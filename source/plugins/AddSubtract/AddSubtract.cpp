@@ -1,5 +1,6 @@
 #include <FFGL.h>
 #include <FFGLLib.h>
+
 #include "AddSubtract.h"
 #include "../../ffgl/utilities/utilities.h"
 
@@ -14,7 +15,7 @@
 static CFFGLPluginInfo PluginInfo ( 
 	AddSubtract::CreateInstance,		// Create method
 	"RE01",								// Plugin unique ID
-	"Add Subtract",						// Plugin name											
+	"Add And Sub",						// Plugin name
 	1,						   			// API major version number 													
 	500,								// API minor version number
 	1,									// Plugin major version number
@@ -24,7 +25,7 @@ static CFFGLPluginInfo PluginInfo (
 	"Resolume FFGL Example"				// About
 );
 
-char *vertexShaderCode = STRINGIFY(
+static const std::string vertexShaderCode = STRINGIFY(
 void main()
 {
 	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
@@ -35,7 +36,7 @@ void main()
 );
 
 
-char *fragmentShaderCode = STRINGIFY(
+static const std::string fragmentShaderCode = STRINGIFY(
 uniform sampler2D inputTexture;
 uniform vec3 brightness;
 void main()

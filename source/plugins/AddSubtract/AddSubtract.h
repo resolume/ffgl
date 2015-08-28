@@ -2,6 +2,7 @@
 
 #include <FFGLShader.h>
 #include "FFGLPluginSDK.h"
+#include <string>
 
 class AddSubtract : public CFreeFrameGLPlugin
 {
@@ -37,14 +38,11 @@ protected:
 	float m_BrightnessR;
 	float m_BrightnessG;
 	float m_BrightnessB;
-
 	int m_initResources;
 
 	FFGLExtensions m_extensions;
     FFGLShader m_shader;
 	GLint m_inputTextureLocation;
 	GLint m_BrightnessLocation;
-	//GLint m_BrightnessGLocation;
-	//GLint m_BrightnessBLocation;
 
 };

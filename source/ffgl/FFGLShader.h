@@ -3,34 +3,34 @@
 
 #include <FFGL.h>
 #include <FFGLExtensions.h>
+#include <string>
 
 class FFGLShader
 {
 public:
-  FFGLShader();
-  virtual ~FFGLShader();
+	FFGLShader();
+	virtual ~FFGLShader();
 
-  void SetExtensions(FFGLExtensions *e);
-  
-  int IsReady() { return (m_glProgram!=0 && m_glVertexShader!=0 && m_glFragmentShader!=0 && m_linkStatus==1); }
-  
-  int Compile(const char *vtxProgram, const char *fragProgram);
+	void SetExtensions(FFGLExtensions *e);
 
-  GLuint FindUniform(const char *name);
-  
-  int BindShader();
-  int UnbindShader();
+	int IsReady();
+	
+	int Compile(const char *vtxProgram, const char *fragProgram);	
+	int Compile(const std::string& vtxProgram, const std::string& fragProgram);
 
-  void FreeGLResources();
+	GLuint FindUniform(const char *name);
+	int BindShader();
+	int UnbindShader();
+	void FreeGLResources();
 
 private:
-  FFGLExtensions *m_extensions;
-  GLenum m_glProgram;
-  GLenum m_glVertexShader;
-  GLenum m_glFragmentShader;
-  GLuint m_linkStatus;
-  
-  void CreateGLResources();
+	FFGLExtensions *m_extensions;
+	GLenum m_glProgram;
+	GLenum m_glVertexShader;
+	GLenum m_glFragmentShader;
+	GLuint m_linkStatus;
+
+	void CreateGLResources();
 };
 
 #endif

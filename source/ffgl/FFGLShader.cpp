@@ -87,6 +87,17 @@ void FFGLShader::SetExtensions(FFGLExtensions *e)
   m_extensions = e;
 }
 
+int FFGLShader::IsReady()
+{
+	return (m_glProgram!=0 && m_glVertexShader!=0 && m_glFragmentShader!=0 && m_linkStatus==1);
+}
+
+
+int FFGLShader::Compile(const std::string& vtxProgram, const std::string& fragProgram)
+{
+	return Compile(vtxProgram.c_str(), fragProgram.c_str());
+}
+
 int FFGLShader::Compile(const char *vtxProgram, const char *fragProgram)
 {
   if (m_extensions==NULL)
@@ -100,7 +111,7 @@ int FFGLShader::Compile(const char *vtxProgram, const char *fragProgram)
   //if we can compile a fragment shader, do it.
   if (m_glFragmentShader!=0 &&
       m_glProgram!=0 &&
-      fragProgram!=NULL && fragProgram[0]!=0)
+      fragProgram != NULL && fragProgram[0]!=0)
   {
     const char *strings[] =
     {
