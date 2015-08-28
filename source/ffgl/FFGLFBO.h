@@ -21,7 +21,7 @@ public:
 
   int Create(int width, int height, FFGLExtensions &e);
   int BindAsRenderTarget(FFGLExtensions &e);
-  int UnbindAsRenderTarget(FFGLExtensions &e);
+  int UnbindAsRenderTarget(FFGLExtensions &e, GLuint hostFbo);
 
   FFGLTextureStruct GetTextureInfo();
 

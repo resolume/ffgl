@@ -1,3 +1,6 @@
 /build/osx/.DS_Store
 
 /binaries/.DS_Store
+
+/binaries/
+/build/osx/build/

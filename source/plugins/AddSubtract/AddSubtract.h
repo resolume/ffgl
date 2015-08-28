@@ -44,5 +44,7 @@ protected:
     FFGLShader m_shader;
 	GLint m_inputTextureLocation;
 	GLint m_BrightnessLocation;
+	//GLint m_BrightnessGLocation;
+	//GLint m_BrightnessBLocation;
 
 };
