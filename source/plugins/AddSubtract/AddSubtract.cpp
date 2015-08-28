@@ -31,7 +31,6 @@ void main()
 	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
 	gl_TexCoord[0] = gl_MultiTexCoord0;
 	gl_FrontColor = gl_Color;
-	
 }
 );
 
@@ -126,9 +125,11 @@ FFResult AddSubtract::DeInitGL()
 
 FFResult AddSubtract::ProcessOpenGL(ProcessOpenGLStruct *pGL)
 {
-	if (pGL->numInputTextures<1) return FF_FAIL;
+	if (pGL->numInputTextures<1)
+		return FF_FAIL;
 
-	if (pGL->inputTextures[0]==NULL) return FF_FAIL;
+	if (pGL->inputTextures[0]==NULL)
+		return FF_FAIL;
 
 	//activate our shader
 	m_shader.BindShader();
