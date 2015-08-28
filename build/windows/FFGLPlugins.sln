@@ -1,0 +1,36 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mixers", "mixers", "{98BAD375-4E77-4EDA-86CA-E77F213DCDA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sources", "sources", "{26AC2413-23B7-4D1F-BB58-17D67106F3F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "effects", "effects", "{F16144DC-83FA-4B2B-8E05-8BE54C7236DF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddSubtract", "AddSubtract.vcxproj", "{8EE99351-6226-415E-B2E9-2DCB2985F371}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8EE99351-6226-415E-B2E9-2DCB2985F371}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8EE99351-6226-415E-B2E9-2DCB2985F371}.Debug|Win32.Build.0 = Debug|Win32
+		{8EE99351-6226-415E-B2E9-2DCB2985F371}.Debug|x64.ActiveCfg = Debug|x64
+		{8EE99351-6226-415E-B2E9-2DCB2985F371}.Debug|x64.Build.0 = Debug|x64
+		{8EE99351-6226-415E-B2E9-2DCB2985F371}.Release|Win32.ActiveCfg = Release|Win32
+		{8EE99351-6226-415E-B2E9-2DCB2985F371}.Release|Win32.Build.0 = Release|Win32
+		{8EE99351-6226-415E-B2E9-2DCB2985F371}.Release|x64.ActiveCfg = Release|x64
+		{8EE99351-6226-415E-B2E9-2DCB2985F371}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8EE99351-6226-415E-B2E9-2DCB2985F371} = {F16144DC-83FA-4B2B-8E05-8BE54C7236DF}
+	EndGlobalSection
+EndGlobal

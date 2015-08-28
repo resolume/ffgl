@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>BC7FE722-938C-441B-A5C1-38DFE5371484</string>
+	<key>IDESourceControlProjectName</key>
+	<string>FFGLPlugins</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>6F85825BDECC9F84EDDA8E03EEC4F8AC07D4200D</key>
+		<string>resolume.unfuddle.com:resolume/resolumeresapi.git</string>
+		<key>73220F081312AE4F986F1C5D78DEDEC18CD364CE</key>
+		<string>https://resolume.unfuddle.com/git/resolume_resolumeffgl/</string>
+		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
+		<string>https://github.com/astellato/ofxSyphon.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>build/osx/FFGLPlugins.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>6F85825BDECC9F84EDDA8E03EEC4F8AC07D4200D</key>
+		<string>../../../../../Resolume%20Resapi</string>
+		<key>73220F081312AE4F986F1C5D78DEDEC18CD364CE</key>
+		<string>../../../..</string>
+		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
+		<string>../../../../../of_v0.8.4_osx_release/addons/ofxSyphon</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://resolume.unfuddle.com/git/resolume_resolumeffgl/</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>73220F081312AE4F986F1C5D78DEDEC18CD364CE</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F4CCB893AFADB97238A965FD2F28717F1CAAE613</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxSyphon</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>73220F081312AE4F986F1C5D78DEDEC18CD364CE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Resolume%20FFGL</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>6F85825BDECC9F84EDDA8E03EEC4F8AC07D4200D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Resolume%20Resapi</string>
+		</dict>
+	</array>
+</dict>
+</plist>

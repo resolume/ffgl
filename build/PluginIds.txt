@@ -1,0 +1,16 @@
+-----Effects-----
+
+AddSubtract				RF01
+
+
+
+
+-----Mixers-----
+Add						RM01
+
+
+
+
+-----Sources-----
+Gradients				RS01
+

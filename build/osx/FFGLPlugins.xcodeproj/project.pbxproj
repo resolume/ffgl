@@ -1,0 +1,453 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		D6369DBB1AAF108500B0CC43 /* ALL */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = D6369DBC1AAF108500B0CC43 /* Build configuration list for PBXAggregateTarget "ALL" */;
+			buildPhases = (
+			);
+			dependencies = (
+				D6369DC21AAF109800B0CC43 /* PBXTargetDependency */,
+			);
+			name = ALL;
+			productName = ALL;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		D69416C91B904EA200D30319 /* AddSubtract.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69416A11B90436100D30319 /* AddSubtract.cpp */; };
+		D6DB1A4D1B9054FE007E6883 /* FFGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A2A1B9054A9007E6883 /* FFGL.cpp */; };
+		D6DB1A541B9054FE007E6883 /* FFGLPluginInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A311B9054A9007E6883 /* FFGLPluginInfo.cpp */; };
+		D6DB1A561B9054FE007E6883 /* FFGLPluginInfoData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A331B9054A9007E6883 /* FFGLPluginInfoData.cpp */; };
+		D6DB1A571B9054FE007E6883 /* FFGLPluginManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A341B9054A9007E6883 /* FFGLPluginManager.cpp */; };
+		D6DB1A5A1B9054FE007E6883 /* FFGLPluginSDK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A371B9054A9007E6883 /* FFGLPluginSDK.cpp */; };
+		D6DB1A5C1B9054FE007E6883 /* FFGLShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A391B9054A9007E6883 /* FFGLShader.cpp */; };
+		D6DB1A6B1B906185007E6883 /* FFGLFBO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A691B906185007E6883 /* FFGLFBO.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D6369DC11AAF109800B0CC43 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2DA285930AEE5D640030A4DD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2FD12258188540470009EBA8;
+			remoteInfo = AVFFGLAddSubtract;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2FD1224418853D4B0009EBA8 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
+		2FD1224618853D640009EBA8 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		2FD1224818853D700009EBA8 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
+		2FD1225318853FFB0009EBA8 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		2FD1226B188540470009EBA8 /* AddSubtract.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AddSubtract.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		A949C2EF18A51F8D0023F3D7 /* AVFFGLGradients.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AVFFGLGradients.cpp; sourceTree = "<group>"; };
+		A949C2F018A51F8D0023F3D7 /* AVFFGLGradients.H */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AVFFGLGradients.H; sourceTree = "<group>"; };
+		A9F28D5818B37D0C007D7C87 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		A9F28D5A18B37D12007D7C87 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		D69416961B9040DA00D30319 /* PluginIds.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = PluginIds.txt; path = ../PluginIds.txt; sourceTree = "<group>"; };
+		D69416971B9041FA00D30319 /* FFGLPlugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FFGLPlugin-Info.plist"; sourceTree = "<group>"; };
+		D694169A1B90421F00D30319 /* FFGL_Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = FFGL_Debug.xcconfig; sourceTree = "<group>"; };
+		D694169B1B90421F00D30319 /* FFGL_Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = FFGL_Release.xcconfig; sourceTree = "<group>"; };
+		D694169C1B90421F00D30319 /* FFGL.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = FFGL.xcconfig; sourceTree = "<group>"; };
+		D69416A11B90436100D30319 /* AddSubtract.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AddSubtract.cpp; sourceTree = "<group>"; };
+		D69416A21B90436100D30319 /* AddSubtract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddSubtract.h; sourceTree = "<group>"; };
+		D6DB1A2A1B9054A9007E6883 /* FFGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGL.cpp; sourceTree = "<group>"; };
+		D6DB1A2B1B9054A9007E6883 /* FFGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGL.h; sourceTree = "<group>"; };
+		D6DB1A301B9054A9007E6883 /* FFGLLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLLib.h; sourceTree = "<group>"; };
+		D6DB1A311B9054A9007E6883 /* FFGLPluginInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLPluginInfo.cpp; sourceTree = "<group>"; };
+		D6DB1A321B9054A9007E6883 /* FFGLPluginInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLPluginInfo.h; sourceTree = "<group>"; };
+		D6DB1A331B9054A9007E6883 /* FFGLPluginInfoData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLPluginInfoData.cpp; sourceTree = "<group>"; };
+		D6DB1A341B9054A9007E6883 /* FFGLPluginManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLPluginManager.cpp; sourceTree = "<group>"; };
+		D6DB1A351B9054A9007E6883 /* FFGLPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLPluginManager.h; sourceTree = "<group>"; };
+		D6DB1A361B9054A9007E6883 /* FFGLPluginManager_inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLPluginManager_inl.h; sourceTree = "<group>"; };
+		D6DB1A371B9054A9007E6883 /* FFGLPluginSDK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLPluginSDK.cpp; sourceTree = "<group>"; };
+		D6DB1A381B9054A9007E6883 /* FFGLPluginSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLPluginSDK.h; sourceTree = "<group>"; };
+		D6DB1A391B9054A9007E6883 /* FFGLShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLShader.cpp; sourceTree = "<group>"; };
+		D6DB1A3A1B9054A9007E6883 /* FFGLShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLShader.h; sourceTree = "<group>"; };
+		D6DB1A3B1B9054A9007E6883 /* FreeFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeFrame.h; sourceTree = "<group>"; };
+		D6DB1A3D1B9054A9007E6883 /* utilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utilities.cpp; sourceTree = "<group>"; };
+		D6DB1A3E1B9054A9007E6883 /* utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utilities.h; sourceTree = "<group>"; };
+		D6DB1A691B906185007E6883 /* FFGLFBO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLFBO.cpp; sourceTree = "<group>"; };
+		D6DB1A6A1B906185007E6883 /* FFGLFBO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLFBO.h; sourceTree = "<group>"; };
+		E89249CF19AD2CE80019503B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2FD12265188540470009EBA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2DA285910AEE5D640030A4DD = {
+			isa = PBXGroup;
+			children = (
+				D69416991B90420600D30319 /* xcconfig */,
+				D69416971B9041FA00D30319 /* FFGLPlugin-Info.plist */,
+				D69416961B9040DA00D30319 /* PluginIds.txt */,
+				E8D767450C9195D90089BAEB /* source plugins */,
+				E8D165D30C5E174D0035D796 /* effect plugins */,
+				E8D165D40C5E177A0035D796 /* mixer plugins */,
+				E8D161130C5DF1DF0035D796 /* frameworks */,
+				2FD12214188538AC0009EBA8 /* source */,
+				2DA285A10AEE5E480030A4DD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2DA285A10AEE5E480030A4DD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2FD1226B188540470009EBA8 /* AddSubtract.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2FD12214188538AC0009EBA8 /* source */ = {
+			isa = PBXGroup;
+			children = (
+				D6DB1A481B9054CD007E6883 /* lib */,
+			);
+			name = source;
+			sourceTree = "<group>";
+		};
+		A949C2EE18A51F8D0023F3D7 /* Gradients */ = {
+			isa = PBXGroup;
+			children = (
+				A949C2EF18A51F8D0023F3D7 /* AVFFGLGradients.cpp */,
+				A949C2F018A51F8D0023F3D7 /* AVFFGLGradients.H */,
+			);
+			name = Gradients;
+			path = ../../source/bundled/AVFFGLGradients;
+			sourceTree = "<group>";
+		};
+		A94EF73518A9161E006D59F0 /* Add */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Add;
+			path = ../../source/bundled/FFGLAdd;
+			sourceTree = "<group>";
+		};
+		D69416991B90420600D30319 /* xcconfig */ = {
+			isa = PBXGroup;
+			children = (
+				D694169A1B90421F00D30319 /* FFGL_Debug.xcconfig */,
+				D694169B1B90421F00D30319 /* FFGL_Release.xcconfig */,
+				D694169C1B90421F00D30319 /* FFGL.xcconfig */,
+			);
+			name = xcconfig;
+			sourceTree = "<group>";
+		};
+		D69416A01B90436100D30319 /* AddSubtract */ = {
+			isa = PBXGroup;
+			children = (
+				D69416A11B90436100D30319 /* AddSubtract.cpp */,
+				D69416A21B90436100D30319 /* AddSubtract.h */,
+			);
+			name = AddSubtract;
+			path = ../../source/plugins/AddSubtract;
+			sourceTree = "<group>";
+		};
+		D6DB1A291B9054A9007E6883 /* ffgl */ = {
+			isa = PBXGroup;
+			children = (
+				D6DB1A691B906185007E6883 /* FFGLFBO.cpp */,
+				D6DB1A6A1B906185007E6883 /* FFGLFBO.h */,
+				D6DB1A2A1B9054A9007E6883 /* FFGL.cpp */,
+				D6DB1A2B1B9054A9007E6883 /* FFGL.h */,
+				D6DB1A301B9054A9007E6883 /* FFGLLib.h */,
+				D6DB1A311B9054A9007E6883 /* FFGLPluginInfo.cpp */,
+				D6DB1A321B9054A9007E6883 /* FFGLPluginInfo.h */,
+				D6DB1A331B9054A9007E6883 /* FFGLPluginInfoData.cpp */,
+				D6DB1A341B9054A9007E6883 /* FFGLPluginManager.cpp */,
+				D6DB1A351B9054A9007E6883 /* FFGLPluginManager.h */,
+				D6DB1A361B9054A9007E6883 /* FFGLPluginManager_inl.h */,
+				D6DB1A371B9054A9007E6883 /* FFGLPluginSDK.cpp */,
+				D6DB1A381B9054A9007E6883 /* FFGLPluginSDK.h */,
+				D6DB1A391B9054A9007E6883 /* FFGLShader.cpp */,
+				D6DB1A3A1B9054A9007E6883 /* FFGLShader.h */,
+				D6DB1A3B1B9054A9007E6883 /* FreeFrame.h */,
+				D6DB1A3C1B9054A9007E6883 /* utilities */,
+			);
+			name = ffgl;
+			path = ../../source/lib/ffgl;
+			sourceTree = "<group>";
+		};
+		D6DB1A3C1B9054A9007E6883 /* utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D6DB1A3D1B9054A9007E6883 /* utilities.cpp */,
+				D6DB1A3E1B9054A9007E6883 /* utilities.h */,
+			);
+			path = utilities;
+			sourceTree = "<group>";
+		};
+		D6DB1A481B9054CD007E6883 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				D6DB1A701B906E50007E6883 /* glload */,
+				D6DB1A291B9054A9007E6883 /* ffgl */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		D6DB1A701B906E50007E6883 /* glload */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = glload;
+			sourceTree = "<group>";
+		};
+		E89249D319AD2D7C0019503B /* plugins */ = {
+			isa = PBXGroup;
+			children = (
+				2FD1224618853D640009EBA8 /* Quartz.framework */,
+				2FD1224418853D4B0009EBA8 /* QuickTime.framework */,
+				2FD1224818853D700009EBA8 /* QTKit.framework */,
+				A9F28D5818B37D0C007D7C87 /* AVFoundation.framework */,
+				A9F28D5A18B37D12007D7C87 /* CoreMedia.framework */,
+				E89249CF19AD2CE80019503B /* AppKit.framework */,
+			);
+			name = plugins;
+			sourceTree = "<group>";
+		};
+		E8D161130C5DF1DF0035D796 /* frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E89249D319AD2D7C0019503B /* plugins */,
+				2FD1225318853FFB0009EBA8 /* OpenGL.framework */,
+			);
+			name = frameworks;
+			sourceTree = "<group>";
+		};
+		E8D165D30C5E174D0035D796 /* effect plugins */ = {
+			isa = PBXGroup;
+			children = (
+				D69416A01B90436100D30319 /* AddSubtract */,
+			);
+			name = "effect plugins";
+			sourceTree = "<group>";
+		};
+		E8D165D40C5E177A0035D796 /* mixer plugins */ = {
+			isa = PBXGroup;
+			children = (
+				A94EF73518A9161E006D59F0 /* Add */,
+			);
+			name = "mixer plugins";
+			sourceTree = "<group>";
+		};
+		E8D767450C9195D90089BAEB /* source plugins */ = {
+			isa = PBXGroup;
+			children = (
+				A949C2EE18A51F8D0023F3D7 /* Gradients */,
+			);
+			name = "source plugins";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2FD12258188540470009EBA8 /* AddSubtract */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2FD12268188540470009EBA8 /* Build configuration list for PBXNativeTarget "AddSubtract" */;
+			buildPhases = (
+				2FD1225B188540470009EBA8 /* Resources */,
+				2FD1225C188540470009EBA8 /* Sources */,
+				2FD12265188540470009EBA8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AddSubtract;
+			productName = FFGLBrightness;
+			productReference = 2FD1226B188540470009EBA8 /* AddSubtract.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2DA285930AEE5D640030A4DD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+			};
+			buildConfigurationList = 2DA285940AEE5D640030A4DD /* Build configuration list for PBXProject "FFGLPlugins" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 2DA285910AEE5D640030A4DD;
+			productRefGroup = 2DA285A10AEE5E480030A4DD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2FD12258188540470009EBA8 /* AddSubtract */,
+				D6369DBB1AAF108500B0CC43 /* ALL */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2FD1225B188540470009EBA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2FD1225C188540470009EBA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6DB1A4D1B9054FE007E6883 /* FFGL.cpp in Sources */,
+				D6DB1A541B9054FE007E6883 /* FFGLPluginInfo.cpp in Sources */,
+				D6DB1A561B9054FE007E6883 /* FFGLPluginInfoData.cpp in Sources */,
+				D6DB1A571B9054FE007E6883 /* FFGLPluginManager.cpp in Sources */,
+				D6DB1A5A1B9054FE007E6883 /* FFGLPluginSDK.cpp in Sources */,
+				D6DB1A5C1B9054FE007E6883 /* FFGLShader.cpp in Sources */,
+				D69416C91B904EA200D30319 /* AddSubtract.cpp in Sources */,
+				D6DB1A6B1B906185007E6883 /* FFGLFBO.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D6369DC21AAF109800B0CC43 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2FD12258188540470009EBA8 /* AddSubtract */;
+			targetProxy = D6369DC11AAF109800B0CC43 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2DA285950AEE5D640030A4DD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D694169A1B90421F00D30319 /* FFGL_Debug.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = ../../binaries/debug;
+				COPY_PHASE_STRIP = NO;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		2DA285960AEE5D640030A4DD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D694169B1B90421F00D30319 /* FFGL_Release.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = ../../binaries/release;
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEPLOYMENT_POSTPROCESSING = YES;
+				STRIP_STYLE = debugging;
+			};
+			name = Release;
+		};
+		2FD12269188540470009EBA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = AddSubtract;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		2FD1226A188540470009EBA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_NAME = AddSubtract;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		D6369DBD1AAF108500B0CC43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D6369DBE1AAF108500B0CC43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2DA285940AEE5D640030A4DD /* Build configuration list for PBXProject "FFGLPlugins" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DA285950AEE5D640030A4DD /* Debug */,
+				2DA285960AEE5D640030A4DD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2FD12268188540470009EBA8 /* Build configuration list for PBXNativeTarget "AddSubtract" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FD12269188540470009EBA8 /* Debug */,
+				2FD1226A188540470009EBA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D6369DBC1AAF108500B0CC43 /* Build configuration list for PBXAggregateTarget "ALL" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6369DBD1AAF108500B0CC43 /* Debug */,
+				D6369DBE1AAF108500B0CC43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2DA285930AEE5D640030A4DD /* Project object */;
+}
