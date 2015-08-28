@@ -1,0 +1,9 @@
+HEADER_SEARCH_PATHS			= $(inherited)
+
+LINKER_FLAGS				= -framework OpenGL -framework Carbon -framework AppKit
+
+PREPROCESSOR_BASE			= TARGET_OS_MAC=1 RA_106_SDK=1
+
+
+
+
