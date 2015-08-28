@@ -9,84 +9,87 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
     </Filter>
-    <Filter Include="Source Files\common">
-      <UniqueIdentifier>{27850a71-84d0-4d0a-9166-03a7d13b2834}</UniqueIdentifier>
+    <Filter Include="Source Files\lib">
+      <UniqueIdentifier>{11d7d984-4d44-478a-8743-190e3d9f8566}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resapi">
-      <UniqueIdentifier>{45731a3a-3129-4b27-8979-76c3092b052d}</UniqueIdentifier>
+    <Filter Include="Source Files\lib\ffgl">
+      <UniqueIdentifier>{8ebaa1f5-8157-4d7f-bf0d-f6623794b934}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resapi\libs">
-      <UniqueIdentifier>{da698ba7-d65a-4198-b160-d7ba7a0793d8}</UniqueIdentifier>
+    <Filter Include="Source Files\lib\glee">
+      <UniqueIdentifier>{a006fba1-a334-4c52-bb54-66be65736c6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\ffgl\utilities">
+      <UniqueIdentifier>{e49878bc-d6f1-47f3-af9c-778389d6fb40}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\bundled\AVFFGLAddSubtract\AVFFGLAddSubtract.cpp">
+    <ClCompile Include="..\..\source\plugins\AddSubtract\AddSubtract.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\common\FFGLExtensions.cpp">
-      <Filter>Source Files\common</Filter>
+    <ClCompile Include="..\..\source\lib\glee\GLee.c">
+      <Filter>Source Files\lib\glee</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\common\FFGLFBO.cpp">
-      <Filter>Source Files\common</Filter>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGL.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\common\FFGLShader.cpp">
-      <Filter>Source Files\common</Filter>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLFBO.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\common\utilities.cpp">
-      <Filter>Source Files\common</Filter>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfo.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGL.cpp">
-      <Filter>resapi\libs</Filter>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfoData.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginInfo.cpp">
-      <Filter>resapi\libs</Filter>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginManager.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginInfoData.cpp">
-      <Filter>resapi\libs</Filter>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginSDK.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginManager.cpp">
-      <Filter>resapi\libs</Filter>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLShader.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginSDK.cpp">
-      <Filter>resapi\libs</Filter>
+    <ClCompile Include="..\..\source\lib\ffgl\utilities\utilities.cpp">
+      <Filter>Source Files\lib\ffgl\utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\source\bundled\AVFFGLAddSubtract\AVFFGLAddSubtract.H">
+    <ClInclude Include="..\..\source\plugins\AddSubtract\AddSubtract.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\common\utilities.h">
-      <Filter>Source Files\common</Filter>
+    <ClInclude Include="..\..\source\lib\glee\GLee.h">
+      <Filter>Source Files\lib\glee</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\common\FFGLExtensions.h">
-      <Filter>Source Files\common</Filter>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGL.h">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\common\FFGLFBO.h">
-      <Filter>Source Files\common</Filter>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLFBO.h">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\common\FFGLShader.h">
-      <Filter>Source Files\common</Filter>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLLib.h">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGL.h">
-      <Filter>resapi\libs</Filter>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginInfo.h">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLLib.h">
-      <Filter>resapi\libs</Filter>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager.h">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginInfo.h">
-      <Filter>resapi\libs</Filter>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager_inl.h">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginManager.h">
-      <Filter>resapi\libs</Filter>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginManager_inl.h">
-      <Filter>resapi\libs</Filter>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLShader.h">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginSDK.h">
-      <Filter>resapi\libs</Filter>
+    <ClInclude Include="..\..\source\lib\ffgl\FreeFrame.h">
+      <Filter>Source Files\lib\ffgl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FreeFrame.h">
-      <Filter>resapi\libs</Filter>
+    <ClInclude Include="..\..\source\lib\ffgl\utilities\utilities.h">
+      <Filter>Source Files\lib\ffgl\utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -19,30 +19,30 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGL.cpp" />
-    <ClCompile Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginInfo.cpp" />
-    <ClCompile Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginInfoData.cpp" />
-    <ClCompile Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginManager.cpp" />
-    <ClCompile Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginSDK.cpp" />
-    <ClCompile Include="..\..\..\source\bundled\AVFFGLAddSubtract\AVFFGLAddSubtract.cpp" />
-    <ClCompile Include="..\..\..\source\common\FFGLExtensions.cpp" />
-    <ClCompile Include="..\..\..\source\common\FFGLFBO.cpp" />
-    <ClCompile Include="..\..\..\source\common\FFGLShader.cpp" />
-    <ClCompile Include="..\..\..\source\common\utilities.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGL.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLFBO.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfo.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfoData.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginManager.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginSDK.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLShader.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\utilities\utilities.cpp" />
+    <ClCompile Include="..\..\source\lib\glee\GLee.c" />
+    <ClCompile Include="..\..\source\plugins\AddSubtract\AddSubtract.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGL.h" />
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLLib.h" />
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginInfo.h" />
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginManager.h" />
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginManager_inl.h" />
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FFGLPluginSDK.h" />
-    <ClInclude Include="..\..\..\..\Resolume Resapi\resapi\libs\ffglsdk\FreeFrame.h" />
-    <ClInclude Include="..\..\..\source\bundled\AVFFGLAddSubtract\AVFFGLAddSubtract.H" />
-    <ClInclude Include="..\..\..\source\common\FFGLExtensions.h" />
-    <ClInclude Include="..\..\..\source\common\FFGLFBO.h" />
-    <ClInclude Include="..\..\..\source\common\FFGLShader.h" />
-    <ClInclude Include="..\..\..\source\common\utilities.h" />
+    <ClInclude Include="..\..\source\lib\ffgl\FFGL.h" />
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLFBO.h" />
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLLib.h" />
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginInfo.h" />
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager.h" />
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager_inl.h" />
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h" />
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLShader.h" />
+    <ClInclude Include="..\..\source\lib\ffgl\FreeFrame.h" />
+    <ClInclude Include="..\..\source\lib\ffgl\utilities\utilities.h" />
+    <ClInclude Include="..\..\source\lib\glee\GLee.h" />
+    <ClInclude Include="..\..\source\plugins\AddSubtract\AddSubtract.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8EE99351-6226-415E-B2E9-2DCB2985F371}</ProjectGuid>
@@ -75,41 +75,37 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
-    <Import Project="..\..\..\..\Resolume Resapi\resapi\ResapiReleasePlugin.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
-    <Import Project="..\..\..\..\Resolume Resapi\resapi\ResapiReleasePlugin.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
-    <Import Project="..\..\..\..\Resolume Resapi\resapi\ResapiDebugPlugin.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
-    <Import Project="..\..\..\..\Resolume Resapi\resapi\ResapiDebugPlugin.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\..\bin\bundled\$(PlatformTarget)\$(Configuration)\effects\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\binaries\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(PlatformTarget)\$(Configuration)\$(ProjectName)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\bin\bundled\$(PlatformTarget)\$(Configuration)\effects\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\binaries\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(PlatformTarget)\$(Configuration)\$(ProjectName)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\..\..\bin\bundled\$(PlatformTarget)\$(Configuration)\effects\</OutDir>
+    <OutDir>..\..\binaries\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>$(PlatformTarget)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\..\..\bin\bundled\$(PlatformTarget)\$(Configuration)\effects\</OutDir>
+    <OutDir>..\..\binaries\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>$(PlatformTarget)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -123,7 +119,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\..\source\common\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\source\lib\ffgl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>FFGLPlugins.def</ModuleDefinitionFile>
@@ -132,6 +128,7 @@
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -144,7 +141,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\..\source\common\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\source\lib\ffgl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>FFGLPlugins.def</ModuleDefinitionFile>
@@ -153,6 +150,7 @@
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
       <AdditionalLibraryDirectories>..\..\..\source\common\opengl\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -163,7 +161,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\..\source\common\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\source\lib\ffgl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>FFGLPlugins.def</ModuleDefinitionFile>
@@ -173,6 +171,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -183,7 +182,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\..\source\common\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\source\lib\ffgl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>FFGLPlugins.def</ModuleDefinitionFile>
@@ -193,6 +192,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
       <AdditionalLibraryDirectories>..\..\..\source\common\opengl\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
