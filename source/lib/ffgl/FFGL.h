@@ -56,6 +56,7 @@
 #ifdef _WIN32
 
 #include <windows.h>
+#include "../glee/GLee.h"
 #include <gl/gl.h>
 
 #else
