@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sources", "sources", "{26AC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "effects", "effects", "{F16144DC-83FA-4B2B-8E05-8BE54C7236DF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AVFFGLAddSubtract", "AVFFGLAddSubtract.vcxproj", "{8EE99351-6226-415E-B2E9-2DCB2985F371}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddSubtract", "AddSubtract.vcxproj", "{8EE99351-6226-415E-B2E9-2DCB2985F371}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
