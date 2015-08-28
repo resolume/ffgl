@@ -61,10 +61,6 @@
 #else
 
 #ifdef TARGET_OS_MAC
-//on osx, <OpenGl/gl.h> auto-includes gl_ext.h for OpenGL extensions, which will interfere
-//with the FFGL SDK's own FFGLExtensions headers (included below). this #define disables
-//the auto-inclusion of gl_ext.h in OpenGl.h on OSX
-#define GL_GLEXT_LEGACY
 #include <OpenGL/gl.h>
 
 #else

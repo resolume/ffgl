@@ -26,9 +26,9 @@ public:
 
 	static FFResult __stdcall CreateInstance(CFreeFrameGLPlugin **ppOutInstance)
   {
-  	*ppOutInstance = new AddSubtract();
+	  *ppOutInstance = new AddSubtract();
 	  if (*ppOutInstance != NULL)
-      return FF_SUCCESS;
+		  return FF_SUCCESS;
 	  return FF_FAIL;
   }
 
@@ -40,7 +40,6 @@ protected:
 	float m_BrightnessB;
 	int m_initResources;
 
-	FFGLExtensions m_extensions;
     FFGLShader m_shader;
 	GLint m_inputTextureLocation;
 	GLint m_BrightnessLocation;

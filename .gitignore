@@ -6,3 +6,9 @@
 /build/osx/build/
 
 /source/.DS_Store
+
+/.DS_Store
+/source/lib/.DS_Store
+
+/source/lib/glsdk_0_5_2/.DS_Store
+/source/lib/glsdk_0_5_2/glload/.DS_Store

@@ -2,7 +2,7 @@
 #include <FFGLLib.h>
 
 #include "AddSubtract.h"
-#include "../../ffgl/utilities/utilities.h"
+#include "../../lib/ffgl/utilities/utilities.h"
 
 #define FFPARAM_BrightnessR  (0)
 #define FFPARAM_BrightnessG	 (1)
@@ -81,14 +81,8 @@ FFResult AddSubtract::InitGL(const FFGLViewportStruct *vp)
 
 	m_initResources = 0;
 
-	//initialize gl extensions and
-	//make sure required features are supported
-	m_extensions.Initialize();
-	if (m_extensions.multitexture==0 || m_extensions.ARB_shader_objects==0)
-	  return FF_FAIL;
 
 	//initialize gl shader
-	m_shader.SetExtensions(&m_extensions);
 	m_shader.Compile(vertexShaderCode,fragmentShaderCode);
 
 	//activate our shader
@@ -102,7 +96,7 @@ FFResult AddSubtract::InitGL(const FFGLViewportStruct *vp)
 
 	//the 0 means that the 'inputTexture' in
 	//the shader will use the texture bound to GL texture unit 0
-	m_extensions.glUniform1iARB(m_inputTextureLocation, 0);
+	glUniform1i(m_inputTextureLocation, 0);
 	
 	m_shader.UnbindShader();
 
@@ -141,15 +135,15 @@ FFResult AddSubtract::ProcessOpenGL(ProcessOpenGLStruct *pGL)
 	FFGLTexCoords maxCoords = GetMaxGLTexCoords(Texture);
 
 	//assign the Brightness
-	m_extensions.glUniform3fARB(m_BrightnessLocation, 
-								-1.0f + (m_BrightnessR * 2.0f),
-								-1.0f + (m_BrightnessG * 2.0f),
-								-1.0f + (m_BrightnessB * 2.0f)		
-								);
+	glUniform3f(m_BrightnessLocation,
+				-1.0f + (m_BrightnessR * 2.0f),
+				-1.0f + (m_BrightnessG * 2.0f),
+				-1.0f + (m_BrightnessB * 2.0f)
+				);
 	
 
 	//activate texture unit 1 and bind the input texture
-	m_extensions.glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, Texture.Handle);
     
 	//draw the quad that will be painted by the shader/textures
@@ -159,19 +153,19 @@ FFResult AddSubtract::ProcessOpenGL(ProcessOpenGLStruct *pGL)
 	glBegin(GL_QUADS);
 
 	//lower left
-	m_extensions.glMultiTexCoord2f(GL_TEXTURE0, 0,0);
+	glMultiTexCoord2f(GL_TEXTURE0, 0,0);
 	glVertex2f(-1,-1);
 
 	//upper left
-	m_extensions.glMultiTexCoord2f(GL_TEXTURE0, 0, maxCoords.t);
+	glMultiTexCoord2f(GL_TEXTURE0, 0, maxCoords.t);
 	glVertex2f(-1,1);
 
 	//upper right
-	m_extensions.glMultiTexCoord2f(GL_TEXTURE0, maxCoords.s, maxCoords.t);
+	glMultiTexCoord2f(GL_TEXTURE0, maxCoords.s, maxCoords.t);
 	glVertex2f(1,1);
 
 	//lower right
-	m_extensions.glMultiTexCoord2f(GL_TEXTURE0, maxCoords.s, 0);
+	glMultiTexCoord2f(GL_TEXTURE0, maxCoords.s, 0);
 	glVertex2f(1,-1);
 	glEnd();
 
