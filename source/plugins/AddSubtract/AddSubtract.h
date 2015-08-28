@@ -1,15 +1,13 @@
-#ifndef AVFFGLAddSubtract_H
-#define AVFFGLAddSubtract_H
+#pragma once
 
 #include <FFGLShader.h>
 #include "FFGLPluginSDK.h"
 
-class AVFFGLAddSubtract :
-public CFreeFrameGLPlugin
+class AddSubtract : public CFreeFrameGLPlugin
 {
 public:
-	AVFFGLAddSubtract();
-  ~AVFFGLAddSubtract() {}
+	AddSubtract();
+	~AddSubtract();
 
 	///////////////////////////////////////////////////
 	// FreeFrame plugin methods
@@ -27,7 +25,7 @@ public:
 
 	static FFResult __stdcall CreateInstance(CFreeFrameGLPlugin **ppOutInstance)
   {
-  	*ppOutInstance = new AVFFGLAddSubtract();
+  	*ppOutInstance = new AddSubtract();
 	  if (*ppOutInstance != NULL)
       return FF_SUCCESS;
 	  return FF_FAIL;
@@ -46,10 +44,5 @@ protected:
     FFGLShader m_shader;
 	GLint m_inputTextureLocation;
 	GLint m_BrightnessLocation;
-	//GLint m_BrightnessGLocation;
-	//GLint m_BrightnessBLocation;
 
 };
-
-
-#endif

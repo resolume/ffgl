@@ -1,7 +1,8 @@
 #include <FFGL.h>
 #include <FFGLLib.h>
-#include "AVFFGLAddSubtract.h"
-#include "../../common/utilities.h"
+#include "AddSubtract.h"
+#include "../../ffgl/utilities/utilities.h"
+
 #define FFPARAM_BrightnessR  (0)
 #define FFPARAM_BrightnessG	 (1)
 #define FFPARAM_BrightnessB	 (2)
@@ -11,16 +12,16 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static CFFGLPluginInfo PluginInfo ( 
-	AVFFGLAddSubtract::CreateInstance,	// Create method
-	"A101",								// Plugin unique ID											
+	AddSubtract::CreateInstance,		// Create method
+	"RE01",								// Plugin unique ID
 	"Add Subtract",						// Plugin name											
 	1,						   			// API major version number 													
 	500,								// API minor version number
 	1,									// Plugin major version number
 	000,								// Plugin minor version number
 	FF_EFFECT,							// Plugin type
-	"Add and subtract colours",	// Plugin description
-	"Resolume" // About
+	"Add and Subtract colours",			// Plugin description
+	"Resolume FFGL Example"				// About
 );
 
 char *vertexShaderCode = STRINGIFY(
@@ -48,17 +49,11 @@ void main()
 }
 );
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Constructor and destructor
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-AVFFGLAddSubtract::AVFFGLAddSubtract()
+AddSubtract::AddSubtract()
 :CFreeFrameGLPlugin(),
  m_initResources(1),
  m_inputTextureLocation(-1),
  m_BrightnessLocation(-1)
- //m_BrightnessGLocation(-1),
- //m_BrightnessBLocation(-1)
 {
 	// Input properties
 	SetMinInputs(1);
@@ -76,7 +71,12 @@ AVFFGLAddSubtract::AVFFGLAddSubtract()
 
 }
 
-FFResult AVFFGLAddSubtract::InitGL(const FFGLViewportStruct *vp)
+AddSubtract::~AddSubtract()
+{
+	
+}
+
+FFResult AddSubtract::InitGL(const FFGLViewportStruct *vp)
 {
 
 	m_initResources = 0;
@@ -109,7 +109,7 @@ FFResult AVFFGLAddSubtract::InitGL(const FFGLViewportStruct *vp)
   return FF_SUCCESS;
 }
 
-FFResult AVFFGLAddSubtract::DeInitGL()
+FFResult AddSubtract::DeInitGL()
 {
   m_shader.FreeGLResources();
 
@@ -123,7 +123,7 @@ FFResult AVFFGLAddSubtract::DeInitGL()
 
 
 
-FFResult AVFFGLAddSubtract::ProcessOpenGL(ProcessOpenGLStruct *pGL)
+FFResult AddSubtract::ProcessOpenGL(ProcessOpenGLStruct *pGL)
 {
 	if (pGL->numInputTextures<1) return FF_FAIL;
 
@@ -183,31 +183,30 @@ FFResult AVFFGLAddSubtract::ProcessOpenGL(ProcessOpenGLStruct *pGL)
 	return FF_SUCCESS;
 }
 
-float AVFFGLAddSubtract::GetFloatParameter(unsigned int dwIndex)
+float AddSubtract::GetFloatParameter(unsigned int dwIndex)
 {
 	float retValue = 0.0;
 
-	switch (dwIndex) {
-
+	switch (dwIndex)
+	{
 	case FFPARAM_BrightnessR:
-    retValue = m_BrightnessR;
+		retValue = m_BrightnessR;
 		return retValue;
 	case FFPARAM_BrightnessG:
-    retValue = m_BrightnessG;
+		retValue = m_BrightnessG;
 		return retValue;
 	case FFPARAM_BrightnessB:
-    retValue = m_BrightnessB;
+		retValue = m_BrightnessB;
 		return retValue;
-
 	default:
 		return retValue;
 	}
 }
 
-FFResult AVFFGLAddSubtract::SetFloatParameter(unsigned int dwIndex, float value)
+FFResult AddSubtract::SetFloatParameter(unsigned int dwIndex, float value)
 {
-	switch (dwIndex) {
-
+	switch (dwIndex)
+	{
 	case FFPARAM_BrightnessR:
 		m_BrightnessR = value;
 		break;
@@ -217,7 +216,6 @@ FFResult AVFFGLAddSubtract::SetFloatParameter(unsigned int dwIndex, float value)
 	case FFPARAM_BrightnessB:
 		m_BrightnessB = value;
 		break;
-
 	default:
 		return FF_FAIL;
 	}
