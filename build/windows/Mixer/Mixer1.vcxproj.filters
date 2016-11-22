@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources Files">
+      <UniqueIdentifier>{1fb7f16e-0a0e-4ae4-92f3-33c0a163acf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources Files\lib">
+      <UniqueIdentifier>{d74baf7e-7200-4ecb-9845-ca0bb054dd26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources Files\lib\ffgl">
+      <UniqueIdentifier>{d039305e-58eb-4aab-85ac-dc8bf7f661c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources Files\lib\ffgl\utilities">
+      <UniqueIdentifier>{e3afa696-54cf-4a53-8c06-0ae442753d88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources Files\lib\glee">
+      <UniqueIdentifier>{2b4e3a06-61e0-4de0-acd5-f09896fc3953}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\plugins\Mixer1\Mixer1.cpp">
+      <Filter>Sources Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\lib\ffgl\FFGL.cpp">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\lib\ffgl\FFGLFBO.cpp">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\lib\ffgl\FFGLPluginInfo.cpp">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\lib\ffgl\FFGLPluginInfoData.cpp">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\lib\ffgl\FFGLPluginManager.cpp">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\lib\ffgl\FFGLPluginSDK.cpp">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\lib\ffgl\FFGLShader.cpp">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\lib\ffgl\utilities\utilities.cpp">
+      <Filter>Sources Files\lib\ffgl\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\lib\glee\GLee.c">
+      <Filter>Sources Files\lib\glee</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\source\plugins\Mixer1\Mixer1.h">
+      <Filter>Sources Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\lib\ffgl\FFGL.h">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\lib\ffgl\FFGLFBO.h">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\lib\ffgl\FFGLLib.h">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\lib\ffgl\FFGLPluginInfo.h">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\lib\ffgl\FFGLPluginManager.h">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\lib\ffgl\FFGLPluginManager_inl.h">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\lib\ffgl\FFGLPluginSDK.h">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\lib\ffgl\FFGLShader.h">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\lib\ffgl\FreeFrame.h">
+      <Filter>Sources Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\lib\ffgl\utilities\utilities.h">
+      <Filter>Sources Files\lib\ffgl\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\lib\glee\GLee.h">
+      <Filter>Sources Files\lib\glee</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\lib">
+      <UniqueIdentifier>{11d7d984-4d44-478a-8743-190e3d9f8566}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\ffgl">
+      <UniqueIdentifier>{8ebaa1f5-8157-4d7f-bf0d-f6623794b934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\glee">
+      <UniqueIdentifier>{a006fba1-a334-4c52-bb54-66be65736c6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\ffgl\utilities">
+      <UniqueIdentifier>{e49878bc-d6f1-47f3-af9c-778389d6fb40}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\plugins\AddSubtract\AddSubtract.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\glee\GLee.c">
+      <Filter>Source Files\lib\glee</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGL.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLFBO.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfo.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfoData.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginManager.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginSDK.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLShader.cpp">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffgl\utilities\utilities.cpp">
+      <Filter>Source Files\lib\ffgl\utilities</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\plugins\AddSubtract\AddSubtract.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\glee\GLee.h">
+      <Filter>Source Files\lib\glee</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGL.h">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLFBO.h">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLLib.h">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginInfo.h">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager.h">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager_inl.h">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLShader.h">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\FreeFrame.h">
+      <Filter>Source Files\lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\utilities\utilities.h">
+      <Filter>Source Files\lib\ffgl\utilities</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
