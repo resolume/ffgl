@@ -4,11 +4,11 @@
 #include "FFGLPluginSDK.h"
 #include <string>
 
-class Mixer1 : public CFreeFrameGLPlugin
+class AddBlending : public CFreeFrameGLPlugin
 {
 public:
-	Mixer1();
-	~Mixer1();
+	AddBlending();
+	~AddBlending();
 
 	///////////////////////////////////////////////////
 	// FreeFrame plugin methods
@@ -20,7 +20,8 @@ public:
 	FFResult InitGL(const FFGLViewportStruct *vp);
 	FFResult DeInitGL();
 
-	const char * GetShortName() { static const char* sname = "MX01"; return sname; }
+	//The mixer short name
+	const char * GetShortName() { static const char* sname = "AddB"; return sname; }
 
 	///////////////////////////////////////////////////
 	// Factory method
@@ -28,7 +29,7 @@ public:
 
 	static FFResult __stdcall CreateInstance(CFreeFrameGLPlugin **ppOutInstance)
   {
-	  *ppOutInstance = new Mixer1();
+	  *ppOutInstance = new AddBlending();
 	  if (*ppOutInstance != NULL)
 		  return FF_SUCCESS;
 	  return FF_FAIL;

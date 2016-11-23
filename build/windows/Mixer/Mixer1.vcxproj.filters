@@ -18,9 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\plugins\Mixer1\Mixer1.cpp">
-      <Filter>Sources Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\lib\ffgl\FFGL.cpp">
       <Filter>Sources Files\lib\ffgl</Filter>
     </ClCompile>
@@ -48,11 +45,11 @@
     <ClCompile Include="..\..\..\source\lib\glee\GLee.c">
       <Filter>Sources Files\lib\glee</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\plugins\Mixer1\AddBlending.cpp">
+      <Filter>Sources Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\source\plugins\Mixer1\Mixer1.h">
-      <Filter>Sources Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\source\lib\ffgl\FFGL.h">
       <Filter>Sources Files\lib\ffgl</Filter>
     </ClInclude>
@@ -85,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\source\lib\glee\GLee.h">
       <Filter>Sources Files\lib\glee</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\plugins\Mixer1\AddBlending.h">
+      <Filter>Sources Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

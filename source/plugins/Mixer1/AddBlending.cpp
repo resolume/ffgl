@@ -1,7 +1,7 @@
 #include <FFGL.h>
 #include <FFGLLib.h>
 
-#include "Mixer1.h"
+#include "AddBlending.h"
 #include "../../lib/ffgl/utilities/utilities.h"
 
 #define FFPARAM_MixVal  (0)
@@ -11,16 +11,16 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static CFFGLPluginInfo PluginInfo ( 
-	Mixer1::CreateInstance,		// Create method
-	"RM01",								// Plugin unique ID
-	"Mix1",								// Plugin name
+	AddBlending::CreateInstance,		// Create method
+	"RM02",								// Plugin unique ID
+	"AddBlending",								// Plugin name
 	1,						   			// API major version number 													
 	500,								// API minor version number
 	1,									// Plugin major version number
 	000,								// Plugin minor version number
 	FF_EFFECT,							// Plugin type
-	"Mix two video ",					// Plugin description
-	"Resolume FFGL Example by Natspir"			// About
+	"Blend two videos by adding the first texture to the second texture. Looks like 50Add mixer",// Plugin description
+	"Resolume FFGL example by Natspir"			// About
 );
 
 static const std::string vertexShaderCode = STRINGIFY(
@@ -33,24 +33,33 @@ void main()
 }
 );
 
-
+//This is the shader. It's using to make the transition.
+//The code below will be applied by each pixel of your output screen by the Graphic Card
 static const std::string fragmentShaderCode = STRINGIFY(
+
+//colorDest = the image originally displayed before blending
+//colorSrc = the image we want to display after blending
 uniform sampler2D textureDest; 
 uniform sampler2D textureSrc;
+//the value defined by the slider to switch between the two images
 uniform float mixVal;
+
+
 void main()
 {
 	//get the two different input to mix
 	vec4 colorDest = texture2D(textureDest, gl_TexCoord[0].st);
 	vec4 colorSrc = texture2D(textureSrc, gl_TexCoord[1].st);
-	vec2 p = gl_TexCoord[0].st; // not the best way to get pixel coordinate
-	
-	//output*/
-	gl_FragColor = mix(colorDest, colorSrc, smoothstep(0.45, 0.55, clamp(p.x-1.0 + mixVal*2.0, 0.0, 1.0))); //colorSrc;// vec4(1.0,0.0,0.0,1.0);// 
+
+	//here we add the colorSrc r,g,b,a pixel value to the colorDest pixel value according to the mixVal value
+	float mix = colorDest + colorSrc*mixVal;
+
+	//Here we use the built-in function min(val1,val2) to get the minimum between val1 and val2 and always keep output pixel value between 0.0 and 1.0
+	gl_FragColor = min(mix, 1.0);
 }
 );
 
-Mixer1::Mixer1()
+AddBlending::AddBlending()
 :CFreeFrameGLPlugin(),
  m_initResources(1),
  m_inputTextureLocation1(-1),
@@ -68,12 +77,12 @@ Mixer1::Mixer1()
 
 }
 
-Mixer1::~Mixer1()
+AddBlending::~AddBlending()
 {
 	
 }
 
-FFResult Mixer1::InitGL(const FFGLViewportStruct *vp)
+FFResult AddBlending::InitGL(const FFGLViewportStruct *vp)
 {
 
 	m_initResources = 0;
@@ -102,7 +111,7 @@ FFResult Mixer1::InitGL(const FFGLViewportStruct *vp)
   return FF_SUCCESS;
 }
 
-FFResult Mixer1::DeInitGL()
+FFResult AddBlending::DeInitGL()
 {
   m_shader.FreeGLResources();
 
@@ -116,7 +125,7 @@ FFResult Mixer1::DeInitGL()
 
 
 
-FFResult Mixer1::ProcessOpenGL(ProcessOpenGLStruct *pGL)
+FFResult AddBlending::ProcessOpenGL(ProcessOpenGLStruct *pGL)
 {
 	if (pGL->numInputTextures<2)
 		return FF_FAIL;
@@ -194,7 +203,7 @@ FFResult Mixer1::ProcessOpenGL(ProcessOpenGLStruct *pGL)
 	return FF_SUCCESS;
 }
 
-float Mixer1::GetFloatParameter(unsigned int dwIndex)
+float AddBlending::GetFloatParameter(unsigned int dwIndex)
 {
 	float retValue = 0.0;
 
@@ -208,7 +217,7 @@ float Mixer1::GetFloatParameter(unsigned int dwIndex)
 	}
 }
 
-FFResult Mixer1::SetFloatParameter(unsigned int dwIndex, float value)
+FFResult AddBlending::SetFloatParameter(unsigned int dwIndex, float value)
 {
 	switch (dwIndex)
 	{
