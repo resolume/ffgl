@@ -52,7 +52,7 @@ void main()
 	vec4 colorSrc = texture2D(textureSrc, gl_TexCoord[1].st);
 
 	//here we add the colorSrc r,g,b,a pixel value to the colorDest pixel value according to the mixVal value
-	float mix = colorDest + colorSrc*mixVal;
+	vec4 mix = colorDest + colorSrc*mixVal;
 
 	//Here we use the built-in function min(val1,val2) to get the minimum between val1 and val2 and always keep output pixel value between 0.0 and 1.0
 	gl_FragColor = min(mix, 1.0);
