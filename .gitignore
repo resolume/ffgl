@@ -12,3 +12,9 @@
 
 /source/lib/glsdk_0_5_2/.DS_Store
 /source/lib/glsdk_0_5_2/glload/.DS_Store
+build/windows/x86/
+*.suo
+*.sdf
+*.opensdf
+*.db
+*.user
