@@ -14,8 +14,8 @@
 
 static CFFGLPluginInfo PluginInfo ( 
 	AddSubtract::CreateInstance,		// Create method
-	"RE01",								// Plugin unique ID
-	"Add And Sub",						// Plugin name
+	"Ex01",								// Plugin unique ID
+	"Example: Add And Sub (effect)",	// Plugin name
 	1,						   			// API major version number 													
 	500,								// API minor version number
 	1,									// Plugin major version number
