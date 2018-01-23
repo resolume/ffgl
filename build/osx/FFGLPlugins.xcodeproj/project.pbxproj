@@ -21,6 +21,15 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		A91E036620173B710018E2D0 /* FFGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A2A1B9054A9007E6883 /* FFGL.cpp */; };
+		A91E036720173B710018E2D0 /* FFGLPluginInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A311B9054A9007E6883 /* FFGLPluginInfo.cpp */; };
+		A91E036820173B710018E2D0 /* FFGLPluginInfoData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A331B9054A9007E6883 /* FFGLPluginInfoData.cpp */; };
+		A91E036920173B710018E2D0 /* FFGLPluginManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A341B9054A9007E6883 /* FFGLPluginManager.cpp */; };
+		A91E036A20173B710018E2D0 /* FFGLPluginSDK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A371B9054A9007E6883 /* FFGLPluginSDK.cpp */; };
+		A91E036D20173B710018E2D0 /* FFGLFBO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A691B906185007E6883 /* FFGLFBO.cpp */; };
+		A91E038120173C2F0018E2D0 /* Plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A91E037A20173C2F0018E2D0 /* Plugin.cpp */; };
+		A91E03842017520B0018E2D0 /* Fireworks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A91E037D20173C2F0018E2D0 /* Fireworks.cpp */; };
+		A91E038520176E9F0018E2D0 /* utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A3D1B9054A9007E6883 /* utilities.cpp */; };
 		D69416C91B904EA200D30319 /* AddSubtract.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69416A11B90436100D30319 /* AddSubtract.cpp */; };
 		D6DB1A4D1B9054FE007E6883 /* FFGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A2A1B9054A9007E6883 /* FFGL.cpp */; };
 		D6DB1A541B9054FE007E6883 /* FFGLPluginInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A311B9054A9007E6883 /* FFGLPluginInfo.cpp */; };
@@ -47,8 +56,14 @@
 		2FD1224818853D700009EBA8 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		2FD1225318853FFB0009EBA8 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2FD1226B188540470009EBA8 /* AddSubtract.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AddSubtract.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		A949C2EF18A51F8D0023F3D7 /* AVFFGLGradients.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AVFFGLGradients.cpp; sourceTree = "<group>"; };
-		A949C2F018A51F8D0023F3D7 /* AVFFGLGradients.H */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AVFFGLGradients.H; sourceTree = "<group>"; };
+		A91E037220173B710018E2D0 /* Fireworks.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Fireworks.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		A91E037920173C2F0018E2D0 /* particleImg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = particleImg.h; path = ../../source/plugins/Fireworks/particleImg.h; sourceTree = "<group>"; };
+		A91E037A20173C2F0018E2D0 /* Plugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Plugin.cpp; path = ../../source/plugins/Fireworks/Plugin.cpp; sourceTree = "<group>"; };
+		A91E037B20173C2F0018E2D0 /* Plugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Plugin.h; path = ../../source/plugins/Fireworks/Plugin.h; sourceTree = "<group>"; };
+		A91E037C20173C2F0018E2D0 /* Vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vec3.h; path = ../../source/plugins/Fireworks/Vec3.h; sourceTree = "<group>"; };
+		A91E037D20173C2F0018E2D0 /* Fireworks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Fireworks.cpp; path = ../../source/plugins/Fireworks/Fireworks.cpp; sourceTree = "<group>"; };
+		A91E037F20173C2F0018E2D0 /* PSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSystem.h; path = ../../source/plugins/Fireworks/PSystem.h; sourceTree = "<group>"; };
+		A91E038020173C2F0018E2D0 /* Fireworks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Fireworks.h; path = ../../source/plugins/Fireworks/Fireworks.h; sourceTree = "<group>"; };
 		A9F28D5818B37D0C007D7C87 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A9F28D5A18B37D12007D7C87 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D69416961B9040DA00D30319 /* PluginIds.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = PluginIds.txt; path = ../PluginIds.txt; sourceTree = "<group>"; };
@@ -87,6 +102,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A91E036E20173B710018E2D0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -109,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				2FD1226B188540470009EBA8 /* AddSubtract.bundle */,
+				A91E037220173B710018E2D0 /* Fireworks.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -121,14 +144,18 @@
 			name = source;
 			sourceTree = "<group>";
 		};
-		A949C2EE18A51F8D0023F3D7 /* Gradients */ = {
+		A91E037820173C1F0018E2D0 /* Fireworks */ = {
 			isa = PBXGroup;
 			children = (
-				A949C2EF18A51F8D0023F3D7 /* AVFFGLGradients.cpp */,
-				A949C2F018A51F8D0023F3D7 /* AVFFGLGradients.H */,
+				A91E037D20173C2F0018E2D0 /* Fireworks.cpp */,
+				A91E038020173C2F0018E2D0 /* Fireworks.h */,
+				A91E037920173C2F0018E2D0 /* particleImg.h */,
+				A91E037A20173C2F0018E2D0 /* Plugin.cpp */,
+				A91E037B20173C2F0018E2D0 /* Plugin.h */,
+				A91E037F20173C2F0018E2D0 /* PSystem.h */,
+				A91E037C20173C2F0018E2D0 /* Vec3.h */,
 			);
-			name = Gradients;
-			path = ../../source/bundled/AVFFGLGradients;
+			name = Fireworks;
 			sourceTree = "<group>";
 		};
 		A94EF73518A9161E006D59F0 /* Add */ = {
@@ -250,7 +277,7 @@
 		E8D767450C9195D90089BAEB /* source plugins */ = {
 			isa = PBXGroup;
 			children = (
-				A949C2EE18A51F8D0023F3D7 /* Gradients */,
+				A91E037820173C1F0018E2D0 /* Fireworks */,
 			);
 			name = "source plugins";
 			sourceTree = "<group>";
@@ -273,6 +300,23 @@
 			name = AddSubtract;
 			productName = FFGLBrightness;
 			productReference = 2FD1226B188540470009EBA8 /* AddSubtract.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+		A91E036220173B710018E2D0 /* Fireworks */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A91E036F20173B710018E2D0 /* Build configuration list for PBXNativeTarget "Fireworks" */;
+			buildPhases = (
+				A91E036320173B710018E2D0 /* Resources */,
+				A91E036520173B710018E2D0 /* Sources */,
+				A91E036E20173B710018E2D0 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Fireworks;
+			productName = FFGLBrightness;
+			productReference = A91E037220173B710018E2D0 /* Fireworks.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -300,12 +344,20 @@
 			targets = (
 				2FD12258188540470009EBA8 /* AddSubtract */,
 				D6369DBB1AAF108500B0CC43 /* ALL */,
+				A91E036220173B710018E2D0 /* Fireworks */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		2FD1225B188540470009EBA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A91E036320173B710018E2D0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -327,6 +379,22 @@
 				D6DB1A5C1B9054FE007E6883 /* FFGLShader.cpp in Sources */,
 				D69416C91B904EA200D30319 /* AddSubtract.cpp in Sources */,
 				D6DB1A6B1B906185007E6883 /* FFGLFBO.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A91E036520173B710018E2D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A91E036620173B710018E2D0 /* FFGL.cpp in Sources */,
+				A91E036720173B710018E2D0 /* FFGLPluginInfo.cpp in Sources */,
+				A91E036820173B710018E2D0 /* FFGLPluginInfoData.cpp in Sources */,
+				A91E038120173C2F0018E2D0 /* Plugin.cpp in Sources */,
+				A91E03842017520B0018E2D0 /* Fireworks.cpp in Sources */,
+				A91E036920173B710018E2D0 /* FFGLPluginManager.cpp in Sources */,
+				A91E036A20173B710018E2D0 /* FFGLPluginSDK.cpp in Sources */,
+				A91E036D20173B710018E2D0 /* FFGLFBO.cpp in Sources */,
+				A91E038520176E9F0018E2D0 /* utilities.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +471,50 @@
 			};
 			name = Release;
 		};
+		A91E037020173B710018E2D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.resolume.Fireworks;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		A91E037120173B710018E2D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.resolume.Fireworks;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		D6369DBD1AAF108500B0CC43 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -434,6 +546,15 @@
 			buildConfigurations = (
 				2FD12269188540470009EBA8 /* Debug */,
 				2FD1226A188540470009EBA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A91E036F20173B710018E2D0 /* Build configuration list for PBXNativeTarget "Fireworks" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A91E037020173B710018E2D0 /* Debug */,
+				A91E037120173B710018E2D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
