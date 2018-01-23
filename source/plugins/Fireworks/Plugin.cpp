@@ -159,10 +159,10 @@ float Plugin::GetFloatParameter(unsigned int index)
             return explosionRandomness;
             break;
         case explosionDurationParam: //3.1, 1, 5
-            return (explosionDuration / 4.0f) - 1.0f;
+            return (explosionDuration - 1.0f) / 4.0f;
             break;
         case pointSizeParam: //35, 5, 130
-            return (pointSize / 125.0f) - 5.0f;
+            return (pointSize - 5.0f) / 125.0f;
             break;
         case rotationXParam: //0, -90, 90
             return (rotx / 180.0f) + 0.5f;
