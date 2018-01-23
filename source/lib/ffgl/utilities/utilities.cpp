@@ -130,5 +130,11 @@ void HSVtoRGB(double h, double s, double v, double* r, double* g, double* b)
 
 }
 
+float random ( float min, float max )
+{
+    return min + (rand() / ( RAND_MAX / (max-min) ) ) ;
+}
+
+
 
 

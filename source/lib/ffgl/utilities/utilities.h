@@ -168,3 +168,5 @@ int npot(int n);
 
 double getTicks();
 void HSVtoRGB(double h, double s, double v, double* r, double* g, double* b);
+
+float random(float min, float max);
