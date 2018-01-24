@@ -1,9 +1,19 @@
 #include "Plugin.h"
 #include <FFGL.h>
 #include <FFGLLib.h>
-#include "utilities.h"
+#include "utilities/utilities.h"
 #include "particleImg.h"
+
+#ifdef _WIN32
+#include <gl/GLU.h>
+#pragma comment(lib, "glu32.lib")
+#else
+#ifdef TARGET_OS_MAC
 #include <OpenGL/glu.h>
+#endif
+#endif
+
+
 
 #define spawnRadiusParam (0)
 #define explosionPowerParam (1)
