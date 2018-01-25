@@ -23,7 +23,7 @@
 #include <memory.h>
 
 // Buffer used by the default implementation of getParameterDisplay
-static char s_DisplayValue[5];
+static char s_DisplayValue[15];
 
 
 ////////////////////////////////////////////////////////
@@ -47,17 +47,16 @@ CFreeFrameGLPlugin::~CFreeFrameGLPlugin()
 char* CFreeFrameGLPlugin::GetParameterDisplay(unsigned int index) 
 {	
 	unsigned int pType = m_pPlugin->GetParamType(index);
-
 	if (pType != FF_FAIL)
-  {
+    {
 		if (pType == FF_TYPE_TEXT)
-    {
+        {
 			return m_pPlugin->GetTextParameter(index);
-    }
+        }
 		else
-    {
+        {
 			float fValue = m_pPlugin->GetFloatParameter(index);
-			memset(s_DisplayValue, 0, 5);
+            memset(s_DisplayValue, 0, 15);
 			sprintf(s_DisplayValue, "%f", fValue);
 			return s_DisplayValue;
 		}
