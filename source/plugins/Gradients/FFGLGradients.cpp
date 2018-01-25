@@ -1,7 +1,8 @@
 #include <FFGL.h>
 #include <FFGLLib.h>
 #include "FFGLGradients.h"
-#include <math.h>
+
+#include <math.h> //floor
 
 #define FFPARAM_Hue1  (0)
 #define FFPARAM_Hue2  (1)
@@ -15,8 +16,8 @@
 
 static CFFGLPluginInfo PluginInfo (
 	FFGLGradients::CreateInstance,	// Create method
-	"Ex02",								// Plugin unique ID
-	"Example: Gradients (source)",		// Plugin name
+	"RS01",								// Plugin unique ID
+	"Gradient Example",		            // Plugin name
 	1,									// API major version number
 	000,								// API minor version number
 	1,									// Plugin major version number
@@ -34,7 +35,6 @@ static CFFGLPluginInfo PluginInfo (
 FFGLGradients::FFGLGradients()
 :CFreeFrameGLPlugin()
 {
-
 	// Input properties
 	SetMinInputs(0);
 	SetMaxInputs(0);
@@ -51,22 +51,16 @@ FFGLGradients::FFGLGradients()
 
 	SetParamInfo(FFPARAM_Brightness, "Brightness", FF_TYPE_STANDARD, 1.0f);
 	m_Brightness = 1.0f;
-
-
-
 }
 
 FFResult FFGLGradients::InitGL(const FFGLViewportStruct *vp)
 {
-
-
 	return FF_SUCCESS;
 }
 
 FFResult FFGLGradients::DeInitGL()
 {
-
-  return FF_SUCCESS;
+    return FF_SUCCESS;
 }
 
 
@@ -80,13 +74,12 @@ FFResult FFGLGradients::ProcessOpenGL(ProcessOpenGLStruct *pGL)
 {
 
 	double rgb1[3];
-
-	//we need to make sure the hue doesn't reach 1.0f, otherwise the result will be pink and not red how it should be
-	double hue1 = (m_Hue1 > 0.99) ? 0.99 : m_Hue1;
+    //we need to make sure the hue doesn't reach 1.0f, otherwise the result will be pink and not red how it should be
+	double hue1 = (m_Hue1 == 1.0) ? 0.0 : m_Hue1;
 	HSVtoRGB( hue1, m_Saturation, m_Brightness, &rgb1[0], &rgb1[1], &rgb1[2]);
 
 	double rgb2[3];
-	double hue2 = (m_Hue2 > 0.99) ? 0.99 : m_Hue2;
+	double hue2 = (m_Hue2 == 1.0) ? 0.0 : m_Hue2;
 	HSVtoRGB( hue2, m_Saturation, m_Brightness, &rgb2[0], &rgb2[1], &rgb2[2]);
 
 
@@ -201,7 +194,6 @@ void HSVtoRGB(double h, double s, double v, double* r, double* g, double* b)
 
 
   }
-
 }
 
 

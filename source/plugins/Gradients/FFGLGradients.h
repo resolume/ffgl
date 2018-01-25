@@ -7,7 +7,7 @@ class FFGLGradients : public CFreeFrameGLPlugin
 {
 public:
 	FFGLGradients();
-  ~FFGLGradients() {}
+    ~FFGLGradients() {}
 
 	///////////////////////////////////////////////////
 	// FreeFrame plugin methods
@@ -24,12 +24,14 @@ public:
 	///////////////////////////////////////////////////
 
 	static FFResult __stdcall CreateInstance(CFreeFrameGLPlugin **ppOutInstance)
-  {
-  	*ppOutInstance = new FFGLGradients();
-	  if (*ppOutInstance != NULL)
-      return FF_SUCCESS;
-	  return FF_FAIL;
-  }
+    {
+        *ppOutInstance = new FFGLGradients();
+        if (*ppOutInstance != NULL)
+            return FF_SUCCESS;
+        return FF_FAIL;
+    }
+    
+
 
 
 protected:	

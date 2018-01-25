@@ -12,8 +12,8 @@
 
 static CFFGLPluginInfo PluginInfo ( 
 	Add::CreateInstance,				// Create method
-	"Ex03",								// Plugin unique ID
-	"Example: Add (mixer)",				// Plugin name
+	"RM01",								// Plugin unique ID
+	"Add Example",      				// Plugin name
 	1,						   			// API major version number 													
 	500,								// API minor version number
 	1,									// Plugin major version number
@@ -71,8 +71,6 @@ Add::Add()
 	// Parameters
 	SetParamInfo(FFPARAM_MixVal, "Mixer Value", FF_TYPE_STANDARD, 0.5f);
 	m_MixVal = 0.5f;
-
-
 }
 
 Add::~Add()
@@ -82,9 +80,7 @@ Add::~Add()
 
 FFResult Add::InitGL(const FFGLViewportStruct *vp)
 {
-
 	m_initResources = 0;
-
 
 	//initialize gl shader
 	m_shader.Compile(vertexShaderCode,fragmentShaderCode);
@@ -106,15 +102,14 @@ FFResult Add::InitGL(const FFGLViewportStruct *vp)
 	
 	m_shader.UnbindShader();
 
-  return FF_SUCCESS;
+    return FF_SUCCESS;
 }
 
 FFResult Add::DeInitGL()
 {
-  m_shader.FreeGLResources();
+    m_shader.FreeGLResources();
 
-
-  return FF_SUCCESS;
+    return FF_SUCCESS;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
