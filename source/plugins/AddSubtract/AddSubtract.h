@@ -17,8 +17,8 @@ public:
 	FFResult SetFloatParameter(unsigned int dwIndex, float value) override;		
 	float GetFloatParameter(unsigned int index) override;					
 	FFResult ProcessOpenGL(ProcessOpenGLStruct* pGL) override;
-	FFResult InitGL(const FFGLViewportStruct *vp);
-	FFResult DeInitGL();
+	FFResult InitGL(const FFGLViewportStruct *vp) override;
+	FFResult DeInitGL() override;
 
 	///////////////////////////////////////////////////
 	// Factory method

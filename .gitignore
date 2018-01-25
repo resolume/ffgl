@@ -1,11 +1,7 @@
-/build/osx/.DS_Store
-
-/binaries/.DS_Store
-
 /binaries/
 /build/osx/build/
+.DS_Store
 
-/source/.DS_Store
 
 /.DS_Store
 /source/lib/.DS_Store
