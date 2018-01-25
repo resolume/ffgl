@@ -15,7 +15,7 @@
 static CFFGLPluginInfo PluginInfo ( 
 	AddSubtract::CreateInstance,		// Create method
 	"RE01",								// Plugin unique ID
-	"Add And Sub",						// Plugin name
+	"AddSub Example",					// Plugin name
 	1,						   			// API major version number 													
 	500,								// API minor version number
 	1,									// Plugin major version number
@@ -60,13 +60,13 @@ AddSubtract::AddSubtract()
 	SetMaxInputs(1);
 
 	// Parameters
-	SetParamInfo(FFPARAM_BrightnessR, "R", FF_TYPE_STANDARD, 0.5f);
+	SetParamInfo(FFPARAM_BrightnessR, "R", FF_TYPE_RED, 0.5f);
 	m_BrightnessR = 0.5f;
 
-	SetParamInfo(FFPARAM_BrightnessG, "G", FF_TYPE_STANDARD, 0.5f);
+	SetParamInfo(FFPARAM_BrightnessG, "G", FF_TYPE_GREEN, 0.5f);
 	m_BrightnessG = 0.5f;
 	
-	SetParamInfo(FFPARAM_BrightnessB, "B", FF_TYPE_STANDARD, 0.5f);
+	SetParamInfo(FFPARAM_BrightnessB, "B", FF_TYPE_BLUE, 0.5f);
 	m_BrightnessB = 0.5f;
 
 }
