@@ -28,8 +28,7 @@
     <ClCompile Include="..\..\source\lib\ffgl\FFGLShader.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\utilities\utilities.cpp" />
     <ClCompile Include="..\..\source\lib\glee\GLee.c" />
-    <ClCompile Include="..\..\source\plugins\Fireworks\Fireworks.cpp" />
-    <ClCompile Include="..\..\source\plugins\Fireworks\Plugin.cpp" />
+    <ClCompile Include="..\..\source\plugins\Gradients\FFGLGradients.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\lib\ffgl\FFGL.h" />
@@ -43,14 +42,10 @@
     <ClInclude Include="..\..\source\lib\ffgl\FreeFrame.h" />
     <ClInclude Include="..\..\source\lib\ffgl\utilities\utilities.h" />
     <ClInclude Include="..\..\source\lib\glee\GLee.h" />
-    <ClInclude Include="..\..\source\plugins\Fireworks\Fireworks.h" />
-    <ClInclude Include="..\..\source\plugins\Fireworks\particleImg.h" />
-    <ClInclude Include="..\..\source\plugins\Fireworks\Plugin.h" />
-    <ClInclude Include="..\..\source\plugins\Fireworks\PSystem.h" />
-    <ClInclude Include="..\..\source\plugins\Fireworks\Vec3.h" />
+    <ClInclude Include="..\..\source\plugins\Gradients\FFGLGradients.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{DA41DB28-FD03-4D06-9188-FF2BE1337CAF}</ProjectGuid>
+    <ProjectGuid>{6858F0CB-DE74-406F-B56A-CC5514CAA952}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -147,7 +142,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\source\lib\ffgl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\source\lib\ffgl\;..\..\source\lib\ffgl\utilities\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>FFGLPlugins.def</ModuleDefinitionFile>
