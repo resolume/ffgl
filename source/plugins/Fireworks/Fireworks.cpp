@@ -9,7 +9,7 @@
 
 
 #include "Fireworks.h"
-#include <utilities.h>
+#include "../../lib/ffgl/utilities/utilities.h"
 
 #define TWOPI 6.2831853
 

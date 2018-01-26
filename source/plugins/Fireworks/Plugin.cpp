@@ -1,7 +1,7 @@
 #include "Plugin.h"
 #include <FFGL.h>
 #include <FFGLLib.h>
-#include <utilities.h>
+#include "../../lib/ffgl/utilities/utilities.h"
 #include "particleImg.h"
 
 #ifdef _WIN32

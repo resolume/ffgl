@@ -2,6 +2,8 @@
 #include <FFGLLib.h>
 #include "FFGLGradients.h"
 
+#include "utilities.h"
+
 #include <math.h> //floor
 
 #define FFPARAM_Hue1  (0)
@@ -150,50 +152,5 @@ FFResult FFGLGradients::SetFloatParameter(unsigned int dwIndex, float value)
 	return FF_SUCCESS;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Utils
-////////////////////////////////////////////////////////////////////////////////////////////////////
-void HSVtoRGB(double h, double s, double v, double* r, double* g, double* b)
-{
-
-  if ( s == 0 )
-
-  {
-
-     *r = v;
-
-     *g = v;
-
-     *b = v;
-
-  } else {
-
-     double var_h = h * 6;
-
-     double var_i = floor( var_h );
-
-	 double var_1 = v * ( 1 - s );
-
-	 double var_2 = v * ( 1 - s * ( var_h - var_i ) );
-
-	 double var_3 = v * ( 1 - s * ( 1 - ( var_h - var_i ) ) );
-
-
-     if      ( var_i == 0 ) { *r = v     ; *g = var_3 ; *b = var_1; }
-
-     else if ( var_i == 1 ) { *r = var_2 ; *g = v     ; *b = var_1; }
-
-     else if ( var_i == 2 ) { *r = var_1 ; *g = v     ; *b = var_3; }
-
-     else if ( var_i == 3 ) { *r = var_1 ; *g = var_2 ; *b = v;     }
-
-     else if ( var_i == 4 ) { *r = var_3 ; *g = var_1 ; *b = v;     }
-
-     else                   { *r = v     ; *g = var_1 ; *b = var_2; }
-
-
-
-  }
-}
 
 
