@@ -584,6 +584,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D694169A1B90421F00D30319 /* FFGL_Debug.xcconfig */;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
 				CONFIGURATION_BUILD_DIR = ../../binaries/debug;
 				COPY_PHASE_STRIP = NO;
 				ONLY_ACTIVE_ARCH = YES;
@@ -594,6 +595,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D694169B1B90421F00D30319 /* FFGL_Release.xcconfig */;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
 				CONFIGURATION_BUILD_DIR = ../../binaries/release;
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
