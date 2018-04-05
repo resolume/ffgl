@@ -23,6 +23,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		602BD75120668B5900D035F9 /* utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A3D1B9054A9007E6883 /* utilities.cpp */; };
 		A9F92E9D201A1C1500527E48 /* FFGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A2A1B9054A9007E6883 /* FFGL.cpp */; };
 		A9F92E9E201A1C1500527E48 /* FFGLPluginInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A311B9054A9007E6883 /* FFGLPluginInfo.cpp */; };
 		A9F92EA0201A1C1500527E48 /* FFGLPluginInfoData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6DB1A331B9054A9007E6883 /* FFGLPluginInfoData.cpp */; };
@@ -228,7 +229,8 @@
 				A9F92E90201A1B8900527E48 /* PSystem.h */,
 				A9F92E8F201A1B8900527E48 /* Vec3.h */,
 			);
-			path = FireWorks;
+			name = FireWorks;
+			path = ../../source/plugins/Fireworks;
 			sourceTree = "<group>";
 		};
 		D69416991B90420600D30319 /* xcconfig */ = {
@@ -539,6 +541,7 @@
 				DB4B641C1FF84E8E0069DA80 /* FFGLGradients.cpp in Sources */,
 				DB4B640C1FF845920069DA80 /* FFGLPluginInfoData.cpp in Sources */,
 				DB4B640D1FF845920069DA80 /* FFGLPluginManager.cpp in Sources */,
+				602BD75120668B5900D035F9 /* utilities.cpp in Sources */,
 				DB4B640E1FF845920069DA80 /* FFGLPluginSDK.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
