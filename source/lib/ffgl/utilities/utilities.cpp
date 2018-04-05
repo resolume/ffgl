@@ -15,7 +15,7 @@
 #include <Carbon/Carbon.h>
 #endif
 
-#include <Math.h>
+#include <math.h>
 
 
 #ifdef _WIN32

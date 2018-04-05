@@ -13,6 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				602BD75320668C0A00D035F9 /* PBXTargetDependency */,
 				D6369DC21AAF109800B0CC43 /* PBXTargetDependency */,
 				DB4B64191FF8459E0069DA80 /* PBXTargetDependency */,
 				DB4B641B1FF845A00069DA80 /* PBXTargetDependency */,
@@ -59,6 +60,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		602BD75220668C0A00D035F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2DA285930AEE5D640030A4DD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9F92E9A201A1C1500527E48;
+			remoteInfo = Fireworks;
+		};
 		D6369DC11AAF109800B0CC43 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2DA285930AEE5D640030A4DD /* Project object */;
@@ -549,6 +557,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		602BD75320668C0A00D035F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A9F92E9A201A1C1500527E48 /* Fireworks */;
+			targetProxy = 602BD75220668C0A00D035F9 /* PBXContainerItemProxy */;
+		};
 		D6369DC21AAF109800B0CC43 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2FD12258188540470009EBA8 /* AddSubtract */;
@@ -571,6 +584,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D694169A1B90421F00D30319 /* FFGL_Debug.xcconfig */;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
 				CONFIGURATION_BUILD_DIR = ../../binaries/debug;
 				COPY_PHASE_STRIP = NO;
 				ONLY_ACTIVE_ARCH = YES;
@@ -581,6 +595,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D694169B1B90421F00D30319 /* FFGL_Release.xcconfig */;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
 				CONFIGURATION_BUILD_DIR = ../../binaries/release;
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
