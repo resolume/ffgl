@@ -148,5 +148,13 @@ private:
 	FPCREATEINSTANCEGL* m_pCreateInstance;
 };
 
+template< typename PluginType >
+FFResult __stdcall PluginFactory( CFreeFrameGLPlugin** ppOutInstance )
+{
+	*ppOutInstance = new PluginType();
+	if( *ppOutInstance != nullptr )
+		return FF_SUCCESS;
+	return FF_FAIL;
+}
 
 #endif

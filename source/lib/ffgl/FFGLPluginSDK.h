@@ -40,8 +40,7 @@
 /// plugin is responsible of providing its specific implementation of such default methods.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class CFreeFrameGLPlugin :
-public CFFGLPluginManager
+class CFreeFrameGLPlugin : public CFFGLPluginManager
 {
 public:
 

@@ -56,13 +56,12 @@
 #ifdef _WIN32
 
 #include <windows.h>
-#include "../glee/GLee.h"
-#include <gl/gl.h>
+#include "../glsdk_0_5_2/glload/include/gl_3_3.h"
 
 #else
 
 #ifdef TARGET_OS_MAC
-#include <OpenGL/gl.h>
+#include <OpenGL/gl3.h>
 
 #else
 #ifdef __linux__
