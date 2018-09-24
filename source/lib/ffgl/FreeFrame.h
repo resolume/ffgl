@@ -67,7 +67,9 @@
 
 #ifdef _WIN32
 
-#define WIN32_LEAN_AND_MEAN// Exclude rarely-used stuff from Windows headers
+#define WIN32_LEAN_AND_MEAN//Exclude rarely-used stuff from Windows headers
+#define NOMINMAX           //No min/max macros.
+#define _WINSOCKAPI_       //Prevent inclusion of winsock
 #include <windows.h>
 
 typedef unsigned __int32 FFUInt32;
@@ -87,84 +89,84 @@ typedef uint32_t FFUInt32;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Function codes
-#define FF_GETINFO 0
-#define FF_INITIALISE 1
-#define FF_DEINITIALISE 2
-#define FF_PROCESSFRAME 3
-#define FF_GETNUMPARAMETERS 4
-#define FF_GETPARAMETERNAME 5
-#define FF_GETPARAMETERDEFAULT 6
-#define FF_GETPARAMETERDISPLAY 7
-#define FF_SETPARAMETER 8
-#define FF_GETPARAMETER 9
-#define FF_GETPLUGINCAPS 10
-#define FF_INSTANTIATE 11
-#define FF_DEINSTANTIATE 12
-#define FF_GETEXTENDEDINFO 13
-#define FF_PROCESSFRAMECOPY 14
-#define FF_GETPARAMETERTYPE 15
-#define FF_GETINPUTSTATUS 16
+static const FFUInt32 FF_GETINFO             = 0;
+static const FFUInt32 FF_INITIALISE          = 1;
+static const FFUInt32 FF_DEINITIALISE        = 2;
+static const FFUInt32 FF_PROCESSFRAME        = 3;
+static const FFUInt32 FF_GETNUMPARAMETERS    = 4;
+static const FFUInt32 FF_GETPARAMETERNAME    = 5;
+static const FFUInt32 FF_GETPARAMETERDEFAULT = 6;
+static const FFUInt32 FF_GETPARAMETERDISPLAY = 7;
+static const FFUInt32 FF_SETPARAMETER        = 8;
+static const FFUInt32 FF_GETPARAMETER        = 9;
+static const FFUInt32 FF_GETPLUGINCAPS       = 10;
+static const FFUInt32 FF_INSTANTIATE         = 11;
+static const FFUInt32 FF_DEINSTANTIATE       = 12;
+static const FFUInt32 FF_GETEXTENDEDINFO     = 13;
+static const FFUInt32 FF_PROCESSFRAMECOPY    = 14;
+static const FFUInt32 FF_GETPARAMETERTYPE    = 15;
+static const FFUInt32 FF_GETINPUTSTATUS      = 16;
 
 enum
 {
 	FF_SUCCESS = 0,
-	FF_FAIL = 0xFFFFFFFF
+	FF_FAIL    = 0xFFFFFFFF
 };
 typedef FFUInt32 FFResult;
 
 // Return values
-#define FF_TRUE 1
-#define FF_FALSE 0
-#define FF_SUPPORTED 1
-#define FF_UNSUPPORTED 0
+static const FFUInt32 FF_TRUE        = 1;
+static const FFUInt32 FF_FALSE       = 0;
+static const FFUInt32 FF_SUPPORTED   = 1;
+static const FFUInt32 FF_UNSUPPORTED = 0;
 
 // Plugin types
-#define FF_EFFECT 0
-#define FF_SOURCE 1
+static const FFUInt32 FF_EFFECT = 0;
+static const FFUInt32 FF_SOURCE = 1;
 
 // Plugin capabilities
-#define FF_CAP_16BITVIDEO 0
-#define FF_CAP_24BITVIDEO 1
-#define FF_CAP_32BITVIDEO 2
-#define FF_CAP_PROCESSFRAMECOPY 3
-#define FF_CAP_MINIMUMINPUTFRAMES 10
-#define FF_CAP_MAXIMUMINPUTFRAMES 11
-#define FF_CAP_COPYORINPLACE 15
+static const FFUInt32 FF_CAP_16BITVIDEO         = 0;
+static const FFUInt32 FF_CAP_24BITVIDEO         = 1;
+static const FFUInt32 FF_CAP_32BITVIDEO         = 2;
+static const FFUInt32 FF_CAP_PROCESSFRAMECOPY   = 3;
+static const FFUInt32 FF_CAP_MINIMUMINPUTFRAMES = 10;
+static const FFUInt32 FF_CAP_MAXIMUMINPUTFRAMES = 11;
+static const FFUInt32 FF_CAP_COPYORINPLACE      = 15;
 
 // Plugin optimization
-#define FF_CAP_PREFER_NONE 0
-#define FF_CAP_PREFER_INPLACE 1
-#define FF_CAP_PREFER_COPY 2
-#define FF_CAP_PREFER_BOTH 3
+static const FFUInt32 FF_CAP_PREFER_NONE    = 0;
+static const FFUInt32 FF_CAP_PREFER_INPLACE = 1;
+static const FFUInt32 FF_CAP_PREFER_COPY    = 2;
+static const FFUInt32 FF_CAP_PREFER_BOTH    = 3;
 
 // Parameter types
-#define FF_TYPE_BOOLEAN 0
-#define FF_TYPE_EVENT 1
-#define FF_TYPE_RED 2
-#define FF_TYPE_GREEN 3
-#define FF_TYPE_BLUE 4
-#define FF_TYPE_XPOS 5
-#define FF_TYPE_YPOS 6
-#define FF_TYPE_STANDARD 10
-#define FF_TYPE_TEXT 100
+static const FFUInt32 FF_TYPE_BOOLEAN  = 0;
+static const FFUInt32 FF_TYPE_EVENT    = 1;
+static const FFUInt32 FF_TYPE_RED      = 2;
+static const FFUInt32 FF_TYPE_GREEN    = 3;
+static const FFUInt32 FF_TYPE_BLUE     = 4;
+static const FFUInt32 FF_TYPE_XPOS     = 5;
+static const FFUInt32 FF_TYPE_YPOS     = 6;
+static const FFUInt32 FF_TYPE_STANDARD = 10;
+static const FFUInt32 FF_TYPE_TEXT     = 100;
 
 // Added by Resolume for HSB colors
-#define FF_TYPE_HUE 200
-#define FF_TYPE_SATURATION 201
-#define FF_TYPE_BRIGHTNESS 202
+static const FFUInt32 FF_TYPE_HUE        = 200;
+static const FFUInt32 FF_TYPE_SATURATION = 201;
+static const FFUInt32 FF_TYPE_BRIGHTNESS = 202;
 
 // Input status
-#define FF_INPUT_NOTINUSE 0
-#define FF_INPUT_INUSE 1
+static const FFUInt32 FF_INPUT_NOTINUSE = 0;
+static const FFUInt32 FF_INPUT_INUSE    = 1;
 
 // Image depth
-#define FF_DEPTH_16 0
-#define FF_DEPTH_24 1
-#define FF_DEPTH_32 2
+static const FFUInt32 FF_DEPTH_16 = 0;
+static const FFUInt32 FF_DEPTH_24 = 1;
+static const FFUInt32 FF_DEPTH_32 = 2;
 
 // Image orientation
-#define FF_ORIENTATION_TL 1
-#define FF_ORIENTATION_BL 2
+static const FFUInt32 FF_ORIENTATION_TL = 1;
+static const FFUInt32 FF_ORIENTATION_BL = 2;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FreeFrame Types
