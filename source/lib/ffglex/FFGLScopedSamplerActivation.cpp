@@ -2,14 +2,24 @@
 
 namespace ffglex
 {
-ScopedSamplerActivation::ScopedSamplerActivation( GLuint samplerIndex )
+ScopedSamplerActivation::ScopedSamplerActivation( GLuint samplerIndex ) :
+	isBound( true )
 {
 	glGetIntegerv( GL_ACTIVE_TEXTURE, &previousBinding );
 	glActiveTexture( GL_TEXTURE0 + samplerIndex );
 }
 ScopedSamplerActivation::~ScopedSamplerActivation()
 {
-	glActiveTexture( previousBinding );
+	EndScope();
+}
+
+void ScopedSamplerActivation::EndScope()
+{
+	if( isBound )
+	{
+		glActiveTexture( previousBinding );
+		isBound = false;
+	}
 }
 
 }//End namespace ffglex

@@ -9,8 +9,11 @@ public:
 	ScopedVAOBinding( GLuint vaoID );
 	~ScopedVAOBinding();
 
+	void EndScope();
+
 private:
 	GLint previousBinding;
+	bool isBound;
 };
 
 }//End namespace ffglex

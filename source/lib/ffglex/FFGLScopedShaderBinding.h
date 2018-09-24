@@ -9,8 +9,11 @@ public:
 	ScopedShaderBinding( GLuint shaderID );
 	~ScopedShaderBinding();
 
+	void EndScope();
+
 private:
 	GLint previousBinding;
+	bool isBound;
 };
 
 }//End namespace ffglex

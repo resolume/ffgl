@@ -9,9 +9,12 @@ public:
 	ScopedBufferBinding( GLenum target, GLenum bindingName, GLuint newBinding );
 	virtual ~ScopedBufferBinding();
 
+	void EndScope();
+
 private:
 	GLenum target;
 	GLint previousBinding;
+	bool isBound;
 };
 
 class ScopedVBOBinding : public ScopedBufferBinding
