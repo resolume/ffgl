@@ -13,7 +13,7 @@ static CFFGLPluginInfo PluginInfo(
 	000,                                                                                         // Plugin minor version number
 	FF_EFFECT,                                                                                   // Plugin type
 	"Blend two videos by adding the first texture to the second texture. Looks like 50Add mixer",// Plugin description
-	"Resolume FFGL example by Natspir"                                                           // About
+	"Resolume FFGL example"                                                                      // About
 );
 
 static const char vertexShaderCode[] = R"(#version 330
@@ -132,11 +132,11 @@ FFResult Add::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	//The input texture's dimension might change each frame and so might the content area.
 	//We're adopting the texture's maxUV using a uniform because that way we dont have to update our vertex buffer each frame.
 	FFGLTextureStruct& TextureDest = *pGL->inputTextures[ 0 ];
-	FFGLTexCoords maxCoordsDest = GetMaxGLTexCoords( TextureDest );
+	FFGLTexCoords maxCoordsDest    = GetMaxGLTexCoords( TextureDest );
 	glUniform2f( maxUVDestLocation, maxCoordsDest.s, maxCoordsDest.t );
 
-	FFGLTextureStruct& TextureSrc  = *pGL->inputTextures[ 1 ];
-	FFGLTexCoords maxCoordsSrc  = GetMaxGLTexCoords( TextureSrc );
+	FFGLTextureStruct& TextureSrc = *pGL->inputTextures[ 1 ];
+	FFGLTexCoords maxCoordsSrc    = GetMaxGLTexCoords( TextureSrc );
 	glUniform2f( maxUVSrcLocation, maxCoordsSrc.s, maxCoordsSrc.t );
 
 	//assign the mixer value

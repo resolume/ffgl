@@ -1,35 +1,55 @@
 #include "FFGLGradients.h"
-
 #include <math.h>//floor
+using namespace ffglex;
 
 #define FFPARAM_Hue1 ( 0 )
 #define FFPARAM_Hue2 ( 1 )
 #define FFPARAM_Saturation ( 2 )
 #define FFPARAM_Brightness ( 3 )
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Plugin information
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static CFFGLPluginInfo PluginInfo(
-	FFGLGradients::CreateInstance,         // Create method
-	"RS01",                                // Plugin unique ID
-	"Gradient Example",                    // Plugin name
-	1,                                     // API major version number
-	000,                                   // API minor version number
-	1,                                     // Plugin major version number
-	000,                                   // Plugin minor version number
-	FF_SOURCE,                             // Plugin type
-	"Sample FFGL Gradients plugin",        // Plugin description
-	"by Edwin de Koning - www.resolume.com"// About
+	FFGLGradients::CreateInstance, // Create method
+	"RS01",                        // Plugin unique ID
+	"Gradient Example",            // Plugin name
+	2,                             // API major version number
+	0,                             // API minor version number
+	1,                             // Plugin major version number
+	000,                           // Plugin minor version number
+	FF_SOURCE,                     // Plugin type
+	"Sample FFGL Gradients plugin",// Plugin description
+	"Resolume FFGL Example"        // About
 );
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Constructor and destructor
-////////////////////////////////////////////////////////////////////////////////////////////////////
+static const char vertexShaderCode[] = R"(#version 330
+layout( location = 0 ) in vec4 vPosition;
+layout( location = 1 ) in vec2 vUV;
+
+out vec2 uv;
+
+void main()
+{
+	gl_Position = vPosition;
+	uv = vUV;
+}
+)";
+
+static const char fragmentShaderCode[] = R"(#version 330
+uniform vec3 RGBLeft;
+uniform vec3 RGBRight;
+
+in vec2 uv;
+
+out vec4 fragColor;
+
+void main()
+{
+	fragColor = vec4( mix( RGBLeft, RGBRight, uv.x ), 1.0 );
+}
+)";
 
 FFGLGradients::FFGLGradients() :
-	CFreeFrameGLPlugin()
+	rgbLeftLocation( -1 ),
+	rgbRightLocation( -1 )
 {
 	// Input properties
 	SetMinInputs( 0 );
@@ -51,11 +71,31 @@ FFGLGradients::FFGLGradients() :
 
 FFResult FFGLGradients::InitGL( const FFGLViewportStruct* vp )
 {
+	if( !shader.Compile( vertexShaderCode, fragmentShaderCode ) )
+	{
+		DeInitGL();
+		return FF_FAIL;
+	}
+	if( !quad.Initialise() )
+	{
+		DeInitGL();
+		return FF_FAIL;
+	}
+
+	ScopedShaderBinding shaderBinding( shader.GetGLID() );
+	rgbLeftLocation  = shader.FindUniform( "RGBLeft" );
+	rgbRightLocation = shader.FindUniform( "RGBRight" );
+
 	return FF_SUCCESS;
 }
 
 FFResult FFGLGradients::DeInitGL()
 {
+	shader.FreeGLResources();
+	quad.Release();
+	rgbLeftLocation  = -1;
+	rgbRightLocation = -1;
+
 	return FF_SUCCESS;
 }
 
@@ -74,20 +114,11 @@ FFResult FFGLGradients::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	double hue2 = ( m_Hue2 == 1.0 ) ? 0.0 : m_Hue2;
 	HSVtoRGB( hue2, m_Saturation, m_Brightness, &rgb2[ 0 ], &rgb2[ 1 ], &rgb2[ 2 ] );
 
-	glShadeModel( GL_SMOOTH );
-	glBegin( GL_POLYGON );
-	glColor3f( rgb1[ 0 ], rgb1[ 1 ], rgb1[ 2 ] );
-	glVertex2f( -1.0, -1.0 );// Bottom Left Of The Texture and Quad
+	ScopedShaderBinding shaderBinding( shader.GetGLID() );
+	glUniform3f( rgbLeftLocation, rgb1[ 0 ], rgb1[ 1 ], rgb1[ 2 ] );
+	glUniform3f( rgbRightLocation, rgb2[ 0 ], rgb2[ 1 ], rgb2[ 2 ] );
 
-	glColor3f( rgb2[ 0 ], rgb2[ 1 ], rgb2[ 2 ] );
-	glVertex2f( 1.0, -1.0 );// Bottom Right Of The Texture and Quad
-
-	glColor3f( rgb2[ 0 ], rgb2[ 1 ], rgb2[ 2 ] );
-	glVertex2f( 1.0, 1.0 );// Top Right Of The Texture and Quad
-
-	glColor3f( rgb1[ 0 ], rgb1[ 1 ], rgb1[ 2 ] );
-	glVertex2f( -1.0, 1.0 );// Top Left Of The Texture and Quad
-	glEnd();
+	quad.Draw();
 
 	return FF_SUCCESS;
 }

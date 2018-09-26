@@ -5,9 +5,6 @@ class FFGLGradients : public CFreeFrameGLPlugin
 {
 public:
 	FFGLGradients();
-	~FFGLGradients()
-	{
-	}
 
 	///////////////////////////////////////////////////
 	// FreeFrame plugin methods
@@ -32,6 +29,11 @@ public:
 	}
 
 protected:
+	ffglex::FFGLShader shader;
+	ffglex::FFGLScreenQuad quad;
+	GLint rgbLeftLocation;
+	GLint rgbRightLocation;
+
 	float m_Hue1;
 	float m_Hue2;
 	float m_Saturation;
