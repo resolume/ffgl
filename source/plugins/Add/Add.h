@@ -1,7 +1,5 @@
 #pragma once
-
-#include <FFGLShader.h>
-#include "FFGLPluginSDK.h"
+#include <FFGLSDK.h>
 #include <string>
 
 class Add : public CFreeFrameGLPlugin
@@ -42,10 +40,10 @@ public:
 protected:
 	// Parameters
 	float m_MixVal;
-	int m_initResources;
 
-	FFGLShader m_shader;
-	GLint m_inputTextureLocation1;
-	GLint m_inputTextureLocation2;
-	GLint m_MixValLocation;
+	ffglex::FFGLShader shader;
+	ffglex::FFGLScreenQuad quad;
+	GLint mixValLocation;
+	GLint maxUVDestLocation;
+	GLint maxUVSrcLocation;
 };

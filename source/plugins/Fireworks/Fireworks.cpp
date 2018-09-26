@@ -1,5 +1,5 @@
 #include "Fireworks.h"
-#include <utilities/utilities.h>
+#include <FFGLSDK.h>
 
 #define TWOPI 6.2831853
 
@@ -24,7 +24,7 @@ float wrap( float val, float limit )
 ///////////////////////////////////////////////////////////////////////
 
 Vec3 Firework::gravity = Vec3( 0, 6.05, 0 );
-bool Firework::blink = true;
+bool Firework::blink   = true;
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -32,11 +32,11 @@ Firework::Firework() :
 	exploding( false ),
 	explosionTrails( true )
 {
-	spawnRadius = 3.0;
-	damping = 0.1;
-	explosionPower = 70;
+	spawnRadius         = 3.0;
+	damping             = 0.1;
+	explosionPower      = 70;
 	explosionRandomness = 1.0;
-	explosionDuration = 3.0;
+	explosionDuration   = 3.0;
 }
 Firework::~Firework()
 {
@@ -54,10 +54,10 @@ Particle* Firework::addParticle( const Vec3& pos,
 		return 0;
 
 	p->pos = p->oldpos = pos;
-	p->accel = accel;
-	p->vel = vel;
-	p->lifetime = lifetime;
-	p->t = 0;
+	p->accel           = accel;
+	p->vel             = vel;
+	p->lifetime        = lifetime;
+	p->t               = 0;
 
 	return p;
 }
@@ -85,18 +85,18 @@ void Firework::spawn( float x, float y, float z )
 
 	// random vertical direction in a cone....
 	float ang = random( 0, TWOPI );
-	accel.z = sin( ang ) * spawnRadius;
-	accel.x = cos( ang ) * spawnRadius;
-	accel.y = -1.0;
+	accel.z   = sin( ang ) * spawnRadius;
+	accel.x   = cos( ang ) * spawnRadius;
+	accel.y   = -1.0;
 	accel.y *= random( 20, 30 );//explosionPower,explosionPower*3.0);
 
-	Particle* p = addParticle( Vec3( x, y, z ),  // pos
-							   Vec3( 0, 0, 0 ),  // velocity
-							   accel,            // accel
-							   random( 1.0, 1.5 )// lifetime
-	);
+	Particle* p  = addParticle( Vec3( x, y, z ),  // pos
+                               Vec3( 0, 0, 0 ),  // velocity
+                               accel,            // accel
+                               random( 1.0, 1.5 )// lifetime
+    );
 	p->exploding = false;
-	p->hasTrail = true;
+	p->hasTrail  = true;
 
 	if( random( 0, 100 ) > 30 )
 		p->hue = wrap( random( 311, 311 + 120 ), 360 );// yellow-red fireworks
@@ -117,7 +117,7 @@ void Firework::explode( Particle& initialParticle, int numExplosionParticles, fl
 
 	Vec3 pos = initialParticle.pos;
 	Vec3 vel = initialParticle.vel;
-	int hue = initialParticle.hue;
+	int hue  = initialParticle.hue;
 
 	exploding = true;
 
@@ -128,9 +128,9 @@ void Firework::explode( Particle& initialParticle, int numExplosionParticles, fl
 	for( int i = pool.getNumParticles(); i < n; i++ )
 	{
 		Particle& p = pool[ i ];
-		p.pos = pos;
-		p.oldpos = pos;
-		p.accel = Vec3( random( -1, 1 ), random( -1, 1 ), random( -1, 1 ) );
+		p.pos       = pos;
+		p.oldpos    = pos;
+		p.accel     = Vec3( random( -1, 1 ), random( -1, 1 ), random( -1, 1 ) );
 		p.accel.normalize();
 		p.accel *= power * ( 1.0 + explosionRandomness * random( 0.5, 2.0 ) );
 
@@ -140,12 +140,12 @@ void Firework::explode( Particle& initialParticle, int numExplosionParticles, fl
 			p.hasTrail = false;
 
 		p.exploding = true;
-		p.vel = vel * 0.5;
+		p.vel       = vel * 0.5;
 
 		p.lifetime = explosionDuration * ( random( 0.5, 2.0 ) );
-		p.t = 0.0;
+		p.t        = 0.0;
 
-		p.hue = hue;
+		p.hue   = hue;
 		p.color = getHSV( p.hue, 1.0, 1.0, 1.0f );
 	}
 
@@ -161,11 +161,11 @@ void Firework::addTrail( Particle& missile, double dt )
 	//trail.accel*=0.1;
 	trail.accel = Vec3( 0, 0, 0 );
 	trail.vel *= 0.3;
-	trail.t = 0;
-	trail.lifetime = 0.2;
+	trail.t         = 0;
+	trail.lifetime  = 0.2;
 	trail.exploding = false;
-	trail.hasTrail = false;
-	trail.hue = missile.hue;
+	trail.hasTrail  = false;
+	trail.hue       = missile.hue;
 
 	trailPool.add( trail );
 }

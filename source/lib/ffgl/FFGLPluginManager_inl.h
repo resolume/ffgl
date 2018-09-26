@@ -21,17 +21,3 @@
 // CFFGLPluginManager inline methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-inline unsigned int CFFGLPluginManager::GetMinInputs() const
-{
-	return m_iMinInputs;
-}
-
-inline unsigned int CFFGLPluginManager::GetMaxInputs() const
-{
-	return m_iMaxInputs;
-}
-
-inline unsigned int CFFGLPluginManager::GetNumParams() const
-{
-	return m_NParams;
-}

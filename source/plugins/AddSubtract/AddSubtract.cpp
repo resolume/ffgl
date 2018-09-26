@@ -81,24 +81,16 @@ AddSubtract::~AddSubtract()
 
 FFResult AddSubtract::InitGL( const FFGLViewportStruct* vp )
 {
-	glGenVertexArrays( 1, &vaoID );
-	glGenBuffers( 1, &vboID );
-
-	ScopedVAOBinding vaoBinding( vaoID );
-	ScopedVBOBinding vboBinding( vboID );
-	glBufferData( GL_ARRAY_BUFFER, sizeof( TEXTURED_QUAD_VERTICES ), TEXTURED_QUAD_VERTICES, GL_STATIC_DRAW );
-
-	glEnableVertexAttribArray( 0 );
-	glVertexAttribPointer( 0, 3, GL_FLOAT, false, sizeof( TEXTURED_QUAD_VERTICES[ 0 ] ), (char*)NULL + 2 * sizeof( float ) );
-	glEnableVertexAttribArray( 1 );
-	glVertexAttribPointer( 1, 2, GL_FLOAT, false, sizeof( TEXTURED_QUAD_VERTICES[ 0 ] ), (char*)NULL + 0 * sizeof( float ) );
-
-	vaoBinding.EndScope();
-
-	glDisableVertexAttribArray( 0 );
-	glDisableVertexAttribArray( 1 );
-
-	shader.Compile( vertexShaderCode, fragmentShaderCode );
+	if( !shader.Compile( vertexShaderCode, fragmentShaderCode ) )
+	{
+		DeInitGL();
+		return FF_FAIL;
+	}
+	if( !quad.Initialise() )
+	{
+		DeInitGL();
+		return FF_FAIL;
+	}
 
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );
 	//We're never changing the sampler to use, instead during rendering we'll make sure that we're always
@@ -107,24 +99,16 @@ FFResult AddSubtract::InitGL( const FFGLViewportStruct* vp )
 
 	//We need to know these uniform locations because we need to set their value each frame.
 	maxUVLocation = shader.FindUniform( "MaxUV" );
-	brightnessLocation = shader.FindUniform( "brightness" );
+	brightnessLocation = shader.FindUniform( "Brightness" );
 
-	if( vaoID == 0 || vboID == 0 || !shader.IsReady() )
-	{
-		DeInitGL();
-		return FF_FAIL;
-	}
 	return FF_SUCCESS;
 }
 FFResult AddSubtract::DeInitGL()
 {
 	shader.FreeGLResources();
+	quad.Release();
 	maxUVLocation = -1;
 	brightnessLocation = -1;
-	glDeleteBuffers( 1, &vboID );
-	vboID = 0;
-	glDeleteVertexArrays( 1, &vaoID );
-	vaoID = 0;
 
 	return FF_SUCCESS;
 }
@@ -137,7 +121,6 @@ FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	if( pGL->inputTextures[ 0 ] == NULL )
 		return FF_FAIL;
 
-	ScopedVAOBinding vaoBinding( vaoID );
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );
 
 	FFGLTextureStruct& Texture = *( pGL->inputTextures[ 0 ] );
@@ -156,7 +139,7 @@ FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	ScopedSamplerActivation activateSampler( 0 );
 	Scoped2DTextureBinding textureBinding( Texture.Handle );
 
-	glDrawArrays( GL_TRIANGLES, 0, 6 );
+	quad.Draw();
 
 	return FF_SUCCESS;
 }

@@ -1,20 +1,14 @@
 #include "Add.h"
-#include <FFGL.h>
-#include <FFGLLib.h>
-#include <utilities/utilities.h>
+using namespace ffglex;
 
 #define FFPARAM_MixVal ( 0 )
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Plugin information
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static CFFGLPluginInfo PluginInfo(
 	Add::CreateInstance,                                                                         // Create method
 	"RM01",                                                                                      // Plugin unique ID
 	"Add Example",                                                                               // Plugin name
-	1,                                                                                           // API major version number
-	500,                                                                                         // API minor version number
+	2,                                                                                           // API major version number
+	0,                                                                                           // API minor version number
 	1,                                                                                           // Plugin major version number
 	000,                                                                                         // Plugin minor version number
 	FF_EFFECT,                                                                                   // Plugin type
@@ -22,41 +16,54 @@ static CFFGLPluginInfo PluginInfo(
 	"Resolume FFGL example by Natspir"                                                           // About
 );
 
-static const std::string vertexShaderCode = STRINGIFY(
-	void main() {
-		gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-		gl_TexCoord[ 0 ] = gl_MultiTexCoord0;
-		gl_TexCoord[ 1 ] = gl_MultiTexCoord1;
-		gl_FrontColor = gl_Color;
-	} );
+static const char vertexShaderCode[] = R"(#version 330
+uniform vec2 MaxUVDest;
+uniform vec2 MaxUVSrc;
+
+layout( location = 0 ) in vec4 vPosition;
+layout( location = 1 ) in vec2 vUV;
+
+out vec2 uvDest;
+out vec2 uvSrc;
+
+void main()
+{
+	gl_Position = vPosition;
+	uvDest = vUV * MaxUVDest;
+	uvSrc = vUV * MaxUVSrc;
+} )";
 
 //This is the shader. It's using to make the transition.
 //The code below will be applied by each pixel of your output screen by the Graphic Card
-static const std::string fragmentShaderCode = STRINGIFY(
+static const char fragmentShaderCode[] = R"(#version 330
+uniform sampler2D textureDest;
+uniform sampler2D textureSrc;
+//the value defined by the slider to switch between the two images
+uniform float mixVal;
 
-	uniform sampler2D textureDest;
-	uniform sampler2D textureSrc;
-	//the value defined by the slider to switch between the two images
-	uniform float mixVal;
+in vec2 uvDest;
+in vec2 uvSrc;
 
-	void main() {
-		//get the two fragments to mix
-		vec4 colorDest = texture2D( textureDest, gl_TexCoord[ 0 ].st );
-		vec4 colorSrc = texture2D( textureSrc, gl_TexCoord[ 1 ].st );
+out vec4 fragColor;
 
-		//here we add the colorSrc r,g,b,a pixel value to the colorDest pixel value according to the mixVal value
-		vec4 mix = colorDest + colorSrc * mixVal;
+void main()
+{
+	//get the two fragments to mix
+	vec4 colorDest = texture( textureDest, uvDest );
+	vec4 colorSrc  = texture( textureSrc, uvSrc );
 
-		//Here we use the built-in function min(val1,val2) to get the minimum between val1 and val2 and always keep output pixel value between 0.0 and 1.0
-		gl_FragColor = min( mix, 1.0 );
-	} );
+	//here we add the colorSrc r,g,b,a pixel value to the colorDest pixel value according to the mixVal value
+	vec4 mix = colorDest + colorSrc * mixVal;
+
+	//Here we use the built-in function min(val1,val2) to get the minimum between val1 and val2 and always keep output pixel value between 0.0 and 1.0
+	fragColor = min( mix, 1.0 );
+}
+)";
 
 Add::Add() :
-	CFreeFrameGLPlugin(),
-	m_initResources( 1 ),
-	m_inputTextureLocation1( -1 ),
-	m_inputTextureLocation2( -1 ),
-	m_MixValLocation( -1 )
+	mixValLocation( -1 ),
+	maxUVDestLocation( -1 ),
+	maxUVSrcLocation( -1 )
 {
 	// Input properties
 	SetMinInputs( 2 );
@@ -73,114 +80,79 @@ Add::~Add()
 
 FFResult Add::InitGL( const FFGLViewportStruct* vp )
 {
-	m_initResources = 0;
+	if( !shader.Compile( vertexShaderCode, fragmentShaderCode ) )
+	{
+		DeInitGL();
+		return FF_FAIL;
+	}
+	if( !quad.Initialise() )
+	{
+		DeInitGL();
+		return FF_FAIL;
+	}
 
-	//initialize gl shader
-	m_shader.Compile( vertexShaderCode, fragmentShaderCode );
+	ScopedShaderBinding shaderBinding( shader.GetGLID() );
+	//We're never changing the sampler to use, instead during rendering we'll make sure that we're always
+	//binding the texture to the right samplers
+	glUniform1i( shader.FindUniform( "textureDest" ), 0 );
+	glUniform1i( shader.FindUniform( "textureSrc" ), 1 );
 
-	//activate our shader
-	m_shader.BindShader();
-
-	//to assign values to parameters in the shader, we have to lookup
-	//the "location" of each value.. then call one of the glUniform* methods
-	//to assign a value
-	m_inputTextureLocation1 = m_shader.FindUniform( "textureDest" );
-	m_inputTextureLocation2 = m_shader.FindUniform( "textureSrc" );
-	m_MixValLocation = m_shader.FindUniform( "mixVal" );
-
-	//the 0 means that the 'inputTexture' in
-	//the shader will use the texture bound to GL texture unit 0
-	glUniform1i( m_inputTextureLocation1, 0 );
-	glUniform1i( m_inputTextureLocation2, 1 );
-
-	m_shader.UnbindShader();
+	//We need to know these uniform locations because we need to set their value each frame.
+	mixValLocation    = shader.FindUniform( "mixVal" );
+	maxUVDestLocation = shader.FindUniform( "MaxUVDest" );
+	maxUVSrcLocation  = shader.FindUniform( "MaxUVSrc" );
 
 	return FF_SUCCESS;
 }
 
 FFResult Add::DeInitGL()
 {
-	m_shader.FreeGLResources();
+	shader.FreeGLResources();
+	quad.Release();
+	mixValLocation    = -1;
+	maxUVDestLocation = -1;
+	maxUVSrcLocation  = -1;
 
 	return FF_SUCCESS;
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Methods
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 FFResult Add::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
 	if( pGL->numInputTextures < 2 )
 		return FF_FAIL;
 
-	if( pGL->inputTextures[ 0 ] == NULL )
+	if( pGL->inputTextures[ 0 ] == nullptr )
 		return FF_FAIL;
-	if( pGL->inputTextures[ 1 ] == NULL )
+	if( pGL->inputTextures[ 1 ] == nullptr )
 		return FF_FAIL;
 
 	//activate our shader
-	m_shader.BindShader();
+	ScopedShaderBinding shaderBinding( shader.GetGLID() );
 
-	FFGLTextureStruct& TextureDest = *( pGL->inputTextures[ 0 ] );
-	FFGLTextureStruct& TextureSrc = *( pGL->inputTextures[ 1 ] );
-
-	//get the max s,t that correspond to the
-	//width,height of the used portion of the allocated texture space
+	//The input texture's dimension might change each frame and so might the content area.
+	//We're adopting the texture's maxUV using a uniform because that way we dont have to update our vertex buffer each frame.
+	FFGLTextureStruct& TextureDest = *pGL->inputTextures[ 0 ];
 	FFGLTexCoords maxCoordsDest = GetMaxGLTexCoords( TextureDest );
-	FFGLTexCoords maxCoordsSrc = GetMaxGLTexCoords( TextureSrc );
+	glUniform2f( maxUVDestLocation, maxCoordsDest.s, maxCoordsDest.t );
+
+	FFGLTextureStruct& TextureSrc  = *pGL->inputTextures[ 1 ];
+	FFGLTexCoords maxCoordsSrc  = GetMaxGLTexCoords( TextureSrc );
+	glUniform2f( maxUVSrcLocation, maxCoordsSrc.s, maxCoordsSrc.t );
 
 	//assign the mixer value
-	glUniform1f( m_MixValLocation, m_MixVal );
+	glUniform1f( mixValLocation, m_MixVal );
 
-	//activate texture unit 1 and bind the input texture
-	glActiveTexture( GL_TEXTURE0 );
-	glBindTexture( GL_TEXTURE_2D, TextureDest.Handle );
-	//activate texture unit 2 and bind the input texture
-	glActiveTexture( GL_TEXTURE1 );
-	glBindTexture( GL_TEXTURE_2D, TextureSrc.Handle );
+	//The shader's samplers are fixed so we need to bind the texture to these exact sampler indices.
+	ScopedSamplerActivation activateSampler0( 0 );
+	Scoped2DTextureBinding textureBinding0( TextureDest.Handle );
+	ScopedSamplerActivation activateSampler1( 1 );
+	Scoped2DTextureBinding textureBinding1( TextureSrc.Handle );
 
 	//draw the quad that will be painted by the shader/textures
 	//note that we are sending texture coordinates to texture unit 1..
 	//the vertex shader and fragment shader refer to this when querying for
 	//texture coordinates of the inputTexture
-	glBegin( GL_QUADS );
-
-	//lower left
-	glMultiTexCoord2f( GL_TEXTURE0, 0, 0 );
-	glMultiTexCoord2f( GL_TEXTURE1, 0, 0 );
-	glVertex2f( -1, -1 );
-
-	//upper left
-	glMultiTexCoord2f( GL_TEXTURE0, 0, maxCoordsDest.t );
-	glMultiTexCoord2f( GL_TEXTURE1, 0, maxCoordsSrc.t );
-	glVertex2f( -1, 1 );
-
-	//upper right
-	glMultiTexCoord2f( GL_TEXTURE0, maxCoordsDest.s, maxCoordsDest.t );
-	glMultiTexCoord2f( GL_TEXTURE1, maxCoordsSrc.s, maxCoordsSrc.t );
-	glVertex2f( 1, 1 );
-
-	//lower right
-	glMultiTexCoord2f( GL_TEXTURE0, maxCoordsDest.s, 0 );
-	glMultiTexCoord2f( GL_TEXTURE1, maxCoordsSrc.s, 0 );
-	glVertex2f( 1, -1 );
-	glEnd();
-
-	//unbind the input texture
-	glDisable( GL_TEXTURE_2D );
-	glBindTexture( GL_TEXTURE_2D, 0 );
-
-	glActiveTexture( GL_TEXTURE1 );
-	glDisable( GL_TEXTURE_2D );
-	glBindTexture( GL_TEXTURE_2D, 0 );
-
-	glActiveTexture( GL_TEXTURE0 );
-	glDisable( GL_TEXTURE_2D );
-	glBindTexture( GL_TEXTURE_2D, 0 );
-
-	//unbind the shader
-	m_shader.UnbindShader();
+	quad.Draw();
 
 	return FF_SUCCESS;
 }

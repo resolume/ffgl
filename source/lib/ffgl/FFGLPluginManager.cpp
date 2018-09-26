@@ -64,6 +64,22 @@ CFFGLPluginManager::~CFFGLPluginManager()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CFFGLPluginManager methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+unsigned int CFFGLPluginManager::GetMinInputs() const
+{
+	return m_iMinInputs;
+}
+
+unsigned int CFFGLPluginManager::GetMaxInputs() const
+{
+	return m_iMaxInputs;
+}
+
+unsigned int CFFGLPluginManager::GetNumParams() const
+{
+	return m_NParams;
+}
+
 void CFFGLPluginManager::SetMinInputs( unsigned int iMinInputs )
 {
 	m_iMinInputs = iMinInputs;

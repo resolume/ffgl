@@ -155,8 +155,6 @@ static GlVertex g_cubeVerticesWired[] =
 		{ -1.0f, -1.0f, -1.0f }
 	};
 
-#define STRINGIFY( expr ) std::string( #expr )
-
 unsigned int is_power_of_2( unsigned int x );
 int npot( int n );
 

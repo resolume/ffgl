@@ -15,7 +15,7 @@
 //
 
 #include "FFGLPluginInfo.h"
-
+#include <assert.h>
 #include <stdlib.h>
 #include <memory.h>
 
@@ -39,6 +39,9 @@ CFFGLPluginInfo::CFFGLPluginInfo(
 	unsigned int dwFreeFrameExtendedDataSize,
 	const void* pFreeFrameExtendedDataBlock )
 {
+	//This FFGL SDK is intended for developing plugins based on the FFGL 2.0 specification.
+	assert( dwAPIMajorVersion >= 2 );
+
 	m_pCreateInstance = pCreateInstance;
 
 	// Filling PluginInfoStruct

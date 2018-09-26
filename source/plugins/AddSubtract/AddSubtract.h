@@ -27,9 +27,7 @@ protected:
 	float brightnessB;
 
 	ffglex::FFGLShader shader;
+	ffglex::FFGLScreenQuad quad;
 	GLint maxUVLocation;
 	GLint brightnessLocation;
-
-	GLuint vaoID;
-	GLuint vboID;
 };

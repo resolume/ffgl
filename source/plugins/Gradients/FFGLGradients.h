@@ -1,7 +1,5 @@
-#ifndef FFGLGradients_H
-#define FFGLGradients_H
-
-#include "FFGLPluginSDK.h"
+#pragma once
+#include <FFGLSDK.h>
 
 class FFGLGradients : public CFreeFrameGLPlugin
 {
@@ -39,5 +37,3 @@ protected:
 	float m_Saturation;
 	float m_Brightness;
 };
-
-#endif

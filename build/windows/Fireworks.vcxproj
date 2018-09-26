@@ -11,30 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\lib\ffgl\FFGL.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLFBO.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfo.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfoData.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginManager.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginSDK.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLShader.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\utilities\utilities.cpp" />
-    <ClCompile Include="..\..\source\lib\glee\GLee.c" />
+    <ClCompile Include="..\..\source\lib\FFGLSDK.cpp" />
     <ClCompile Include="..\..\source\plugins\Fireworks\Fireworks.cpp" />
     <ClCompile Include="..\..\source\plugins\Fireworks\Plugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\source\lib\ffgl\FFGL.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLFBO.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLLib.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginInfo.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager_inl.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLShader.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FreeFrame.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\utilities\utilities.h" />
-    <ClInclude Include="..\..\source\lib\glee\GLee.h" />
+    <ClInclude Include="..\..\source\lib\FFGLSDK.h" />
     <ClInclude Include="..\..\source\plugins\Fireworks\Fireworks.h" />
     <ClInclude Include="..\..\source\plugins\Fireworks\particleImg.h" />
     <ClInclude Include="..\..\source\plugins\Fireworks\Plugin.h" />

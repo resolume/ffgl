@@ -1,7 +1,4 @@
 #include "FFGLGradients.h"
-#include <FFGL.h>
-#include <FFGLLib.h>
-#include <utilities/utilities.h>
 
 #include <math.h>//floor
 
