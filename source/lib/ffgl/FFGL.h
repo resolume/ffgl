@@ -5,14 +5,9 @@
 // It provides a framework for developing video effects plugins and hosts on Windows,
 // Linux and Mac OSX.
 //
-// Copyright (c) 2006 www.freeframe.org
+// Copyright (c) 2018 www.freeframe.org
 // All rights reserved.
 //
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// FFGL.h by Trey Harrison
-// www.harrisondigitalmedia.com
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,8 +39,30 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __FFGL_H__
-#define __FFGL_H__
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// First version, Marcus Clements (marcus@freeframe.org)
+// www.freeframe.org
+//
+// FreeFrame 1.0 upgrade by Pete Warden
+// www.petewarden.com
+//
+// FreeFrame 1.0 - 03 upgrade by Gualtiero Volpe
+// Gualtiero.Volpe@poste.it
+//
+// #ifdef tweaks for FreeFrameGL upgrade by Trey Harrison
+// www.harrisondigitalmedia.com
+//
+// FFGL 1.0 by Trey Harrison
+// www.harrisondigitalmedia.com
+//
+// FFGL 2.0 by Menno Vink (menno@resolume.com)
+// www.resolume.com
+// 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#ifndef __FFGL2_H__
+#define __FFGL2_H__
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Includes
@@ -53,67 +70,188 @@
 
 //include the appropriate OpenGL headers for the compiler
 
-#ifdef _WIN32
-
+#if defined( _WIN32 )
+#define WIN32_LEAN_AND_MEAN//Exclude rarely-used stuff from Windows headers
+#define NOMINMAX           //No min/max macros.
+#define _WINSOCKAPI_       //Prevent inclusion of winsock
 #include <windows.h>
 #include "../glsdk_0_5_2/glload/include/gl_3_3.h"
-
+typedef unsigned __int32 FFUInt32;
 #else
-
-#ifdef TARGET_OS_MAC
+#if defined( TARGET_OS_MAC )
 #include <OpenGL/gl3.h>
-
-#else
-#ifdef __linux__
-
+#elif defined( __linux__ )
 #include <GL/gl.h>
-
 #else
-
 #error define this for your OS
+#endif
 
-#endif
-#endif
+extern "C" {
+#include <string.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+typedef uint32_t FFUInt32;
 #endif
 
 #define FFGL_EXT
 
-/////////////////////////////////////////////////////////////////////////////
-//FreeFrameGL defines numerically extend FreeFrame defines (see FreeFrame.h)
-/////////////////////////////////////////////////////////////////////////////
-#include "FreeFrame.h"
+// Function codes
+static const FFUInt32 FF_GETINFO                 = 0;
+static const FFUInt32 FF_INITIALISE              = 1;
+static const FFUInt32 FF_DEINITIALISE            = 2;
+static const FFUInt32 FF_PROCESSFRAME            = 3;
+static const FFUInt32 FF_GETNUMPARAMETERS        = 4;
+static const FFUInt32 FF_GETPARAMETERNAME        = 5;
+static const FFUInt32 FF_GETPARAMETERDEFAULT     = 6;
+static const FFUInt32 FF_GETPARAMETERDISPLAY     = 7;
+static const FFUInt32 FF_SETPARAMETER            = 8;
+static const FFUInt32 FF_GETPARAMETER            = 9;
+static const FFUInt32 FF_GETPLUGINCAPS           = 10;
+static const FFUInt32 FF_INSTANTIATE             = 11;
+static const FFUInt32 FF_DEINSTANTIATE           = 12;
+static const FFUInt32 FF_GETEXTENDEDINFO         = 13;
+static const FFUInt32 FF_PROCESSFRAMECOPY        = 14;
+static const FFUInt32 FF_GETPARAMETERTYPE        = 15;
+static const FFUInt32 FF_GETINPUTSTATUS          = 16;
+static const FFUInt32 FF_PROCESSOPENGL           = 17;
+static const FFUInt32 FF_INSTANTIATEGL           = 18;
+static const FFUInt32 FF_DEINSTANTIATEGL         = 19;
+static const FFUInt32 FF_SETTIME                 = 20;
+static const FFUInt32 FF_CONNECT                 = 21;
+static const FFUInt32 FF_DISCONNECT              = 22;
+static const FFUInt32 FF_RESIZE                  = 23;
+static const FFUInt32 FF_GETNUMPARAMETERELEMENTS = 31;
+static const FFUInt32 FF_GETPARAMETERUSAGE       = 32;
+static const FFUInt32 FF_GETPLUGINSHORTNAME      = 33;
 
-// new function codes for FFGL
-#define FF_PROCESSOPENGL 17
-#define FF_INSTANTIATEGL 18
-#define FF_DEINSTANTIATEGL 19
-#define FF_SETTIME 20
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FreeFrame defines
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+enum
+{
+	FF_SUCCESS = 0,
+	FF_FAIL    = 0xFFFFFFFF
+};
+typedef FFUInt32 FFResult;
 
-// new function codes
-#define FF_CONNECT 21
-#define FF_DISCONNECT 22
-#define FF_RESIZE 23
+// Return values
+static const FFUInt32 FF_TRUE        = 1;
+static const FFUInt32 FF_FALSE       = 0;
+static const FFUInt32 FF_SUPPORTED   = 1;
+static const FFUInt32 FF_UNSUPPORTED = 0;
 
-#ifdef FFGL_EXT
+// Plugin types
+static const FFUInt32 FF_EFFECT = 0;
+static const FFUInt32 FF_SOURCE = 1;
 
-// extra functions
-#define FF_GETNUMPARAMETERELEMENTS 31
-#define FF_GETPARAMETERUSAGE 32
-#define FF_GETPLUGINSHORTNAME 33
+// Plugin capabilities
+static const FFUInt32 FF_CAP_16BITVIDEO         = 0;
+static const FFUInt32 FF_CAP_24BITVIDEO         = 1;
+static const FFUInt32 FF_CAP_32BITVIDEO         = 2;
+static const FFUInt32 FF_CAP_PROCESSFRAMECOPY   = 3;
+static const FFUInt32 FF_CAP_PROCESSOPENGL      = 4;
+static const FFUInt32 FF_CAP_SETTIME            = 5;
+static const FFUInt32 FF_CAP_MINIMUMINPUTFRAMES = 10;
+static const FFUInt32 FF_CAP_MAXIMUMINPUTFRAMES = 11;
+static const FFUInt32 FF_CAP_COPYORINPLACE      = 15;
+
+// Plugin optimization
+static const FFUInt32 FF_CAP_PREFER_NONE    = 0;
+static const FFUInt32 FF_CAP_PREFER_INPLACE = 1;
+static const FFUInt32 FF_CAP_PREFER_COPY    = 2;
+static const FFUInt32 FF_CAP_PREFER_BOTH    = 3;
+
+// Parameter types
+static const FFUInt32 FF_TYPE_BOOLEAN    = 0;
+static const FFUInt32 FF_TYPE_EVENT      = 1;
+static const FFUInt32 FF_TYPE_RED        = 2;
+static const FFUInt32 FF_TYPE_GREEN      = 3;
+static const FFUInt32 FF_TYPE_BLUE       = 4;
+static const FFUInt32 FF_TYPE_XPOS       = 5;
+static const FFUInt32 FF_TYPE_YPOS       = 6;
+static const FFUInt32 FF_TYPE_STANDARD   = 10;
+static const FFUInt32 FF_TYPE_OPTION     = 11;
+static const FFUInt32 FF_TYPE_BUFFER     = 12;
+static const FFUInt32 FF_TYPE_TEXT       = 100;
+static const FFUInt32 FF_TYPE_HUE        = 200;
+static const FFUInt32 FF_TYPE_SATURATION = 201;
+static const FFUInt32 FF_TYPE_BRIGHTNESS = 202;
+
+// Input status
+static const FFUInt32 FF_INPUT_NOTINUSE = 0;
+static const FFUInt32 FF_INPUT_INUSE    = 1;
+
+// Image depth
+static const FFUInt32 FF_DEPTH_16 = 0;
+static const FFUInt32 FF_DEPTH_24 = 1;
+static const FFUInt32 FF_DEPTH_32 = 2;
+
+// Image orientation
+static const FFUInt32 FF_ORIENTATION_TL = 1;
+static const FFUInt32 FF_ORIENTATION_BL = 2;
 
 // Parameter usages
-#define FF_USAGE_STANDARD 0
-#define FF_USAGE_FFT 1
+static const FFUInt32 FF_USAGE_STANDARD = 0;
+static const FFUInt32 FF_USAGE_FFT      = 1;
 
-// extra param types
-#define FF_TYPE_OPTION 11
-#define FF_TYPE_BUFFER 12
 
-#endif
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FreeFrame Types
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// new plugin capabilities for FFGL
-#define FF_CAP_PROCESSOPENGL 4
-#define FF_CAP_SETTIME 5
+typedef union FFMixed
+{
+	FFUInt32 UIntValue;
+	void* PointerValue;
+} FFMixed;
+
+typedef void* FFInstanceID;
+
+// PluginInfoStruct
+typedef struct PluginInfoStructTag
+{
+	FFUInt32 APIMajorVersion;
+	FFUInt32 APIMinorVersion;
+	char PluginUniqueID[ 4 ];// 4 chars uniqueID - not null terminated
+	char PluginName[ 16 ];   // 16 chars plugin friendly name - not null terminated
+	FFUInt32 PluginType;     // Effect or source
+} PluginInfoStruct;
+
+// PluginExtendedInfoStruct
+typedef struct PluginExtendedInfoStructTag
+{
+	FFUInt32 PluginMajorVersion;
+	FFUInt32 PluginMinorVersion;
+	char* Description;
+	char* About;
+	FFUInt32 FreeFrameExtendedDataSize;
+	void* FreeFrameExtendedDataBlock;
+} PluginExtendedInfoStruct;
+
+// VideoInfoStruct
+typedef struct VideoInfoStructTag
+{
+	FFUInt32 FrameWidth; // width of frame in pixels
+	FFUInt32 FrameHeight;// height of frame in pixels
+	FFUInt32 BitDepth;   // enumerated indicator of bit depth of video: 0 = 16 bit 5-6-5   1 = 24bit packed   2 = 32bit
+	FFUInt32 Orientation;
+} VideoInfoStruct;
+
+// ProcessFrameCopyStruct
+typedef struct ProcessFrameCopyStructTag
+{
+	FFUInt32 numInputFrames;
+	void** ppInputFrames;
+	void* pOutputFrame;
+} ProcessFrameCopyStruct;
+
+// SetParameterStruct
+typedef struct SetParameterStructTag
+{
+	FFUInt32 ParameterNumber;
+	FFMixed NewParameterValue;
+} SetParameterStruct;
 
 //FFGLViewportStruct (for InstantiateGL)
 typedef struct FFGLViewportStructTag
@@ -142,5 +280,43 @@ typedef struct ProcessOpenGLStructTag
 	//makes use of its own FBO's for intermediate rendering
 	GLuint HostFBO;
 } ProcessOpenGLStruct;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Function prototypes
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// plugMain - The one and only exposed function
+// parameters:
+//	functionCode - tells the plugin which function is being called
+//  pParam - 32-bit parameter or 32-bit pointer to parameter structure
+//
+// PLUGIN DEVELOPERS:  you shouldn't need to change this function
+//
+// All parameters are cast as 32-bit untyped pointers and cast to appropriate
+// types here
+//
+// All return values are cast to 32-bit untyped pointers here before return to
+// the host
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#ifdef _WIN32
+
+BOOL APIENTRY DllMain( HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserved );
+
+__declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
+typedef __declspec( dllimport ) FFMixed( __stdcall* FF_Main_FuncPtr )( FFUInt32, FFMixed, FFInstanceID );
+
+#else
+
+//linux and Mac OSX share these
+FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
+typedef FFMixed ( *FF_Main_FuncPtr )( FFUInt32 funcCode, FFMixed inputVal, FFInstanceID instanceID );
+
+#endif
+
+#ifndef _WIN32
+}//extern "C"
+#endif
 
 #endif

@@ -8,7 +8,7 @@
 // FreeFrameGL (FFGL) is an extension to the FreeFrame spec to support video processing
 // with OpenGL on Windows, Linux, and Mac OSX.
 //
-// Copyright (c) 2002, 2003, 2004, 2006 www.freeframe.org
+// Copyright (c) 2018 www.freeframe.org
 // All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,6 +56,9 @@
 //
 // FFGL upgrade by Trey Harrison
 // email: trey@harrisondigitalmedia.com
+//
+// FFGL 2.0 by Menno Vink (menno@resolume.com)
+// www.resolume.com
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

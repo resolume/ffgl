@@ -7,6 +7,7 @@
 #endif
 
 #include <math.h>
+#include <random>
 
 namespace ffglex
 {
