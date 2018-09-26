@@ -9,10 +9,10 @@ static CFFGLPluginInfo PluginInfo(
 	PluginFactory< AddSubtract >,// Create method
 	"RE01",                      // Plugin unique ID of maximum length 4.
 	"AddSub Example",            // Plugin name
-	3,                           // API major version number
-	3,                           // API minor version number
+	2,                           // API major version number
+	0,                         // API minor version number
 	1,                           // Plugin major version number
-	0,                           // Plugin minor version number
+	000,                         // Plugin minor version number
 	FF_EFFECT,                   // Plugin type
 	"Add and Subtract colours",  // Plugin description
 	"Resolume FFGL Example"      // About
@@ -48,7 +48,7 @@ void main()
 	if( color.a > 0.0 )
 		color.rgb /= color.a;
 
-	color.rgb = color.rgb + brightness;
+	color.rgb = color.rgb + Brightness;
 
 	//The plugin has to output premultiplied colors, this is how we're premultiplying our straight color while also
 	//ensuring we aren't going out of the LDR the video engine is working in.
@@ -92,6 +92,8 @@ FFResult AddSubtract::InitGL( const FFGLViewportStruct* vp )
 	glVertexAttribPointer( 0, 3, GL_FLOAT, false, sizeof( TEXTURED_QUAD_VERTICES[ 0 ] ), (char*)NULL + 2 * sizeof( float ) );
 	glEnableVertexAttribArray( 1 );
 	glVertexAttribPointer( 1, 2, GL_FLOAT, false, sizeof( TEXTURED_QUAD_VERTICES[ 0 ] ), (char*)NULL + 0 * sizeof( float ) );
+
+	vaoBinding.EndScope();
 
 	glDisableVertexAttribArray( 0 );
 	glDisableVertexAttribArray( 1 );

@@ -44,7 +44,6 @@
     <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager.h" />
     <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager_inl.h" />
     <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FreeFrame.h" />
     <ClInclude Include="..\..\source\plugins\AddSubtract\AddSubtract.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
