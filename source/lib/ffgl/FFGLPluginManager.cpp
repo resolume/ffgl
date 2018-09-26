@@ -79,10 +79,8 @@ void CFFGLPluginManager::SetParamInfo( unsigned int pIndex, const char* pchName,
 	ParamInfo* pInfo = new ParamInfo;
 	pInfo->ID = pIndex;
 
-#ifdef FFGL_EXT
 	pInfo->numElements = 1;
 	pInfo->usage = 0;
-#endif
 
 	bool bEndFound = false;
 	for( int i = 0; i < 16; ++i )
@@ -108,7 +106,6 @@ void CFFGLPluginManager::SetParamInfo( unsigned int pIndex, const char* pchName,
 	m_NParams++;
 }
 
-#ifdef FFGL_EXT
 void CFFGLPluginManager::SetBufferParamInfo( unsigned int pIndex, const char* pchName, unsigned int numElements, unsigned int usage )
 {
 	ParamInfo* pInfo = new ParamInfo;
@@ -166,7 +163,6 @@ void CFFGLPluginManager::SetOptionParamInfo( unsigned int pIndex, const char* pc
 	m_pLast = pInfo;
 	m_NParams++;
 }
-#endif
 
 void CFFGLPluginManager::SetParamInfo( unsigned int pIndex, const char* pchName, unsigned int pType, bool bDefaultValue )
 {
@@ -198,10 +194,8 @@ void CFFGLPluginManager::SetParamInfo( unsigned int dwIndex, const char* pchName
 	ParamInfo* pInfo = new ParamInfo;
 	pInfo->ID = dwIndex;
 
-#ifdef FFGL_EXT
 	pInfo->numElements = 1;
 	pInfo->usage = 0;
-#endif
 
 	bool bEndFound = false;
 	for( int i = 0; i < 16; ++i )
@@ -264,7 +258,6 @@ unsigned int CFFGLPluginManager::GetParamType( unsigned int dwIndex ) const
 	return FF_FAIL;
 }
 
-#ifdef FFGL_EXT
 unsigned int CFFGLPluginManager::GetNumParamElements( unsigned int dwIndex ) const
 {
 	ParamInfo* pCurr = m_pFirst;
@@ -300,8 +293,6 @@ unsigned int CFFGLPluginManager::GetParamUsage( unsigned int dwIndex ) const
 		return pCurr->usage;
 	return FF_FAIL;
 }
-
-#endif
 
 FFMixed CFFGLPluginManager::GetParamDefault( unsigned int dwIndex ) const
 {

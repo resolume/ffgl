@@ -58,7 +58,7 @@
 //
 // FFGL 2.0 by Menno Vink (menno@resolume.com)
 // www.resolume.com
-// 
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef __FFGL2_H__
@@ -94,13 +94,10 @@ extern "C" {
 typedef uint32_t FFUInt32;
 #endif
 
-#define FFGL_EXT
-
 // Function codes
 static const FFUInt32 FF_GETINFO                 = 0;
-static const FFUInt32 FF_INITIALISE              = 1;
+static const FFUInt32 FF_INITIALISE_V2           = 34;
 static const FFUInt32 FF_DEINITIALISE            = 2;
-static const FFUInt32 FF_PROCESSFRAME            = 3;
 static const FFUInt32 FF_GETNUMPARAMETERS        = 4;
 static const FFUInt32 FF_GETPARAMETERNAME        = 5;
 static const FFUInt32 FF_GETPARAMETERDEFAULT     = 6;
@@ -108,10 +105,7 @@ static const FFUInt32 FF_GETPARAMETERDISPLAY     = 7;
 static const FFUInt32 FF_SETPARAMETER            = 8;
 static const FFUInt32 FF_GETPARAMETER            = 9;
 static const FFUInt32 FF_GETPLUGINCAPS           = 10;
-static const FFUInt32 FF_INSTANTIATE             = 11;
-static const FFUInt32 FF_DEINSTANTIATE           = 12;
 static const FFUInt32 FF_GETEXTENDEDINFO         = 13;
-static const FFUInt32 FF_PROCESSFRAMECOPY        = 14;
 static const FFUInt32 FF_GETPARAMETERTYPE        = 15;
 static const FFUInt32 FF_GETINPUTSTATUS          = 16;
 static const FFUInt32 FF_PROCESSOPENGL           = 17;
@@ -124,6 +118,13 @@ static const FFUInt32 FF_RESIZE                  = 23;
 static const FFUInt32 FF_GETNUMPARAMETERELEMENTS = 31;
 static const FFUInt32 FF_GETPARAMETERUSAGE       = 32;
 static const FFUInt32 FF_GETPLUGINSHORTNAME      = 33;
+//Previously used function codes that are no longer in use. Should prevent using
+//these numbers for new function codes.
+//static const FFUInt32 FF_INITIALISE            = 1;
+//static const FFUInt32 FF_PROCESSFRAME          = 3;
+//static const FFUInt32 FF_INSTANTIATE           = 11;
+//static const FFUInt32 FF_DEINSTANTIATE         = 12;
+//static const FFUInt32 FF_PROCESSFRAMECOPY      = 14;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FreeFrame defines
@@ -146,21 +147,23 @@ static const FFUInt32 FF_EFFECT = 0;
 static const FFUInt32 FF_SOURCE = 1;
 
 // Plugin capabilities
-static const FFUInt32 FF_CAP_16BITVIDEO         = 0;
-static const FFUInt32 FF_CAP_24BITVIDEO         = 1;
-static const FFUInt32 FF_CAP_32BITVIDEO         = 2;
-static const FFUInt32 FF_CAP_PROCESSFRAMECOPY   = 3;
-static const FFUInt32 FF_CAP_PROCESSOPENGL      = 4;
 static const FFUInt32 FF_CAP_SETTIME            = 5;
 static const FFUInt32 FF_CAP_MINIMUMINPUTFRAMES = 10;
 static const FFUInt32 FF_CAP_MAXIMUMINPUTFRAMES = 11;
-static const FFUInt32 FF_CAP_COPYORINPLACE      = 15;
+//Previously used capability codes that are no longer in use. New codes should prevent using
+//these numbers for new capability codes.
+//static const FFUInt32 FF_CAP_16BITVIDEO         = 0;
+//static const FFUInt32 FF_CAP_24BITVIDEO         = 1;
+//static const FFUInt32 FF_CAP_32BITVIDEO         = 2;
+//static const FFUInt32 FF_CAP_PROCESSFRAMECOPY   = 3;
+//static const FFUInt32 FF_CAP_PROCESSOPENGL      = 4;
+//static const FFUInt32 FF_CAP_COPYORINPLACE      = 15;
 
-// Plugin optimization
-static const FFUInt32 FF_CAP_PREFER_NONE    = 0;
-static const FFUInt32 FF_CAP_PREFER_INPLACE = 1;
-static const FFUInt32 FF_CAP_PREFER_COPY    = 2;
-static const FFUInt32 FF_CAP_PREFER_BOTH    = 3;
+// Old return values that were used for the FF_CAP_COPYORINPLACE capability.
+//static const FFUInt32 FF_CAP_PREFER_NONE    = 0;
+//static const FFUInt32 FF_CAP_PREFER_INPLACE = 1;
+//static const FFUInt32 FF_CAP_PREFER_COPY    = 2;
+//static const FFUInt32 FF_CAP_PREFER_BOTH    = 3;
 
 // Parameter types
 static const FFUInt32 FF_TYPE_BOOLEAN    = 0;
@@ -182,19 +185,9 @@ static const FFUInt32 FF_TYPE_BRIGHTNESS = 202;
 static const FFUInt32 FF_INPUT_NOTINUSE = 0;
 static const FFUInt32 FF_INPUT_INUSE    = 1;
 
-// Image depth
-static const FFUInt32 FF_DEPTH_16 = 0;
-static const FFUInt32 FF_DEPTH_24 = 1;
-static const FFUInt32 FF_DEPTH_32 = 2;
-
-// Image orientation
-static const FFUInt32 FF_ORIENTATION_TL = 1;
-static const FFUInt32 FF_ORIENTATION_BL = 2;
-
 // Parameter usages
 static const FFUInt32 FF_USAGE_STANDARD = 0;
 static const FFUInt32 FF_USAGE_FFT      = 1;
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FreeFrame Types
@@ -228,23 +221,6 @@ typedef struct PluginExtendedInfoStructTag
 	FFUInt32 FreeFrameExtendedDataSize;
 	void* FreeFrameExtendedDataBlock;
 } PluginExtendedInfoStruct;
-
-// VideoInfoStruct
-typedef struct VideoInfoStructTag
-{
-	FFUInt32 FrameWidth; // width of frame in pixels
-	FFUInt32 FrameHeight;// height of frame in pixels
-	FFUInt32 BitDepth;   // enumerated indicator of bit depth of video: 0 = 16 bit 5-6-5   1 = 24bit packed   2 = 32bit
-	FFUInt32 Orientation;
-} VideoInfoStruct;
-
-// ProcessFrameCopyStruct
-typedef struct ProcessFrameCopyStructTag
-{
-	FFUInt32 numInputFrames;
-	void** ppInputFrames;
-	void* pOutputFrame;
-} ProcessFrameCopyStruct;
 
 // SetParameterStruct
 typedef struct SetParameterStructTag

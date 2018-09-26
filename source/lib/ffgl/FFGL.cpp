@@ -83,15 +83,10 @@ static CFreeFrameGLPlugin* s_pPrototype = NULL;
 // Such function are called by the plugMain function, the only function a plugin exposes.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void* getInfo()
-{
-	return (void*)( g_CurrPluginInfo->GetPluginInfo() );
-}
-
 bool InitGLExts()
 {
 #if defined( WIN32 )
-	static bool triedInit = false;
+	static bool triedInit  = false;
 	static bool initResult = false;
 	if( triedInit )
 		return initResult;
@@ -106,6 +101,10 @@ bool InitGLExts()
 #endif
 }
 
+void* getInfo()
+{
+	return (void*)( g_CurrPluginInfo->GetPluginInfo() );
+}
 FFResult initialise()
 {
 	if( g_CurrPluginInfo == NULL )
@@ -128,7 +127,6 @@ FFResult initialise()
 
 	return FF_SUCCESS;
 }
-
 FFResult deInitialise()
 {
 	if( s_pPrototype != NULL )
@@ -138,7 +136,6 @@ FFResult deInitialise()
 	}
 	return FF_SUCCESS;
 }
-
 unsigned int getNumParameters()
 {
 	if( s_pPrototype == NULL )
@@ -150,7 +147,6 @@ unsigned int getNumParameters()
 
 	return s_pPrototype->GetNumParams();
 }
-
 char* getParameterName( unsigned int index )
 {
 	if( s_pPrototype == NULL )
@@ -162,7 +158,6 @@ char* getParameterName( unsigned int index )
 
 	return s_pPrototype->GetParamName( index );
 }
-
 FFMixed getParameterDefault( unsigned int index )
 {
 	FFMixed ret;
@@ -175,7 +170,6 @@ FFMixed getParameterDefault( unsigned int index )
 	}
 	return s_pPrototype->GetParamDefault( index );
 }
-
 FFResult getPluginCaps( unsigned int index )
 {
 	int MinInputs = -1;
@@ -190,41 +184,21 @@ FFResult getPluginCaps( unsigned int index )
 
 	switch( index )
 	{
-	case FF_CAP_16BITVIDEO:
-		return FF_FALSE;
-
-	case FF_CAP_24BITVIDEO:
-		return FF_FALSE;
-
-	case FF_CAP_32BITVIDEO:
-		return FF_FALSE;
-
-	case FF_CAP_PROCESSFRAMECOPY:
-		return FF_FALSE;
-
-	case FF_CAP_PROCESSOPENGL:
-		return FF_TRUE;
-
 	case FF_CAP_SETTIME:
 		if( s_pPrototype->GetTimeSupported() )
 			return FF_TRUE;
 		else
 			return FF_FALSE;
-
 	case FF_CAP_MINIMUMINPUTFRAMES:
 		MinInputs = s_pPrototype->GetMinInputs();
 		if( MinInputs < 0 )
 			return FF_FALSE;
 		return MinInputs;
-
 	case FF_CAP_MAXIMUMINPUTFRAMES:
 		MaxInputs = s_pPrototype->GetMaxInputs();
 		if( MaxInputs < 0 )
 			return FF_FALSE;
 		return MaxInputs;
-
-	case FF_CAP_COPYORINPLACE:
-		return FF_FALSE;
 
 	default:
 		return FF_FALSE;
@@ -232,12 +206,10 @@ FFResult getPluginCaps( unsigned int index )
 
 	return FF_FAIL;
 }
-
 void* getExtendedInfo()
 {
 	return (void*)( g_CurrPluginInfo->GetPluginExtendedInfo() );
 }
-
 unsigned int getParameterType( unsigned int index )
 {
 	if( s_pPrototype == NULL )
@@ -249,51 +221,6 @@ unsigned int getParameterType( unsigned int index )
 
 	return s_pPrototype->GetParamType( index );
 }
-
-#ifdef FFGL_EXT
-
-FFUInt32 getNumParameterElements( unsigned int index )
-{
-	if( s_pPrototype == NULL )
-	{
-		FFResult dwRet = initialise();
-		if( dwRet == FF_FAIL )
-			return FF_FAIL;
-	}
-
-	return s_pPrototype->GetNumParamElements( index );
-}
-
-FFUInt32 getParameterUsage( unsigned int index )
-{
-	if( s_pPrototype == NULL )
-	{
-		FFResult dwRet = initialise();
-		if( dwRet == FF_FAIL )
-			return FF_FAIL;
-	}
-
-	return s_pPrototype->GetParamUsage( index );
-}
-
-const char* getPluginShortName()
-{
-	if( s_pPrototype == NULL )
-	{
-		FFResult dwRet = initialise();
-		if( dwRet == FF_FAIL )
-			return NULL;
-	}
-
-	const char* shortName = s_pPrototype->GetShortName();
-	if( shortName == NULL )
-		return NULL;
-
-	return shortName;
-}
-
-#endif
-
 void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 {
 	if( g_CurrPluginInfo == NULL || pGLViewport == NULL )
@@ -326,7 +253,7 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 	for( unsigned int i = 0; i < s_pPrototype->GetNumParams(); ++i )
 	{
 		unsigned int pType = s_pPrototype->GetParamType( i );
-		FFMixed pDefault = s_pPrototype->GetParamDefault( i );
+		FFMixed pDefault   = s_pPrototype->GetParamDefault( i );
 		if( pType == FF_TYPE_TEXT )
 			dwRet = pInstance->SetTextParameter( i, (const char*)pDefault.PointerValue );
 		else
@@ -343,7 +270,6 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 		//		ParamStruct.NewParameterValue = pDefault;
 		//        dwRet = pInstance->SetParameter(&ParamStruct);
 		//        break;
-		//#ifdef FFGL_EXT
 		//      case FF_TYPE_BUFFER:
 		//        {
 		//          /*int n = s_pPrototype->GetNumParamElements(DWORD(i));
@@ -355,7 +281,6 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 		//          delete [] buf;*/
 		//        }
 		//        break;
-		//#endif
 		//		default:
 		//         memcpy(&ParamStruct.NewParameterValue, pValue, 4);
 		//         dwRet = pInstance->SetParameter(&ParamStruct);
@@ -387,7 +312,6 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 
 	return (void*)FF_FAIL;
 }
-
 FFResult deInstantiateGL( void* instanceID )
 {
 	CFreeFrameGLPlugin* p = (CFreeFrameGLPlugin*)instanceID;
@@ -408,6 +332,43 @@ FFResult deInstantiateGL( void* instanceID )
 	}
 
 	return FF_FAIL;
+}
+FFUInt32 getNumParameterElements( unsigned int index )
+{
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return FF_FAIL;
+	}
+
+	return s_pPrototype->GetNumParamElements( index );
+}
+FFUInt32 getParameterUsage( unsigned int index )
+{
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return FF_FAIL;
+	}
+
+	return s_pPrototype->GetParamUsage( index );
+}
+const char* getPluginShortName()
+{
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return NULL;
+	}
+
+	const char* shortName = s_pPrototype->GetShortName();
+	if( shortName == NULL )
+		return NULL;
+
+	return shortName;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -442,96 +403,79 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_GETINFO:
 		retval.PointerValue = (PluginInfoStruct*)getInfo();
 		break;
-
-	case FF_INITIALISE:
+	case FF_INITIALISE_V2:
 		retval.UIntValue = initialise();
 		break;
-
 	case FF_DEINITIALISE:
 		retval.UIntValue = deInitialise();
 		break;
-
 	case FF_GETNUMPARAMETERS:
 		retval.UIntValue = getNumParameters();
 		break;
-
 	case FF_GETPARAMETERNAME:
 		retval.PointerValue = getParameterName( inputValue.UIntValue );
 		break;
-
 	case FF_GETPARAMETERDEFAULT:
 		retval = getParameterDefault( inputValue.UIntValue );
 		break;
-
-	case FF_GETPLUGINCAPS:
-		retval.UIntValue = getPluginCaps( inputValue.UIntValue );
-		break;
-
-	case FF_GETEXTENDEDINFO:
-		retval.PointerValue = getExtendedInfo();
-		break;
-
-	case FF_GETPARAMETERTYPE:
-		retval.UIntValue = getParameterType( inputValue.UIntValue );
-		break;
-
 	case FF_GETPARAMETERDISPLAY:
 		if( pPlugObj != NULL )
 			retval.PointerValue = pPlugObj->GetParameterDisplay( inputValue.UIntValue );
 		else
 			retval.PointerValue = (char*)FF_FAIL;
 		break;
-
 	case FF_SETPARAMETER:
 		if( pPlugObj != NULL )
 		{
 			if( getParameterType( ( (const SetParameterStruct*)inputValue.PointerValue )->ParameterNumber ) == FF_TYPE_TEXT )
+			{
 				retval.UIntValue = pPlugObj->SetTextParameter( ( (const SetParameterStruct*)inputValue.PointerValue )->ParameterNumber,
 															   (const char*)( (const SetParameterStruct*)inputValue.PointerValue )->NewParameterValue.PointerValue );
+			}
 			else
+			{
 				retval.UIntValue = pPlugObj->SetFloatParameter( ( (const SetParameterStruct*)inputValue.PointerValue )->ParameterNumber,
 																( *(float*)&( (const SetParameterStruct*)inputValue.PointerValue )->NewParameterValue.UIntValue ) );
+			}
 		}
 		else
 		{
 			retval.UIntValue = FF_FAIL;
 		}
 		break;
-
 	case FF_GETPARAMETER:
 		if( pPlugObj != NULL )
 		{
 			if( getParameterType( inputValue.UIntValue ) == FF_TYPE_TEXT )
+			{
 				retval.PointerValue = pPlugObj->GetTextParameter( inputValue.UIntValue );
+			}
 			else
 			{
-				float fValue = pPlugObj->GetFloatParameter( inputValue.UIntValue );
+				float fValue     = pPlugObj->GetFloatParameter( inputValue.UIntValue );
 				retval.UIntValue = *(FFUInt32*)&fValue;
 			}
 		}
-
 		else
+		{
 			retval.UIntValue = FF_FAIL;
+		}
 		break;
-
-	case FF_INSTANTIATEGL:
-		retval.PointerValue = instantiateGL( (const FFGLViewportStruct*)inputValue.PointerValue );
+	case FF_GETPLUGINCAPS:
+		retval.UIntValue = getPluginCaps( inputValue.UIntValue );
 		break;
-
-	case FF_DEINSTANTIATEGL:
-		if( pPlugObj != NULL )
-			retval.UIntValue = deInstantiateGL( pPlugObj );
-		else
-			retval.UIntValue = FF_FAIL;
+	case FF_GETEXTENDEDINFO:
+		retval.PointerValue = getExtendedInfo();
 		break;
-
+	case FF_GETPARAMETERTYPE:
+		retval.UIntValue = getParameterType( inputValue.UIntValue );
+		break;
 	case FF_GETINPUTSTATUS:
 		if( pPlugObj != NULL )
 			retval.UIntValue = pPlugObj->GetInputStatus( inputValue.UIntValue );
 		else
 			retval.UIntValue = FF_FAIL;
 		break;
-
 	case FF_PROCESSOPENGL:
 		if( pPlugObj != NULL )
 		{
@@ -548,27 +492,24 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 				retval.UIntValue = pPlugObj->ProcessOpenGL( pogls );
 			}
 			else
+			{
 				retval.UIntValue = FF_FAIL;
+			}
 		}
+		else
+		{
+			retval.UIntValue = FF_FAIL;
+		}
+		break;
+	case FF_INSTANTIATEGL:
+		retval.PointerValue = instantiateGL( (const FFGLViewportStruct*)inputValue.PointerValue );
+		break;
+	case FF_DEINSTANTIATEGL:
+		if( pPlugObj != NULL )
+			retval.UIntValue = deInstantiateGL( pPlugObj );
 		else
 			retval.UIntValue = FF_FAIL;
 		break;
-
-#ifdef FFGL_EXT
-	case FF_GETNUMPARAMETERELEMENTS:
-		retval.UIntValue = getNumParameterElements( inputValue.UIntValue );
-		break;
-
-	case FF_GETPARAMETERUSAGE:
-		retval.UIntValue = getParameterUsage( inputValue.UIntValue );
-		break;
-
-	case FF_GETPLUGINSHORTNAME:
-		retval.PointerValue = (void*)getPluginShortName();
-		break;
-
-#endif
-
 	case FF_SETTIME:
 		if( pPlugObj != NULL )
 		{
@@ -579,11 +520,10 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 				retval.UIntValue = FF_FAIL;
 		}
 		else
+		{
 			retval.UIntValue = FF_FAIL;
+		}
 		break;
-
-	//////////////////////////////////////////////////
-	// Custom Resolume plugin functions
 	case FF_CONNECT:
 		if( pPlugObj != NULL )
 		{
@@ -596,7 +536,6 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 			retval.UIntValue = FF_FAIL;
 		}
 		break;
-
 	case FF_DISCONNECT:
 		if( pPlugObj != NULL )
 		{
@@ -609,7 +548,6 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 			retval.UIntValue = FF_FAIL;
 		}
 		break;
-
 	case FF_RESIZE:
 		if( pPlugObj != NULL )
 		{
@@ -620,12 +558,28 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 			retval.UIntValue = FF_FAIL;
 		}
 		break;
+	case FF_GETNUMPARAMETERELEMENTS:
+		retval.UIntValue = getNumParameterElements( inputValue.UIntValue );
+		break;
+	case FF_GETPARAMETERUSAGE:
+		retval.UIntValue = getParameterUsage( inputValue.UIntValue );
+		break;
+	case FF_GETPLUGINSHORTNAME:
+		retval.PointerValue = (void*)getPluginShortName();
+		break;
 
-		//these old FF functions must always fail for FFGL plugins
-	case FF_INSTANTIATE:
-	case FF_DEINSTANTIATE:
-	case FF_PROCESSFRAME:
-	case FF_PROCESSFRAMECOPY:
+	//Previously used function codes that are no longer supported:
+	//case FF_INITIALISE:
+		/**
+		 * We're dropping the old FFGL 1.6 and lower initialise here. FFGL 2.0 removed old stuff and made support for newer stuff mandatory
+		 * so hosts need a way to know they cannot use this plugin if they're dependant on the old behaviour. If the host isn't dependant on the old
+		 * behaviour it will have to update to build using the FFGL 2.0 sdk and instead invoke the initialise_v2 opcode. This way
+		 * the plugin and host both agree that it's okay not to support the old behaviour.
+		 */
+	//case FF_INSTANTIATE:
+	//case FF_DEINSTANTIATE:
+	//case FF_PROCESSFRAME:
+	//case FF_PROCESSFRAMECOPY:
 	default:
 		retval.UIntValue = FF_FAIL;
 		break;

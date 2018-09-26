@@ -84,7 +84,6 @@ public:
 	///						In case of error, FF_FAIL is returned.
 	unsigned int GetParamType( unsigned int index ) const;
 
-#ifdef FFGL_EXT
 	/// This method is called to know the number of elements of the plugin parameter whose index is passed as parameter
 	/// to the method. It is usually called by the default implementations of the FreeFrame global functions.
 	/// By default parameters will return 1.
@@ -106,7 +105,6 @@ public:
 	///						Codes for allowed parameter types are defined in FreeFrame.h.
 	///						In case of error, FF_FAIL is returned.
 	unsigned int GetParamUsage( unsigned int dwIndex ) const;
-#endif
 
 	/// This method is called to get the default value of the plugin parameter whose index is passed as parameter
 	/// to the method. It is usually called by the default implementations of the FreeFrame global functions.
@@ -144,7 +142,6 @@ protected:
 	///						can receive.
 	void SetMaxInputs( unsigned int iMaxInputs );
 
-#ifdef FFGL_EXT
 	/// This method is called by a plugin subclass, derived from this class, to specify name, type, and default
 	/// value of the plugin parameter whose index is passed as parameter to the method. This method is usually
 	/// called when a plugin object is instantiated (i.e., in the plugin subclass contructor). This version of
@@ -173,8 +170,6 @@ protected:
 	///							characters long. Longer strings will be truncated at the 16th character.
 	/// \param	numElements		Number of elements of this parameter ( array )
 	void SetOptionParamInfo( unsigned int dwIndex, const char* pchName, unsigned int numElements, int defaultValue );
-
-#endif
 
 	/// This method is called by a plugin subclass, derived from this class, to specify name, type, and default
 	/// value of the plugin parameter whose index is passed as parameter to the method. This method is usually
@@ -235,11 +230,9 @@ private:
 		char Name[ 16 ];
 		unsigned int dwType;
 
-#ifdef FFGL_EXT
 		// extra parameters
 		unsigned int numElements;
 		unsigned int usage;
-#endif
 
 		float DefaultValue;
 		char* StrDefaultValue;
