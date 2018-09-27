@@ -94,8 +94,8 @@ void CFFGLPluginManager::SetParamInfo( unsigned int pIndex, const char* pchName,
 {
 	ParamInfo* pInfo = new ParamInfo;
 	pInfo->ID = pIndex;
-
-	pInfo->numElements = 1;
+	
+	pInfo->elements.resize( 1 );
 	pInfo->usage = 0;
 
 	bool bEndFound = false;
@@ -127,7 +127,7 @@ void CFFGLPluginManager::SetBufferParamInfo( unsigned int pIndex, const char* pc
 	ParamInfo* pInfo = new ParamInfo;
 	pInfo->ID = pIndex;
 
-	pInfo->numElements = numElements;
+	pInfo->elements.resize( numElements );
 	pInfo->usage = usage;
 
 	bool bEndFound = false;
@@ -151,12 +151,12 @@ void CFFGLPluginManager::SetBufferParamInfo( unsigned int pIndex, const char* pc
 	m_NParams++;
 }
 
-void CFFGLPluginManager::SetOptionParamInfo( unsigned int pIndex, const char* pchName, unsigned int numElements, int defaultValue )
+void CFFGLPluginManager::SetOptionParamInfo( unsigned int pIndex, const char* pchName, unsigned int numElements, float defaultValue )
 {
 	ParamInfo* pInfo = new ParamInfo;
 	pInfo->ID = pIndex;
 
-	pInfo->numElements = numElements;
+	pInfo->elements.resize( numElements );
 	pInfo->usage = FF_USAGE_STANDARD;
 
 	bool bEndFound = false;
@@ -178,6 +178,19 @@ void CFFGLPluginManager::SetOptionParamInfo( unsigned int pIndex, const char* pc
 		m_pLast->pNext = pInfo;
 	m_pLast = pInfo;
 	m_NParams++;
+}
+
+void CFFGLPluginManager::SetParamElementInfo( unsigned int paramID, unsigned int elementIndex, const char* elementName, float elementValue )
+{
+	ParamInfo* paramInfo = FindParamInfo( paramID );
+	if( paramInfo == nullptr )
+		return;
+
+	if( elementIndex >= paramInfo->elements.size() )
+		return;
+	
+	paramInfo->elements[ elementIndex ].name = elementName;
+	paramInfo->elements[ elementIndex ].value = elementValue;
 }
 
 void CFFGLPluginManager::SetParamInfo( unsigned int pIndex, const char* pchName, unsigned int pType, bool bDefaultValue )
@@ -210,7 +223,7 @@ void CFFGLPluginManager::SetParamInfo( unsigned int dwIndex, const char* pchName
 	ParamInfo* pInfo = new ParamInfo;
 	pInfo->ID = dwIndex;
 
-	pInfo->numElements = 1;
+	pInfo->elements.resize( 1 );
 	pInfo->usage = 0;
 
 	bool bEndFound = false;
@@ -238,107 +251,120 @@ void CFFGLPluginManager::SetTimeSupported( bool supported )
 	m_timeSupported = supported;
 }
 
-char* CFFGLPluginManager::GetParamName( unsigned int dwIndex ) const
+char* CFFGLPluginManager::GetParamName( unsigned int dwIndex )
 {
-	ParamInfo* pCurr = m_pFirst;
-	bool bFound = false;
-	while( pCurr != NULL )
-	{
-		if( pCurr->ID == dwIndex )
-		{
-			bFound = true;
-			break;
-		}
-		pCurr = pCurr->pNext;
-	}
-	if( bFound )
-		return pCurr->Name;
-	return NULL;
+	ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	if( paramInfo == nullptr )
+		return nullptr;
+
+	return paramInfo->Name;
 }
 
 unsigned int CFFGLPluginManager::GetParamType( unsigned int dwIndex ) const
 {
-	ParamInfo* pCurr = m_pFirst;
-	bool bFound = false;
-	while( pCurr != NULL )
-	{
-		if( pCurr->ID == dwIndex )
-		{
-			bFound = true;
-			break;
-		}
-		pCurr = pCurr->pNext;
-	}
-	if( bFound )
-		return pCurr->dwType;
-	return FF_FAIL;
+	const ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	if( paramInfo == nullptr )
+		return FF_FAIL;
+
+	return paramInfo->dwType;
 }
 
 unsigned int CFFGLPluginManager::GetNumParamElements( unsigned int dwIndex ) const
 {
-	ParamInfo* pCurr = m_pFirst;
-	bool bFound = false;
-	while( pCurr != NULL )
-	{
-		if( pCurr->ID == dwIndex )
-		{
-			bFound = true;
-			break;
-		}
-		pCurr = pCurr->pNext;
-	}
-	if( bFound )
-		return pCurr->numElements;
-	return FF_FAIL;
+	const ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	if( paramInfo == nullptr )
+		return FF_FAIL;
+
+	return paramInfo->elements.size();
+}
+char* CFFGLPluginManager::GetParamElementName( unsigned int dwIndex, unsigned int elIndex )
+{
+	ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	if( paramInfo == nullptr )
+		return nullptr;
+
+	if( elIndex >= paramInfo->elements.size() )
+		return nullptr;
+
+	/**
+	 * Have to const-cast here because ffgl is implemented using a single interface function and thus we cannot differentiate
+	 * between constant and non constant pointers. This is also a problem of returning a pointer to our string rather than outputting
+	 * our string into the caller's buffer.
+	 */
+	return const_cast< char* >( paramInfo->elements[ elIndex ].name.c_str() );
+}
+FFMixed CFFGLPluginManager::GetParamElementDefault( unsigned int dwIndex, unsigned int elIndex ) const
+{
+	FFMixed result;
+	result.UIntValue = FF_FAIL;
+	const ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	if( paramInfo == nullptr )
+		return result;
+	if( elIndex >= paramInfo->elements.size() )
+		return result;
+
+	result.UIntValue = *(unsigned int*)&paramInfo->elements[ elIndex ].value;
+
+	return result;
+}
+FFUInt32 CFFGLPluginManager::SetParamElementValue( unsigned int dwIndex, unsigned int elIndex, float newValue )
+{
+	ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	if( paramInfo == nullptr )
+		return FF_FAIL;
+
+	if( elIndex >= paramInfo->elements.size() )
+		return FF_FAIL;
+
+	paramInfo->elements[ elIndex ].value = newValue;
+	return FF_SUCCESS;
 }
 
 unsigned int CFFGLPluginManager::GetParamUsage( unsigned int dwIndex ) const
 {
-	ParamInfo* pCurr = m_pFirst;
-	bool bFound = false;
-	while( pCurr != NULL )
-	{
-		if( pCurr->ID == dwIndex )
-		{
-			bFound = true;
-			break;
-		}
-		pCurr = pCurr->pNext;
-	}
-	if( bFound )
-		return pCurr->usage;
-	return FF_FAIL;
+	const ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	if( paramInfo == nullptr )
+		return FF_FAIL;
+
+	return paramInfo->usage;
 }
 
 FFMixed CFFGLPluginManager::GetParamDefault( unsigned int dwIndex ) const
 {
 	FFMixed result;
-	ParamInfo* pCurr = m_pFirst;
-	bool bFound = false;
-	while( pCurr != NULL )
-	{
-		if( pCurr->ID == dwIndex )
-		{
-			bFound = true;
-			break;
-		}
-		pCurr = pCurr->pNext;
-	}
-	if( bFound )
-	{
-		if( GetParamType( dwIndex ) == FF_TYPE_TEXT )
-			result.PointerValue = (void*)pCurr->StrDefaultValue;
-		else
-			result.UIntValue = *(unsigned int*)&pCurr->DefaultValue;
-	}
+	result.UIntValue = FF_FAIL;
+	const ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	if( paramInfo == nullptr )
+		return result;
+
+	if( GetParamType( dwIndex ) == FF_TYPE_TEXT )
+		result.PointerValue = (void*)paramInfo->StrDefaultValue;
 	else
-	{
-		result.UIntValue = FF_FAIL;
-	}
+		result.UIntValue = *(unsigned int*)&paramInfo->DefaultValue;
+	
 	return result;
 }
 
 bool CFFGLPluginManager::GetTimeSupported() const
 {
 	return m_timeSupported;
+}
+
+CFFGLPluginManager::ParamInfo* CFFGLPluginManager::FindParamInfo( unsigned int ID )
+{
+	for( ParamInfo* pCurr = m_pFirst; pCurr != nullptr; pCurr = pCurr->pNext )
+	{
+		if( pCurr->ID == ID )
+			return pCurr;
+	}
+	return nullptr;
+}
+const CFFGLPluginManager::ParamInfo* CFFGLPluginManager::FindParamInfo( unsigned int ID ) const
+{
+	for( const ParamInfo* pCurr = m_pFirst; pCurr != nullptr; pCurr = pCurr->pNext )
+	{
+		if( pCurr->ID == ID )
+			return pCurr;
+	}
+	return nullptr;
 }

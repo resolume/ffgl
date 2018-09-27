@@ -76,6 +76,7 @@
 #define _WINSOCKAPI_       //Prevent inclusion of winsock
 #include <windows.h>
 #include "../glsdk_0_5_2/glload/include/gl_3_3.h"
+typedef unsigned __int16 FFUInt16;
 typedef unsigned __int32 FFUInt32;
 #else
 #if defined( TARGET_OS_MAC )
@@ -91,33 +92,37 @@ extern "C" {
 #include <stdlib.h>
 #include <stdint.h>
 
+typedef uint16_t FFUInt16;
 typedef uint32_t FFUInt32;
 #endif
 
 // Function codes
-static const FFUInt32 FF_GETINFO                 = 0;
-static const FFUInt32 FF_INITIALISE_V2           = 34;
-static const FFUInt32 FF_DEINITIALISE            = 2;
-static const FFUInt32 FF_GETNUMPARAMETERS        = 4;
-static const FFUInt32 FF_GETPARAMETERNAME        = 5;
-static const FFUInt32 FF_GETPARAMETERDEFAULT     = 6;
-static const FFUInt32 FF_GETPARAMETERDISPLAY     = 7;
-static const FFUInt32 FF_SETPARAMETER            = 8;
-static const FFUInt32 FF_GETPARAMETER            = 9;
-static const FFUInt32 FF_GETPLUGINCAPS           = 10;
-static const FFUInt32 FF_GETEXTENDEDINFO         = 13;
-static const FFUInt32 FF_GETPARAMETERTYPE        = 15;
-static const FFUInt32 FF_GETINPUTSTATUS          = 16;
-static const FFUInt32 FF_PROCESSOPENGL           = 17;
-static const FFUInt32 FF_INSTANTIATEGL           = 18;
-static const FFUInt32 FF_DEINSTANTIATEGL         = 19;
-static const FFUInt32 FF_SETTIME                 = 20;
-static const FFUInt32 FF_CONNECT                 = 21;
-static const FFUInt32 FF_DISCONNECT              = 22;
-static const FFUInt32 FF_RESIZE                  = 23;
-static const FFUInt32 FF_GETNUMPARAMETERELEMENTS = 31;
-static const FFUInt32 FF_GETPARAMETERUSAGE       = 32;
-static const FFUInt32 FF_GETPLUGINSHORTNAME      = 33;
+static const FFUInt32 FF_GETINFO                       = 0;
+static const FFUInt32 FF_INITIALISE_V2                 = 34;
+static const FFUInt32 FF_DEINITIALISE                  = 2;
+static const FFUInt32 FF_GETNUMPARAMETERS              = 4;
+static const FFUInt32 FF_GETPARAMETERNAME              = 5;
+static const FFUInt32 FF_GETPARAMETERDEFAULT           = 6;
+static const FFUInt32 FF_GETPARAMETERDISPLAY           = 7;
+static const FFUInt32 FF_SETPARAMETER                  = 8;
+static const FFUInt32 FF_GETPARAMETER                  = 9;
+static const FFUInt32 FF_GETPLUGINCAPS                 = 10;
+static const FFUInt32 FF_GETEXTENDEDINFO               = 13;
+static const FFUInt32 FF_GETPARAMETERTYPE              = 15;
+static const FFUInt32 FF_GETINPUTSTATUS                = 16;
+static const FFUInt32 FF_PROCESSOPENGL                 = 17;
+static const FFUInt32 FF_INSTANTIATEGL                 = 18;
+static const FFUInt32 FF_DEINSTANTIATEGL               = 19;
+static const FFUInt32 FF_SETTIME                       = 20;
+static const FFUInt32 FF_CONNECT                       = 21;
+static const FFUInt32 FF_DISCONNECT                    = 22;
+static const FFUInt32 FF_RESIZE                        = 23;
+static const FFUInt32 FF_GETNUMPARAMETERELEMENTS       = 31;
+static const FFUInt32 FF_GET_PARAMETER_ELEMENT_NAME    = 35;
+static const FFUInt32 FF_GET_PARAMETER_ELEMENT_DEFAULT = 36;
+static const FFUInt32 FF_SET_PARAMETER_ELEMENT_VALUE   = 37;
+static const FFUInt32 FF_GETPARAMETERUSAGE             = 32;
+static const FFUInt32 FF_GETPLUGINSHORTNAME            = 33;
 //Previously used function codes that are no longer in use. Should prevent using
 //these numbers for new function codes.
 //static const FFUInt32 FF_INITIALISE            = 1;
@@ -256,6 +261,28 @@ typedef struct ProcessOpenGLStructTag
 	//makes use of its own FBO's for intermediate rendering
 	GLuint HostFBO;
 } ProcessOpenGLStruct;
+
+// GetParameterElementNameStruct
+typedef struct GetParameterElementNameStructTag
+{
+	FFUInt32 ParameterNumber;
+	FFUInt32 ElementNumber;
+} GetParameterElementNameStruct;
+
+// GetParameterElementValueStruct
+typedef struct GetParameterElementValueStructTag
+{
+	FFUInt32 ParameterNumber;
+	FFUInt32 ElementNumber;
+} GetParameterElementValueStruct;
+
+// SetParameterElementValueStruct
+typedef struct SetParameterElementValueStructTag
+{
+	FFUInt32 ParameterNumber;
+	FFUInt32 ElementNumber;
+	FFMixed NewParameterValue;
+} SetParameterElementValueStruct;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Function prototypes

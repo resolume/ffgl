@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include <sstream>
 #include "../ffgl/FFGL.h"//For OpenGL
 
 namespace ffglex
@@ -159,8 +161,36 @@ unsigned int is_power_of_2( unsigned int x );
 int npot( int n );
 
 double getTicks();
+void HSVtoRGB( float h, float s, float v, float& r, float& g, float& b );
 void HSVtoRGB( double h, double s, double v, double* r, double* g, double* b );
 
 float random( float min, float max );
+float clamp01( float value );
+
+void ReplaceAll( std::string& utf8String, const std::string& valueToReplace, const std::string& replaceWith );
+
+template< typename T >
+void VariadicMessageBuilder( std::ostream& o, T t )
+{
+	o << t;
+}
+template< typename T, typename... Args >
+void VariadicMessageBuilder( std::ostream& o, T t, const Args& ... args )
+{
+	VariadicMessageBuilder( o, t );
+	VariadicMessageBuilder( o, args... );
+}
+void Log( const std::string& message );
+/**
+ * This function logs anything that's streamable to a stringstream, just provide it as many arguments as you want
+ * and it'll concatenate all of them into a string and show it in your debugger.
+ */
+template<typename... Args>
+void Log( const Args&... args )
+{
+	std::ostringstream oss;
+	VariadicMessageBuilder( oss, args... );
+	Log( oss.str() );
+}
 
 }//End namespace ffglex

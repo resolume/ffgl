@@ -8,10 +8,6 @@ public:
 	Add();
 	~Add();
 
-	///////////////////////////////////////////////////
-	// FreeFrame plugin methods
-	///////////////////////////////////////////////////
-
 	FFResult SetFloatParameter( unsigned int dwIndex, float value ) override;
 	float GetFloatParameter( unsigned int index ) override;
 	FFResult ProcessOpenGL( ProcessOpenGLStruct* pGL ) override;
@@ -23,18 +19,6 @@ public:
 	{
 		static const char* sname = "AddB";
 		return sname;
-	}
-
-	///////////////////////////////////////////////////
-	// Factory method
-	///////////////////////////////////////////////////
-
-	static FFResult __stdcall CreateInstance( CFreeFrameGLPlugin** ppOutInstance )
-	{
-		*ppOutInstance = new Add();
-		if( *ppOutInstance != NULL )
-			return FF_SUCCESS;
-		return FF_FAIL;
 	}
 
 protected:

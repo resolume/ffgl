@@ -87,6 +87,10 @@ public:
 	virtual float GetFloatParameter( unsigned int index );
 	virtual char* GetTextParameter( unsigned int index );
 
+	void SetParamInfof( unsigned int index, const char* pchName, unsigned int type )
+	{
+		SetParamInfo( index, pchName, type, GetFloatParameter( index ) );
+	}
 	/// Default implementation of the FFGL ProcessOpenGL instance specific function. This function processes
 	/// the input texture(s) by
 	///

@@ -6,27 +6,11 @@ class FFGLGradients : public CFreeFrameGLPlugin
 public:
 	FFGLGradients();
 
-	///////////////////////////////////////////////////
-	// FreeFrame plugin methods
-	///////////////////////////////////////////////////
-
 	FFResult SetFloatParameter( unsigned int dwIndex, float value ) override;
 	float GetFloatParameter( unsigned int index ) override;
 	FFResult ProcessOpenGL( ProcessOpenGLStruct* pGL ) override;
 	FFResult InitGL( const FFGLViewportStruct* vp ) override;
 	FFResult DeInitGL() override;
-
-	///////////////////////////////////////////////////
-	// Factory method
-	///////////////////////////////////////////////////
-
-	static FFResult __stdcall CreateInstance( CFreeFrameGLPlugin** ppOutInstance )
-	{
-		*ppOutInstance = new FFGLGradients();
-		if( *ppOutInstance != NULL )
-			return FF_SUCCESS;
-		return FF_FAIL;
-	}
 
 protected:
 	ffglex::FFGLShader shader;

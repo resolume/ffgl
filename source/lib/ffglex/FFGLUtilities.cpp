@@ -8,6 +8,7 @@
 
 #include <math.h>
 #include <random>
+#include <iostream>
 
 namespace ffglex
 {
@@ -18,7 +19,7 @@ inline int64 abs64( const int64 n ) throw()
 	return ( n >= 0 ) ? n : -n;
 }
 
-static int64 hiResTicksPerSecond = -1;
+static int64 hiResTicksPerSecond    = -1;
 static double hiResTicksScaleFactor = 0.0;
 #endif
 
@@ -32,7 +33,7 @@ double getTicks()
 	{
 		LARGE_INTEGER f;
 		QueryPerformanceFrequency( &f );
-		hiResTicksPerSecond = f.QuadPart;
+		hiResTicksPerSecond   = f.QuadPart;
 		hiResTicksScaleFactor = 1000.0 / hiResTicksPerSecond;
 	}
 
@@ -40,12 +41,12 @@ double getTicks()
 	QueryPerformanceCounter( &ticks );
 
 	const int64 mainCounterAsHiResTicks = ( GetTickCount() * hiResTicksPerSecond ) / 1000;
-	const int64 newOffset = mainCounterAsHiResTicks - ticks.QuadPart;
+	const int64 newOffset               = mainCounterAsHiResTicks - ticks.QuadPart;
 
 	// fix for a very obscure PCI hardware bug that can make the counter
 	// sometimes jump forwards by a few seconds..
 	static int64 hiResTicksOffset = 0;
-	const int64 offsetDrift = abs64( newOffset - hiResTicksOffset );
+	const int64 offsetDrift       = abs64( newOffset - hiResTicksOffset );
 
 	if( offsetDrift > ( hiResTicksPerSecond >> 1 ) )
 		hiResTicksOffset = newOffset;
@@ -79,27 +80,74 @@ int npot( int n )
 	return prevn * 2;
 }
 
+void HSVtoRGB( float h, float s, float v, float& r, float& g, float& b )
+{
+	if( s == 0 )
+	{
+		r = v;
+		g = v;
+		b = v;
+	}
+	else
+	{
+		double var_h = h * 6;
+		double var_i = floor( var_h );
+		double var_1 = v * ( 1 - s );
+		double var_2 = v * ( 1 - s * ( var_h - var_i ) );
+		double var_3 = v * ( 1 - s * ( 1 - ( var_h - var_i ) ) );
+
+		if( var_i == 0 )
+		{
+			r = v;
+			g = var_3;
+			b = var_1;
+		}
+		else if( var_i == 1 )
+		{
+			r = var_2;
+			g = v;
+			b = var_1;
+		}
+		else if( var_i == 2 )
+		{
+			r = var_1;
+			g = v;
+			b = var_3;
+		}
+		else if( var_i == 3 )
+		{
+			r = var_1;
+			g = var_2;
+			b = v;
+		}
+		else if( var_i == 4 )
+		{
+			r = var_3;
+			g = var_1;
+			b = v;
+		}
+		else
+		{
+			r = v;
+			g = var_1;
+			b = var_2;
+		}
+	}
+}
 void HSVtoRGB( double h, double s, double v, double* r, double* g, double* b )
 {
 	if( s == 0 )
-
 	{
 		*r = v;
-
 		*g = v;
-
 		*b = v;
 	}
 	else
 	{
 		double var_h = h * 6;
-
 		double var_i = floor( var_h );
-
 		double var_1 = v * ( 1 - s );
-
 		double var_2 = v * ( 1 - s * ( var_h - var_i ) );
-
 		double var_3 = v * ( 1 - s * ( 1 - ( var_h - var_i ) ) );
 
 		if( var_i == 0 )
@@ -108,35 +156,30 @@ void HSVtoRGB( double h, double s, double v, double* r, double* g, double* b )
 			*g = var_3;
 			*b = var_1;
 		}
-
 		else if( var_i == 1 )
 		{
 			*r = var_2;
 			*g = v;
 			*b = var_1;
 		}
-
 		else if( var_i == 2 )
 		{
 			*r = var_1;
 			*g = v;
 			*b = var_3;
 		}
-
 		else if( var_i == 3 )
 		{
 			*r = var_1;
 			*g = var_2;
 			*b = v;
 		}
-
 		else if( var_i == 4 )
 		{
 			*r = var_3;
 			*g = var_1;
 			*b = v;
 		}
-
 		else
 		{
 			*r = v;
@@ -150,5 +193,26 @@ float random( float min, float max )
 {
 	return min + ( rand() / ( RAND_MAX / ( max - min ) ) );
 }
+float clamp01( float value )
+{
+	return std::min( std::max( value, 0.0f ), 1.0f );
+}
 
+void ReplaceAll( std::string& utf8String, const std::string& valueToReplace, const std::string& replaceWith )
+{
+	if( valueToReplace == replaceWith )
+		return;
+	for( std::string::size_type offset = utf8String.find( valueToReplace ); offset != std::string::npos; offset = utf8String.find( valueToReplace, offset ) )
+		utf8String.replace( offset, valueToReplace.length(), replaceWith );
+}
+void Log( const std::string& message )
+{
+#if defined( _WIN32 )
+	OutputDebugString( message.c_str() );
+	OutputDebugString( "\n" );
+	std::cout << message << std::endl;
+#else
+	printf( "%s", (message + "\n").c_str() );
+#endif
+}
 }//End namespace ffglex

@@ -8,7 +8,7 @@ using namespace ffglex;
 #define FFPARAM_Brightness ( 3 )
 
 static CFFGLPluginInfo PluginInfo(
-	FFGLGradients::CreateInstance, // Create method
+	PluginFactory< FFGLGradients >,// Create method
 	"RS01",                        // Plugin unique ID
 	"Gradient Example",            // Plugin name
 	2,                             // API major version number

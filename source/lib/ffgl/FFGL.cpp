@@ -344,6 +344,29 @@ FFUInt32 getNumParameterElements( unsigned int index )
 
 	return s_pPrototype->GetNumParamElements( index );
 }
+char* getParameterElementName( unsigned int paramIndex, unsigned int elementIndex )
+{
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return NULL;
+	}
+
+	return s_pPrototype->GetParamElementName( paramIndex, elementIndex );
+}
+FFMixed getParameterElementDefault( unsigned int paramIndex, unsigned int elementIndex )
+{
+	FFMixed ret;
+	ret.UIntValue = FF_FAIL;
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return ret;
+	}
+	return s_pPrototype->GetParamElementDefault( paramIndex, elementIndex );
+}
 FFUInt32 getParameterUsage( unsigned int index )
 {
 	if( s_pPrototype == NULL )
@@ -560,6 +583,25 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		break;
 	case FF_GETNUMPARAMETERELEMENTS:
 		retval.UIntValue = getNumParameterElements( inputValue.UIntValue );
+		break;
+	case FF_GET_PARAMETER_ELEMENT_NAME:
+	{
+		const GetParameterElementNameStruct* arguments = (const GetParameterElementNameStruct*)inputValue.PointerValue;
+		retval.PointerValue = getParameterElementName( arguments->ParameterNumber, arguments->ElementNumber );
+		break;
+	}
+	case FF_GET_PARAMETER_ELEMENT_DEFAULT:
+	{
+		const GetParameterElementValueStruct* arguments = (const GetParameterElementValueStruct*)inputValue.PointerValue;
+		retval = getParameterElementDefault( arguments->ParameterNumber, arguments->ElementNumber );
+		break;
+	}
+	case FF_SET_PARAMETER_ELEMENT_VALUE:
+		if( pPlugObj != NULL )
+		{
+			const SetParameterElementValueStruct* arguments = (const SetParameterElementValueStruct*)inputValue.PointerValue;
+			retval.UIntValue = pPlugObj->SetParamElementValue( arguments->ParameterNumber, arguments->ElementNumber, *(float*)&arguments->NewParameterValue.UIntValue );
+		}
 		break;
 	case FF_GETPARAMETERUSAGE:
 		retval.UIntValue = getParameterUsage( inputValue.UIntValue );

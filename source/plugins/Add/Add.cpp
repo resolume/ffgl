@@ -4,7 +4,7 @@ using namespace ffglex;
 #define FFPARAM_MixVal ( 0 )
 
 static CFFGLPluginInfo PluginInfo(
-	Add::CreateInstance,                                                                         // Create method
+	PluginFactory< Add >,                                                                        // Create method
 	"RM01",                                                                                      // Plugin unique ID
 	"Add Example",                                                                               // Plugin name
 	2,                                                                                           // API major version number

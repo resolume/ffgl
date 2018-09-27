@@ -20,8 +20,8 @@ private:
 class Scoped2DTextureBinding : public ScopedTextureBinding
 {
 public:
-	Scoped2DTextureBinding( GLuint vboID ) :
-		ScopedTextureBinding( GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D, vboID )
+	Scoped2DTextureBinding( GLuint textureID ) :
+		ScopedTextureBinding( GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D, textureID )
 	{
 	}
 };

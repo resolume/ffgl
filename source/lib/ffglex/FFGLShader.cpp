@@ -12,6 +12,7 @@ namespace ffglex
  */
 FFGLShader::FFGLShader() :
 	vertexShaderID( 0 ),
+	geometryShaderID( 0 ),
 	fragmentShaderID( 0 ),
 	programID( 0 )
 {
@@ -23,10 +24,23 @@ FFGLShader::~FFGLShader()
 {
 	//If any of these assertions hit you forgot to free this shader's gl resources.
 	assert( vertexShaderID == 0 );
+	assert( geometryShaderID == 0 );
 	assert( fragmentShaderID == 0 );
 	assert( programID == 0 );
 }
 
+/**
+ * Add a varying that will be captured using a transform feedback.
+ * If you want to use transform feedback shaders you have to specify which varyings you want to capture.
+ * You can do this by calling this function for each varying you want to capture prior to compiling the shader. You should
+ * call this function in order of the varyings to capture.
+ *
+ * @param varyingName: The name of the varying that you want to capture.
+ */
+void FFGLShader::AddTransformFeedbackVarying( const std::string& varyingName )
+{
+	transformFeedbackVaryings.push_back( varyingName );
+}
 /**
  * Compiles and links two shaders into a shader program.
  *
@@ -60,14 +74,73 @@ bool FFGLShader::Compile( const char* vertexShader, const char* fragmentShader )
 	//We need to have valid inputs to be able to compile a shader, validate them here so that below we can just use them without checking.
 	if( vertexShader == nullptr || strlen( vertexShader ) == 0 )
 		return false;
-	if( fragmentShader == nullptr || strlen( fragmentShader ) == 0 )
+	if( (fragmentShader == nullptr || strlen( fragmentShader ) == 0) && transformFeedbackVaryings.empty() )
 		return false;
 
 	//Everything needs to succeed for this to be a usable shader. If anything fails we'll be cleaning up everything
 	//so that we wont keep anything that wont be used alive.
-	if( !CompileVertexShader( vertexShader ) ||
-	    !CompileFragmentShader( fragmentShader ) ||
-	    !LinkProgram() )
+	if( !CompileVertexShader( vertexShader ) )
+	{
+		FreeGLResources();
+		return false;
+	}
+	//Transform feedback shaders dont require a fragment shader.
+	if( fragmentShader != nullptr && strlen( fragmentShader ) != 0 && !CompileFragmentShader( fragmentShader ) )
+	{
+		FreeGLResources();
+		return false;
+	}
+	if( !LinkProgram() )
+	{
+		FreeGLResources();
+		return false;
+	}
+
+	return true;
+}
+/**
+ * Compiles and links a vertex/geometry/fragment shader into a single shader program.
+ *
+ * @param vertexShader: The glsl shader string that represents the shader that should be used in the vertex processing stage.
+ * You should make sure that this glsl string defines the glsl version it's targetting (eg #version 330) and respect the OpenGL specs
+ * for that shader version.
+ * @param geometryShader: The glsl shader string that represents the shader that should be used in the geometry processing stage.
+ * You should make sure that this glsl string defines the glsl version it's targetting (eg #version 330) and respect the OpenGL specs
+ * for that shader version.
+ * @param fragmentShader: The glsl shader string that represents the shader that should be used in the fragment processing stage.
+ * You should make sure that this glsl string defines the glsl version it's targetting (eg #version 330) and respect the OpenGL specs
+ * for that shader version.
+ * @return: Whether or not compiling/linking succeeded and thus if this object can be used to bind a shader program for rendering.
+ * If compilation succeeded you need to make sure that you're freeing the GL resources when you no longer intend to use this shader.
+ */
+bool FFGLShader::Compile( const char* vertexShader, const char* geometryShader, const char* fragmentShader )
+{
+	//We need to have valid inputs to be able to compile a shader, validate them here so that below we can just use them without checking.
+	if( vertexShader == nullptr || strlen( vertexShader ) == 0 )
+		return false;
+	if( (fragmentShader == nullptr || strlen( fragmentShader ) == 0) && transformFeedbackVaryings.empty() )
+		return false;
+
+	//If anything fails we'll be cleaning up everything so that we wont keep anything that wont be used alive.
+	if( !CompileVertexShader( vertexShader ) )
+	{
+		FreeGLResources();
+		return false;
+	}
+	//No shaders require the geometry stage.
+	if( geometryShader != nullptr && strlen( geometryShader ) != 0 && !CompileGeometryShader( geometryShader ) )
+	{
+		FreeGLResources();
+		return false;
+	}
+	//Transform feedback shaders dont require a fragment shader.
+	if( fragmentShader != nullptr && strlen( fragmentShader ) != 0 && !CompileFragmentShader( fragmentShader ) )
+	{
+		FreeGLResources();
+		return false;
+	}
+
+	if( !LinkProgram() )
 	{
 		FreeGLResources();
 		return false;
@@ -94,6 +167,12 @@ void FFGLShader::FreeGLResources()
 		fragmentShaderID = 0;
 	}
 
+	if( geometryShaderID != 0 )
+	{
+		glDeleteShader( geometryShaderID );
+		geometryShaderID = 0;
+	}
+
 	if( programID != 0 )
 	{
 		glDeleteProgram( programID );
@@ -106,7 +185,8 @@ void FFGLShader::FreeGLResources()
  */
 bool FFGLShader::IsReady() const
 {
-	return vertexShaderID != 0 && fragmentShaderID != 0 && programID != 0;
+	//The shaders themselves are optional, it's the program we're using when rendering with those shaders.
+	return programID != 0;
 }
 /**
  * Gets the OpenGL ID that represents the linked shader program.
@@ -152,18 +232,46 @@ bool FFGLShader::CompileVertexShader( const char* vertexShader )
 		memset( log.data(), 0, logLength + 1 );
 		glGetShaderInfoLog( vertexShaderID, logLength, NULL, log.data() );
 
-		printf( "Vertex Shader error: %s \n", log.data() );
+		Log( "Vertex Shader error: ", log.data() );
 #endif
 	}
 
 	return compileStatus == GL_TRUE;
 }
-bool FFGLShader::CompileFragmentShader( const char* vertexShader )
+bool FFGLShader::CompileGeometryShader( const char* geometryShader )
+{
+	geometryShaderID = glCreateShader( GL_GEOMETRY_SHADER );
+
+	// Load Shader Sources
+	glShaderSource( geometryShaderID, 1, &geometryShader, NULL );
+
+	// Compile The Shaders
+	glCompileShader( geometryShaderID );
+
+	GLint compileStatus;
+	glGetShaderiv( geometryShaderID, GL_COMPILE_STATUS, &compileStatus );
+
+	if( compileStatus != GL_TRUE )
+	{
+#ifdef LOGSHADERERRORS
+		GLint logLength;
+		glGetShaderiv( geometryShaderID, GL_INFO_LOG_LENGTH, &logLength );
+		std::vector< GLchar > log( logLength + 1 );
+		memset( log.data(), 0, logLength + 1 );
+		glGetShaderInfoLog( geometryShaderID, logLength, NULL, log.data() );
+
+		Log( "Geometry Shader error: ", log.data() );
+#endif
+	}
+
+	return compileStatus == GL_TRUE;
+}
+bool FFGLShader::CompileFragmentShader( const char* fragmentShader )
 {
 	fragmentShaderID = glCreateShader( GL_FRAGMENT_SHADER );
 
 	// Load Shader Sources
-	glShaderSource( fragmentShaderID, 1, &vertexShader, NULL );
+	glShaderSource( fragmentShaderID, 1, &fragmentShader, NULL );
 
 	// Compile The Shaders
 	glCompileShader( fragmentShaderID );
@@ -180,7 +288,7 @@ bool FFGLShader::CompileFragmentShader( const char* vertexShader )
 		memset( log.data(), 0, logLength + 1 );
 		glGetShaderInfoLog( fragmentShaderID, logLength, NULL, log.data() );
 
-		printf( "Fragment Shader error: %s \n", log.data() );
+		Log( "Fragment Shader error: ", log.data() );
 #endif
 	}
 
@@ -189,9 +297,20 @@ bool FFGLShader::CompileFragmentShader( const char* vertexShader )
 bool FFGLShader::LinkProgram()
 {
 	programID = glCreateProgram();
-
+	
 	glAttachShader( programID, vertexShaderID );
-	glAttachShader( programID, fragmentShaderID );
+	if( geometryShaderID != 0 )
+		glAttachShader( programID, geometryShaderID );
+	if( fragmentShaderID != 0 )
+		glAttachShader( programID, fragmentShaderID );
+
+	if( !transformFeedbackVaryings.empty() )
+	{
+		std::vector< const char* > feedbackVaryingNames;
+		for( size_t index = 0; index < transformFeedbackVaryings.size(); ++index )
+			feedbackVaryingNames.push_back( transformFeedbackVaryings[ index ].c_str() );
+		glTransformFeedbackVaryings( programID, feedbackVaryingNames.size(), feedbackVaryingNames.data(), GL_INTERLEAVED_ATTRIBS );
+	}
 
 	GLint linkStatus = 0;
 	glLinkProgram( programID );
@@ -206,7 +325,7 @@ bool FFGLShader::LinkProgram()
 		glGetProgramInfoLog( fragmentShaderID, sizeof( log ) - 1, &returnedLength, log );
 		log[ returnedLength ] = 0;
 
-		printf( "Fragment Shader error: %s \n", log );
+		Log( "Fragment Shader error: ", log );
 #endif
 	}
 

@@ -19,6 +19,8 @@
 
 #ifndef FFGLPLUGINMANAGER_STANDARD
 #define FFGLPLUGINMANAGER_STANDARD
+#include <vector>
+#include <string>
 
 #include "FFGL.h"
 
@@ -72,7 +74,7 @@ public:
 	/// \return				The name of the plugin parameter whose index is passed to the method.
 	///						The return value is a pointer to an array of 16 1-byte ASCII characters,
 	///						not null terminated (see FreeFrame specification). NULL is returned on error.
-	char* GetParamName( unsigned int index ) const;
+	char* GetParamName( unsigned int index );
 
 	/// This method is called to know the type of the plugin parameter whose index is passed as parameter
 	/// to the method. It is usually called by the default implementations of the FreeFrame global functions.
@@ -94,6 +96,9 @@ public:
 	///						Codes for allowed parameter types are defined in FreeFrame.h.
 	///						In case of error, FF_FAIL is returned.
 	unsigned int GetNumParamElements( unsigned int dwIndex ) const;
+	char* GetParamElementName( unsigned int dwIndex, unsigned int elIndex );
+	FFMixed GetParamElementDefault( unsigned int dwIndex, unsigned int elIndex ) const;
+	FFUInt32 SetParamElementValue( unsigned int dwIndex, unsigned int elIndex, float newValue );
 
 	/// This method is called to know the usage of a plugin parameter
 	/// For example a float buffer that expects a spectrum, will return FF_USAGE_FFT
@@ -169,7 +174,9 @@ protected:
 	///							According to the FreeFrame specification it should be at most 16 1-byte ASCII
 	///							characters long. Longer strings will be truncated at the 16th character.
 	/// \param	numElements		Number of elements of this parameter ( array )
-	void SetOptionParamInfo( unsigned int dwIndex, const char* pchName, unsigned int numElements, int defaultValue );
+	void SetOptionParamInfo( unsigned int dwIndex, const char* pchName, unsigned int numElements, float defaultValue );
+
+	void SetParamElementInfo( unsigned int paramID, unsigned int elementIndex, const char* elementName, float elementValue );
 
 	/// This method is called by a plugin subclass, derived from this class, to specify name, type, and default
 	/// value of the plugin parameter whose index is passed as parameter to the method. This method is usually
@@ -231,13 +238,21 @@ private:
 		unsigned int dwType;
 
 		// extra parameters
-		unsigned int numElements;
+		struct Element
+		{
+			std::string name;
+			float value = 0.0f;
+		};
+		std::vector< Element > elements;
 		unsigned int usage;
 
 		float DefaultValue;
 		char* StrDefaultValue;
 		ParamInfoStruct* pNext;
 	} ParamInfo;
+	
+	ParamInfo* FindParamInfo( unsigned int ID );
+	const ParamInfo* FindParamInfo( unsigned int ID ) const;
 
 	// Information on paramters and pointers to ParamInfo list
 	int m_NParams;
