@@ -65,7 +65,8 @@ enum ParamID
 	PID_NUM_BUCKETS,
 	PID_NUM_PARTICLES_PER_BUCKET,
 	PID_BURST_DURATION,
-	PID_BURST_INTENSITY
+	PID_BURST_INTENSITY,
+	PID_SIMULATE
 };
 
 Particles::Particles() :
@@ -81,7 +82,8 @@ Particles::Particles() :
 	numBuckets( 32 ),
 	numParticlesPerBucket( int( MAX_PARTICLES_PER_BUCKET * 0.5f ) ),
 	burstDuration( 0.25f ),
-	burstIntensity( 4.0f )
+	burstIntensity( 4.0f ),
+	simulate( true )
 {
 	// Input properties
 	SetMinInputs( 0 );
@@ -105,6 +107,7 @@ Particles::Particles() :
 	SetParamInfof( PID_NUM_PARTICLES_PER_BUCKET, "Num Particles Per Bucket", FF_TYPE_STANDARD );
 	SetParamInfof( PID_BURST_DURATION, "Burst Duration", FF_TYPE_STANDARD );
 	SetParamInfof( PID_BURST_INTENSITY, "Burst Intensity", FF_TYPE_STANDARD );
+	SetParamInfo( PID_SIMULATE, "Simulate", FF_TYPE_BOOLEAN, simulate );
 }
 
 FFResult Particles::InitGL( const FFGLViewportStruct* vp )
@@ -125,7 +128,8 @@ FFResult Particles::DeInitGL()
 }
 FFResult Particles::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
-	UpdateParticles();
+	if( simulate )
+		UpdateParticles();
 	RenderParticles();
 
 	/*
@@ -182,6 +186,10 @@ FFResult Particles::SetFloatParameter( unsigned int dwIndex, float value )
 		burstIntensity = value * 15.0f + 1.0f;
 		break;
 
+	case PID_SIMULATE:
+		simulate = value != 0.0f;
+		break;
+
 	default:
 		return FF_FAIL;
 	}
@@ -219,6 +227,9 @@ float Particles::GetFloatParameter( unsigned int index )
 		return burstDuration;
 	case PID_BURST_INTENSITY:
 		return (burstIntensity - 1.0f) / 15.0f;
+
+	case PID_SIMULATE:
+		return simulate ? 1.0f : 0.0f;
 
 	default:
 		return 0.0f;
@@ -273,11 +284,7 @@ void Particles::UpdateParticles()
 
 	ScopedVAOBinding vaoBinding( glResources.GetFrontVAOID() );
 
-	glEnable( GL_BLEND );
-	glBlendFunc( GL_SRC_ALPHA, GL_ONE );
 	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( numBuckets * numParticlesPerBucket ) );
-	glBlendFunc( GL_ONE, GL_ZERO );
-	glDisable( GL_BLEND );
 
 	vaoBinding.EndScope();
 
@@ -307,5 +314,9 @@ void Particles::RenderParticles()
 	glUniform1f( glResources.GetRenderShader().FindUniform( "DeltaTime" ), 0.017f );
 	glUniform2i( glResources.GetRenderShader().FindUniform( "RenderSize" ), 1920, 1080 );
 
+	glEnable( GL_BLEND );
+	glBlendFunc( GL_SRC_ALPHA, GL_ONE );
 	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( numBuckets * numParticlesPerBucket ) );
+	glBlendFunc( GL_ONE, GL_ZERO );
+	glDisable( GL_BLEND );
 }

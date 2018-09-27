@@ -36,6 +36,7 @@ protected:
 	int numParticlesPerBucket;   //!< In range between 0 .. MAX_PARTICLES_PER_BUCKET
 	float burstDuration;
 	float burstIntensity;        //!< In range between 1.0 .. 16.0
+	bool simulate;
 
 	float tempo = 120.0;
 };

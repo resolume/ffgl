@@ -23,8 +23,8 @@ void main()
 {
 	float agePhase = clamp( vAge / MAX_AGE, 0.0, 1.0 );
 
-	particlePosition = vPosition * vec2( 1.0, -1.0 );
-	particleVelocity = (vVelocity + (1.0 - clamp( vAge / MAX_AGE, 0.0, BURST_DURATION ) / BURST_DURATION) * vBurstVel) * vec2( 1.0, -1.0 );
+	particlePosition = vPosition;
+	particleVelocity = (vVelocity + (1.0 - clamp( vAge / MAX_AGE, 0.0, BURST_DURATION ) / BURST_DURATION) * vBurstVel);
 
 	gl_Position = vec4( particlePosition.xy, 0.0, 1.0 );
 	particleColor = BUCKET_COLORS[ vBucketIndex ];

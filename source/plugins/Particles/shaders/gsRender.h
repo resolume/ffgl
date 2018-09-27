@@ -25,7 +25,7 @@ void main()
 	vec2 particleUp = normalize( particleVelocity[ 0 ] );
 	vec2 particleRight = vec2( -particleUp.y, particleUp.x );
 	particleUp *= particleSize;
-	particleUp *= (VelocitySizeFactor * particleVelocity[ 0 ]);
+	particleUp *= (VelocitySizeFactor * length( particleVelocity[ 0 ] ));
 	particleRight *= particleSize;
 
 	vec2 corners[ 4 ];

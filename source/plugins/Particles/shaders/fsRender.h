@@ -11,7 +11,9 @@ out vec4 fragColor;
 
 void main()
 {
-	fragColor = color;// * vec4( vec3( 1.0 ), texture2D( ParticleTexture, uv ).a );
+	fragColor = color;// * vec4( vec3( 1.0 ), texture( ParticleTexture, uv ).r );
+	//fragColor = texture( ParticleTexture, uv );
+	//fragColor = vec4( uv.x, uv.y, 0.0, 1.0 );
 }
 
 )";
