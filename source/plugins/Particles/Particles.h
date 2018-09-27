@@ -30,4 +30,12 @@ protected:
 	float turbulenceDetail;      //!< In range between 0.5 .. 1.5
 	float turbulenceSpeed;       //!< In range between 0.1 .. 2.0
 	float maxAge;
+	float particleSize;          //!< In range between 1.0 .. 10.0
+	float velocityToSizeFactor;  //!< In range between 1.0 .. 20.0
+	int numBuckets;              //!< In range between 16 .. MAX_BUCKETS
+	int numParticlesPerBucket;   //!< In range between 0 .. MAX_PARTICLES_PER_BUCKET
+	float burstDuration;
+	float burstIntensity;        //!< In range between 1.0 .. 16.0
+
+	float tempo = 120.0;
 };

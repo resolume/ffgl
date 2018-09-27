@@ -59,7 +59,13 @@ enum ParamID
 	PID_ENERGY_MAX_AGE_FACTOR,
 	PID_TURBULENCE_DETAIL,
 	PID_TURBULENCE_SPEED,
-	PID_MAX_AGE
+	PID_MAX_AGE,
+	PID_PARTICLE_SIZE,
+	PID_VELOCITY_SIZE_FACTOR,
+	PID_NUM_BUCKETS,
+	PID_NUM_PARTICLES_PER_BUCKET,
+	PID_BURST_DURATION,
+	PID_BURST_INTENSITY
 };
 
 Particles::Particles() :
@@ -69,7 +75,13 @@ Particles::Particles() :
 	energyMaxAgeFactor( 0.3f ),
 	turbulenceDetail( 1.2f ),
 	turbulenceSpeed( 0.5f ),
-	maxAge( 4.0f )
+	maxAge( 4.0f ),
+	particleSize( 1.0f ),
+	velocityToSizeFactor( 7.0f ),
+	numBuckets( 32 ),
+	numParticlesPerBucket( int( MAX_PARTICLES_PER_BUCKET * 0.5f ) ),
+	burstDuration( 0.25f ),
+	burstIntensity( 4.0f )
 {
 	// Input properties
 	SetMinInputs( 0 );
@@ -87,7 +99,12 @@ Particles::Particles() :
 	SetParamElementInfo( PID_MAX_AGE, 2, "2 beats", 2.0f );
 	SetParamElementInfo( PID_MAX_AGE, 3, "4 beats", maxAge );
 	SetParamElementInfo( PID_MAX_AGE, 4, "16 beats", 16.0f );
-	//SetParamInfo( PID, "NAME", FF_TYPE_STANDARD, param );
+	SetParamInfof( PID_PARTICLE_SIZE, "Particle Size", FF_TYPE_STANDARD );
+	SetParamInfof( PID_VELOCITY_SIZE_FACTOR, "Velocity Size Factor", FF_TYPE_STANDARD );
+	SetParamInfof( PID_NUM_BUCKETS, "Num Buckets", FF_TYPE_STANDARD );
+	SetParamInfof( PID_NUM_PARTICLES_PER_BUCKET, "Num Particles Per Bucket", FF_TYPE_STANDARD );
+	SetParamInfof( PID_BURST_DURATION, "Burst Duration", FF_TYPE_STANDARD );
+	SetParamInfof( PID_BURST_INTENSITY, "Burst Intensity", FF_TYPE_STANDARD );
 }
 
 FFResult Particles::InitGL( const FFGLViewportStruct* vp )
@@ -146,6 +163,24 @@ FFResult Particles::SetFloatParameter( unsigned int dwIndex, float value )
 	case PID_MAX_AGE:
 		maxAge = value;
 		break;
+	case PID_PARTICLE_SIZE:
+		particleSize = value * 9.0f + 1.0f;
+		break;
+	case PID_VELOCITY_SIZE_FACTOR:
+		velocityToSizeFactor = value * 19.0f + 1.0f;
+		break;
+	case PID_NUM_BUCKETS:
+		numBuckets = static_cast< int >( value * (MAX_BUCKETS - 16.0f) + 16.0f );
+		break;
+	case PID_NUM_PARTICLES_PER_BUCKET:
+		numParticlesPerBucket = static_cast< int >( value * MAX_PARTICLES_PER_BUCKET );
+		break;
+	case PID_BURST_DURATION:
+		burstDuration = value;
+		break;
+	case PID_BURST_INTENSITY:
+		burstIntensity = value * 15.0f + 1.0f;
+		break;
 
 	default:
 		return FF_FAIL;
@@ -172,6 +207,18 @@ float Particles::GetFloatParameter( unsigned int index )
 		return (turbulenceSpeed - 0.1f) / 1.9f;
 	case PID_MAX_AGE:
 		return maxAge;
+	case PID_PARTICLE_SIZE:
+		return (particleSize - 1.0f) / 9.0f;
+	case PID_VELOCITY_SIZE_FACTOR:
+		return (velocityToSizeFactor - 1.0f) / 19.0f;
+	case PID_NUM_BUCKETS:
+		return (numBuckets - 16.0f) / (MAX_BUCKETS - 16.0f);
+	case PID_NUM_PARTICLES_PER_BUCKET:
+		return static_cast< float >( numParticlesPerBucket ) / MAX_PARTICLES_PER_BUCKET;
+	case PID_BURST_DURATION:
+		return burstDuration;
+	case PID_BURST_INTENSITY:
+		return (burstIntensity - 1.0f) / 15.0f;
 
 	default:
 		return 0.0f;
@@ -182,17 +229,10 @@ void Particles::UpdateParticles()
 {
 	std::vector< float > fftData( 64 );
 	//std::fill( fftData.begin(), fftData.end(), 0.4f );
-	float peakBucket = sinf( getTicks() / 1000.0f * 2 ) * 32.0f + 32.0f;
+	float peakBucket = sinf( getTicks() / 1000.0f * 2.0f ) * 32.0f + 32.0f;
 	float phasePerBucket = M_PI * 2.0f / fftData.size();
 	for( size_t index = 0; index < fftData.size(); ++index )
 		fftData[ index ] = std::max( 0.0f, 0.2f * sinf( M_PI * 0.5f + index * phasePerBucket + peakBucket * phasePerBucket ) );
-
-	float tempo = 120.0;
-	float maxAge = 16.0f;
-	size_t thisFrameNumBuckets = MAX_BUCKETS;
-	size_t thisFrameNumParticlesPerBucket = MAX_PARTICLES_PER_BUCKET;
-	float burstDuration = 0.25f;
-	float burstIntensity = 4.0f;
 
 	glResources.FlipBuffers();
 
@@ -202,13 +242,13 @@ void Particles::UpdateParticles()
 	glBindBufferRange( GL_TRANSFORM_FEEDBACK_BUFFER, 0, glResources.GetBackBufferID(), 0, MAX_BUCKETS * MAX_PARTICLES_PER_BUCKET * sizeof( Vertex ) );
 	glBeginTransformFeedback( GL_POINTS );
 
-	std::vector< Vec4f > spawnAreas( thisFrameNumBuckets );
-	std::vector< float > spawnChances( thisFrameNumBuckets );
+	std::vector< Vec4f > spawnAreas( numBuckets );
+	std::vector< float > spawnChances( numBuckets );
 	memset( spawnChances.data(), 0, spawnChances.size() * sizeof( float ) );
 	//TODO: Map from fft's num bins to our num buckets. Audio guys halp!
-	for( size_t index = 0; index < thisFrameNumBuckets && index < fftData.size(); ++index )
+	for( size_t index = 0; index < numBuckets && index < fftData.size(); ++index )
 	{
-		float widthPerBucket = 1.6f / thisFrameNumBuckets;
+		float widthPerBucket = 1.6f / numBuckets;
 		Rectf spawnArea;
 		spawnArea.l = -0.8f + index * widthPerBucket + 0.1f * widthPerBucket;
 		spawnArea.r = spawnArea.l + widthPerBucket - 0.1f * widthPerBucket;
@@ -235,7 +275,7 @@ void Particles::UpdateParticles()
 
 	glEnable( GL_BLEND );
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE );
-	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( thisFrameNumBuckets * thisFrameNumParticlesPerBucket ) );
+	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( numBuckets * numParticlesPerBucket ) );
 	glBlendFunc( GL_ONE, GL_ZERO );
 	glDisable( GL_BLEND );
 
@@ -247,16 +287,6 @@ void Particles::UpdateParticles()
 }
 void Particles::RenderParticles()
 {
-	size_t thisFrameNumBuckets = MAX_BUCKETS;
-	size_t thisFrameNumParticlesPerBucket = MAX_PARTICLES_PER_BUCKET;
-
-	float tempo = 120.0;
-	float maxAge = 16.0f;
-	float fadeoutStart = 0.2f;
-	float particleSize = 1.0f;
-	float velocityToSizeFactor = 7.0f;
-	float burstDuration = 0.25f;
-
 	ScopedShaderBinding shaderBinding( glResources.GetRenderShader().GetGLID() );
 	ScopedVAOBinding vaoBinding( glResources.GetBackVAOID() );
 	ScopedSamplerActivation samplerBinding( 0 );
@@ -277,5 +307,5 @@ void Particles::RenderParticles()
 	glUniform1f( glResources.GetRenderShader().FindUniform( "DeltaTime" ), 0.017f );
 	glUniform2i( glResources.GetRenderShader().FindUniform( "RenderSize" ), 1920, 1080 );
 
-	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( thisFrameNumBuckets * thisFrameNumParticlesPerBucket ) );
+	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( numBuckets * numParticlesPerBucket ) );
 }
