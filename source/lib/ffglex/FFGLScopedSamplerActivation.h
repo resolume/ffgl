@@ -12,7 +12,6 @@ public:
 	void EndScope();
 
 private:
-	GLint previousBinding;
 	bool isBound;
 };
 

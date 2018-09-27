@@ -5,7 +5,6 @@ namespace ffglex
 ScopedShaderBinding::ScopedShaderBinding( GLuint shaderID ) :
 	isBound( true )
 {
-	glGetIntegerv( GL_CURRENT_PROGRAM, &previousBinding );
 	glUseProgram( shaderID );
 }
 ScopedShaderBinding::~ScopedShaderBinding()
@@ -17,7 +16,7 @@ void ScopedShaderBinding::EndScope()
 {
 	if( isBound )
 	{
-		glUseProgram( previousBinding );
+		glUseProgram( 0 );
 		isBound = false;
 	}
 }

@@ -5,7 +5,6 @@ namespace ffglex
 ScopedVAOBinding::ScopedVAOBinding( GLuint vaoID ) :
 	isBound( true )
 {
-	glGetIntegerv( GL_VERTEX_ARRAY_BINDING, &previousBinding );
 	glBindVertexArray( vaoID );
 }
 ScopedVAOBinding::~ScopedVAOBinding()
@@ -17,7 +16,7 @@ void ScopedVAOBinding::EndScope()
 {
 	if( isBound )
 	{
-		glBindVertexArray( previousBinding );
+		glBindVertexArray( 0 );
 		isBound = false;
 	}
 }

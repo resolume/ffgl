@@ -6,14 +6,13 @@ namespace ffglex
 class ScopedTextureBinding
 {
 public:
-	ScopedTextureBinding( GLenum target, GLenum bindingName, GLuint textureID );
+	ScopedTextureBinding( GLenum target, GLuint textureID );
 	virtual ~ScopedTextureBinding();
 
 	void EndScope();
 
 private:
 	GLenum target;
-	GLint previousBinding;
 	bool isBound;
 };
 
@@ -21,7 +20,7 @@ class Scoped2DTextureBinding : public ScopedTextureBinding
 {
 public:
 	Scoped2DTextureBinding( GLuint textureID ) :
-		ScopedTextureBinding( GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D, textureID )
+		ScopedTextureBinding( GL_TEXTURE_2D, textureID )
 	{
 	}
 };

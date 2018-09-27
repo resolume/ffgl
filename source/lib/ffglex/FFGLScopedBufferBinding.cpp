@@ -2,12 +2,10 @@
 
 namespace ffglex
 {
-ScopedBufferBinding::ScopedBufferBinding( GLenum target, GLenum bindingName, GLuint newBinding ) :
+ScopedBufferBinding::ScopedBufferBinding( GLenum target, GLuint newBinding ) :
 	target( target ),
-	previousBinding( 0 ),
 	isBound( true )
 {
-	glGetIntegerv( bindingName, &previousBinding );
 	glBindBuffer( target, newBinding );
 }
 ScopedBufferBinding::~ScopedBufferBinding()
@@ -19,7 +17,7 @@ void ScopedBufferBinding::EndScope()
 {
 	if( isBound )
 	{
-		glBindBuffer( target, previousBinding );
+		glBindBuffer( target, 0 );
 		isBound = false;
 	}
 }

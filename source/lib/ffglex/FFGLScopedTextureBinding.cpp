@@ -2,11 +2,9 @@
 
 namespace ffglex
 {
-ScopedTextureBinding::ScopedTextureBinding( GLenum target, GLenum bindingName, GLuint textureID ) :
-	target( target ),
-	isBound( true )
+ScopedTextureBinding::ScopedTextureBinding( GLenum target, GLuint textureID ) :
+	target( target )
 {
-	glGetIntegerv( bindingName, &previousBinding );
 	glBindTexture( target, textureID );
 }
 ScopedTextureBinding::~ScopedTextureBinding()
@@ -18,7 +16,7 @@ void ScopedTextureBinding::EndScope()
 {
 	if( isBound )
 	{
-		glBindTexture( target, previousBinding );
+		glBindTexture( target, 0 );
 		isBound = false;
 	}
 }
