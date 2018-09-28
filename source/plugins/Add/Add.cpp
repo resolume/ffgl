@@ -16,7 +16,7 @@ static CFFGLPluginInfo PluginInfo(
 	"Resolume FFGL example"                                                                      // About
 );
 
-static const char vertexShaderCode[] = R"(#version 330
+static const char vertexShaderCode[] = R"(#version 410 core
 uniform vec2 MaxUVDest;
 uniform vec2 MaxUVSrc;
 
@@ -35,7 +35,7 @@ void main()
 
 //This is the shader. It's using to make the transition.
 //The code below will be applied by each pixel of your output screen by the Graphic Card
-static const char fragmentShaderCode[] = R"(#version 330
+static const char fragmentShaderCode[] = R"(#version 410 core
 uniform sampler2D textureDest;
 uniform sampler2D textureSrc;
 //the value defined by the slider to switch between the two images
@@ -91,7 +91,9 @@ FFResult Add::InitGL( const FFGLViewportStruct* vp )
 		return FF_FAIL;
 	}
 
+	//FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that.
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );
+
 	//We're never changing the sampler to use, instead during rendering we'll make sure that we're always
 	//binding the texture to the right samplers
 	glUniform1i( shader.FindUniform( "textureDest" ), 0 );
@@ -126,7 +128,7 @@ FFResult Add::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	if( pGL->inputTextures[ 1 ] == nullptr )
 		return FF_FAIL;
 
-	//activate our shader
+	//Activate our shader using the scoped binding so that we'll restore the context state when we're done.
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );
 
 	//The input texture's dimension might change each frame and so might the content area.
@@ -142,7 +144,8 @@ FFResult Add::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	//assign the mixer value
 	glUniform1f( mixValLocation, m_MixVal );
 
-	//The shader's samplers are fixed so we need to bind the texture to these exact sampler indices.
+	//The shader's samplers are fixed so we need to bind the texture to these exact sampler indices. Use the scoped
+	//bindings to ensure that the context will be returned in it's default state after we're done rendering.
 	ScopedSamplerActivation activateSampler0( 0 );
 	Scoped2DTextureBinding textureBinding0( TextureDest.Handle );
 	ScopedSamplerActivation activateSampler1( 1 );

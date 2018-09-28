@@ -20,7 +20,7 @@ static CFFGLPluginInfo PluginInfo(
 	"Resolume FFGL Example"        // About
 );
 
-static const char vertexShaderCode[] = R"(#version 330
+static const char vertexShaderCode[] = R"(#version 410 core
 layout( location = 0 ) in vec4 vPosition;
 layout( location = 1 ) in vec2 vUV;
 
@@ -33,7 +33,7 @@ void main()
 }
 )";
 
-static const char fragmentShaderCode[] = R"(#version 330
+static const char fragmentShaderCode[] = R"(#version 410 core
 uniform vec3 RGBLeft;
 uniform vec3 RGBRight;
 

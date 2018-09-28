@@ -1,6 +1,6 @@
 #pragma once
 
-static const char vsDebugRender[] = R"(#version 330
+static const char vsDebugRender[] = R"(#version 410 core
 #line 5
 uniform vec4 BUCKET_COLORS[ MAX_BUCKETS ];
 

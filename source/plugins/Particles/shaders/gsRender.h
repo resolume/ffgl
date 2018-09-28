@@ -1,6 +1,6 @@
 #pragma once
 
-static const char gsRender[] = R"(#version 330
+static const char gsRender[] = R"(#version 410 core
 #line 5
 layout( points ) in;
 layout( triangle_strip, max_vertices = 4 ) out;

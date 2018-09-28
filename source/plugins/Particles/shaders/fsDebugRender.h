@@ -1,6 +1,6 @@
 #pragma once
 
-static const char fsDebugRender[] = R"(#version 330
+static const char fsDebugRender[] = R"(#version 410 core
 #line 5
 
 in vec4 color;

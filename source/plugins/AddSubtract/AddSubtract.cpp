@@ -10,7 +10,7 @@ static CFFGLPluginInfo PluginInfo(
 	"RE01",                      // Plugin unique ID of maximum length 4.
 	"AddSub Example",            // Plugin name
 	2,                           // API major version number
-	0,                         // API minor version number
+	0,                           // API minor version number
 	1,                           // Plugin major version number
 	000,                         // Plugin minor version number
 	FF_EFFECT,                   // Plugin type
@@ -18,7 +18,7 @@ static CFFGLPluginInfo PluginInfo(
 	"Resolume FFGL Example"      // About
 );
 
-static const char vertexShaderCode[] = R"(#version 330
+static const char vertexShaderCode[] = R"(#version 410 core
 uniform vec2 MaxUV;
 
 layout( location = 0 ) in vec4 vPosition;
@@ -33,7 +33,7 @@ void main()
 }
 )";
 
-static const char fragmentShaderCode[] = R"(#version 330
+static const char fragmentShaderCode[] = R"(#version 410 core
 uniform sampler2D InputTexture;
 uniform vec3 Brightness;
 
@@ -92,7 +92,9 @@ FFResult AddSubtract::InitGL( const FFGLViewportStruct* vp )
 		return FF_FAIL;
 	}
 
+	//FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that.
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );
+
 	//We're never changing the sampler to use, instead during rendering we'll make sure that we're always
 	//binding the texture to sampler 0.
 	glUniform1i( shader.FindUniform( "inputTexture" ), 0 );
@@ -121,6 +123,7 @@ FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	if( pGL->inputTextures[ 0 ] == NULL )
 		return FF_FAIL;
 
+	//FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that.
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );
 
 	FFGLTextureStruct& Texture = *( pGL->inputTextures[ 0 ] );
@@ -136,6 +139,7 @@ FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 				 -1.0f + ( brightnessB * 2.0f ) );
 
 	//The shader's sampler is always bound to sampler index 0 so that's where we need to bind the texture.
+	//Again, we're using the scoped bindings to help us keep the context in a default state.
 	ScopedSamplerActivation activateSampler( 0 );
 	Scoped2DTextureBinding textureBinding( Texture.Handle );
 

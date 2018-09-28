@@ -1,6 +1,6 @@
 #pragma once
 
-static const char fsRender[] = R"(#version 330
+static const char fsRender[] = R"(#version 410 core
 #line 5
 uniform sampler2D ParticleTexture;
 

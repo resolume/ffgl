@@ -1,6 +1,6 @@
 #pragma once
 
-static const char vsRender[] = R"(#version 330
+static const char vsRender[] = R"(#version 410 core
 #line 5
 uniform float MAX_AGE;
 uniform float FADEOUT_START;

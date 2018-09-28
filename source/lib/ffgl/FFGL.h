@@ -75,7 +75,7 @@
 #define NOMINMAX           //No min/max macros.
 #define _WINSOCKAPI_       //Prevent inclusion of winsock
 #include <windows.h>
-#include "../glsdk_0_5_2/glload/include/gl_3_3.h"
+#include "../glsdk_0_5_2/glload/include/gl_4_1.h"
 typedef unsigned __int16 FFUInt16;
 typedef unsigned __int32 FFUInt32;
 #else

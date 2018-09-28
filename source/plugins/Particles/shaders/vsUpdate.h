@@ -1,6 +1,6 @@
 #pragma once
 
-static const char vsUpdate[] = R"(#version 330
+static const char vsUpdate[] = R"(#version 410 core
 #line 5
 
 uniform float MAX_AGE;
