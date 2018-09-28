@@ -31,7 +31,8 @@ void main()
 	gl_Position = vPosition;
 	uvDest = vUV * MaxUVDest;
 	uvSrc = vUV * MaxUVSrc;
-} )";
+}
+)";
 
 //This is the shader. It's using to make the transition.
 //The code below will be applied by each pixel of your output screen by the Graphic Card
@@ -73,7 +74,6 @@ Add::Add() :
 	SetParamInfo( FFPARAM_MixVal, "Mixer Value", FF_TYPE_STANDARD, 0.5f );
 	m_MixVal = 0.5f;
 }
-
 Add::~Add()
 {
 }
@@ -107,18 +107,6 @@ FFResult Add::InitGL( const FFGLViewportStruct* vp )
 	//Use base-class init as success result so that it retains the viewport.
 	return CFreeFrameGLPlugin::InitGL( vp );
 }
-
-FFResult Add::DeInitGL()
-{
-	shader.FreeGLResources();
-	quad.Release();
-	mixValLocation    = -1;
-	maxUVDestLocation = -1;
-	maxUVSrcLocation  = -1;
-
-	return FF_SUCCESS;
-}
-
 FFResult Add::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
 	if( pGL->numInputTextures < 2 )
@@ -152,11 +140,32 @@ FFResult Add::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	ScopedSamplerActivation activateSampler1( 1 );
 	Scoped2DTextureBinding textureBinding1( TextureSrc.Handle );
 
-	//draw the quad that will be painted by the shader/textures
-	//note that we are sending texture coordinates to texture unit 1..
-	//the vertex shader and fragment shader refer to this when querying for
-	//texture coordinates of the inputTexture
+	//Apply our shader to the full screen quad.
 	quad.Draw();
+
+	return FF_SUCCESS;
+}
+FFResult Add::DeInitGL()
+{
+	shader.FreeGLResources();
+	quad.Release();
+	mixValLocation    = -1;
+	maxUVDestLocation = -1;
+	maxUVSrcLocation  = -1;
+
+	return FF_SUCCESS;
+}
+
+FFResult Add::SetFloatParameter( unsigned int dwIndex, float value )
+{
+	switch( dwIndex )
+	{
+	case FFPARAM_MixVal:
+		m_MixVal = value;
+		break;
+	default:
+		return FF_FAIL;
+	}
 
 	return FF_SUCCESS;
 }
@@ -173,18 +182,4 @@ float Add::GetFloatParameter( unsigned int dwIndex )
 	default:
 		return retValue;
 	}
-}
-
-FFResult Add::SetFloatParameter( unsigned int dwIndex, float value )
-{
-	switch( dwIndex )
-	{
-	case FFPARAM_MixVal:
-		m_MixVal = value;
-		break;
-	default:
-		return FF_FAIL;
-	}
-
-	return FF_SUCCESS;
 }

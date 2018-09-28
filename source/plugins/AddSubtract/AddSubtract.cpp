@@ -106,16 +106,6 @@ FFResult AddSubtract::InitGL( const FFGLViewportStruct* vp )
 	//Use base-class init as success result so that it retains the viewport.
 	return CFreeFrameGLPlugin::InitGL( vp );
 }
-FFResult AddSubtract::DeInitGL()
-{
-	shader.FreeGLResources();
-	quad.Release();
-	maxUVLocation = -1;
-	brightnessLocation = -1;
-
-	return FF_SUCCESS;
-}
-
 FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
 	if( pGL->numInputTextures < 1 )
@@ -148,6 +138,15 @@ FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 
 	return FF_SUCCESS;
 }
+FFResult AddSubtract::DeInitGL()
+{
+	shader.FreeGLResources();
+	quad.Release();
+	maxUVLocation = -1;
+	brightnessLocation = -1;
+
+	return FF_SUCCESS;
+}
 
 FFResult AddSubtract::SetFloatParameter( unsigned int dwIndex, float value )
 {
@@ -171,21 +170,16 @@ FFResult AddSubtract::SetFloatParameter( unsigned int dwIndex, float value )
 
 float AddSubtract::GetFloatParameter( unsigned int dwIndex )
 {
-	float retValue = 0.0;
-
 	switch( dwIndex )
 	{
 	case FFPARAM_BrightnessR:
-		retValue = brightnessR;
-		return retValue;
+		return brightnessR;
 	case FFPARAM_BrightnessG:
-		retValue = brightnessG;
-		return retValue;
+		return brightnessG;
 	case FFPARAM_BrightnessB:
-		retValue = brightnessB;
-		return retValue;
+		return brightnessB;
 
 	default:
-		return retValue;
+		return 0.0f;
 	}
 }

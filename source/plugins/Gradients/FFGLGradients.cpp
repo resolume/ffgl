@@ -82,6 +82,7 @@ FFResult FFGLGradients::InitGL( const FFGLViewportStruct* vp )
 		return FF_FAIL;
 	}
 
+	//FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that.
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );
 	rgbLeftLocation  = shader.FindUniform( "RGBLeft" );
 	rgbRightLocation = shader.FindUniform( "RGBRight" );
@@ -89,21 +90,6 @@ FFResult FFGLGradients::InitGL( const FFGLViewportStruct* vp )
 	//Use base-class init as success result so that it retains the viewport.
 	return CFreeFrameGLPlugin::InitGL( vp );
 }
-
-FFResult FFGLGradients::DeInitGL()
-{
-	shader.FreeGLResources();
-	quad.Release();
-	rgbLeftLocation  = -1;
-	rgbRightLocation = -1;
-
-	return FF_SUCCESS;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Methods
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 FFResult FFGLGradients::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
 	double rgb1[ 3 ];
@@ -115,11 +101,44 @@ FFResult FFGLGradients::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	double hue2 = ( m_Hue2 == 1.0 ) ? 0.0 : m_Hue2;
 	HSVtoRGB( hue2, m_Saturation, m_Brightness, &rgb2[ 0 ], &rgb2[ 1 ], &rgb2[ 2 ] );
 
+	//FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that.
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );
 	glUniform3f( rgbLeftLocation, rgb1[ 0 ], rgb1[ 1 ], rgb1[ 2 ] );
 	glUniform3f( rgbRightLocation, rgb2[ 0 ], rgb2[ 1 ], rgb2[ 2 ] );
 
 	quad.Draw();
+
+	return FF_SUCCESS;
+}
+FFResult FFGLGradients::DeInitGL()
+{
+	shader.FreeGLResources();
+	quad.Release();
+	rgbLeftLocation  = -1;
+	rgbRightLocation = -1;
+
+	return FF_SUCCESS;
+}
+
+FFResult FFGLGradients::SetFloatParameter( unsigned int dwIndex, float value )
+{
+	switch( dwIndex )
+	{
+	case FFPARAM_Hue1:
+		m_Hue1 = value;
+		break;
+	case FFPARAM_Hue2:
+		m_Hue2 = value;
+		break;
+	case FFPARAM_Saturation:
+		m_Saturation = value;
+		break;
+	case FFPARAM_Brightness:
+		m_Brightness = value;
+		break;
+	default:
+		return FF_FAIL;
+	}
 
 	return FF_SUCCESS;
 }
@@ -147,27 +166,4 @@ float FFGLGradients::GetFloatParameter( unsigned int index )
 	}
 
 	return retValue;
-}
-
-FFResult FFGLGradients::SetFloatParameter( unsigned int dwIndex, float value )
-{
-	switch( dwIndex )
-	{
-	case FFPARAM_Hue1:
-		m_Hue1 = value;
-		break;
-	case FFPARAM_Hue2:
-		m_Hue2 = value;
-		break;
-	case FFPARAM_Saturation:
-		m_Saturation = value;
-		break;
-	case FFPARAM_Brightness:
-		m_Brightness = value;
-		break;
-	default:
-		return FF_FAIL;
-	}
-
-	return FF_SUCCESS;
 }
