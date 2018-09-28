@@ -86,7 +86,8 @@ FFResult FFGLGradients::InitGL( const FFGLViewportStruct* vp )
 	rgbLeftLocation  = shader.FindUniform( "RGBLeft" );
 	rgbRightLocation = shader.FindUniform( "RGBRight" );
 
-	return FF_SUCCESS;
+	//Use base-class init as success result so that it retains the viewport.
+	return CFreeFrameGLPlugin::InitGL( vp );
 }
 
 FFResult FFGLGradients::DeInitGL()

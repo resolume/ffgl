@@ -104,7 +104,8 @@ FFResult Add::InitGL( const FFGLViewportStruct* vp )
 	maxUVDestLocation = shader.FindUniform( "MaxUVDest" );
 	maxUVSrcLocation  = shader.FindUniform( "MaxUVSrc" );
 
-	return FF_SUCCESS;
+	//Use base-class init as success result so that it retains the viewport.
+	return CFreeFrameGLPlugin::InitGL( vp );
 }
 
 FFResult Add::DeInitGL()

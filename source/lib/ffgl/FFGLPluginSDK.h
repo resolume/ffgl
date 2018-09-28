@@ -56,6 +56,7 @@ public:
 	///           any OpenGL resources
 	virtual FFResult InitGL( const FFGLViewportStruct* vp )
 	{
+		currentViewport = *vp;
 		return FF_SUCCESS;
 	}
 
@@ -155,6 +156,7 @@ public:
 	/// \return		The default implementation always returns FF_SUCCESS.
 	virtual unsigned int Resize( const FFGLViewportStruct* vp )
 	{
+		currentViewport = *vp;
 		return FF_SUCCESS;
 	}
 
@@ -172,6 +174,8 @@ protected:
 	/// plugins should be instantiated. Moreover, subclasses should define and provide a factory method to be used by
 	/// the FreeFrame SDK for instantiating plugin objects.
 	CFreeFrameGLPlugin();
+
+	FFGLViewportStruct currentViewport;
 };
 
 #endif

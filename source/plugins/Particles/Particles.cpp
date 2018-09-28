@@ -92,7 +92,7 @@ Particles::Particles() :
 	SetParamInfof( PID_FADEOUT_START, "Fadeout Start", FF_TYPE_STANDARD );
 	SetParamInfof( PID_SMOKE_START, "Smoke Start", FF_TYPE_STANDARD );
 	SetParamInfof( PID_SMOKE_INTENSITY, "Smoke Intensity", FF_TYPE_STANDARD );
-	SetParamInfof( PID_SMOKE_INTENSITY, "Energy To Age Factor", FF_TYPE_STANDARD );
+	SetParamInfof( PID_ENERGY_MAX_AGE_FACTOR, "Energy To Age Factor", FF_TYPE_STANDARD );
 	SetParamInfof( PID_TURBULENCE_DETAIL, "Turbulence Detail", FF_TYPE_STANDARD );
 	SetParamInfof( PID_TURBULENCE_SPEED, "Turbulence Speed", FF_TYPE_STANDARD );
 	SetOptionParamInfo( PID_MAX_AGE, "Max Age", 5, maxAge );
@@ -118,7 +118,8 @@ FFResult Particles::InitGL( const FFGLViewportStruct* vp )
 		return FF_FAIL;
 	}
 
-	return FF_SUCCESS;
+	//Use base-class init as success result so that it retains the viewport.
+	return CFreeFrameGLPlugin::InitGL( vp );
 }
 FFResult Particles::DeInitGL()
 {
@@ -280,7 +281,7 @@ void Particles::UpdateParticles()
 
 	glUniform1f( glResources.GetUpdateShader().FindUniform( "Time" ), getTicks() / 1000.0f );
 	glUniform1f( glResources.GetUpdateShader().FindUniform( "DeltaTime" ), 0.017f );
-	glUniform2i( glResources.GetUpdateShader().FindUniform( "RenderSize" ), 1920, 1080 );
+	glUniform2i( glResources.GetUpdateShader().FindUniform( "RenderSize" ), currentViewport.width, currentViewport.height );
 
 	ScopedVAOBinding vaoBinding( glResources.GetFrontVAOID() );
 
@@ -312,7 +313,7 @@ void Particles::RenderParticles()
 
 	glUniform1f( glResources.GetRenderShader().FindUniform( "Time" ), getTicks() / 1000.0f );
 	glUniform1f( glResources.GetRenderShader().FindUniform( "DeltaTime" ), 0.017f );
-	glUniform2i( glResources.GetRenderShader().FindUniform( "RenderSize" ), 1920, 1080 );
+	glUniform2i( glResources.GetRenderShader().FindUniform( "RenderSize" ), currentViewport.width, currentViewport.height );
 
 	glEnable( GL_BLEND );
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE );

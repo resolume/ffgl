@@ -103,7 +103,8 @@ FFResult AddSubtract::InitGL( const FFGLViewportStruct* vp )
 	maxUVLocation = shader.FindUniform( "MaxUV" );
 	brightnessLocation = shader.FindUniform( "Brightness" );
 
-	return FF_SUCCESS;
+	//Use base-class init as success result so that it retains the viewport.
+	return CFreeFrameGLPlugin::InitGL( vp );
 }
 FFResult AddSubtract::DeInitGL()
 {
