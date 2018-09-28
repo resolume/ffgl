@@ -20,7 +20,7 @@ protected:
 	void UpdateParticles();
 	void RenderParticles();
 
-	GLResources glResources;
+	GLResources glResources;     //!< The container of our OpenGL resources.
 
 	//Parameters
 	float fadeoutStart;

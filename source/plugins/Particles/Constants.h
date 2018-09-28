@@ -1,6 +1,6 @@
 #pragma once
 
-static const int MAX_BUCKETS = 64;
+static const int MAX_BUCKETS = 64; //Resolume supports 64 fft bins so we support up toone bucket per bin
 static const int MAX_PARTICLES_PER_BUCKET = 65536;
 float* GetBucketColors();
 

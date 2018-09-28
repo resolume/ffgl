@@ -118,13 +118,14 @@ bool GLResources::LoadParticleTexture()
 	if( particleTextureID == 0 )
 		return false;
 
+	//Use the scoped binding so that the context state is restored to it's default as required by ffgl.
 	Scoped2DTextureBinding textureBinding( particleTextureID );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	//We've been lazy with our pixel building above, tell the driver that our data isn't 4byte aligned (which is context default)
 	glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
 	glTexImage2D( GL_TEXTURE_2D, 0, GL_R8, 15, 15, 0, GL_RED, GL_UNSIGNED_BYTE, pixels.data() );
-	glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );//Set it back to the context's default state.
+	glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );//Set it back to the context's default state as required by ffgl.
 	return true;
 }
 bool GLResources::LoadVertexBuffers()
@@ -144,7 +145,6 @@ bool GLResources::LoadVertexBuffers()
 	{
 		for( int bucketIndex = 0; bucketIndex < MAX_BUCKETS; ++bucketIndex )
 		{
-			//const size_t vertexIndex = bucketIndex * MAX_PARTICLES_PER_BUCKET + particleIndex;
 			Vertex& vertex           = vertexData[ vertexIndex ];
 			vertex.age               = std::numeric_limits< float >::max();
 			vertex.bucketIndex       = bucketIndex;
@@ -168,6 +168,7 @@ bool GLResources::LoadVertexBuffers()
 	if( vboIDs[ 0 ] == 0 || vboIDs[ 1 ] == 0 )
 		return false;
 
+	//FFGL requires us to leave the context in a default state on return, so use these scoped bindings to help us do that.
 	ScopedVAOBinding vaoBinding0( vaoIDs[ 0 ] );
 	ScopedVBOBinding vboBinding0( vboIDs[ 0 ] );
 	glBufferData( GL_ARRAY_BUFFER, MAX_BUCKETS * MAX_PARTICLES_PER_BUCKET * sizeof( Vertex ), vertexData.data(), GL_STATIC_DRAW );
@@ -183,9 +184,11 @@ bool GLResources::LoadVertexBuffers()
 	glEnableVertexAttribArray( 4 );
 	glVertexAttribIPointer( 4, 1, GL_INT, sizeof( Vertex ), (char*)NULL + 7 * sizeof( float ) );
 
+	//Manually end the scope so that we wont do two unbindings when we're done.
 	vboBinding0.EndScope();
 	vaoBinding0.EndScope();
 
+	//FFGL requires us to leave the context in a default state on return, so use these scoped bindings to help us do that.
 	ScopedVAOBinding vaoBinding1( vaoIDs[ 1 ] );
 	ScopedVBOBinding vboBinding1( vboIDs[ 1 ] );
 	glBufferData( GL_ARRAY_BUFFER, MAX_BUCKETS * MAX_PARTICLES_PER_BUCKET * sizeof( Vertex ), vertexData.data(), GL_STATIC_DRAW );
@@ -204,11 +207,6 @@ bool GLResources::LoadVertexBuffers()
 	vboBinding1.EndScope();
 	vaoBinding1.EndScope();
 
-	glDisableVertexAttribArray( 0 );
-	glDisableVertexAttribArray( 1 );
-	glDisableVertexAttribArray( 2 );
-	glDisableVertexAttribArray( 3 );
-	glDisableVertexAttribArray( 4 );
 	return true;
 }
 bool GLResources::LoadShaders()

@@ -64,15 +64,15 @@ void main()
 Add::Add() :
 	mixValLocation( -1 ),
 	maxUVDestLocation( -1 ),
-	maxUVSrcLocation( -1 )
+	maxUVSrcLocation( -1 ),
+	m_MixVal( 0.5f )
 {
 	// Input properties
 	SetMinInputs( 2 );
 	SetMaxInputs( 2 );
 
 	// Parameters
-	SetParamInfo( FFPARAM_MixVal, "Mixer Value", FF_TYPE_STANDARD, 0.5f );
-	m_MixVal = 0.5f;
+	SetParamInfof( FFPARAM_MixVal, "Mixer Value", FF_TYPE_STANDARD );
 }
 Add::~Add()
 {

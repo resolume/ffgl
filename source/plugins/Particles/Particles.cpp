@@ -51,6 +51,7 @@ struct Rectf
 	float l, r, b, t;
 };
 
+//Just using an enum to give our Parameter ID's unique numbers.
 enum ParamID
 {
 	PID_FADEOUT_START,
@@ -66,7 +67,9 @@ enum ParamID
 	PID_NUM_PARTICLES_PER_BUCKET,
 	PID_BURST_DURATION,
 	PID_BURST_INTENSITY,
-	PID_SIMULATE
+
+	PID_SIMULATE,
+	PID_FFT_INPUT
 };
 
 Particles::Particles() :
@@ -89,6 +92,7 @@ Particles::Particles() :
 	SetMinInputs( 0 );
 	SetMaxInputs( 0 );
 
+	//Register our params using the new utility function that gets the current value and uses it as the default.
 	SetParamInfof( PID_FADEOUT_START, "Fadeout Start", FF_TYPE_STANDARD );
 	SetParamInfof( PID_SMOKE_START, "Smoke Start", FF_TYPE_STANDARD );
 	SetParamInfof( PID_SMOKE_INTENSITY, "Smoke Intensity", FF_TYPE_STANDARD );
@@ -108,6 +112,10 @@ Particles::Particles() :
 	SetParamInfof( PID_BURST_DURATION, "Burst Duration", FF_TYPE_STANDARD );
 	SetParamInfof( PID_BURST_INTENSITY, "Burst Intensity", FF_TYPE_STANDARD );
 	SetParamInfo( PID_SIMULATE, "Simulate", FF_TYPE_BOOLEAN, simulate );
+
+	SetBufferParamInfo( PID_FFT_INPUT, "FFT", MAX_BUCKETS, FF_USAGE_FFT );
+	for( size_t index = 0; index < MAX_BUCKETS; ++index )
+		SetParamElementInfo( PID_FFT_INPUT, index, "", 0.1f ); //Default to 0.1 so that we'll keep emitting even if the host doesn't provide fft data.
 }
 
 FFResult Particles::InitGL( const FFGLViewportStruct* vp )
@@ -190,6 +198,8 @@ FFResult Particles::SetFloatParameter( unsigned int dwIndex, float value )
 	case PID_SIMULATE:
 		simulate = value != 0.0f;
 		break;
+	case PID_FFT_INPUT:  //This case is here to keep the ffgl framework happy. By responding with FF_SUCCESS we're telling it that this is a valid param id.
+		break;
 
 	default:
 		return FF_FAIL;
@@ -231,6 +241,8 @@ float Particles::GetFloatParameter( unsigned int index )
 
 	case PID_SIMULATE:
 		return simulate ? 1.0f : 0.0f;
+	case PID_FFT_INPUT:
+		return 0.0f;
 
 	default:
 		return 0.0f;
@@ -239,12 +251,14 @@ float Particles::GetFloatParameter( unsigned int index )
 
 void Particles::UpdateParticles()
 {
-	std::vector< float > fftData( 64 );
-	//std::fill( fftData.begin(), fftData.end(), 0.4f );
-	float peakBucket = sinf( getTicks() / 1000.0f * 2.0f ) * 32.0f + 32.0f;
-	float phasePerBucket = M_PI * 2.0f / fftData.size();
-	for( size_t index = 0; index < fftData.size(); ++index )
-		fftData[ index ] = std::max( 0.0f, 0.2f * sinf( M_PI * 0.5f + index * phasePerBucket + peakBucket * phasePerBucket ) );
+	std::vector< float > fftData( MAX_BUCKETS );
+	const ParamInfo* fftInfo = FindParamInfo( PID_FFT_INPUT );
+	for( size_t index = 0; index < MAX_BUCKETS; ++index )
+		fftData[ index ] = fftInfo->elements[ index ].value;
+	//float peakBucket = sinf( getTicks() / 1000.0f * 2.0f ) * 32.0f + 32.0f;
+	//float phasePerBucket = M_PI * 2.0f / fftData.size();
+	//for( size_t index = 0; index < fftData.size(); ++index )
+	//	fftData[ index ] = std::max( 0.0f, 0.2f * sinf( M_PI * 0.5f + index * phasePerBucket + peakBucket * phasePerBucket ) );
 
 	glResources.FlipBuffers();
 
@@ -311,13 +325,12 @@ void Particles::RenderParticles()
 	glUniform2f( glResources.GetRenderShader().FindUniform( "MAX_UV" ), 1.0f, 1.0f );
 	glUniform1f( glResources.GetRenderShader().FindUniform( "BURST_DURATION" ), burstDuration );
 
-	glUniform1f( glResources.GetRenderShader().FindUniform( "Time" ), getTicks() / 1000.0f );
-	glUniform1f( glResources.GetRenderShader().FindUniform( "DeltaTime" ), 0.017f );
 	glUniform2i( glResources.GetRenderShader().FindUniform( "RenderSize" ), currentViewport.width, currentViewport.height );
 
 	glEnable( GL_BLEND );
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE );
 	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( numBuckets * numParticlesPerBucket ) );
+	//FFGL requires us to keep the entire context state at default, this includes the blendmode, so set it back.
 	glBlendFunc( GL_ONE, GL_ZERO );
 	glDisable( GL_BLEND );
 }

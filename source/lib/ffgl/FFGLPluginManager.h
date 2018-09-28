@@ -229,7 +229,7 @@ protected:
 	/// \param	supported	The plugin indicates whether it supports the SetTime function by passing true or false (1 or 0)
 	void SetTimeSupported( bool supported );
 
-private:
+protected:
 	// Structure for keeping information about each plugin parameter
 	typedef struct ParamInfoStruct
 	{
@@ -250,10 +250,11 @@ private:
 		char* StrDefaultValue;
 		ParamInfoStruct* pNext;
 	} ParamInfo;
-	
+
 	ParamInfo* FindParamInfo( unsigned int ID );
 	const ParamInfo* FindParamInfo( unsigned int ID ) const;
 
+private:
 	// Information on paramters and pointers to ParamInfo list
 	int m_NParams;
 	ParamInfo* m_pFirst;

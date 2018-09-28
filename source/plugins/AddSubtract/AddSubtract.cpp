@@ -59,21 +59,19 @@ void main()
 
 AddSubtract::AddSubtract() :
 	maxUVLocation( -1 ),
-	brightnessLocation( -1 )
+	brightnessLocation( -1 ),
+	brightnessR( 0.5f ),
+	brightnessG( 0.5f ),
+	brightnessB( 0.5f )
 {
 	// Input properties
 	SetMinInputs( 1 );
 	SetMaxInputs( 1 );
 
 	// Parameters
-	SetParamInfo( FFPARAM_BrightnessR, "R", FF_TYPE_RED, 0.5f );
-	brightnessR = 0.5f;
-
-	SetParamInfo( FFPARAM_BrightnessG, "G", FF_TYPE_GREEN, 0.5f );
-	brightnessG = 0.5f;
-
-	SetParamInfo( FFPARAM_BrightnessB, "B", FF_TYPE_BLUE, 0.5f );
-	brightnessB = 0.5f;
+	SetParamInfof( FFPARAM_BrightnessR, "R", FF_TYPE_RED );
+	SetParamInfof( FFPARAM_BrightnessG, "G", FF_TYPE_GREEN );
+	SetParamInfof( FFPARAM_BrightnessB, "B", FF_TYPE_BLUE );
 }
 AddSubtract::~AddSubtract()
 {

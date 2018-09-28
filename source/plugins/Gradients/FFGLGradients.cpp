@@ -49,26 +49,22 @@ void main()
 
 FFGLGradients::FFGLGradients() :
 	rgbLeftLocation( -1 ),
-	rgbRightLocation( -1 )
+	rgbRightLocation( -1 ),
+	m_Hue1( 0.0f ),
+	m_Hue2( 0.5f ),
+	m_Saturation( 1.0f ),
+	m_Brightness( 1.0f )
 {
 	// Input properties
 	SetMinInputs( 0 );
 	SetMaxInputs( 0 );
 
 	// Parameters
-	SetParamInfo( FFPARAM_Hue1, "Hue 1", FF_TYPE_STANDARD, 0.0f );
-	m_Hue1 = 0.0f;
-
-	SetParamInfo( FFPARAM_Hue2, "Hue 2", FF_TYPE_STANDARD, 0.5f );
-	m_Hue2 = 0.5f;
-
-	SetParamInfo( FFPARAM_Saturation, "Saturation", FF_TYPE_STANDARD, 1.0f );
-	m_Saturation = 1.0f;
-
-	SetParamInfo( FFPARAM_Brightness, "Brightness", FF_TYPE_STANDARD, 1.0f );
-	m_Brightness = 1.0f;
+	SetParamInfof( FFPARAM_Hue1, "Hue 1", FF_TYPE_STANDARD );
+	SetParamInfof( FFPARAM_Hue2, "Hue 2", FF_TYPE_STANDARD );
+	SetParamInfof( FFPARAM_Saturation, "Saturation", FF_TYPE_STANDARD );
+	SetParamInfof( FFPARAM_Brightness, "Brightness", FF_TYPE_STANDARD );
 }
-
 FFResult FFGLGradients::InitGL( const FFGLViewportStruct* vp )
 {
 	if( !shader.Compile( vertexShaderCode, fragmentShaderCode ) )
