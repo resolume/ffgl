@@ -16,7 +16,7 @@ void ScopedSamplerActivation::EndScope()
 {
 	if( isBound )
 	{
-		glActiveTexture( 0 );
+		glActiveTexture( GL_TEXTURE0 + 0 );
 		isBound = false;
 	}
 }
