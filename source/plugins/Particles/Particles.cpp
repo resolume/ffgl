@@ -114,7 +114,7 @@ Particles::Particles() :
 	SetParamInfo( PID_SIMULATE, "Simulate", FF_TYPE_BOOLEAN, simulate );
 
 	SetBufferParamInfo( PID_FFT_INPUT, "FFT", MAX_BUCKETS, FF_USAGE_FFT );
-	for( size_t index = 0; index < MAX_BUCKETS; ++index )
+	for( unsigned int index = 0; index < MAX_BUCKETS; ++index )
 		SetParamElementInfo( PID_FFT_INPUT, index, "", 0.1f ); //Default to 0.1 so that we'll keep emitting even if the host doesn't provide fft data.
 }
 
@@ -137,17 +137,14 @@ FFResult Particles::DeInitGL()
 }
 FFResult Particles::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
+	float timeNow = getTicks() / 1000.0f;
+	float deltaTime = timeNow - lastUpdate;
+	lastUpdate = timeNow;
+
 	if( simulate )
-		UpdateParticles();
+		UpdateParticles( deltaTime );
 	RenderParticles();
 
-	/*
-	ScopedShaderBinding shaderBinding( glResources.GetDebugRenderShader().GetGLID() );
-	ScopedVAOBinding vaoBinding( glResources.GetFrontVAOID() );
-
-	glUniform4fv( glResources.GetDebugRenderShader().FindUniform( "BUCKET_COLORS" ), MAX_BUCKETS, GetBucketColors() );
-	glDrawArrays( GL_POINTS, 0, MAX_BUCKETS * MAX_PARTICLES_PER_BUCKET );
-	*/
 	return FF_SUCCESS;
 }
 
@@ -249,16 +246,12 @@ float Particles::GetFloatParameter( unsigned int index )
 	}
 }
 
-void Particles::UpdateParticles()
+void Particles::UpdateParticles( float deltaTime )
 {
 	std::vector< float > fftData( MAX_BUCKETS );
 	const ParamInfo* fftInfo = FindParamInfo( PID_FFT_INPUT );
 	for( size_t index = 0; index < MAX_BUCKETS; ++index )
 		fftData[ index ] = fftInfo->elements[ index ].value;
-	//float peakBucket = sinf( getTicks() / 1000.0f * 2.0f ) * 32.0f + 32.0f;
-	//float phasePerBucket = M_PI * 2.0f / fftData.size();
-	//for( size_t index = 0; index < fftData.size(); ++index )
-	//	fftData[ index ] = std::max( 0.0f, 0.2f * sinf( M_PI * 0.5f + index * phasePerBucket + peakBucket * phasePerBucket ) );
 
 	glResources.FlipBuffers();
 
@@ -294,7 +287,7 @@ void Particles::UpdateParticles()
 	glUniform1f( glResources.GetUpdateShader().FindUniform( "BURST_INTENSITY" ), burstIntensity );
 
 	glUniform1f( glResources.GetUpdateShader().FindUniform( "Time" ), getTicks() / 1000.0f );
-	glUniform1f( glResources.GetUpdateShader().FindUniform( "DeltaTime" ), 0.017f );
+	glUniform1f( glResources.GetUpdateShader().FindUniform( "DeltaTime" ), deltaTime );
 	glUniform2i( glResources.GetUpdateShader().FindUniform( "RenderSize" ), currentViewport.width, currentViewport.height );
 
 	ScopedVAOBinding vaoBinding( glResources.GetFrontVAOID() );
@@ -312,7 +305,7 @@ void Particles::RenderParticles()
 	ScopedShaderBinding shaderBinding( glResources.GetRenderShader().GetGLID() );
 	ScopedVAOBinding vaoBinding( glResources.GetBackVAOID() );
 	ScopedSamplerActivation samplerBinding( 0 );
-	Scoped2DTextureBinding( glResources.GetParticleTextureID() );
+	Scoped2DTextureBinding textureBinding( glResources.GetParticleTextureID() );
 
 	glUniform1f( glResources.GetRenderShader().FindUniform( "MAX_AGE" ), 60.0f / tempo * maxAge );
 	glUniform1f( glResources.GetRenderShader().FindUniform( "FADEOUT_START" ), fadeoutStart );

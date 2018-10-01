@@ -3,7 +3,8 @@
 namespace ffglex
 {
 ScopedTextureBinding::ScopedTextureBinding( GLenum target, GLuint textureID ) :
-	target( target )
+	target( target ),
+	isBound( true )
 {
 	glBindTexture( target, textureID );
 }

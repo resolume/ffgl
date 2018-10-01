@@ -15,7 +15,6 @@
     <ClCompile Include="..\..\source\plugins\Particles\Constants.cpp" />
     <ClCompile Include="..\..\source\plugins\Particles\GLResources.cpp" />
     <ClCompile Include="..\..\source\plugins\Particles\Particles.cpp" />
-    <ClCompile Include="..\..\source\plugins\Particles\shaders\fsDebugRender.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\lib\FFGLSDK.h" />
@@ -25,7 +24,6 @@
     <ClInclude Include="..\..\source\plugins\Particles\shaders\fsRender.h" />
     <ClInclude Include="..\..\source\plugins\Particles\shaders\gsRender.h" />
     <ClInclude Include="..\..\source\plugins\Particles\shaders\vsRender.h" />
-    <ClInclude Include="..\..\source\plugins\Particles\shaders\vsDebugRender.h" />
     <ClInclude Include="..\..\source\plugins\Particles\shaders\vsUpdate.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -6,8 +6,6 @@
 #include "shaders/vsRender.h"
 #include "shaders/gsRender.h"
 #include "shaders/fsRender.h"
-#include "shaders/vsDebugRender.h"
-#include "shaders/fsDebugRender.h"
 using namespace ffglex;
 
 //#define USE_DEBUG_INIT_DATA 1
@@ -60,7 +58,6 @@ void GLResources::Release()
 	vboIDs[ 0 ] = vboIDs[ 1 ] = 0;
 	updateShader.FreeGLResources();
 	renderShader.FreeGLResources();
-	debugRenderShader.FreeGLResources();
 }
 
 void GLResources::FlipBuffers()
@@ -96,10 +93,6 @@ const FFGLShader& GLResources::GetRenderShader() const
 {
 	return renderShader;
 }
-const ffglex::FFGLShader& GLResources::GetDebugRenderShader() const
-{
-	return debugRenderShader;
-}
 
 bool GLResources::LoadParticleTexture()
 {
@@ -110,7 +103,7 @@ bool GLResources::LoadParticleTexture()
 		{
 			float deltaY         = y - 7.0f;
 			float deltaX         = x - 7.0f;
-			pixels[ y * 15 + x ] = static_cast< unsigned char >( powf( clamp01( 1.0f - sqrt( deltaX * deltaX + deltaY * deltaY ) / 7.0f ), 0.16f ) * 255.0f );
+			pixels[ y * 15 + x ] = static_cast< unsigned char >( powf( clamp01( 1.0f - sqrt( deltaX * deltaX + deltaY * deltaY ) / 8.0f ), 0.16f ) * 255.0f );
 		}
 	}
 
@@ -213,8 +206,6 @@ bool GLResources::LoadShaders()
 {
 	std::string vsUpdateShader( vsUpdate );
 	ReplaceAll( vsUpdateShader, "MAX_BUCKETS", std::to_string( MAX_BUCKETS ) );
-	std::string vsDebugRenderShader( vsDebugRender );
-	ReplaceAll( vsDebugRenderShader, "MAX_BUCKETS", std::to_string( MAX_BUCKETS ) );
 	std::string vsRenderShader( vsRender );
 	ReplaceAll( vsRenderShader, "MAX_BUCKETS", std::to_string( MAX_BUCKETS ) );
 
@@ -222,8 +213,6 @@ bool GLResources::LoadShaders()
 		return false;
 	if( !renderShader.Compile( vsRenderShader.c_str(), gsRender, fsRender ) )
 		return false;
-	//if( !debugRenderShader.Compile( vsDebugRenderShader.c_str(), fsDebugRender ) )
-		//return false;
 
 	return true;
 }

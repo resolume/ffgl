@@ -23,7 +23,7 @@ static int64 hiResTicksPerSecond    = -1;
 static double hiResTicksScaleFactor = 0.0;
 #endif
 
-double getTicks()
+float getTicks()
 {
 #ifdef _WIN32
 	//return (double) GetTickCount();
@@ -34,7 +34,7 @@ double getTicks()
 		LARGE_INTEGER f;
 		QueryPerformanceFrequency( &f );
 		hiResTicksPerSecond   = f.QuadPart;
-		hiResTicksScaleFactor = 1000.0 / hiResTicksPerSecond;
+		hiResTicksScaleFactor = 1000.0f / hiResTicksPerSecond;
 	}
 
 	LARGE_INTEGER ticks;

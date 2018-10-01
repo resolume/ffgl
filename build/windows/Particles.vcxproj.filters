@@ -15,9 +15,6 @@
     <ClCompile Include="..\..\source\plugins\Particles\Particles.cpp" />
     <ClCompile Include="..\..\source\plugins\Particles\GLResources.cpp" />
     <ClCompile Include="..\..\source\plugins\Particles\Constants.cpp" />
-    <ClCompile Include="..\..\source\plugins\Particles\shaders\fsDebugRender.h">
-      <Filter>shaders</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\lib\FFGLSDK.h">
@@ -36,9 +33,6 @@
       <Filter>shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\plugins\Particles\shaders\vsUpdate.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\plugins\Particles\shaders\vsDebugRender.h">
       <Filter>shaders</Filter>
     </ClInclude>
   </ItemGroup>

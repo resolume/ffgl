@@ -126,13 +126,6 @@ vec2 normalNoise(vec2 _st, float _zoom, float _speed){
 
 void main()
 {
-/*
-	oPosition = vPosition;
-	oVelocity = vVelocity;
-	oBurstVel = vBurstVel;
-	oAge = vAge;
-	oBucketIndex = vBucketIndex;
-*/
 	vec2 turbulence = normalNoise( (vPosition * 0.5 + 0.5) * RenderSize, 1.5, TURBULENCE_SPEED ) * 1.0;
 	turbulence += normalNoise( (vPosition * 0.5 + 0.5) * RenderSize, TURBULENCE_DETAIL, TURBULENCE_SPEED ) * 2.0;
 	turbulence /= RenderSize;

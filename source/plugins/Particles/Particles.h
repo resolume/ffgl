@@ -17,7 +17,7 @@ public:
 	float GetFloatParameter( unsigned int index ) override;
 
 protected:
-	void UpdateParticles();
+	void UpdateParticles( float deltaTime );
 	void RenderParticles();
 
 	GLResources glResources;     //!< The container of our OpenGL resources.
@@ -37,6 +37,7 @@ protected:
 	float burstDuration;
 	float burstIntensity;        //!< In range between 1.0 .. 16.0
 	bool simulate;
+	float lastUpdate;            //!< Time of the last update in seconds.
 
 	float tempo = 120.0;
 };

@@ -160,7 +160,7 @@ static GlVertex g_cubeVerticesWired[] =
 unsigned int is_power_of_2( unsigned int x );
 int npot( int n );
 
-double getTicks();
+float getTicks();
 void HSVtoRGB( float h, float s, float v, float& r, float& g, float& b );
 void HSVtoRGB( double h, double s, double v, double* r, double* g, double* b );
 

@@ -18,7 +18,6 @@ public:
 	GLuint GetBackBufferID() const;
 	const ffglex::FFGLShader& GetUpdateShader() const;
 	const ffglex::FFGLShader& GetRenderShader() const;
-	const ffglex::FFGLShader& GetDebugRenderShader() const;
 
 private:
 	bool LoadParticleTexture();
@@ -31,5 +30,4 @@ private:
 	GLuint vboIDs[ 2 ];
 	ffglex::FFGLShader updateShader;
 	ffglex::FFGLShader renderShader;
-	ffglex::FFGLShader debugRenderShader;
 };
