@@ -14,9 +14,6 @@
     <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager.h">
       <Filter>lib\ffgl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager_inl.h">
-      <Filter>lib\ffgl</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h">
       <Filter>lib\ffgl</Filter>
     </ClInclude>

@@ -59,6 +59,13 @@
 //
 // FFGL 2.0 by Menno Vink (menno@resolume.com)
 // www.resolume.com
+// -Removed the old FreeFrame functionality, and thus CPU processing is no longer supported.
+// -Completed the FF_TYPE_OPTION parameter type. Plugins can add parameter elements which hosts
+//  should use to show a dropdown styled parameter. When one of the options is selected the parameter
+//  will get a value equal to that of the option's value.
+// -Completed the FF_TYPE_BUFFER parameter type. When this parameter is used it should provide a usage indication
+//  which the host can then use to fill that buffer with the requested data. This can be used by plugins to
+//  access the host's global fft data for example.
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

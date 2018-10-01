@@ -58,6 +58,13 @@
 //
 // FFGL 2.0 by Menno Vink (menno@resolume.com)
 // www.resolume.com
+// -Removed the old FreeFrame functionality, and thus CPU processing is no longer supported.
+// -Completed the FF_TYPE_OPTION parameter type. Plugins can add parameter elements which hosts
+//  should use to show a dropdown styled parameter. When one of the options is selected the parameter
+//  will get a value equal to that of the option's value.
+// -Completed the FF_TYPE_BUFFER parameter type. When this parameter is used it should provide a usage indication
+//  which the host can then use to fill that buffer with the requested data. This can be used by plugins to
+//  access the host's global fft data for example.
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -291,15 +298,16 @@ typedef struct SetParameterElementValueStructTag
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // plugMain - The one and only exposed function
 // parameters:
-//	functionCode - tells the plugin which function is being called
-//  pParam - 32-bit parameter or 32-bit pointer to parameter structure
+//  functionCode - tells the plugin which function is being called
+//  inputValue - 32-bit parameter or architecture specific pointer to parameter structure (eg 64 bits on x64)
+//  instanceID - the id of the instance on which you want to invoke the functionCode
 //
 // PLUGIN DEVELOPERS:  you shouldn't need to change this function
 //
-// All parameters are cast as 32-bit untyped pointers and cast to appropriate
+// All parameters are cast as untyped pointers and cast to appropriate
 // types here
 //
-// All return values are cast to 32-bit untyped pointers here before return to
+// All return values are cast to untyped pointers here before return to
 // the host
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -39,7 +39,8 @@ CFFGLPluginInfo::CFFGLPluginInfo(
 	unsigned int dwFreeFrameExtendedDataSize,
 	const void* pFreeFrameExtendedDataBlock )
 {
-	//This FFGL SDK is intended for developing plugins based on the FFGL 2.0 specification.
+	//This FFGL SDK is intended for developing plugins based on the FFGL 2.0 specification. Please
+	//update your plugin code to use FFGL 2.0.
 	assert( dwAPIMajorVersion >= 2 );
 
 	m_pCreateInstance = pCreateInstance;

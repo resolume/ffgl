@@ -145,6 +145,11 @@ private:
 	FPCREATEINSTANCEGL* m_pCreateInstance;
 };
 
+/**
+ * This utility function can be used as factory function in your CFFGLPluginInfo structure.
+ * This way you dont need to specify a factory function in each plugin you make but you can just
+ * instantiate this template function with your plugin's type and you're done.
+ */
 template< typename PluginType >
 FFResult __stdcall PluginFactory( CFreeFrameGLPlugin** ppOutInstance )
 {

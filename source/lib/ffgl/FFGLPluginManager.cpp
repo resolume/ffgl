@@ -11,8 +11,11 @@
 // Developer: Gualtiero Volpe
 // mailto:volpe@infomus.dist.unige.it
 //
-// Last modified: Oct 25 2006 by Trey Harrison
+// Modified: Oct 25 2006 by Trey Harrison
 // email:trey@harrisondigitalmedia.com
+//
+// Last modified: Oct 01 2018 by Menno Vink
+// email:menno@resolume.com
 
 #include "FFGLPluginManager.h"
 #include "FFGLPluginSDK.h"

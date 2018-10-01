@@ -27,19 +27,19 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \class		CFFGLPluginManager
 ///	\brief		CFFGLPluginManager manages information concerning a plugin inputs, parameters, and capabilities.
-/// \author		Gualtiero Volpe
-/// \version	1.0.0.3
+/// \authors	Gualtiero Volpe, Menno Vink (menno@resolume.com)
+/// \version	2.0.0
 ///
 /// The CFFGLPluginManager class is the base class for FreeFrameGL plugins developed with the FreeFrameGL SDK since it provides
 /// them with methods for automatically manage information concerning plugin inputs, paramaters, and capabilities.
 /// Examples of information managed by this class are the number of inputs and parameters of a plugin; the name, type and
-/// default value of each parameter; the image formats a plugin supports; the supported optimizations.
-/// Plugins developed with the FreeFrameGL SDK (and thus having this class as base class) should call the protected methods
-/// of this class in order to specify the information related to their inputs, parameters and capabilities. These calls
+/// default value of each parameter.
+/// Plugins developed with the FFGL SDK (and thus having this class as base class) should call the protected methods
+/// of this class in order to specify the information related to their inputs and parameters. These calls
 /// are usually done while constructing the plugin subclass. Plugins subclasses should also call methods of this class in
-/// order to get information about the images they are going to process (i.e., their width, height, depth, orientation).
-/// The defualt implementations of the FreeFrame gloabal functions call the public methods of this class in order to
-/// return to the host information about a plugin inputs, parameters, and capabilities.
+/// order to get information about the images they are going to process (i.e., their width and height).
+/// The default implementations of the FFGL global functions call the public methods of this class in order to
+/// return to the host information about a plugin.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class CFFGLPluginManager
@@ -96,8 +96,46 @@ public:
 	///						Codes for allowed parameter types are defined in FreeFrame.h.
 	///						In case of error, FF_FAIL is returned.
 	unsigned int GetNumParamElements( unsigned int dwIndex ) const;
+
+	/// Get the name of an element for a parameter that can have elements (eg FF_TYPE_OPTION and FF_TYPE_BUFFER)
+	/// The host may use this name to display that element on the screen. For example an OPTION's element
+	/// will most likely be show as a dropdown option, which when pressed will cause the param's value to change
+	/// to that element's default value.
+	///
+	/// \param	dwIndex		The index of the plugin parameter which contains the element for which
+	///						the name is being queried.
+	///						It should be in the range[0, Number of plugin parameters).
+	///	\param	elIndex		The index of the element whose name is queried.
+	///						It should be in the range [0, parameter.Number of elements).
+	///	\return				The name of the parameter's element whose indices are passed to the method.
+	///						The return value is a pointer to a null terminated c string of ASCII characters.
+	///						In case of error, NULL is returned.
 	char* GetParamElementName( unsigned int dwIndex, unsigned int elIndex );
+
+	/// Get the default value of an element for a parameter whose elements default values have any effect (eg FF_TYPE_OPTION)
+	/// The host will use this value to set the param to this specific value when that option is chosen.
+	///
+	/// \param	dwIndex		The index of the plugin parameter which contains the element for which
+	///						the default value is being queried.
+	///						It should be in the range[0, Number of plugin parameters).
+	///	\param	elIndex		The index of the element whose default value is queried.
+	///						It should be in the range [0, parameter.Number of elements).
+	///	\return				The default value of the parameter's element whose indices are passed to the method.
+	///						The return value should be cast either to a float*.
+	///						In case of error, NULL is returned.
 	FFMixed GetParamElementDefault( unsigned int dwIndex, unsigned int elIndex ) const;
+
+	/// Set the value of an element for a parameter whose elements values can change (eg FF_TYPE_BUFFER)
+	/// The host will use this to change the contents of a parameter's elements, which the plugin can then use
+	/// depending on what the buffer is used for.
+	///
+	/// \param	dwIndex		The index of the plugin parameter which contains the element for which
+	///						the value is to be changed.
+	///						It should be in the range[0, Number of plugin parameters).
+	///	\param	elIndex		The index of the element whose value is to be  changed.
+	///						It should be in the range [0, parameter.Number of elements).
+	///	\return				FFGL result indicating if setting the value succeeded. Setting a value might fail
+	///						if either of the provided indices is out of range. FF_SUCCESS on success, FF_FAIL otherwise.
 	FFUInt32 SetParamElementValue( unsigned int dwIndex, unsigned int elIndex, float newValue );
 
 	/// This method is called to know the usage of a plugin parameter
@@ -267,7 +305,5 @@ private:
 	// Time capability
 	bool m_timeSupported;
 };
-
-#include "FFGLPluginManager_inl.h"
 
 #endif
