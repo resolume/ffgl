@@ -1,6 +1,8 @@
 #pragma once
-#include <FFGLSDK.h>
 #include <string>
+#include <ffgl/FFGLPluginSDK.h>
+#include <ffglex/FFGLShader.h>
+#include <ffglex/FFGLScreenQuad.h>
 
 class AddSubtract : public CFreeFrameGLPlugin
 {

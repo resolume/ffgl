@@ -50,7 +50,7 @@
 //FFGLTexCoords
 typedef struct FFGLTexCoordsTag
 {
-	GLdouble s, t;
+	GLfloat s, t;
 } FFGLTexCoords;
 
 //helper function to return the s,t,r coordinate
@@ -64,8 +64,8 @@ inline FFGLTexCoords GetMaxGLTexCoords( FFGLTextureStruct t )
 	//of the allocated hardware texture memory
 
 	//normalized (0..1) S and T coords
-	texCoords.s = ( (GLdouble)t.Width ) / (GLdouble)t.HardwareWidth;
-	texCoords.t = ( (GLdouble)t.Height ) / (GLdouble)t.HardwareHeight;
+	texCoords.s = ( (GLfloat)t.Width ) / (GLfloat)t.HardwareWidth;
+	texCoords.t = ( (GLfloat)t.Height ) / (GLfloat)t.HardwareHeight;
 
 	return texCoords;
 }

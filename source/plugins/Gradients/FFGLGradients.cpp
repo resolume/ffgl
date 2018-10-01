@@ -88,14 +88,14 @@ FFResult FFGLGradients::InitGL( const FFGLViewportStruct* vp )
 }
 FFResult FFGLGradients::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
-	double rgb1[ 3 ];
+	float rgb1[ 3 ];
 	//we need to make sure the hue doesn't reach 1.0f, otherwise the result will be pink and not red how it should be
-	double hue1 = ( m_Hue1 == 1.0 ) ? 0.0 : m_Hue1;
-	HSVtoRGB( hue1, m_Saturation, m_Brightness, &rgb1[ 0 ], &rgb1[ 1 ], &rgb1[ 2 ] );
+	float hue1 = ( m_Hue1 == 1.0f ) ? 0.0f : m_Hue1;
+	HSVtoRGB( hue1, m_Saturation, m_Brightness, rgb1[ 0 ], rgb1[ 1 ], rgb1[ 2 ] );
 
-	double rgb2[ 3 ];
-	double hue2 = ( m_Hue2 == 1.0 ) ? 0.0 : m_Hue2;
-	HSVtoRGB( hue2, m_Saturation, m_Brightness, &rgb2[ 0 ], &rgb2[ 1 ], &rgb2[ 2 ] );
+	float rgb2[ 3 ];
+	float hue2 = ( m_Hue2 == 1.0f ) ? 0.0f : m_Hue2;
+	HSVtoRGB( hue2, m_Saturation, m_Brightness, rgb2[ 0 ], rgb2[ 1 ], rgb2[ 2 ] );
 
 	//FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that.
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );

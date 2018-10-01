@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <vector>
 #include <assert.h>
+#include "FFGLUtilities.h"
 
 #define LOGSHADERERRORS
 
@@ -309,7 +310,7 @@ bool FFGLShader::LinkProgram()
 		std::vector< const char* > feedbackVaryingNames;
 		for( size_t index = 0; index < transformFeedbackVaryings.size(); ++index )
 			feedbackVaryingNames.push_back( transformFeedbackVaryings[ index ].c_str() );
-		glTransformFeedbackVaryings( programID, feedbackVaryingNames.size(), feedbackVaryingNames.data(), GL_INTERLEAVED_ATTRIBS );
+		glTransformFeedbackVaryings( programID, (GLsizei)feedbackVaryingNames.size(), feedbackVaryingNames.data(), GL_INTERLEAVED_ATTRIBS );
 	}
 
 	GLint linkStatus = 0;

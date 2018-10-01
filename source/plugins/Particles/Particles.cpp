@@ -278,10 +278,10 @@ void Particles::UpdateParticles()
 		Rectf spawnArea;
 		spawnArea.l = -0.8f + index * widthPerBucket + 0.1f * widthPerBucket;
 		spawnArea.r = spawnArea.l + widthPerBucket - 0.1f * widthPerBucket;
-		spawnArea.b = -1.0f;
-		spawnArea.t = -0.9f;
+		spawnArea.t = -1.0f;
+		spawnArea.b = -1.1f;
 		//left, width, bottom, height
-		spawnAreas[ index ] = Vec4f( spawnArea.l, spawnArea.getWidth(), spawnArea.b, spawnArea.getHeight() );
+		spawnAreas[ index ] = Vec4f( spawnArea.l, spawnArea.getWidth(), spawnArea.t, spawnArea.getHeight() );
 		spawnChances[ index ] = fftData[ index ] * fftData[ index ] * 3.0f;
 	}
 	glUniform1f( glResources.GetUpdateShader().FindUniform( "MAX_AGE" ), 60.0f / tempo * maxAge );

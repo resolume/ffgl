@@ -1,4 +1,8 @@
 #include "AddSubtract.h"
+#include <ffgl/FFGLLib.h>
+#include <ffglex/FFGLScopedShaderBinding.h>
+#include <ffglex/FFGLScopedSamplerActivation.h>
+#include <ffglex/FFGLScopedTextureBinding.h>
 using namespace ffglex;
 
 #define FFPARAM_BrightnessR ( 0 )
