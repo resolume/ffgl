@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="lib">
+      <UniqueIdentifier>{f6881118-4fb6-47dc-b86e-5f04ccf6cc0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{90e7a090-5a01-427e-a757-e4cd87ce559c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\lib\FFGLSDK.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\plugins\Particles\Particles.cpp" />
+    <ClCompile Include="..\..\source\plugins\Particles\GLResources.cpp" />
+    <ClCompile Include="..\..\source\plugins\Particles\Constants.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\lib\FFGLSDK.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\Particles\Particles.h" />
+    <ClInclude Include="..\..\source\plugins\Particles\GLResources.h" />
+    <ClInclude Include="..\..\source\plugins\Particles\Constants.h" />
+    <ClInclude Include="..\..\source\plugins\Particles\shaders\vsRender.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\Particles\shaders\gsRender.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\Particles\shaders\fsRender.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\Particles\shaders\vsUpdate.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -13,6 +13,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FFGLLib.h by Trey Harrison
 // www.harrisondigitalmedia.com
+//
+// Last modified: Oct 01 2018 by Menno Vink
+// email:menno@resolume.com
+// -Changed GLdouble to GLfloat
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,25 +54,24 @@
 //FFGLTexCoords
 typedef struct FFGLTexCoordsTag
 {
-  GLdouble s,t;
+	GLfloat s, t;
 } FFGLTexCoords;
 
 //helper function to return the s,t,r coordinate
 //that cooresponds to the width,height,depth of the used
 //portion of the texture
-inline FFGLTexCoords GetMaxGLTexCoords(FFGLTextureStruct t)
+inline FFGLTexCoords GetMaxGLTexCoords( FFGLTextureStruct t )
 {
-  FFGLTexCoords texCoords;
+	FFGLTexCoords texCoords;
 
-  //the texture may only occupy a portion
-  //of the allocated hardware texture memory
+	//the texture may only occupy a portion
+	//of the allocated hardware texture memory
 
-  //normalized (0..1) S and T coords
-  texCoords.s = ((GLdouble)t.Width) / (GLdouble)t.HardwareWidth;
-  texCoords.t = ((GLdouble)t.Height) / (GLdouble)t.HardwareHeight;
+	//normalized (0..1) S and T coords
+	texCoords.s = ( (GLfloat)t.Width ) / (GLfloat)t.HardwareWidth;
+	texCoords.t = ( (GLfloat)t.Height ) / (GLfloat)t.HardwareHeight;
 
-  return texCoords;
+	return texCoords;
 }
 
 #endif
-
