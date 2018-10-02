@@ -44,14 +44,14 @@ int FFGLFBO::BindAsRenderTarget()
 	glBindFramebuffer( GL_FRAMEBUFFER, m_fboHandle );
 
 	//make sure there's a valid depth buffer attached to it
-	if( glIsRenderbufferEXT( m_depthBufferHandle ) == 0 )
+	if( glIsRenderbuffer( m_depthBufferHandle ) == 0 )
 	{
-		glGenRenderbuffersEXT( 1, &m_depthBufferHandle );
-		glBindRenderbufferEXT( GL_RENDERBUFFER_EXT, m_depthBufferHandle );
-		glRenderbufferStorageEXT( GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, m_glWidth, m_glHeight );
+		glGenRenderbuffers( 1, &m_depthBufferHandle );
+		glBindRenderbuffer( GL_RENDERBUFFER, m_depthBufferHandle );
+		glRenderbufferStorage( GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, m_glWidth, m_glHeight );
 
 		//attach our depth buffer to the fbo
-		glFramebufferRenderbufferEXT( GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER_EXT, m_depthBufferHandle );
+		glFramebufferRenderbuffer( GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferHandle );
 	}
 
 	//make sure we have a valid gl texture attached to it
@@ -110,39 +110,17 @@ int FFGLFBO::BindAsRenderTarget()
 	switch( status )
 	{
 	case GL_FRAMEBUFFER_COMPLETE:
-		//no error
-		break;
+		break; //No Error
 
-	case GL_FRAMEBUFFER_UNSUPPORTED:
-		//FFDebugMessage("GL_FRAMEBUFFER_UNSUPPORTED");
-		return 0;
-
+	case GL_FRAMEBUFFER_UNDEFINED:
 	case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-		//FFDebugMessage("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT");
-		return 0;
-
 	case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-		//FFDebugMessage("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT");
-		return 0;
-
-	case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT:
-		//FFDebugMessage("GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT");
-		return 0;
-
-	case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT:
-		//FFDebugMessage("GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT");
-		return 0;
-
 	case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
-		//FFDebugMessage("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER");
-		return 0;
-
 	case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
-		//FFDebugMessage("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER");
-		return 0;
+	case GL_FRAMEBUFFER_UNSUPPORTED:
+		return 0; //Known error
 
-	default:
-		//FFDebugMessage("Unknown GL_FRAMEBUFFER error");
+	default: //Unknown error
 		return 0;
 	}
 
@@ -180,7 +158,7 @@ void FFGLFBO::FreeResources()
 
 	if( m_depthBufferHandle )
 	{
-		glDeleteRenderbuffersEXT( 1, &m_depthBufferHandle );
+		glDeleteRenderbuffers( 1, &m_depthBufferHandle );
 		m_depthBufferHandle = 0;
 	}
 

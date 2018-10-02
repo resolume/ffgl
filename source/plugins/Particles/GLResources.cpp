@@ -1,5 +1,6 @@
 #include "GLResources.h"
 #include <vector>
+#include <cmath>
 #include <assert.h>
 #include "Constants.h"
 #include "shaders/vsUpdate.h"

@@ -16,7 +16,7 @@ static CFFGLPluginInfo PluginInfo(
 	2,                           // API major version number
 	0,                           // API minor version number
 	1,                           // Plugin major version number
-	000,                         // Plugin minor version number
+	0,                           // Plugin minor version number
 	FF_EFFECT,                   // Plugin type
 	"Add and Subtract colours",  // Plugin description
 	"Resolume FFGL Example"      // About
