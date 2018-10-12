@@ -38,6 +38,4 @@ protected:
 	float burstIntensity;        //!< In range between 1.0 .. 16.0
 	bool simulate;
 	float lastUpdate;            //!< Time of the last update in seconds.
-
-	float tempo = 120.0;
 };

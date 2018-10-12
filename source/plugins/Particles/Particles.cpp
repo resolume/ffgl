@@ -10,7 +10,7 @@ static CFFGLPluginInfo PluginInfo(
 	"RS02",                        // Plugin unique ID
 	"Particles Example",           // Plugin name
 	2,                             // API major version number
-	0,                             // API minor version number
+	1,                             // API minor version number
 	1,                             // Plugin major version number
 	0,                             // Plugin minor version number
 	FF_SOURCE,                     // Plugin type
@@ -277,7 +277,7 @@ void Particles::UpdateParticles( float deltaTime )
 		spawnAreas[ index ] = Vec4f( spawnArea.l, spawnArea.getWidth(), spawnArea.t, spawnArea.getHeight() );
 		spawnChances[ index ] = fftData[ index ] * fftData[ index ] * 3.0f;
 	}
-	glUniform1f( glResources.GetUpdateShader().FindUniform( "MAX_AGE" ), 60.0f / tempo * maxAge );
+	glUniform1f( glResources.GetUpdateShader().FindUniform( "MAX_AGE" ), 60.0f / bpm * maxAge );
 	glUniform4fv( glResources.GetUpdateShader().FindUniform( "SPAWN_AREAS" ), (GLsizei)spawnAreas.size(), (float*)spawnAreas.data() );
 	glUniform1fv( glResources.GetUpdateShader().FindUniform( "SPAWN_CHANCES" ), (GLsizei)spawnChances.size(), spawnChances.data() );
 	glUniform1f( glResources.GetUpdateShader().FindUniform( "ENERGY_MAX_AGE_FACTOR" ), energyMaxAgeFactor );
@@ -307,7 +307,7 @@ void Particles::RenderParticles()
 	ScopedSamplerActivation samplerBinding( 0 );
 	Scoped2DTextureBinding textureBinding( glResources.GetParticleTextureID() );
 
-	glUniform1f( glResources.GetRenderShader().FindUniform( "MAX_AGE" ), 60.0f / tempo * maxAge );
+	glUniform1f( glResources.GetRenderShader().FindUniform( "MAX_AGE" ), 60.0f / bpm * maxAge );
 	glUniform1f( glResources.GetRenderShader().FindUniform( "FADEOUT_START" ), fadeoutStart );
 	glUniform1f( glResources.GetRenderShader().FindUniform( "SMOKE_START" ), smokeStart );
 	glUniform1f( glResources.GetRenderShader().FindUniform( "SMOKE_INTENSITY" ), smokeIntensity );

@@ -30,7 +30,9 @@ static char s_DisplayValue[ 15 ];
 ////////////////////////////////////////////////////////
 
 CFreeFrameGLPlugin::CFreeFrameGLPlugin() :
-	CFFGLPluginManager()
+	CFFGLPluginManager(),
+	bpm( 120.0f ),
+	barPhase( 0.0f )
 {
 }
 
@@ -87,4 +89,10 @@ FFResult CFreeFrameGLPlugin::GetInputStatus( unsigned int index )
 	if( index >= GetMaxInputs() )
 		return FF_FAIL;
 	return FF_INPUT_INUSE;
+}
+
+void CFreeFrameGLPlugin::SetBeatInfo( float bpm, float barPhase )
+{
+	this->bpm = bpm;
+	this->barPhase = barPhase;
 }

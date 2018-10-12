@@ -616,6 +616,20 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_GETPLUGINSHORTNAME:
 		retval.PointerValue = (void*)getPluginShortName();
 		break;
+	case FF_SET_BEATINFO:
+		if( pPlugObj != NULL )
+		{
+			const SetBeatinfoStruct* beatInfo = reinterpret_cast< const SetBeatinfoStruct* >( inputValue.PointerValue );
+			float bpm = *(float*)&beatInfo->bpm.UIntValue;
+			float barPhase = *(float*)&beatInfo->barPhase.UIntValue;
+			pPlugObj->SetBeatInfo( bpm, barPhase );
+			retval.UIntValue = FF_SUCCESS;
+		}
+		else
+		{
+			retval.UIntValue = FF_FAIL;
+		}
+		break;
 
 	//Previously used function codes that are no longer supported:
 	//case FF_INITIALISE:

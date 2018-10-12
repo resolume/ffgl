@@ -8,7 +8,7 @@ static CFFGLPluginInfo PluginInfo(
 	"RM01",                                                                                      // Plugin unique ID
 	"Add Example",                                                                               // Plugin name
 	2,                                                                                           // API major version number
-	0,                                                                                           // API minor version number
+	1,                                                                                           // API minor version number
 	1,                                                                                           // Plugin major version number
 	000,                                                                                         // Plugin minor version number
 	FF_EFFECT,                                                                                   // Plugin type
