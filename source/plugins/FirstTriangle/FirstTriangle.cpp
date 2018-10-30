@@ -21,13 +21,14 @@ static CFFGLPluginInfo PluginInfo(
 );
 
 static const char vertexShaderCode[] = R"(#version 410 core
-//location refers to the location in memory we're reading and writing from
-//we use 0 for the first location
+//location refers to the order of the attributes we use to get data into the shader
+//in a bit, we'll tell our VAO to send vertex data into the first slot
+//programmer's are nerds that use 0 for the first location
 layout( location = 0 ) in vec3 vPosition;
 
 void main()
 {
-    //set the vertices based on the VBO we upload in line 75 and write in line 80
+    //set the vertices based on the data from the VBO
     gl_Position.xyz = vPosition;
     gl_Position.w = 1.0;
 }
@@ -70,18 +71,21 @@ FFResult Triangle::InitGL( const FFGLViewportStruct* vp )
         0.0f,  0.5f, 0.0f,
     };
     
-    //now we need to tell the GPU to use these vertices as data for the shader
+    //now we need to tell the VAO these vertices should be used as data for the shader
     //we only have to do this once during init, because the data doesn't change
     
-    //first write the vertex data into the VBO that was bound in line 64
+    //first write the vertex data into a VBO
+    //the VBO was created in 55 and bound in line 65
+    //from now on, our VAO knows it has to use the data in this VBO
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
-    //now we tell the GPU which locations in memory should be enabled for this VAO
+    //now we tell the VAO which locations in the shader should be used
     //without this, line 84 will have no effect
     glEnableVertexAttribArray( 0 );
-    //this tells the GPU how to interpret the data in the VBO we bound in line 58 and wrote in line 77
+    //this tells the VAO how to interpret the data in the VBO
+    //when we later bind this VAO again during the draw call, the GPU will know what to do with the information
     glVertexAttribPointer(
-                          0,                  // attribute 0, this sends the vertex data in our buffer to the "position" input of our shader
+                          0,                  // attribute 0, this will let the VAO know to send the vertex data in our buffer to the "vPosition" input of our shader
                           3,                  // size is 3, every vertex has a GLfloat for x, y and z
                           GL_FLOAT,           // type
                           GL_FALSE,           // normalized?
@@ -117,16 +121,18 @@ FFResult Triangle::ProcessOpenGL( ProcessOpenGLStruct* pGL )
     glClearColor(0.0f, 0.4f, 0.4f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    //here we tell the GPU to use the VAO and shader we created during init
+    //here we tell the GPU to use the information from the VAO and shader we created during init
+    //binding the VAO means that the data in the VBO will get sent to the correct location in the shader
     //FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that
     ffglex::ScopedVAOBinding vaoBinding( vaoID );
     ffglex::ScopedShaderBinding shaderBinding( shader.GetGLID() );
   
-    // Draw the triangle !
+    // Draw the triangle
     glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
 
+    //that's it, we're done. because everything was set up and set in the VAO during init, we can leave this party and go home
     //clean up again
-    //this is important becasue otherwise plugins rendering after this one might use our settings!
+    //this is important becasue otherwise any rendering done by Resolume or other plugins after this plugin, might use our settings!
     shaderBinding.EndScope();
     vaoBinding.EndScope();
 

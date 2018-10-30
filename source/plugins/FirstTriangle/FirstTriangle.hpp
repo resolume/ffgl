@@ -12,7 +12,7 @@ public:
     FFResult DeInitGL() override;
     
 private:
-    GLuint vaoID; //the Vertex Array Object we'll use to store the vertex data on the GPU
-    GLuint vboID; // the Vertex Buffer Object we'll use to upload the vertex data to the GPU
+    GLuint vaoID; //a Vertex Array Object lets the GPU know where to get its data from, what the data is, and where to send it in the shader
+    GLuint vboID; // a Vertex Buffer Object is used to store information about our vertices
     ffglex::FFGLShader shader;   //!< Utility to help us compile and link some shaders into a program.
 };
