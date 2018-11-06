@@ -12,6 +12,8 @@ public:
 	FFResult DeInitGL() override;
 	FFResult ProcessOpenGL( ProcessOpenGLStruct* pGL ) override;
 
+	char* GetParameterDisplay( unsigned int index ) override;
+
 	FFResult SetFloatParameter( unsigned int dwIndex, float value ) override;
 
 	float GetFloatParameter( unsigned int index ) override;
