@@ -9,6 +9,7 @@
 #include <math.h>
 #include <random>
 #include <iostream>
+#include <algorithm>
 
 namespace ffglex
 {
