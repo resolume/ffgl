@@ -77,7 +77,7 @@ void main()
 	//position of our uv coordinate
 	vec2 st = uv;
 
-	//first move to the required position
+	//move to the required position
 	st += Position;
 	
 	//set the center to 0, 0
@@ -103,7 +103,7 @@ void main()
 	float min = min ( bounds.x, bounds.y );
 
 	//get the color at this uv coordinate
-	vec4 color = texture( InputTexture, st * MaxUV) 
+	vec4 color = texture( InputTexture, st * MaxUV);
 	
 	//draw transparent where we're out of bounds
 	color *= min;
