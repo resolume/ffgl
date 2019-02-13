@@ -45,15 +45,18 @@ void main()
 
 static const char fragmentShaderCode[] = R"(#version 410 core
 
+#define PI 3.141592564
+
 in vec2 uv;
 
 uniform sampler2D InputTexture;
 uniform vec2 MaxUV;
 uniform float Aspect;
 
+uniform float NumClones;
 uniform float Scale;
-uniform vec2 Position;
-uniform float Angle;
+uniform float Radius;
+uniform float Fan;
 
 out vec4 fragColor;
 
@@ -74,40 +77,59 @@ mat2 scale(vec2 _scale){
 
 void main()
 {
-	//position of our uv coordinate
-	vec2 st = uv;
-
-	//move to the required position
-	st += Position;
 	
-	//set the center to 0, 0
-	st -= 0.5;
-
-	//apply scaling
-	st = scale ( vec2 ( Scale ) ) * st;
-
-	//set the aspect ratio to 1:1
-	st = scale ( vec2 ( 1.0, 1.0f / Aspect ) ) * st;
-
-	//rotate
-	st = rotate2d( Angle ) * st; 
-
-	//set the aspect ratio back
-	st = scale ( vec2 ( 1.0, Aspect ) ) * st;
-
-	//set the center back
-	st += 0.5;
-
-	//use step to see where st goes out of bounds
-	vec2 bounds = step ( vec2(0.0), st ) * step ( st, vec2(1.0) ) ;
-	float min = min ( bounds.x, bounds.y );
-
-	//get the color at this uv coordinate
-	vec4 color = texture( InputTexture, st * MaxUV);
+	vec4 color = vec4(0.0);
+	//for loop for each clone
+	const float maxClones = 16.0f;
+	float fNumClones = floor( NumClones * maxClones );
 	
-	//draw transparent where we're out of bounds
-	color *= min;
+	for( float i = 0; i < fNumClones; i++ )
+	{
+		float angle = 360.0f / maxClones //rotation for one clone
+		* i // calculated for this clone
+		* PI / 180.0f //converted to radians
+		* Fan; //scaled by the fan value
 
+		float x     = cos( angle ) * Radius / Aspect; //adjust for aspect ratio
+		float y     = sin( angle ) * Radius;
+
+		//position of our uv coordinate
+		vec2 st = uv;
+		
+		//move to the required position
+		st += vec2(x,y);
+	
+		//set the center to 0, 0
+		st -= 0.5;
+
+		//apply scaling
+		st = scale ( vec2 ( Scale ) ) * st;
+
+		//set the aspect ratio to 1:1
+		st = scale ( vec2 ( 1.0, 1.0f / Aspect ) ) * st;
+
+		//rotate
+		st = rotate2d( angle ) * st; 
+
+		//set the aspect ratio back
+		st = scale ( vec2 ( 1.0, Aspect ) ) * st;
+
+		//set the center back
+		st += 0.5;
+
+		//use step to see where st goes out of bounds
+		vec2 bounds = step ( vec2(0.0), st ) * step ( st, vec2(1.0) ) ;
+		float min = min ( bounds.x, bounds.y );
+
+		//get the color at this uv coordinate
+		vec4 cloneCol = texture( InputTexture, st * MaxUV);
+	
+		//make color transparent where we're out of bounds
+		cloneCol *= min;
+		
+		//regular alpha blend
+		color = color * ( 1.0 - cloneCol.a) + cloneCol;
+	}
 	fragColor = color;
 }
 )";
@@ -115,9 +137,10 @@ void main()
 Cloner::Cloner() :
 	maxUVLocation( -1 ),
 	aspectLocation( -1 ),
+	numClonesLocation( -1 ),
 	scaleLocation( -1 ),
-	positionLocation( -1 ),
-	angleLocation( -1 )
+	radiusLocation( -1 ),
+	fanLocation( -1 )
 {
 	// Input properties
 	SetMinInputs( 1 );
@@ -158,11 +181,12 @@ FFResult Cloner::InitGL( const FFGLViewportStruct* vp )
 	glUniform1i( shader.FindUniform( "inputTexture" ), 0 );
 
 	//We need to know these uniform locations because we need to set their value each frame.
-	maxUVLocation    = shader.FindUniform( "MaxUV" );
-	aspectLocation   = shader.FindUniform( "Aspect" );
-	scaleLocation    = shader.FindUniform( "Scale" );
-	positionLocation = shader.FindUniform( "Position" );
-	angleLocation    = shader.FindUniform( "Angle" );
+	maxUVLocation     = shader.FindUniform( "MaxUV" );
+	aspectLocation    = shader.FindUniform( "Aspect" );
+	numClonesLocation = shader.FindUniform( "NumClones" );
+	scaleLocation     = shader.FindUniform( "Scale" );
+	radiusLocation    = shader.FindUniform( "Radius" );
+	fanLocation       = shader.FindUniform( "Fan" );
 
 	//Use base-class init as success result so that it retains the viewport.
 	return CFreeFrameGLPlugin::InitGL( vp );
@@ -175,6 +199,7 @@ FFResult Cloner::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	if( pGL->inputTextures[ 0 ] == NULL )
 		return FF_FAIL;
 
+	//prevent division by zero error
 	if( scale == 0.0f )
 		return FF_SUCCESS;
 
@@ -191,36 +216,18 @@ FFResult Cloner::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	float aspect = Texture.Width / float( Texture.Height );
 	glUniform1f( aspectLocation, aspect );
 
+	//pass the variables to the shader
+	glUniform1f( numClonesLocation, numClones );
+	glUniform1f( scaleLocation, 1.0f / scale );
+	glUniform1f( radiusLocation, radius );
+	glUniform1f( fanLocation, fan );
+	
 	//The shader's sampler is always bound to sampler index 0 so that's where we need to bind the texture.
 	//Again, we're using the scoped bindings to help us keep the context in a default state.
 	ScopedSamplerActivation activateSampler( 0 );
 	Scoped2DTextureBinding textureBinding( Texture.Handle );
-
-	//regular alpha blending
-	glEnable( GL_BLEND );
-	glBlendFunc( GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
-
-	glUniform1f( scaleLocation, 1.0f / scale );
 	
-	//for loop for each clone
-	float fNumClones = floor( numClones * maxClones );
-	for( float i = 0; i < fNumClones; i++ )
-	{
-		float angle = 360.0f / maxClones //rotation for one clone
-			* i // calculated for this clone
-			* PI / 180.0f //converted to radians
-			* fan; //scaled by the fan value
-
-		float x     = cos( angle ) * radius / aspect; //adjust for aspect ratio
-		float y     = sin( angle ) * radius;
-
-		glUniform2f( positionLocation, x, y );
-		glUniform1f( angleLocation, angle );
-		quad.Draw();
-	}
-
-	//put blending back in default state
-	glDisable( GL_BLEND );
+	quad.Draw();
 
 	return FF_SUCCESS;
 }
@@ -228,11 +235,12 @@ FFResult Cloner::DeInitGL()
 {
 	shader.FreeGLResources();
 	quad.Release();
-	maxUVLocation    = -1;
-	aspectLocation   = -1;
-	scaleLocation    = -1;
-	positionLocation = -1;
-	angleLocation    = -1;
+	maxUVLocation     = -1;
+	aspectLocation    = -1;
+	numClonesLocation = -1;
+	scaleLocation     = -1;
+	radiusLocation    = -1;
+	fanLocation       = -1;
 
 	return FF_SUCCESS;
 }

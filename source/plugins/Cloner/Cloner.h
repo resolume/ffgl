@@ -29,7 +29,8 @@ private:
 	ffglex::FFGLScreenQuad quad;//!< Utility to help us render a full screen quad.
 	GLint maxUVLocation;
 	GLint aspectLocation;
+	GLint numClonesLocation;
 	GLint scaleLocation;
-	GLint positionLocation;
-	GLint angleLocation;
+	GLint radiusLocation;
+	GLint fanLocation;
 };
