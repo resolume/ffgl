@@ -36,8 +36,6 @@ layout( location = 1 ) in vec2 vUV;
 
 out vec2 uv;
 
-
-
 void main()
 {
 	gl_Position = vPosition;
@@ -59,6 +57,10 @@ uniform float Angle;
 
 out vec4 fragColor;
 
+// rotation and scale in GLSL using matrices
+// is really well explained here
+// https://thebookofshaders.com/08/
+
 mat2 rotate2d(float _angle)
 {
     return mat2(cos(_angle),-sin(_angle),
@@ -72,26 +74,41 @@ mat2 scale(vec2 _scale){
 
 void main()
 {
+	//position of our uv coordinate
 	vec2 st = uv;
 
+	//first move to the required position
 	st += Position;
 	
+	//set the center to 0, 0
 	st -= 0.5;
 
+	//apply scaling
 	st = scale ( vec2 ( Scale ) ) * st;
 
+	//set the aspect ratio to 1:1
 	st = scale ( vec2 ( 1.0, 1.0f / Aspect ) ) * st;
+
+	//rotate
 	st = rotate2d( Angle ) * st; 
+
+	//set the aspect ratio back
 	st = scale ( vec2 ( 1.0, Aspect ) ) * st;
 
+	//set the center back
 	st += 0.5;
 
 	//use step to see where st goes out of bounds
 	vec2 bounds = step ( vec2(0.0), st ) * step ( st, vec2(1.0) ) ;
 	float min = min ( bounds.x, bounds.y );
 
-	vec4 color = texture( InputTexture, st * MaxUV);
-	fragColor = color * min;
+	//get the color at this uv coordinate
+	vec4 color = texture( InputTexture, st * MaxUV) 
+	
+	//draw transparent where we're out of bounds
+	color *= min;
+
+	fragColor = color;
 }
 )";
 
@@ -179,22 +196,30 @@ FFResult Cloner::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	ScopedSamplerActivation activateSampler( 0 );
 	Scoped2DTextureBinding textureBinding( Texture.Handle );
 
+	//regular alpha blending
 	glEnable( GL_BLEND );
 	glBlendFunc( GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
 
 	glUniform1f( scaleLocation, 1.0f / scale );
+	
 	//for loop for each clone
 	float fNumClones = floor( numClones * maxClones );
 	for( float i = 0; i < fNumClones; i++ )
 	{
-		float angle = 360.0f / maxClones * i * PI / 180.0f * fan;
-		float x     = cos( angle ) * radius / aspect;
+		float angle = 360.0f / maxClones //rotation for one clone
+			* i // calculated for this clone
+			* PI / 180.0f //converted to radians
+			* fan; //scaled by the fan value
+
+		float x     = cos( angle ) * radius / aspect; //adjust for aspect ratio
 		float y     = sin( angle ) * radius;
+
 		glUniform2f( positionLocation, x, y );
 		glUniform1f( angleLocation, angle );
 		quad.Draw();
 	}
 
+	//put blending back in default state
 	glDisable( GL_BLEND );
 
 	return FF_SUCCESS;
