@@ -76,12 +76,12 @@ FFResult Triangle::InitGL( const FFGLViewportStruct* vp )
     ffglex::ScopedVAOBinding vaoBinding( vaoID );
     ffglex::ScopedVBOBinding vboBinding(vboID);
     
-    //now we need to tell the VAO these vertices should be used as data for the shader
+    //now we need to tell the VAO the vertices should be used as data for the shader
     //we only have to do this once during init, because the data doesn't change
     
     //first write the vertex data into a VBO
     //the VBO was created in line 54 and bound in line 77
-    //basically, it's the same data as the float array, except it's stored in the high speed memory of the GPU
+    //basically, it's a copy of the data in the float array, except it's stored in the high speed memory of the GPU
     //because our VBO was bound after our VAO, our VAO now knows it has to use the data in this VBO
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
