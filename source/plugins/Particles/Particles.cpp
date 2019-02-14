@@ -148,6 +148,46 @@ FFResult Particles::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	return FF_SUCCESS;
 }
 
+char* Particles::GetParameterDisplay( unsigned int index )
+{
+	/**
+	 * We're not returning ownership over the string we return, so we have to somehow guarantee that
+	 * the lifetime of the returned string encompasses the usage of that string by the host. Having this static
+	 * buffer here keeps previously returned display string alive until this function is called again.
+	 * This happens to be long enough for the hosts we know about.
+	 */
+	static char displayValueBuffer[ 15 ];
+	memset( displayValueBuffer, 0, sizeof( displayValueBuffer ) );
+
+	switch( index )
+	{
+	case PID_TURBULENCE_DETAIL:
+		sprintf( displayValueBuffer, "%f", turbulenceDetail );
+		return displayValueBuffer;
+	case PID_TURBULENCE_SPEED:
+		sprintf( displayValueBuffer, "%f", turbulenceSpeed );
+		return displayValueBuffer;
+	case PID_PARTICLE_SIZE:
+		sprintf( displayValueBuffer, "%f", particleSize );
+		return displayValueBuffer;
+	case PID_VELOCITY_SIZE_FACTOR:
+		sprintf( displayValueBuffer, "%f", velocityToSizeFactor );
+		return displayValueBuffer;
+	case PID_NUM_BUCKETS:
+		sprintf( displayValueBuffer, "%d", numBuckets );
+		return displayValueBuffer;
+	case PID_NUM_PARTICLES_PER_BUCKET:
+		sprintf( displayValueBuffer, "%d", numParticlesPerBucket );
+		return displayValueBuffer;
+	case PID_BURST_INTENSITY:
+		sprintf( displayValueBuffer, "%f", burstIntensity );
+		return displayValueBuffer;
+
+	default:
+		return CFreeFrameGLPlugin::GetParameterDisplay( index );
+	}
+}
+
 FFResult Particles::SetFloatParameter( unsigned int dwIndex, float value )
 {
 	switch( dwIndex )
