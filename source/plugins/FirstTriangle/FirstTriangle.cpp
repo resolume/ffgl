@@ -133,9 +133,11 @@ FFResult Triangle::ProcessOpenGL( ProcessOpenGLStruct* pGL )
     // 1) use the same VBO we created and set during init
     // 2) open the fist slot in the shader
     // 3) that the data in the VBO are sets of 3 floats that need to be sent to the first slot
-    // 4) use the same shader we created during init
+    
     //FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that
     ffglex::ScopedVAOBinding vaoBinding( vaoID );
+    
+    // 4) use the same shader we created during init
     ffglex::ScopedShaderBinding shaderBinding( shader.GetGLID() );
   
     // Draw the triangle
