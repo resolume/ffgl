@@ -83,19 +83,6 @@
 		1B27092021639CEC002B8B05 /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B27090B21635FB1002B8B05 /* Constants.cpp */; };
 		1B27092121639CEC002B8B05 /* GLResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B27090A21635FB0002B8B05 /* GLResources.cpp */; };
 		1B27092221639CEC002B8B05 /* Particles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B27090C21635FB1002B8B05 /* Particles.cpp */; };
-		A924BBE7221C69E100B5F98C /* FFGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708B321635F6D002B8B05 /* FFGL.cpp */; };
-		A924BBE8221C69F300B5F98C /* FFGLPluginInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708B621635F6D002B8B05 /* FFGLPluginInfo.cpp */; };
-		A924BBE9221C69F500B5F98C /* FFGLPluginInfoData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708B721635F6D002B8B05 /* FFGLPluginInfoData.cpp */; };
-		A924BBEA221C69FA00B5F98C /* FFGLPluginManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708B421635F6D002B8B05 /* FFGLPluginManager.cpp */; };
-		A924BBEB221C69FB00B5F98C /* FFGLPluginSDK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708BA21635F6E002B8B05 /* FFGLPluginSDK.cpp */; };
-		A924BBEC221C6A0200B5F98C /* FFGLScopedBufferBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708DC21635F82002B8B05 /* FFGLScopedBufferBinding.cpp */; };
-		A924BBED221C6A0700B5F98C /* FFGLScopedSamplerActivation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D221635F82002B8B05 /* FFGLScopedSamplerActivation.cpp */; };
-		A924BBEE221C6A0D00B5F98C /* FFGLScopedShaderBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708E221635F83002B8B05 /* FFGLScopedShaderBinding.cpp */; };
-		A924BBEF221C6A1000B5F98C /* FFGLScopedTextureBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D321635F82002B8B05 /* FFGLScopedTextureBinding.cpp */; };
-		A924BBF0221C6A1900B5F98C /* FFGLScreenQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D521635F82002B8B05 /* FFGLScreenQuad.cpp */; };
-		A924BBF2221C6A2500B5F98C /* FFGLShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708E321635F83002B8B05 /* FFGLShader.cpp */; };
-		A924BBF3221C6A3F00B5F98C /* FFGLUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D421635F82002B8B05 /* FFGLUtilities.cpp */; };
-		A924BBF4221C6A4200B5F98C /* DigiGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A924BBDB221C673B00B5F98C /* DigiGlitch.cpp */; };
 		A9D22A952181FA0400708C0E /* FFGLUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D421635F82002B8B05 /* FFGLUtilities.cpp */; };
 		A9D22A962181FA0400708C0E /* FFGLPluginManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708B421635F6D002B8B05 /* FFGLPluginManager.cpp */; };
 		A9D22A972181FA0400708C0E /* FFGLScopedBufferBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708DC21635F82002B8B05 /* FFGLScopedBufferBinding.cpp */; };
@@ -191,10 +178,6 @@
 		2FD1224818853D700009EBA8 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		2FD1225318853FFB0009EBA8 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2FD1226B188540470009EBA8 /* AddSubtract.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AddSubtract.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		A924BBDB221C673B00B5F98C /* DigiGlitch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DigiGlitch.cpp; path = ../../../source/plugins/DigiGlitch/DigiGlitch.cpp; sourceTree = "<group>"; };
-		A924BBDC221C673B00B5F98C /* DigiGlitch.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DigiGlitch.hpp; path = ../../../source/plugins/DigiGlitch/DigiGlitch.hpp; sourceTree = "<group>"; };
-		A924BBE1221C69CC00B5F98C /* DigiGlitch.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DigiGlitch.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		A924BBE3221C69CC00B5F98C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9D22A902181F8AF00708C0E /* FirstTriangle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FirstTriangle.cpp; path = ../../source/plugins/FirstTriangle/FirstTriangle.cpp; sourceTree = "<group>"; };
 		A9D22A912181F8AF00708C0E /* FirstTriangle.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FirstTriangle.hpp; path = ../../source/plugins/FirstTriangle/FirstTriangle.hpp; sourceTree = "<group>"; };
 		A9D22AA82181FA0400708C0E /* Triangle.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Triangle.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,13 +202,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		2FD12265188540470009EBA8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A924BBDE221C69CC00B5F98C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -324,7 +300,6 @@
 				E8D165D40C5E177A0035D796 /* mixer plugins */,
 				E8D161130C5DF1DF0035D796 /* frameworks */,
 				2FD12214188538AC0009EBA8 /* source */,
-				A924BBE2221C69CC00B5F98C /* DigiGlitch */,
 				2DA285A10AEE5E480030A4DD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -337,7 +312,6 @@
 				DB4B64161FF845920069DA80 /* Gradients.bundle */,
 				A9F92EA9201A1C1500527E48 /* Particles.bundle */,
 				A9D22AA82181FA0400708C0E /* Triangle.bundle */,
-				A924BBE1221C69CC00B5F98C /* DigiGlitch.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -353,28 +327,11 @@
 		A91E037820173C1F0018E2D0 /* Gradients */ = {
 			isa = PBXGroup;
 			children = (
-				DB4B63E31FF8455E0069DA80 /* FFGLGradients.cpp */,
 				DB4B63E41FF8455E0069DA80 /* FFGLGradients.h */,
+				DB4B63E31FF8455E0069DA80 /* FFGLGradients.cpp */,
 			);
 			name = Gradients;
 			path = ../../source/plugins/Gradients;
-			sourceTree = "<group>";
-		};
-		A924BBDA221C670900B5F98C /* DigiGlitch */ = {
-			isa = PBXGroup;
-			children = (
-				A924BBDB221C673B00B5F98C /* DigiGlitch.cpp */,
-				A924BBDC221C673B00B5F98C /* DigiGlitch.hpp */,
-			);
-			path = DigiGlitch;
-			sourceTree = "<group>";
-		};
-		A924BBE2221C69CC00B5F98C /* DigiGlitch */ = {
-			isa = PBXGroup;
-			children = (
-				A924BBE3221C69CC00B5F98C /* Info.plist */,
-			);
-			path = DigiGlitch;
 			sourceTree = "<group>";
 		};
 		A94EF73518A9161E006D59F0 /* Add */ = {
@@ -409,8 +366,8 @@
 		D69416A01B90436100D30319 /* AddSubtract */ = {
 			isa = PBXGroup;
 			children = (
-				D69416A11B90436100D30319 /* AddSubtract.cpp */,
 				D69416A21B90436100D30319 /* AddSubtract.h */,
+				D69416A11B90436100D30319 /* AddSubtract.cpp */,
 			);
 			name = AddSubtract;
 			path = ../../source/plugins/AddSubtract;
@@ -476,7 +433,6 @@
 		E8D165D40C5E177A0035D796 /* mixer plugins */ = {
 			isa = PBXGroup;
 			children = (
-				A924BBDA221C670900B5F98C /* DigiGlitch */,
 				A94EF73518A9161E006D59F0 /* Add */,
 			);
 			name = "mixer plugins";
@@ -510,23 +466,6 @@
 			name = AddSubtract;
 			productName = FFGLBrightness;
 			productReference = 2FD1226B188540470009EBA8 /* AddSubtract.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
-		A924BBE0221C69CC00B5F98C /* DigiGlitch */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A924BBE4221C69CC00B5F98C /* Build configuration list for PBXNativeTarget "DigiGlitch" */;
-			buildPhases = (
-				A924BBDD221C69CC00B5F98C /* Sources */,
-				A924BBDE221C69CC00B5F98C /* Frameworks */,
-				A924BBDF221C69CC00B5F98C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = DigiGlitch;
-			productName = DigiGlitch;
-			productReference = A924BBE1221C69CC00B5F98C /* DigiGlitch.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		A9D22A922181FA0400708C0E /* Triangle */ = {
@@ -604,12 +543,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0510;
-				TargetAttributes = {
-					A924BBE0221C69CC00B5F98C = {
-						CreatedOnToolsVersion = 10.1;
-						ProvisioningStyle = Automatic;
-					};
-				};
 			};
 			buildConfigurationList = 2DA285940AEE5D640030A4DD /* Build configuration list for PBXProject "FFGLPlugins" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -632,20 +565,12 @@
 				DB4B63E51FF845820069DA80 /* Add */,
 				A9F92E9A201A1C1500527E48 /* Particles */,
 				A9D22A922181FA0400708C0E /* Triangle */,
-				A924BBE0221C69CC00B5F98C /* DigiGlitch */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		2FD1225B188540470009EBA8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A924BBDF221C69CC00B5F98C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -702,26 +627,6 @@
 				1B2708E921635F83002B8B05 /* FFGLScopedTextureBinding.cpp in Sources */,
 				D69416C91B904EA200D30319 /* AddSubtract.cpp in Sources */,
 				1B27090521635F83002B8B05 /* FFGLShader.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A924BBDD221C69CC00B5F98C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A924BBF4221C6A4200B5F98C /* DigiGlitch.cpp in Sources */,
-				A924BBE7221C69E100B5F98C /* FFGL.cpp in Sources */,
-				A924BBE8221C69F300B5F98C /* FFGLPluginInfo.cpp in Sources */,
-				A924BBE9221C69F500B5F98C /* FFGLPluginInfoData.cpp in Sources */,
-				A924BBEA221C69FA00B5F98C /* FFGLPluginManager.cpp in Sources */,
-				A924BBEB221C69FB00B5F98C /* FFGLPluginSDK.cpp in Sources */,
-				A924BBEC221C6A0200B5F98C /* FFGLScopedBufferBinding.cpp in Sources */,
-				A924BBED221C6A0700B5F98C /* FFGLScopedSamplerActivation.cpp in Sources */,
-				A924BBEE221C6A0D00B5F98C /* FFGLScopedShaderBinding.cpp in Sources */,
-				A924BBEF221C6A1000B5F98C /* FFGLScopedTextureBinding.cpp in Sources */,
-				A924BBF0221C6A1900B5F98C /* FFGLScreenQuad.cpp in Sources */,
-				A924BBF2221C6A2500B5F98C /* FFGLShader.cpp in Sources */,
-				A924BBF3221C6A3F00B5F98C /* FFGLUtilities.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -904,129 +809,6 @@
 				PRODUCT_NAME = AddSubtract;
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		A924BBE5221C69CC00B5F98C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = Resolume.DigiGlitch;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		A924BBE6221C69CC00B5F98C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = Resolume.DigiGlitch;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -1245,15 +1027,6 @@
 			buildConfigurations = (
 				2FD12269188540470009EBA8 /* Debug */,
 				2FD1226A188540470009EBA8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A924BBE4221C69CC00B5F98C /* Build configuration list for PBXNativeTarget "DigiGlitch" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A924BBE5221C69CC00B5F98C /* Debug */,
-				A924BBE6221C69CC00B5F98C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
