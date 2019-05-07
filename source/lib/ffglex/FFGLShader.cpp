@@ -75,7 +75,7 @@ bool FFGLShader::Compile( const char* vertexShader, const char* fragmentShader )
 	//We need to have valid inputs to be able to compile a shader, validate them here so that below we can just use them without checking.
 	if( vertexShader == nullptr || strlen( vertexShader ) == 0 )
 		return false;
-	if( (fragmentShader == nullptr || strlen( fragmentShader ) == 0) && transformFeedbackVaryings.empty() )
+	if( ( fragmentShader == nullptr || strlen( fragmentShader ) == 0 ) && transformFeedbackVaryings.empty() )
 		return false;
 
 	//Everything needs to succeed for this to be a usable shader. If anything fails we'll be cleaning up everything
@@ -119,7 +119,7 @@ bool FFGLShader::Compile( const char* vertexShader, const char* geometryShader, 
 	//We need to have valid inputs to be able to compile a shader, validate them here so that below we can just use them without checking.
 	if( vertexShader == nullptr || strlen( vertexShader ) == 0 )
 		return false;
-	if( (fragmentShader == nullptr || strlen( fragmentShader ) == 0) && transformFeedbackVaryings.empty() )
+	if( ( fragmentShader == nullptr || strlen( fragmentShader ) == 0 ) && transformFeedbackVaryings.empty() )
 		return false;
 
 	//If anything fails we'll be cleaning up everything so that we wont keep anything that wont be used alive.
@@ -189,6 +189,10 @@ bool FFGLShader::IsReady() const
 	//The shaders themselves are optional, it's the program we're using when rendering with those shaders.
 	return programID != 0;
 }
+void FFGLShader::Use() const
+{
+	glUseProgram( programID );
+}
 /**
  * Gets the OpenGL ID that represents the linked shader program.
  *
@@ -209,6 +213,33 @@ GLuint FFGLShader::GetGLID() const
 GLint FFGLShader::FindUniform( const char* name ) const
 {
 	return glGetUniformLocation( programID, name );
+}
+
+void FFGLShader::Set( const char* name, float value )
+{
+	glUniform1f( FindUniform( name ), value );
+}
+
+void FFGLShader::Set( const char* name, float v1, float v2 )
+{
+	glUniform2f( FindUniform( name ), v1, v2 );
+}
+
+void FFGLShader::Set( const char* name, float v1, float v2, float v3 )
+{
+	glUniform3f( FindUniform( name ), v1, v2, v3 );
+}
+
+void FFGLShader::Set( const char* name, int value )
+{
+	glUniform1i( FindUniform( name ), value );
+}
+
+void FFGLShader::Bind( const char* name, int textureID, const FFGLTextureStruct& texture )
+{
+	Set( name, textureID );
+	glActiveTexture( GL_TEXTURE0 + textureID );
+	glBindTexture( GL_TEXTURE_2D, texture.Handle );
 }
 
 bool FFGLShader::CompileVertexShader( const char* vertexShader )
@@ -298,7 +329,7 @@ bool FFGLShader::CompileFragmentShader( const char* fragmentShader )
 bool FFGLShader::LinkProgram()
 {
 	programID = glCreateProgram();
-	
+
 	glAttachShader( programID, vertexShaderID );
 	if( geometryShaderID != 0 )
 		glAttachShader( programID, geometryShaderID );

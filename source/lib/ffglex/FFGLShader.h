@@ -2,6 +2,8 @@
 #include "../ffgl/FFGL.h"//For OpenGL
 #include <vector>
 #include <string>
+#include <map>
+#include <string>
 
 namespace ffglex
 {
@@ -14,8 +16,6 @@ class FFGLShader final
 {
 public:
 	FFGLShader();                                                                                     //The default constructor just initializes this object to represent no shader.
-	FFGLShader( const FFGLShader& ) = delete;
-	FFGLShader( FFGLShader&& ) = delete;
 	~FFGLShader();                                                                                    //Destructing this object just checks and lets you know if you've properly released the GL resources.
 
 	void AddTransformFeedbackVarying( const std::string& varyingName );                               //Add a varying that will be captured using a transform feedback.
@@ -25,8 +25,14 @@ public:
 	void FreeGLResources();                                                                           //Frees any GL resources that this shader is holding.
 
 	bool IsReady() const;                                                                             //Whether or not previous complilation succeeded and this shader is ready to be used for rendering.
+	void Use() const;                                                                                 //Call glUseProgram with the current programID
 	GLuint GetGLID() const;                                                                           //Gets the OpenGL ID that represents the linked shader program.
-	GLint FindUniform( const char* name ) const;                                                      //Finds the uniform location that needs to be used to addess a uniform with a certain name.
+	GLint FindUniform( const char* name ) const;                                               //Finds the uniform location that needs to be used to addess a uniform with a certain name.
+	void Set( const char* name, float value );
+	void Set( const char* name, float v1, float v2 );
+	void Set( const char* name, float v1, float v2, float v3 );
+	void Set( const char* name, int value );
+	void Bind( const char* name, int texture, const FFGLTextureStruct& fbo );
 
 	FFGLShader& operator=( const FFGLShader& ) = delete;
 	FFGLShader& operator=( FFGLShader&& ) = delete;
@@ -42,6 +48,7 @@ private:
 	GLuint fragmentShaderID;                              //!< The ID OpenGL gave our fragment shader. 0 for invalid.
 	GLuint programID;                                     //!< The ID OpenGL gave our shader program. Bind this to use this shader. 0 for invalid.
 	std::vector< std::string > transformFeedbackVaryings; //!< The varyings that will be captured using a transform feedback. Ordered in the order of capturing.
+	std::map< std::string, int > uniformLocations;
 };
 
 }//End namespace ffglex

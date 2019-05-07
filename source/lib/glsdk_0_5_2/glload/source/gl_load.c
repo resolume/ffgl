@@ -12002,7 +12002,7 @@ static void ParseVersionFromString(int *pOutMajor, int *pOutMinor, const char *s
 		return;
 
 	iLength = (int)((ptrdiff_t)strDotPos - (ptrdiff_t)strVersion);
-	strncpy(strWorkBuff, strVersion, iLength);
+	strncpy_s(strWorkBuff, strVersion, iLength);
 	strWorkBuff[iLength] = '\0';
 
 	*pOutMajor = atoi(strWorkBuff);
@@ -12010,14 +12010,14 @@ static void ParseVersionFromString(int *pOutMajor, int *pOutMinor, const char *s
 	if(!strDotPos)
 	{
 		/*No extra data. Take the whole rest of the string.*/
-		strcpy(strWorkBuff, strVersion + iLength + 1);
+		strcpy_s(strWorkBuff, strVersion + iLength + 1);
 	}
 	else
 	{
 		/*Copy only up until the space.*/
 		int iLengthMinor = (int)((ptrdiff_t)strDotPos - (ptrdiff_t)strVersion);
 		iLengthMinor = iLengthMinor - (iLength + 1);
-		strncpy(strWorkBuff, strVersion + iLength + 1, iLengthMinor);
+		strncpy_s(strWorkBuff, strVersion + iLength + 1, iLengthMinor);
 		strWorkBuff[iLengthMinor] = '\0';
 	}
 
@@ -12061,7 +12061,7 @@ static void ProcExtsFromExtString(const char *strExtList)
 		if(iStrLen > 255)
 			return;
 
-		strncpy(strWorkBuff, strCurrPos, iStrLen);
+		strncpy_s(strWorkBuff, strCurrPos, iStrLen);
 		strWorkBuff[iStrLen] = '\0';
 
 		LoadExtByName(strWorkBuff);

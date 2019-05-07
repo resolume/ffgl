@@ -115,13 +115,11 @@ public:
 		return FF_FAIL;
 	}
 
-	/// Inform this plugin of the host's current beat info.
-	/// The default implementations copies the values to local values so that plugins will have them
-	/// available when processing the OpenGL code.
-	///
-	/// \param		bpm The host's global number of beats per minute.
-	/// \param		barPhase The hosts current position inside the bar.
 	virtual void SetBeatInfo( float bpm, float barPhase );
+
+	virtual void SetHostInfo(const char * hostname, const char * version);
+
+	virtual void SetSampleRate(unsigned int sampleRate);
 
 	/// Default implementation of the FreeFrame getInputStatus instance specific function. This function is called
 	/// to know whether a given input is currently in use. For the default implementation every input is always in use.
@@ -183,9 +181,16 @@ protected:
 	/// the FreeFrame SDK for instantiating plugin objects.
 	CFreeFrameGLPlugin();
 
-	FFGLViewportStruct currentViewport;  //!< 
-	float bpm;                           //!< The host's global number of beats per minute.
-	float barPhase;                      //!< The hosts current position inside the bar. It's a float between 0.0f and 1.0f. A bar is 4 beats (usually)
+	FFGLViewportStruct currentViewport;
+	float bpm;
+	float barPhase;
+	
+	struct HostInfo {
+		std::string name;
+		std::string version;
+	} hostInfos;
+
+	int sampleRate;
 };
 
 #endif
