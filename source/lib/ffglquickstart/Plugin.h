@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include "Utils.h"
 #include "Params.h"
 
 typedef CFFGLPluginInfo PluginInstance;
@@ -12,6 +13,7 @@ struct PluginInfo
 	std::string id, name, description, about;
 	int majorVersion = 1;
 	int minorVersion = 0;
+	PluginInfo(std::string id, std::string name) : id(id), name(name) {}
 };
 
 class Plugin : public CFreeFrameGLPlugin

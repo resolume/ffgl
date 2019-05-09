@@ -401,15 +401,20 @@ const char* getPluginShortName()
 	return shortName;
 }
 
-GetRangeStruct getParamRange( unsigned int index )
+FFMixed getParamRange( unsigned int index )
 {
+	FFMixed ret;
+	ret.UIntValue = FF_FAIL;
 	if( s_pPrototype == NULL )
 	{
 		FFResult dwRet = initialise();
 		if( dwRet == FF_FAIL )
 			return {};
 	}
-	return s_pPrototype->GetParamRange( index );
+	ret.UIntValue = FF_SUCCESS;
+	GetRangeStruct range = s_pPrototype->GetParamRange( index );
+	ret.PointerValue = (void*)&range;
+	return ;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -669,7 +674,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 
 		break;
 	case FF_GET_RANGE:
-		retval.PointerValue = (void*)&getParamRange( inputValue.UIntValue );
+		retval = getParamRange( inputValue.UIntValue );
 		break;
 		
 

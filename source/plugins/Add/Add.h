@@ -1,5 +1,5 @@
 #pragma once
-#include "../../lib/FFGLSDK.h"
+#include <FFGLSDK.h>
 class Add : public Mixer
 {
 public:

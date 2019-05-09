@@ -291,10 +291,13 @@ protected:
 		struct Range {
 			float min = 0;
 			float max = 1;
+			Range(float min, float max) : min(min), max(max) {}
 		} range;
 		float DefaultValue;
 		char* StrDefaultValue;
 		ParamInfoStruct* pNext;
+
+		ParamInfoStruct() : range(0,1) {}
 	} ParamInfo;
 
 	ParamInfo* FindParamInfo( unsigned int ID );
