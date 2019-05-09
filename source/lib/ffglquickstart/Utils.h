@@ -69,7 +69,7 @@ public:
 
 namespace shader
 {
-const enum snippet_id { random,
+enum snippet_id { random,
 						map,
 						simplex };
 
