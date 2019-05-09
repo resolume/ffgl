@@ -1,10 +1,16 @@
 #pragma once
-#include <FFGLSDK.h>
 #include <vector>
 #include <string>
 #include <chrono>
+#include "../ffgl/FFGLPluginInfo.h"
+#include "../ffgl/FFGLPluginSDK.h"
+#include "../ffgl/FFGLLib.h"
+#include "../ffglex/FFGLShader.h"
+#include "../ffglex/FFGLScreenQuad.h"
+#include "../ffglex/FFGLUtilities.h"
 #include "Utils.h"
 #include "Params.h"
+#include "Audio.h"
 
 typedef CFFGLPluginInfo PluginInstance;
 

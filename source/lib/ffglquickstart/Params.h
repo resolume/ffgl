@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
 #include <string>
-#include <FFGLSDK.h>
 #include <atomic>
 #include "Utils.h"
+#include "../ffgl/FFGL.h"
 
 class Param
 {

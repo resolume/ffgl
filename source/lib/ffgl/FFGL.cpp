@@ -414,7 +414,7 @@ FFMixed getParamRange( unsigned int index )
 	ret.UIntValue = FF_SUCCESS;
 	GetRangeStruct range = s_pPrototype->GetParamRange( index );
 	ret.PointerValue = (void*)&range;
-	return ;
+	return ret;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

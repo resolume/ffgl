@@ -1,6 +1,6 @@
 #pragma once
-#include <FFGLSDK.h>
 #include "Params.h"
+#include "Utils.h"
 
 // The FFT buffer size
 static const int BUFFER_SIZE = 2048;

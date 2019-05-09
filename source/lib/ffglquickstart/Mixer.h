@@ -1,5 +1,6 @@
 #pragma once
 #include "Plugin.h"
+
 class Mixer : public Plugin
 {
 public:
@@ -9,7 +10,7 @@ public:
 	template< typename PluginType >
 	static PluginInstance createPlugin( PluginInfo infos );
 
-	FFResult render( ProcessOpenGLStruct* pGL ) override;
+	virtual FFResult render( ProcessOpenGLStruct* pGL ) override;
 };
 
 template< typename PluginType >
