@@ -55,7 +55,7 @@ void Dissolve::update()
 	auto speedParam = std::dynamic_pointer_cast< ParamRange >( getParam( "speed" ) );
 	float speed     = speedParam->getRealValue();
 	relativeTime += deltaTime * speed;
-	glUniform1f( shader.FindUniform( "relativeTime" ), relativeTime );
+	shader.Set( "relativeTime", relativeTime );
 }
 
 Dissolve::~Dissolve()

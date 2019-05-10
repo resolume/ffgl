@@ -70,23 +70,23 @@ void Alea::update()
 
 	if( fixedSize->getValue() )
 	{
-		glUniform1f( shader.FindUniform( "audioVolume" ), 1.0f );
+		shader.Set( "audioVolume", 1.0f );
 	}
 
 	if( select->getValue() == 1 )
 	{
-		glUniform1f( shader.FindUniform( "audioVolume" ), audio.getBass() );
+		shader.Set( "audioVolume", audio.getBass() );
 	}
 	else if( select->getValue() == 2 )
 	{
-		glUniform1f( shader.FindUniform( "audioVolume" ), audio.getMed() );
+		shader.Set( "audioVolume", audio.getMed() );
 	}
 	else if( select->getValue() == 3 )
 	{
-		glUniform1f( shader.FindUniform( "audioVolume" ), audio.getHigh() );
+		shader.Set( "audioVolume", audio.getHigh() );
 	}
 
-	glUniform1f( shader.FindUniform( "sides" ), (float)sides );
+	shader.Set( "sides", (float)sides );
 
 	audio.setSmoothness( smoothness->getValue() );
 }

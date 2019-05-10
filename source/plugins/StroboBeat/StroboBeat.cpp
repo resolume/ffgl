@@ -38,7 +38,7 @@ void StroboBeat::update()
 	v |= v >> 16;
 	v++;
 	float value = (float)v / 4.f;
-	glUniform1f( shader.FindUniform( "speed" ), value );
+	shader.Set( "speed",  value );
 }
 
 StroboBeat::~StroboBeat()
