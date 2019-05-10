@@ -63,5 +63,5 @@ private:
 	utils::SmoothValue vol, bass, med, high;
 	float freqMax, freqBinStep;
 	int sampleRate;
-	ParamRange::Ptr gainParam = ParamRange::create( "default", 0, {} );
+	ParamRange::Ptr gainParam = ParamRange::create( "default", 0, {0.0f, 1.0f} );
 };

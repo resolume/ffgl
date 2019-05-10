@@ -1,5 +1,5 @@
 #pragma once
-#include "../api/Effect.h"
+#include <FFGLSDK.h>
 class BarrelBlur : public Effect
 {
 public:
