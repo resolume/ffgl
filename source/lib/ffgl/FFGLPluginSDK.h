@@ -112,7 +112,8 @@ public:
 	///						A custom implementation must be provided by every specific plugin.
 	virtual FFResult SetTime( double time )
 	{
-		return FF_FAIL;
+		hostTime = time;
+		return FF_SUCCESS;
 	}
 
 	virtual void SetBeatInfo( float bpm, float barPhase );
@@ -189,7 +190,7 @@ protected:
 		std::string name;
 		std::string version;
 	} hostInfos;
-
+	double hostTime;
 	int sampleRate;
 };
 

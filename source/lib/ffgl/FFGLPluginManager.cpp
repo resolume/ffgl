@@ -33,7 +33,7 @@ CFFGLPluginManager::CFFGLPluginManager()
 {
 	m_iMinInputs = 0;
 	m_iMaxInputs = 0;
-	m_timeSupported = 0;
+	m_timeSupported = true;
 
 	m_NParams = 0;
 	m_pFirst = NULL;
