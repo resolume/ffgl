@@ -13,57 +13,6 @@
 
 namespace ffglex
 {
-#ifdef _WIN32
-typedef __int64 int64;
-inline int64 abs64( const int64 n ) throw()
-{
-	return ( n >= 0 ) ? n : -n;
-}
-
-static int64 hiResTicksPerSecond    = -1;
-static double hiResTicksScaleFactor = 0.0;
-#endif
-
-float getTicks()
-{
-#ifdef _WIN32
-	//return (double) GetTickCount();
-
-	//snippet for timing taken from JUCE library
-	if( hiResTicksPerSecond == -1 )
-	{
-		LARGE_INTEGER f;
-		QueryPerformanceFrequency( &f );
-		hiResTicksPerSecond   = f.QuadPart;
-		hiResTicksScaleFactor = 1000.0f / hiResTicksPerSecond;
-	}
-
-	LARGE_INTEGER ticks;
-	QueryPerformanceCounter( &ticks );
-
-	const int64 mainCounterAsHiResTicks = ( GetTickCount() * hiResTicksPerSecond ) / 1000;
-	const int64 newOffset               = mainCounterAsHiResTicks - ticks.QuadPart;
-
-	// fix for a very obscure PCI hardware bug that can make the counter
-	// sometimes jump forwards by a few seconds..
-	static int64 hiResTicksOffset = 0;
-	const int64 offsetDrift       = abs64( newOffset - hiResTicksOffset );
-
-	if( offsetDrift > ( hiResTicksPerSecond >> 1 ) )
-		hiResTicksOffset = newOffset;
-
-	return (float)( ticks.QuadPart + hiResTicksOffset * hiResTicksScaleFactor );
-
-#else
-
-	Nanoseconds nano = AbsoluteToNanoseconds( UpTime() );
-	// if you want that in (floating point) seconds:
-	double seconds = ( (double)UnsignedWideToUInt64( nano ) ) * 1e-9;
-	return seconds * 1000.0;
-
-#endif
-}
-
 unsigned int is_power_of_2( unsigned int x )
 {
 	return ( x != 0 ) && ( ( x & ( x - 1 ) ) == 0 );

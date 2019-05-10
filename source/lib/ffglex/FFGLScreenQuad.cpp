@@ -1,7 +1,5 @@
 #include "FFGLScreenQuad.h"
 #include <assert.h>
-#include "FFGLScopedVAOBinding.h"
-#include "FFGLScopedBufferBinding.h"
 #include "FFGLUtilities.h"
 
 namespace ffglex
@@ -36,10 +34,8 @@ bool FFGLScreenQuad::Initialise()
 		return false;
 	}
 
-	//FFGL requires us to leave the context in a default state, so use these scoped bindings to
-	//help us restore the state after we're done.
-	ScopedVAOBinding vaoBinding( vaoID );
-	ScopedVBOBinding vboBinding( vboID );
+	glBindVertexArray( vaoID );
+	glBindBuffer( GL_ARRAY_BUFFER, vboID );
 	glBufferData( GL_ARRAY_BUFFER, sizeof( TEXTURED_QUAD_VERTICES ), TEXTURED_QUAD_VERTICES, GL_STATIC_DRAW );
 
 	glEnableVertexAttribArray( 0 );
@@ -60,8 +56,7 @@ void FFGLScreenQuad::Draw()
 	if( vaoID == 0 || vboID == 0 )
 		return;
 
-	//Scoped binding to make sure we dont keep the vao bind after we're done rendering.
-	ScopedVAOBinding vaoBinding( vaoID );
+	glBindVertexArray( vaoID );
 	glDrawArrays( GL_TRIANGLES, 0, 6 );
 }
 /**
