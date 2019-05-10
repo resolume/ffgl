@@ -13,6 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				65755C6822856C55008A5A57 /* PBXTargetDependency */,
 				D6369DC21AAF109800B0CC43 /* PBXTargetDependency */,
 				DB4B64191FF8459E0069DA80 /* PBXTargetDependency */,
 			);
@@ -76,7 +77,6 @@
 		65755C5922846EC6008A5A57 /* FFGLScopedSamplerActivation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D221635F82002B8B05 /* FFGLScopedSamplerActivation.cpp */; };
 		65755C5A22846EC6008A5A57 /* FFGLScopedVAOBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708DA21635F82002B8B05 /* FFGLScopedVAOBinding.cpp */; };
 		65755C5B22846EC6008A5A57 /* FFGLScopedTextureBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D321635F82002B8B05 /* FFGLScopedTextureBinding.cpp */; };
-		65755C5C22846EC6008A5A57 /* Add.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB4B63E11FF8453A0069DA80 /* Add.cpp */; };
 		65755C5D22846EC6008A5A57 /* FFGLShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708E321635F83002B8B05 /* FFGLShader.cpp */; };
 		65755C5E22846EC6008A5A57 /* Plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65755C3522845D15008A5A57 /* Plugin.cpp */; };
 		65755C5F22846EC6008A5A57 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65755C3422845D15008A5A57 /* Effect.cpp */; };
@@ -86,6 +86,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		65755C6722856C55008A5A57 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2DA285930AEE5D640030A4DD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65755C4922846EC6008A5A57;
+			remoteInfo = Gradient;
+		};
 		D6369DC11AAF109800B0CC43 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2DA285930AEE5D640030A4DD /* Project object */;
@@ -541,7 +548,6 @@
 				65755C5922846EC6008A5A57 /* FFGLScopedSamplerActivation.cpp in Sources */,
 				65755C5A22846EC6008A5A57 /* FFGLScopedVAOBinding.cpp in Sources */,
 				65755C5B22846EC6008A5A57 /* FFGLScopedTextureBinding.cpp in Sources */,
-				65755C5C22846EC6008A5A57 /* Add.cpp in Sources */,
 				65755C5D22846EC6008A5A57 /* FFGLShader.cpp in Sources */,
 				65755C5E22846EC6008A5A57 /* Plugin.cpp in Sources */,
 				65755C5F22846EC6008A5A57 /* Effect.cpp in Sources */,
@@ -578,6 +584,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		65755C6822856C55008A5A57 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65755C4922846EC6008A5A57 /* Gradient */;
+			targetProxy = 65755C6722856C55008A5A57 /* PBXContainerItemProxy */;
+		};
 		D6369DC21AAF109800B0CC43 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2FD12258188540470009EBA8 /* AddSubtract */;
