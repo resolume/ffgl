@@ -8,12 +8,6 @@
 #include "ffglex/FFGLShader.h"
 #include "ffglex/FFGLUtilities.h"
 
-#include "ffglex/FFGLScopedBufferBinding.h"
-#include "ffglex/FFGLScopedSamplerActivation.h"
-#include "ffglex/FFGLScopedShaderBinding.h"
-#include "ffglex/FFGLScopedTextureBinding.h"
-#include "ffglex/FFGLScopedVAOBinding.h"
-
 #include "ffglquickstart/Audio.h"
 #include "ffglquickstart/Effect.h"
 #include "ffglquickstart/Mixer.h"

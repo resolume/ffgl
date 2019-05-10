@@ -11,12 +11,6 @@
 #include "ffglex/FFGLShader.cpp"
 #include "ffglex/FFGLUtilities.cpp"
 
-#include "ffglex/FFGLScopedBufferBinding.cpp"
-#include "ffglex/FFGLScopedSamplerActivation.cpp"
-#include "ffglex/FFGLScopedShaderBinding.cpp"
-#include "ffglex/FFGLScopedTextureBinding.cpp"
-#include "ffglex/FFGLScopedVAOBinding.cpp"
-
 #include "ffglquickstart/Audio.cpp"
 #include "ffglquickstart/Effect.cpp"
 #include "ffglquickstart/Mixer.cpp"
