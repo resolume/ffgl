@@ -74,6 +74,7 @@ public:
 	struct Range
 	{
 		float min = 0.0f, max = 1.0f;
+		Range(float min, float max) : min(min), max(max) {};
 	};
 	typedef std::shared_ptr< ParamRange > Ptr;
 

@@ -7,7 +7,7 @@ class Bloom : public Effect
 public:
 	Bloom();
 	FFResult init() override;
-	FFResult Bloom::render( ProcessOpenGLStruct* inputTextures ) override;
+	FFResult render( ProcessOpenGLStruct* inputTextures ) override;
 	void clean() override;
 	~Bloom();
 
