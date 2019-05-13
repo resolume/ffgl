@@ -31,6 +31,7 @@ public:
 	void Set( const char* name, float value );
 	void Set( const char* name, float v1, float v2 );
 	void Set( const char* name, float v1, float v2, float v3 );
+	void Set( const char* name, float v1, float v2, float v3, float v4 );
 	void Set( const char* name, int value );
 	void Bind( const char* name, int texture, const FFGLTextureStruct& fbo );
 

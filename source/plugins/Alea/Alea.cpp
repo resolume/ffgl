@@ -40,8 +40,7 @@ void main()
 	float colorR = polygon(uv-vec2(rgbShift,0), size, width, sides);
     float colorG = polygon(uv, size, width, sides);
     float colorB = polygon(uv+vec2(rgbShift,0), size, width, sides);
-	vec3 color = vec3(colorR, colorG, colorB);
-    fragColor = vec4(color,1.0);
+    fragColor = vec4(colorR, colorG, colorB, 1) * color;
 }
 )";
 

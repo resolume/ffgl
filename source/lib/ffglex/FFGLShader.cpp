@@ -230,6 +230,11 @@ void FFGLShader::Set( const char* name, float v1, float v2, float v3 )
 	glUniform3f( FindUniform( name ), v1, v2, v3 );
 }
 
+void FFGLShader::Set( const char* name, float v1, float v2, float v3, float v4 )
+{
+	glUniform4f( FindUniform( name ), v1, v2, v3, v4 );
+}
+
 void FFGLShader::Set( const char* name, int value )
 {
 	glUniform1i( FindUniform( name ), value );

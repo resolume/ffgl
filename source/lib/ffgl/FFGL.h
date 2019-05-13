@@ -200,6 +200,7 @@ static const FFUInt32 FF_TYPE_TEXT       = 100;
 static const FFUInt32 FF_TYPE_HUE        = 200;
 static const FFUInt32 FF_TYPE_SATURATION = 201;
 static const FFUInt32 FF_TYPE_BRIGHTNESS = 202;
+static const FFUInt32 FF_TYPE_ALPHA      = 203;
 
 // Input status
 static const FFUInt32 FF_INPUT_NOTINUSE = 0;

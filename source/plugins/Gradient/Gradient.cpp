@@ -8,7 +8,7 @@ static PluginInstance p = Source::createPlugin< Gradient >( {
 static const std::string fshader = R"(
 void main()
 {
-	fragColor = vec4( mix( RGBLeft, RGBRight, i_uv.x ), 1.0 );
+	fragColor = mix( RGBLeft, RGBRight, i_uv.x );
 }
 )";
 

@@ -2,7 +2,7 @@
 
 static PluginInstance p = Effect::createPlugin< StroboBeat >( {
 	"FL12",     // plugin unique ID
-	"Strobotime"// Plugin name
+	"StroboBeat"// Plugin name
 } );
 
 static const std::string fshader = R"(
@@ -12,7 +12,7 @@ void main()
 	bool shouldBeOn = fract(phase * speed) < dutyCycle;
 	shouldBeOn = reversephase ? !shouldBeOn : shouldBeOn;
 	tex = mix(tex,vec4(0,0,0,1),blackframe);
-	fragColor=mix(tex,vec4(color,1.),shouldBeOn);
+	fragColor=mix(tex,color,shouldBeOn);
 }
 )";
 

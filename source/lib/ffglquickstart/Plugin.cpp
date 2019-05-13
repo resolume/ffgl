@@ -37,7 +37,7 @@ FFResult Plugin::ProcessOpenGL( ProcessOpenGLStruct* inputTextures )
 	updateAudioAndTime();
 	sendParams( shader );
 	update();
-	FFResult result = render(inputTextures);
+	FFResult result = render( inputTextures );
 	consumeAllTrigger();
 	resetOpenGLState();
 
@@ -65,10 +65,15 @@ std::string Plugin::createFragmentShader( std::string base )
 	int i                          = 0;
 	while( i < params.size() )
 	{
-		if( isRGBColor( i ) || isHueColor( i ) )
+		if( isRGBColor( i ) )
 		{
 			fragmentShaderCode += "uniform vec3 " + params[ i ]->getName() + ";\n";
 			i += 2;
+		}
+		else if( isHueColor( i ) )
+		{
+			fragmentShaderCode += "uniform vec4 " + params[ i ]->getName() + ";\n";
+			i += 3;
 		}
 		else if( params[ i ]->getType() == FF_TYPE_BOOLEAN || params[ i ]->getType() == FF_TYPE_EVENT )
 		{
@@ -94,10 +99,10 @@ void Plugin::updateAudioAndTime()
 {
 	// Update time and frame data
 	frame++;
-	auto t_now    = std::chrono::high_resolution_clock::now();
-	timeNow = std::chrono::duration< float, std::milli >( t_now - t_start ).count() / 1000.0f;
-	deltaTime     = timeNow - lastUpdate;
-	lastUpdate    = timeNow;
+	auto t_now = std::chrono::high_resolution_clock::now();
+	timeNow    = std::chrono::duration< float, std::milli >( t_now - t_start ).count() / 1000.0f;
+	deltaTime  = timeNow - lastUpdate;
+	lastUpdate = timeNow;
 	// Update FFT data
 	std::vector< float > fftData( Audio::getBufferSize() );
 	const ParamInfo* fftInfo = FindParamInfo( FFT_INPUT_INDEX );
@@ -131,11 +136,12 @@ void Plugin::sendParams( FFGLShader& shader )
 			float hue        = params[ i ]->getValue();
 			float saturation = params[ i + 1 ]->getValue();
 			float brightness = params[ i + 2 ]->getValue();
+			float alpha      = params[ i + 3 ]->getValue();
 			//we need to make sure the hue doesn't reach 1.0f, otherwise the result will be pink and not red how it should be
 			hue = ( hue == 1.0f ) ? 0.0f : hue;
 			HSVtoRGB( hue, saturation, brightness, rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] );
-			shader.Set( name.c_str(), rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] );
-			i += 2;
+			shader.Set( name.c_str(), rgb[ 0 ], rgb[ 1 ], rgb[ 2 ], alpha );
+			i += 3;
 		}
 		if( params[ i ]->getType() == FF_TYPE_BOOLEAN || params[ i ]->getType() == FF_TYPE_EVENT )
 		{
@@ -262,7 +268,7 @@ void Plugin::addParam( ParamRange::Ptr param )
 {
 	params.push_back( param );
 	SetParamInfo( (unsigned int)params.size(), param->getName().c_str(), param->getType(), param->getValue() );
-	SetParamRange( (unsigned int)params.size(), param->getRange().min, param->getRange().max);
+	SetParamRange( (unsigned int)params.size(), param->getRange().min, param->getRange().max );
 }
 
 void Plugin::addParam( ParamOption::Ptr param )
@@ -282,6 +288,7 @@ void Plugin::addHueColorParam( std::string name )
 	addParam( Param::create( name, FF_TYPE_HUE, 0. ) );
 	addParam( Param::create( name + "_saturation", FF_TYPE_SATURATION, 0. ) );
 	addParam( Param::create( name + "_brighthness", FF_TYPE_BRIGHTNESS, 1.0 ) );
+	addParam( Param::create( name + "_alpha", FF_TYPE_ALPHA, 1.0 ) );
 }
 
 void Plugin::addRGBColorParam( std::string name )
@@ -293,13 +300,14 @@ void Plugin::addRGBColorParam( std::string name )
 
 bool Plugin::isHueColor( int index )
 {
-	bool enoughSpace = index + 2 < params.size();
+	bool enoughSpace = index + 3 < params.size();
 	if( !enoughSpace )
 		return false;
 	bool isColorType =
 		params[ index ]->getType() == FF_TYPE_HUE &&
 		params[ index + 1 ]->getType() == FF_TYPE_SATURATION &&
-		params[ index + 2 ]->getType() == FF_TYPE_BRIGHTNESS;
+		params[ index + 2 ]->getType() == FF_TYPE_BRIGHTNESS &&
+		params[ index + 3 ]->getType() == FF_TYPE_ALPHA;
 
 	return isColorType;
 }
@@ -374,7 +382,7 @@ void Plugin::include( std::set< shader::snippet_id > snippets )
 
 void Plugin::consumeAllTrigger()
 {
-	for(int i = 0; i < params.size(); i++)
+	for( int i = 0; i < params.size(); i++ )
 	{
 		auto trigger = std::dynamic_pointer_cast< ParamTrigger >( params[ i ] );
 		if( trigger )
