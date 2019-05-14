@@ -29,6 +29,7 @@ FFResult Plugin::InitGL( const FFGLViewportStruct* viewPort )
 		DeInitGL();
 		return FF_FAIL;
 	}
+	resetOpenGLState();
 	return CFreeFrameGLPlugin::InitGL( viewPort );
 }
 
