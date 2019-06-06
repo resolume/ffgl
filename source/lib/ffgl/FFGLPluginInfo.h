@@ -19,7 +19,7 @@
 
 #ifndef FFGLPLUGININFO_STANDARD
 #define FFGLPLUGININFO_STANDARD
-#include <cstddef>
+
 #include "FFGL.h"
 
 #ifdef TARGET_OS_MAC

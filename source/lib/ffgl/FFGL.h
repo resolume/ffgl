@@ -131,6 +131,11 @@ static const FFUInt32 FF_SET_PARAMETER_ELEMENT_VALUE   = 37;
 static const FFUInt32 FF_GETPARAMETERUSAGE             = 32;
 static const FFUInt32 FF_GETPLUGINSHORTNAME            = 33;
 static const FFUInt32 FF_SET_BEATINFO                  = 38;
+static const FFUInt32 FF_SET_HOSTINFO                  = 39;
+static const FFUInt32 FF_SET_SAMPLERATE                = 40;
+static const FFUInt32 FF_GET_RANGE                     = 41;
+
+
 //Previously used function codes that are no longer in use. Should prevent using
 //these numbers for new function codes.
 //static const FFUInt32 FF_INITIALISE            = 1;
@@ -158,6 +163,7 @@ static const FFUInt32 FF_UNSUPPORTED = 0;
 // Plugin types
 static const FFUInt32 FF_EFFECT = 0;
 static const FFUInt32 FF_SOURCE = 1;
+static const FFUInt32 FF_MIXER  = 2;
 
 // Plugin capabilities
 static const FFUInt32 FF_CAP_SETTIME            = 5;
@@ -189,10 +195,12 @@ static const FFUInt32 FF_TYPE_YPOS       = 6;
 static const FFUInt32 FF_TYPE_STANDARD   = 10;
 static const FFUInt32 FF_TYPE_OPTION     = 11;
 static const FFUInt32 FF_TYPE_BUFFER     = 12;
+static const FFUInt32 FF_TYPE_INTEGER    = 13;
 static const FFUInt32 FF_TYPE_TEXT       = 100;
 static const FFUInt32 FF_TYPE_HUE        = 200;
 static const FFUInt32 FF_TYPE_SATURATION = 201;
 static const FFUInt32 FF_TYPE_BRIGHTNESS = 202;
+static const FFUInt32 FF_TYPE_ALPHA      = 203;
 
 // Input status
 static const FFUInt32 FF_INPUT_NOTINUSE = 0;
@@ -248,6 +256,19 @@ typedef struct SetBeatinfoStructTag
 	FFMixed bpm;
 	FFMixed barPhase;
 } SetBeatinfoStruct;
+
+// SetHostinfoStruct
+typedef struct SetHostinfoStructTag
+{
+	const char* name;
+	const char* version;
+} SetHostinfoStruct;
+
+typedef struct GetRangeStructTag
+{
+	FFUInt32 min;
+	FFUInt32 max;
+} GetRangeStruct;
 
 //FFGLViewportStruct (for InstantiateGL)
 typedef struct FFGLViewportStructTag

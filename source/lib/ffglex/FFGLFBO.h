@@ -9,11 +9,13 @@ public:
 	FFGLFBO();
 
 	int Create( int width, int height );
+	int Create( int width, int height, GLuint pixelFormat );
 	int BindAsRenderTarget();
 	int UnbindAsRenderTarget( GLuint hostFbo );
 
-	FFGLTextureStruct GetTextureInfo();
+	FFGLTextureStruct GetTextureInfo() const;
 	void FreeResources();
+	void ResizeViewPort();
 
 	GLuint GetWidth()
 	{
@@ -23,7 +25,7 @@ public:
 	{
 		return m_height;
 	}
-	GLuint GetFBOHandle()
+	GLuint GetFBOHandle() const
 	{
 		return m_fboHandle;
 	}

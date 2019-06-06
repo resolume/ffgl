@@ -21,9 +21,10 @@
 #include "FFGLPluginSDK.h"
 #include <stdio.h>
 #include <memory.h>
+#include <algorithm>
 
 // Buffer used by the default implementation of getParameterDisplay
-static char s_DisplayValue[ 15 ];
+static char s_DisplayValue[ 16 ];
 
 ////////////////////////////////////////////////////////
 // CFreeFrameGLPlugin constructor and destructor
@@ -55,9 +56,9 @@ char* CFreeFrameGLPlugin::GetParameterDisplay( unsigned int index )
 		}
 		else
 		{
-			float fValue = m_pPlugin->GetFloatParameter( index );
-			memset( s_DisplayValue, 0, 15 );
-			sprintf( s_DisplayValue, "%f", fValue );
+			std::string stringValue = std::to_string(m_pPlugin->GetFloatParameter( index ));
+			memset(s_DisplayValue, 0, sizeof(s_DisplayValue));
+			memcpy(s_DisplayValue, stringValue.c_str(), std::min(sizeof(s_DisplayValue), stringValue.length()));
 			return s_DisplayValue;
 		}
 	}
@@ -96,3 +97,15 @@ void CFreeFrameGLPlugin::SetBeatInfo( float bpm, float barPhase )
 	this->bpm = bpm;
 	this->barPhase = barPhase;
 }
+
+void CFreeFrameGLPlugin::SetHostInfo(const char * hostname, const char * version)
+{
+	hostInfos.name = hostname;
+	hostInfos.version = version;
+}
+
+void CFreeFrameGLPlugin::SetSampleRate(unsigned int _sampleRate)
+{
+	sampleRate = _sampleRate;
+}
+

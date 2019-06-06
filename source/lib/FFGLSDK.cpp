@@ -16,4 +16,10 @@
 #include "ffglex/FFGLShader.cpp"
 #include "ffglex/FFGLUtilities.cpp"
 
+#include "ffglquickstart/Audio.cpp"
+#include "ffglquickstart/Effect.cpp"
+#include "ffglquickstart/Mixer.cpp"
+#include "ffglquickstart/Plugin.cpp"
+#include "ffglquickstart/Source.cpp"
+
 #include "glsdk_0_5_2/glload/source/gl_load.c"
