@@ -51,71 +51,37 @@ struct Rectf
 	float l, r, b, t;
 };
 
-//Just using an enum to give our Parameter ID's unique numbers.
-enum ParamID
-{
-	PID_FADEOUT_START,
-	PID_SMOKE_START,
-	PID_SMOKE_INTENSITY,
-	PID_ENERGY_MAX_AGE_FACTOR,
-	PID_TURBULENCE_DETAIL,
-	PID_TURBULENCE_SPEED,
-	PID_MAX_AGE,
-	PID_PARTICLE_SIZE,
-	PID_VELOCITY_SIZE_FACTOR,
-	PID_NUM_BUCKETS,
-	PID_NUM_PARTICLES_PER_BUCKET,
-	PID_BURST_DURATION,
-	PID_BURST_INTENSITY,
-
-	PID_SIMULATE,
-	PID_FFT_INPUT
-};
-
-Particles::Particles() :
-	fadeoutStart( 0.2f ),
-	smokeStart( 0.5f ),
-	smokeIntensity( 0.4f ),
-	energyMaxAgeFactor( 0.3f ),
-	turbulenceDetail( 1.2f ),
-	turbulenceSpeed( 0.5f ),
-	maxAge( 4.0f ),
-	particleSize( 1.0f ),
-	velocityToSizeFactor( 7.0f ),
-	numBuckets( 32 ),
-	numParticlesPerBucket( int( MAX_PARTICLES_PER_BUCKET * 0.5f ) ),
-	burstDuration( 0.25f ),
-	burstIntensity( 4.0f ),
-	simulate( true )
+Particles::Particles()
 {
 	// Input properties
 	SetMinInputs( 0 );
 	SetMaxInputs( 0 );
 
 	//Register our params using the new utility function that gets the current value and uses it as the default.
-	SetParamInfof( PID_FADEOUT_START, "Fadeout Start", FF_TYPE_STANDARD );
-	SetParamInfof( PID_SMOKE_START, "Smoke Start", FF_TYPE_STANDARD );
-	SetParamInfof( PID_SMOKE_INTENSITY, "Smoke Intensity", FF_TYPE_STANDARD );
-	SetParamInfof( PID_ENERGY_MAX_AGE_FACTOR, "Energy To Age Factor", FF_TYPE_STANDARD );
-	SetParamInfof( PID_TURBULENCE_DETAIL, "Turbulence Detail", FF_TYPE_STANDARD );
-	SetParamInfof( PID_TURBULENCE_SPEED, "Turbulence Speed", FF_TYPE_STANDARD );
-	SetOptionParamInfo( PID_MAX_AGE, "Max Age", 5, maxAge );
-	SetParamElementInfo( PID_MAX_AGE, 0, "0.5 beats", 0.5f );
-	SetParamElementInfo( PID_MAX_AGE, 1, "1 beat", 1.0f );
-	SetParamElementInfo( PID_MAX_AGE, 2, "2 beats", 2.0f );
-	SetParamElementInfo( PID_MAX_AGE, 3, "4 beats", maxAge );
-	SetParamElementInfo( PID_MAX_AGE, 4, "16 beats", 16.0f );
-	SetParamInfof( PID_PARTICLE_SIZE, "Particle Size", FF_TYPE_STANDARD );
-	SetParamInfof( PID_VELOCITY_SIZE_FACTOR, "Velocity Size Factor", FF_TYPE_STANDARD );
-	SetParamInfof( PID_NUM_BUCKETS, "Num Buckets", FF_TYPE_STANDARD );
-	SetParamInfof( PID_NUM_PARTICLES_PER_BUCKET, "Num Particles Per Bucket", FF_TYPE_STANDARD );
-	SetParamInfof( PID_BURST_DURATION, "Burst Duration", FF_TYPE_STANDARD );
-	SetParamInfof( PID_BURST_INTENSITY, "Burst Intensity", FF_TYPE_STANDARD );
-	SetParamInfo( PID_SIMULATE, "Simulate", FF_TYPE_BOOLEAN, simulate );
+	addParam( fadeoutStart = ParamRange::create("Fadeout Start", 0.2f, { 0.0f, 1.0f } ) );
+	addParam( smokeStart = ParamRange::create( "Smoke Start", 0.5f, { 0.0f, 1.0f } ) );
+	addParam( smokeIntensity = ParamRange::create( "Smoke Intensity", 0.4f, { 0.0f, 1.0f } ) );
+	addParam( energyMaxAgeFactor = ParamRange::create( "Energy To Age Factor", 0.3f, { 0.0f, 1.0f } ) );
+	addParam( turbulenceDetail = ParamRange::create( "Turbulence Detail", 1.2f, { 0.5f, 1.5f } ) );
+	addParam( turbulenceSpeed = ParamRange::create( "Turbulence Speed", 0.5f, { 0.1f, 2.0f } ) );
+	addParam( maxAge = ParamOption::create( "Max Age", {
+		{ "0.5 beats", 0.5f },
+		{ "1 beat", 1.0f },
+		{ "2 beats", 2.0f },
+		{ "4 beats", 4.0f },
+		{ "16 beats", 16.0f }
+	}, 3));
+	addParam( particleSize = ParamRange::create( "Particle Size", 1.0f, { 1.0f, 10.0f } ) );
+	addParam( velocityToSizeFactor = ParamRange::create( "Velocity Size Factor", 7.0f, { 1.0f, 20.0f } ) );
+	addParam( numBuckets = ParamRange::create( "Num Buckets", 1.0f, { 16.0f, (float) MAX_BUCKETS } ) );
+	addParam( numParticlesPerBucket = ParamRange::create( "Num Particles Per Bucket", 1.0f, { 0.0f, (float) MAX_PARTICLES_PER_BUCKET } ) );
+	addParam( burstDuration = ParamRange::create( "Burst Duration", 1.0f, { 0.0f, 1.0f } ) );
+	addParam( burstIntensity = ParamRange::create( "Burst Intensity", 1.0f, { 1.0f, 16.0f } ) );
+	addParam( simulate = ParamBool::create( "simulate", true ) );
 
-	SetBufferParamInfo( PID_FFT_INPUT, "FFT", MAX_BUCKETS, FF_USAGE_FFT );
+	SetBufferParamInfo( FFT_INPUT_INDEX, "FFT", MAX_BUCKETS, FF_USAGE_FFT );
 	for( unsigned int index = 0; index < MAX_BUCKETS; ++index )
-		SetParamElementInfo( PID_FFT_INPUT, index, "", 0.1f ); //Default to 0.1 so that we'll keep emitting even if the host doesn't provide fft data.
+		SetParamElementInfo( FFT_INPUT_INDEX, index, "", 0.1f );//Default to 0.1 so that we'll keep emitting even if the host doesn't provide fft data.
 }
 
 FFResult Particles::InitGL( const FFGLViewportStruct* vp )
@@ -137,162 +103,15 @@ FFResult Particles::DeInitGL()
 }
 FFResult Particles::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
-	float timeNow = getTicks() / 1000.0f;
-	float deltaTime = timeNow - lastUpdate;
-	lastUpdate = timeNow;
-
-	if( simulate )
+	if( simulate->getValue() )
 		UpdateParticles( deltaTime );
 	RenderParticles();
 
 	return FF_SUCCESS;
 }
 
-char* Particles::GetParameterDisplay( unsigned int index )
-{
-	/**
-	 * We're not returning ownership over the string we return, so we have to somehow guarantee that
-	 * the lifetime of the returned string encompasses the usage of that string by the host. Having this static
-	 * buffer here keeps previously returned display string alive until this function is called again.
-	 * This happens to be long enough for the hosts we know about.
-	 */
-	static char displayValueBuffer[ 15 ];
-	memset( displayValueBuffer, 0, sizeof( displayValueBuffer ) );
-
-	switch( index )
-	{
-	case PID_TURBULENCE_DETAIL:
-		sprintf( displayValueBuffer, "%f", turbulenceDetail );
-		return displayValueBuffer;
-	case PID_TURBULENCE_SPEED:
-		sprintf( displayValueBuffer, "%f", turbulenceSpeed );
-		return displayValueBuffer;
-	case PID_PARTICLE_SIZE:
-		sprintf( displayValueBuffer, "%f", particleSize );
-		return displayValueBuffer;
-	case PID_VELOCITY_SIZE_FACTOR:
-		sprintf( displayValueBuffer, "%f", velocityToSizeFactor );
-		return displayValueBuffer;
-	case PID_NUM_BUCKETS:
-		sprintf( displayValueBuffer, "%d", numBuckets );
-		return displayValueBuffer;
-	case PID_NUM_PARTICLES_PER_BUCKET:
-		sprintf( displayValueBuffer, "%d", numParticlesPerBucket );
-		return displayValueBuffer;
-	case PID_BURST_INTENSITY:
-		sprintf( displayValueBuffer, "%f", burstIntensity );
-		return displayValueBuffer;
-
-	default:
-		return CFreeFrameGLPlugin::GetParameterDisplay( index );
-	}
-}
-
-FFResult Particles::SetFloatParameter( unsigned int dwIndex, float value )
-{
-	switch( dwIndex )
-	{
-	case PID_FADEOUT_START:
-		fadeoutStart = value;
-		break;
-	case PID_SMOKE_START:
-		smokeStart = value;
-		break;
-	case PID_SMOKE_INTENSITY:
-		smokeIntensity = value;
-		break;
-	case PID_ENERGY_MAX_AGE_FACTOR:
-		energyMaxAgeFactor = value;
-		break;
-	case PID_TURBULENCE_DETAIL:
-		turbulenceDetail = value + 0.5f;
-		break;
-	case PID_TURBULENCE_SPEED:
-		turbulenceSpeed = value * 1.9f + 0.1f;
-		break;
-	case PID_MAX_AGE:
-		maxAge = value;
-		break;
-	case PID_PARTICLE_SIZE:
-		particleSize = value * 9.0f + 1.0f;
-		break;
-	case PID_VELOCITY_SIZE_FACTOR:
-		velocityToSizeFactor = value * 19.0f + 1.0f;
-		break;
-	case PID_NUM_BUCKETS:
-		numBuckets = static_cast< int >( value * (MAX_BUCKETS - 16.0f) + 16.0f );
-		break;
-	case PID_NUM_PARTICLES_PER_BUCKET:
-		numParticlesPerBucket = static_cast< int >( value * MAX_PARTICLES_PER_BUCKET );
-		break;
-	case PID_BURST_DURATION:
-		burstDuration = value;
-		break;
-	case PID_BURST_INTENSITY:
-		burstIntensity = value * 15.0f + 1.0f;
-		break;
-
-	case PID_SIMULATE:
-		simulate = value != 0.0f;
-		break;
-	case PID_FFT_INPUT:  //This case is here to keep the ffgl framework happy. By responding with FF_SUCCESS we're telling it that this is a valid param id.
-		break;
-
-	default:
-		return FF_FAIL;
-	}
-
-	return FF_SUCCESS;
-}
-
-float Particles::GetFloatParameter( unsigned int index )
-{
-	switch( index )
-	{
-	case PID_FADEOUT_START:
-		return fadeoutStart;
-	case PID_SMOKE_START:
-		return smokeStart;
-	case PID_SMOKE_INTENSITY:
-		return smokeIntensity;
-	case PID_ENERGY_MAX_AGE_FACTOR:
-		return energyMaxAgeFactor;
-	case PID_TURBULENCE_DETAIL:
-		return turbulenceDetail - 0.5f;
-	case PID_TURBULENCE_SPEED:
-		return (turbulenceSpeed - 0.1f) / 1.9f;
-	case PID_MAX_AGE:
-		return maxAge;
-	case PID_PARTICLE_SIZE:
-		return (particleSize - 1.0f) / 9.0f;
-	case PID_VELOCITY_SIZE_FACTOR:
-		return (velocityToSizeFactor - 1.0f) / 19.0f;
-	case PID_NUM_BUCKETS:
-		return (numBuckets - 16.0f) / (MAX_BUCKETS - 16.0f);
-	case PID_NUM_PARTICLES_PER_BUCKET:
-		return static_cast< float >( numParticlesPerBucket ) / MAX_PARTICLES_PER_BUCKET;
-	case PID_BURST_DURATION:
-		return burstDuration;
-	case PID_BURST_INTENSITY:
-		return (burstIntensity - 1.0f) / 15.0f;
-
-	case PID_SIMULATE:
-		return simulate ? 1.0f : 0.0f;
-	case PID_FFT_INPUT:
-		return 0.0f;
-
-	default:
-		return 0.0f;
-	}
-}
-
 void Particles::UpdateParticles( float deltaTime )
 {
-	std::vector< float > fftData( MAX_BUCKETS );
-	const ParamInfo* fftInfo = FindParamInfo( PID_FFT_INPUT );
-	for( size_t index = 0; index < MAX_BUCKETS; ++index )
-		fftData[ index ] = fftInfo->elements[ index ].value;
-
 	glResources.FlipBuffers();
 
 	ScopedShaderBinding shaderBinding( glResources.GetUpdateShader().GetGLID() );
@@ -301,13 +120,14 @@ void Particles::UpdateParticles( float deltaTime )
 	glBindBufferRange( GL_TRANSFORM_FEEDBACK_BUFFER, 0, glResources.GetBackBufferID(), 0, MAX_BUCKETS * MAX_PARTICLES_PER_BUCKET * sizeof( Vertex ) );
 	glBeginTransformFeedback( GL_POINTS );
 
-	std::vector< Vec4f > spawnAreas( numBuckets );
-	std::vector< float > spawnChances( numBuckets );
+	float numBucketsVal = numBuckets->getRealValue();
+	std::vector< Vec4f > spawnAreas( (size_t)numBucketsVal );
+	std::vector< float > spawnChances( (size_t)numBucketsVal );
 	memset( spawnChances.data(), 0, spawnChances.size() * sizeof( float ) );
 	//TODO: Map from fft's num bins to our num buckets. Audio guys halp!
-	for( size_t index = 0; index < numBuckets && index < fftData.size(); ++index )
+	for( size_t index = 0; index < numBucketsVal && index < fftData.size(); ++index )
 	{
-		float widthPerBucket = 1.6f / numBuckets;
+		float widthPerBucket = 1.6f / numBucketsVal;
 		Rectf spawnArea;
 		spawnArea.l = -0.8f + index * widthPerBucket + 0.1f * widthPerBucket;
 		spawnArea.r = spawnArea.l + widthPerBucket - 0.1f * widthPerBucket;
@@ -317,22 +137,23 @@ void Particles::UpdateParticles( float deltaTime )
 		spawnAreas[ index ] = Vec4f( spawnArea.l, spawnArea.getWidth(), spawnArea.t, spawnArea.getHeight() );
 		spawnChances[ index ] = fftData[ index ] * fftData[ index ] * 3.0f;
 	}
-	glUniform1f( glResources.GetUpdateShader().FindUniform( "MAX_AGE" ), 60.0f / bpm * maxAge );
+	glResources.GetUpdateShader().Set( "MAX_AGE", 60.0f / bpm * maxAge->getRealValue() );
 	glUniform4fv( glResources.GetUpdateShader().FindUniform( "SPAWN_AREAS" ), (GLsizei)spawnAreas.size(), (float*)spawnAreas.data() );
 	glUniform1fv( glResources.GetUpdateShader().FindUniform( "SPAWN_CHANCES" ), (GLsizei)spawnChances.size(), spawnChances.data() );
-	glUniform1f( glResources.GetUpdateShader().FindUniform( "ENERGY_MAX_AGE_FACTOR" ), energyMaxAgeFactor );
-	glUniform1f( glResources.GetUpdateShader().FindUniform( "TURBULENCE_DETAIL" ), turbulenceDetail );
-	glUniform1f( glResources.GetUpdateShader().FindUniform( "TURBULENCE_SPEED" ), turbulenceSpeed );
-	glUniform1f( glResources.GetUpdateShader().FindUniform( "BURST_DURATION" ), burstDuration );
-	glUniform1f( glResources.GetUpdateShader().FindUniform( "BURST_INTENSITY" ), burstIntensity );
+	glResources.GetUpdateShader().Set( "ENERGY_MAX_AGE_FACTOR", energyMaxAgeFactor->getRealValue() );
+	glResources.GetUpdateShader().Set( "TURBULENCE_DETAIL", turbulenceDetail->getRealValue() );
+	glResources.GetUpdateShader().Set( "TURBULENCE_SPEED", turbulenceSpeed->getRealValue() );
+	glResources.GetUpdateShader().Set( "BURST_DURATION", burstDuration->getRealValue() );
+	glResources.GetUpdateShader().Set( "BURST_INTENSITY", burstIntensity->getRealValue() );
 
-	glUniform1f( glResources.GetUpdateShader().FindUniform( "Time" ), getTicks() / 1000.0f );
-	glUniform1f( glResources.GetUpdateShader().FindUniform( "DeltaTime" ), deltaTime );
-	glUniform2i( glResources.GetUpdateShader().FindUniform( "RenderSize" ), currentViewport.width, currentViewport.height );
+	updateAudioAndTime();
+	glResources.GetUpdateShader().Set( "Time", timeNow );
+	glResources.GetUpdateShader().Set( "DeltaTime", deltaTime );
+	glResources.GetUpdateShader().Set( "RenderSize", (GLuint)currentViewport.width, (GLuint)currentViewport.height );
 
 	ScopedVAOBinding vaoBinding( glResources.GetFrontVAOID() );
 
-	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( numBuckets * numParticlesPerBucket ) );
+	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( numBucketsVal * numParticlesPerBucket->getRealValue() ) );
 
 	vaoBinding.EndScope();
 
@@ -347,22 +168,22 @@ void Particles::RenderParticles()
 	ScopedSamplerActivation samplerBinding( 0 );
 	Scoped2DTextureBinding textureBinding( glResources.GetParticleTextureID() );
 
-	glUniform1f( glResources.GetRenderShader().FindUniform( "MAX_AGE" ), 60.0f / bpm * maxAge );
-	glUniform1f( glResources.GetRenderShader().FindUniform( "FADEOUT_START" ), fadeoutStart );
-	glUniform1f( glResources.GetRenderShader().FindUniform( "SMOKE_START" ), smokeStart );
-	glUniform1f( glResources.GetRenderShader().FindUniform( "SMOKE_INTENSITY" ), smokeIntensity );
-	glUniform1i( glResources.GetRenderShader().FindUniform( "ParticleTexture" ), 0 );
-	glUniform1f( glResources.GetRenderShader().FindUniform( "ParticleSize" ), particleSize );
-	glUniform1f( glResources.GetRenderShader().FindUniform( "VelocitySizeFactor" ), velocityToSizeFactor );
-	glUniform4fv( glResources.GetRenderShader().FindUniform( "BUCKET_COLORS" ), MAX_BUCKETS, GetBucketColors() );
-	glUniform2f( glResources.GetRenderShader().FindUniform( "MAX_UV" ), 1.0f, 1.0f );
-	glUniform1f( glResources.GetRenderShader().FindUniform( "BURST_DURATION" ), burstDuration );
+	glResources.GetRenderShader().Set( "MAX_AGE", 60.0f / bpm * maxAge->getRealValue() );
+	glResources.GetRenderShader().Set( "FADEOUT_START", fadeoutStart->getRealValue() );
+	glResources.GetRenderShader().Set( "SMOKE_START", smokeStart->getRealValue() );
+	glResources.GetRenderShader().Set( "SMOKE_INTENSITY", smokeIntensity->getRealValue() );
+	glResources.GetRenderShader().Set( "ParticleTexture", 0 );
+	glResources.GetRenderShader().Set( "ParticleSize", particleSize->getRealValue() );
+	glResources.GetRenderShader().Set( "VelocitySizeFactor", velocityToSizeFactor->getRealValue() );
+	glUniform4fv( glResources.GetRenderShader().FindUniform( "BUCKET_COLORS"), MAX_BUCKETS, GetBucketColors() );
+	glResources.GetRenderShader().Set( "MAX_UV", 1.0f, 1.0f);
+	glResources.GetRenderShader().Set( "BURST_DURATION", burstDuration->getRealValue() );
 
-	glUniform2i( glResources.GetRenderShader().FindUniform( "RenderSize" ), currentViewport.width, currentViewport.height );
+	glResources.GetRenderShader().Set( "RenderSize", currentViewport.width, currentViewport.height );
 
 	glEnable( GL_BLEND );
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE );
-	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( numBuckets * numParticlesPerBucket ) );
+	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( numBuckets->getRealValue() * numParticlesPerBucket->getRealValue() ) );
 	//FFGL requires us to keep the entire context state at default, this includes the blendmode, so set it back.
 	glBlendFunc( GL_ONE, GL_ZERO );
 	glDisable( GL_BLEND );

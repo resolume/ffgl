@@ -1,13 +1,5 @@
 #include "AddSubtract.h"
-#include <ffgl/FFGLLib.h>
-#include <ffglex/FFGLScopedShaderBinding.h>
-#include <ffglex/FFGLScopedSamplerActivation.h>
-#include <ffglex/FFGLScopedTextureBinding.h>
 using namespace ffglex;
-
-#define FFPARAM_BrightnessR ( 0 )
-#define FFPARAM_BrightnessG ( 1 )
-#define FFPARAM_BrightnessB ( 2 )
 
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< AddSubtract >,// Create method
@@ -22,7 +14,7 @@ static CFFGLPluginInfo PluginInfo(
 	"Resolume FFGL Example"      // About
 );
 
-static const char vertexShaderCode[] = R"(#version 410 core
+static const char _vertexShaderCode[] = R"(#version 410 core
 uniform vec2 MaxUV;
 
 layout( location = 0 ) in vec4 vPosition;
@@ -37,7 +29,7 @@ void main()
 }
 )";
 
-static const char fragmentShaderCode[] = R"(#version 410 core
+static const char _fragmentShaderCode[] = R"(#version 410 core
 uniform sampler2D InputTexture;
 uniform vec3 Brightness;
 
@@ -63,19 +55,15 @@ void main()
 
 AddSubtract::AddSubtract() :
 	maxUVLocation( -1 ),
-	brightnessLocation( -1 ),
-	brightnessR( 0.5f ),
-	brightnessG( 0.5f ),
-	brightnessB( 0.5f )
+	brightnessLocation( -1 )
 {
 	// Input properties
 	SetMinInputs( 1 );
 	SetMaxInputs( 1 );
 
-	// Parameters
-	SetParamInfof( FFPARAM_BrightnessR, "R", FF_TYPE_RED );
-	SetParamInfof( FFPARAM_BrightnessG, "G", FF_TYPE_GREEN );
-	SetParamInfof( FFPARAM_BrightnessB, "B", FF_TYPE_BLUE );
+	//We declare that this plugin has a Brightness parameter which is a RGB param.
+	//The name here must match the one you declared in your fragment shader.
+	addRGBColorParam( "Brightness" );
 }
 AddSubtract::~AddSubtract()
 {
@@ -83,7 +71,7 @@ AddSubtract::~AddSubtract()
 
 FFResult AddSubtract::InitGL( const FFGLViewportStruct* vp )
 {
-	if( !shader.Compile( vertexShaderCode, fragmentShaderCode ) )
+	if( !shader.Compile( _vertexShaderCode, _fragmentShaderCode ) )
 	{
 		DeInitGL();
 		return FF_FAIL;
@@ -126,10 +114,8 @@ FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	FFGLTexCoords maxCoords = GetMaxGLTexCoords( Texture );
 	glUniform2f( maxUVLocation, maxCoords.s, maxCoords.t );
 
-	glUniform3f( brightnessLocation,
-				 -1.0f + ( brightnessR * 2.0f ),
-				 -1.0f + ( brightnessG * 2.0f ),
-				 -1.0f + ( brightnessB * 2.0f ) );
+	//This takes care of sending all the parameter that the plugin registered to the shader.
+	sendParams( shader );
 
 	//The shader's sampler is always bound to sampler index 0 so that's where we need to bind the texture.
 	//Again, we're using the scoped bindings to help us keep the context in a default state.
@@ -148,40 +134,4 @@ FFResult AddSubtract::DeInitGL()
 	brightnessLocation = -1;
 
 	return FF_SUCCESS;
-}
-
-FFResult AddSubtract::SetFloatParameter( unsigned int dwIndex, float value )
-{
-	switch( dwIndex )
-	{
-	case FFPARAM_BrightnessR:
-		brightnessR = value;
-		break;
-	case FFPARAM_BrightnessG:
-		brightnessG = value;
-		break;
-	case FFPARAM_BrightnessB:
-		brightnessB = value;
-		break;
-	default:
-		return FF_FAIL;
-	}
-
-	return FF_SUCCESS;
-}
-
-float AddSubtract::GetFloatParameter( unsigned int dwIndex )
-{
-	switch( dwIndex )
-	{
-	case FFPARAM_BrightnessR:
-		return brightnessR;
-	case FFPARAM_BrightnessG:
-		return brightnessG;
-	case FFPARAM_BrightnessB:
-		return brightnessB;
-
-	default:
-		return 0.0f;
-	}
 }

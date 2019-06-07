@@ -162,7 +162,7 @@ public:
 	/// This method is called by a the host to determine whether the plugin supports the SetTime function
 	bool GetTimeSupported() const;
 
-	GetRangeStruct GetParamRange( unsigned int index );
+	RangeStruct GetParamRange( unsigned int index );
 
 protected:
 	///	The standard constructor of CFFGLPluginManager.
@@ -288,16 +288,12 @@ protected:
 		std::vector< Element > elements;
 		unsigned int usage;
 
-		struct Range {
-			float min = 0;
-			float max = 1;
-			Range(float min, float max) : min(min), max(max) {}
-		} range;
+		RangeStruct range;
 		float DefaultValue;
 		char* StrDefaultValue;
 		ParamInfoStruct* pNext;
 
-		ParamInfoStruct() : range(0,1) {}
+		ParamInfoStruct() : range{0,1} {}
 	} ParamInfo;
 
 	ParamInfo* FindParamInfo( unsigned int ID );

@@ -247,15 +247,12 @@ void CFFGLPluginManager::SetParamRange(unsigned int index, float min, float max)
 		paramInfo->range = { min, max };
 }
 
-GetRangeStruct CFFGLPluginManager::GetParamRange(unsigned int index)
+RangeStruct CFFGLPluginManager::GetParamRange(unsigned int index)
 {
-	GetRangeStruct result;
+	RangeStruct result = { 0, 1 };
 	ParamInfo* paramInfo = FindParamInfo(index);
 	if (paramInfo)
-		result = {
-			*reinterpret_cast<FFUInt32*>( &paramInfo->range.min ),
-			*reinterpret_cast<FFUInt32*>( &paramInfo->range.max )
-		};
+		result = paramInfo->range;
 	return result;
 }
 

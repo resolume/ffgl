@@ -11,44 +11,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLFBO.cpp" />
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedBufferBinding.cpp" />
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedSamplerActivation.cpp" />
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedShaderBinding.cpp" />
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedTextureBinding.cpp" />
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedVAOBinding.cpp" />
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLScreenQuad.cpp" />
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLShader.cpp" />
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLUtilities.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGL.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfo.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfoData.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginManager.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginSDK.cpp" />
-    <ClCompile Include="..\..\source\lib\glsdk_0_5_2\glload\source\gl_load.c" />
+    <ClCompile Include="..\..\source\lib\FFGLSDK.cpp" />
     <ClCompile Include="..\..\source\plugins\AddSubtract\AddSubtract.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLFBO.h" />
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedBufferBinding.h" />
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedSamplerActivation.h" />
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedShaderBinding.h" />
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedTextureBinding.h" />
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedVAOBinding.h" />
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLScreenQuad.h" />
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLShader.h" />
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLUtilities.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGL.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLLib.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginInfo.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h" />
+    <ClInclude Include="..\..\source\lib\FFGLSDK.h" />
     <ClInclude Include="..\..\source\plugins\AddSubtract\AddSubtract.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8EE99351-6226-415E-B2E9-2DCB2985F371}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">

@@ -8,6 +8,7 @@
 #include "../ffglex/FFGLShader.h"
 #include "../ffglex/FFGLScreenQuad.h"
 #include "../ffglex/FFGLUtilities.h"
+#include "../ffglex/FFGLScopedShaderBinding.h"
 #include "Utils.h"
 #include "Params.h"
 #include "Audio.h"
@@ -25,6 +26,8 @@ struct PluginInfo
 class Plugin : public CFreeFrameGLPlugin
 {
 public:
+	static const int FFT_INPUT_INDEX = 0;
+
 	Plugin();
 	~Plugin();
 
@@ -88,9 +91,13 @@ public:
 	/// This function is called by the plugin before each render it allows to update all the params that 
 	/// are sent to the main shader.
 	void updateAudioAndTime();
-	/// This function will send all the default uniform and parameter registered by your plugin.
+	/// This function will send all the parameter registered by your plugin to the shader.
 	/// \param	shader		The shader to send the params
 	void sendParams( ffglex::FFGLShader& shader );
+	/// This function will send all the default parameter (like time, bpm, resolution...) to the shader.
+	/// \param	shader		The shader to send the params
+	void sendDefaultParams( ffglex::FFGLShader& shader );
+
 
 	/// This function is called by the host to get a string representation of any parameter.
 	/// It will just return the value of the current param as a char*.
@@ -177,6 +184,7 @@ protected:
 	ffglex::FFGLShader shader;
 	ffglex::FFGLScreenQuad quad;
 
+	std::vector< float > fftData = std::vector< float >( Audio::getBufferSize() );
 	float timeNow    = 0;
 	float deltaTime  = 0;
 	float lastUpdate = 0;

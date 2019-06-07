@@ -264,10 +264,16 @@ typedef struct SetHostinfoStructTag
 	const char* version;
 } SetHostinfoStruct;
 
+typedef struct RangeStructTag
+{
+	float min;
+	float max;
+} RangeStruct;
+
 typedef struct GetRangeStructTag
 {
-	FFUInt32 min;
-	FFUInt32 max;
+	FFUInt32 parameterNumber;
+	RangeStruct range;
 } GetRangeStruct;
 
 //FFGLViewportStruct (for InstantiateGL)

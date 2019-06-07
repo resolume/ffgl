@@ -1,8 +1,6 @@
 #include "Add.h"
 using namespace ffglex;
 
-#define FFPARAM_MixVal ( 0 )
-
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< Add >,                                                                        // Create method
 	"RM01",                                                                                      // Plugin unique ID
@@ -11,12 +9,12 @@ static CFFGLPluginInfo PluginInfo(
 	1,                                                                                           // API minor version number
 	1,                                                                                           // Plugin major version number
 	000,                                                                                         // Plugin minor version number
-	FF_EFFECT,                                                                                   // Plugin type
+	FF_MIXER,                                                                                   // Plugin type
 	"Blend two videos by adding the first texture to the second texture. Looks like 50Add mixer",// Plugin description
 	"Resolume FFGL example"                                                                      // About
 );
 
-static const char vertexShaderCode[] = R"(#version 410 core
+static const char _vertexShaderCode[] = R"(#version 410 core
 uniform vec2 MaxUVDest;
 uniform vec2 MaxUVSrc;
 
@@ -36,7 +34,7 @@ void main()
 
 //This is the shader. It's using to make the transition.
 //The code below will be applied by each pixel of your output screen by the Graphic Card
-static const char fragmentShaderCode[] = R"(#version 410 core
+static const char _fragmentShaderCode[] = R"(#version 410 core
 uniform sampler2D textureDest;
 uniform sampler2D textureSrc;
 //the value defined by the slider to switch between the two images
@@ -64,15 +62,15 @@ void main()
 Add::Add() :
 	mixValLocation( -1 ),
 	maxUVDestLocation( -1 ),
-	maxUVSrcLocation( -1 ),
-	m_MixVal( 0.5f )
+	maxUVSrcLocation( -1 )
 {
 	// Input properties
 	SetMinInputs( 2 );
 	SetMaxInputs( 2 );
 
 	// Parameters
-	SetParamInfof( FFPARAM_MixVal, "Mixer Value", FF_TYPE_STANDARD );
+	// The name here must match the one you declared in your fragment shader.
+	addParam( Param::create( "mixVal" ) );
 }
 Add::~Add()
 {
@@ -80,7 +78,7 @@ Add::~Add()
 
 FFResult Add::InitGL( const FFGLViewportStruct* vp )
 {
-	if( !shader.Compile( vertexShaderCode, fragmentShaderCode ) )
+	if( !shader.Compile( _vertexShaderCode, _fragmentShaderCode ) )
 	{
 		DeInitGL();
 		return FF_FAIL;
@@ -130,8 +128,8 @@ FFResult Add::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	FFGLTexCoords maxCoordsSrc    = GetMaxGLTexCoords( TextureSrc );
 	glUniform2f( maxUVSrcLocation, maxCoordsSrc.s, maxCoordsSrc.t );
 
-	//assign the mixer value
-	glUniform1f( mixValLocation, m_MixVal );
+	//This takes care of sending all the parameter that the plugin registered to the shader.
+	sendParams( shader );
 
 	//The shader's samplers are fixed so we need to bind the texture to these exact sampler indices. Use the scoped
 	//bindings to ensure that the context will be returned in it's default state after we're done rendering.
@@ -154,32 +152,4 @@ FFResult Add::DeInitGL()
 	maxUVSrcLocation  = -1;
 
 	return FF_SUCCESS;
-}
-
-FFResult Add::SetFloatParameter( unsigned int dwIndex, float value )
-{
-	switch( dwIndex )
-	{
-	case FFPARAM_MixVal:
-		m_MixVal = value;
-		break;
-	default:
-		return FF_FAIL;
-	}
-
-	return FF_SUCCESS;
-}
-
-float Add::GetFloatParameter( unsigned int dwIndex )
-{
-	float retValue = 0.0;
-
-	switch( dwIndex )
-	{
-	case FFPARAM_MixVal:
-		retValue = m_MixVal;
-		return retValue;
-	default:
-		return retValue;
-	}
 }

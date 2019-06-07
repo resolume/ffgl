@@ -1,6 +1,5 @@
 #include "Plugin.h"
 using namespace ffglex;
-static const int FFT_INPUT_INDEX = 0;
 
 Plugin::Plugin()
 {
@@ -36,6 +35,7 @@ FFResult Plugin::InitGL( const FFGLViewportStruct* viewPort )
 FFResult Plugin::ProcessOpenGL( ProcessOpenGLStruct* inputTextures )
 {
 	updateAudioAndTime();
+	sendDefaultParams( shader );
 	sendParams( shader );
 	update();
 	FFResult result = render( inputTextures );
@@ -105,7 +105,6 @@ void Plugin::updateAudioAndTime()
 	deltaTime  = timeNow - lastUpdate;
 	lastUpdate = timeNow;
 	// Update FFT data
-	std::vector< float > fftData( Audio::getBufferSize() );
 	const ParamInfo* fftInfo = FindParamInfo( FFT_INPUT_INDEX );
 	for( size_t index = 0; index < Audio::getBufferSize(); ++index )
 		fftData[ index ] = fftInfo->elements[ index ].value;
@@ -114,7 +113,7 @@ void Plugin::updateAudioAndTime()
 
 void Plugin::sendParams( FFGLShader& shader )
 {
-	shader.Use();
+	ScopedShaderBinding shaderBinding( shader.GetGLID() );
 	// Clamp to edge is broken in Resolume right now so disable it
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER );
@@ -159,7 +158,10 @@ void Plugin::sendParams( FFGLShader& shader )
 		}
 		i += 1;
 	}
+}
 
+void Plugin::sendDefaultParams( ffglex::FFGLShader& shader )
+{
 	shader.Set( "time", timeNow );
 	shader.Set( "deltaTime", deltaTime );
 	shader.Set( "frame", frame );
@@ -280,7 +282,7 @@ void Plugin::addParam( ParamOption::Ptr param )
 
 	for( unsigned int i = 0; i < param->options.size(); i++ )
 	{
-		SetParamElementInfo( index, i, param->options[ i ].c_str(), (float)i );
+		SetParamElementInfo( index, i, param->options[ i ].name.c_str(), (float)i );
 	}
 }
 

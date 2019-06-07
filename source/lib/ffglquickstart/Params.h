@@ -114,8 +114,13 @@ protected:
 class ParamOption : public Param
 {
 public:
+	struct Option
+	{
+		std::string name;
+		float value;
+	};
 	typedef std::shared_ptr< ParamOption > Ptr;
-	typedef std::vector< std::string > Options;
+	typedef std::vector< Option > Options;
 	Options options;
 
 	static Ptr create( std::string name, Options options )
@@ -143,13 +148,19 @@ public:
 		options.size() <= _value ? value = 0 : value = _value;
 		currentOption                                = options[ (size_t)value ];
 	}
+
+	float getRealValue()
+	{
+		return currentOption.value;
+	}
+
 	bool isCurrentOption( std::string option )
 	{
-		return option.compare( currentOption ) == 0;
+		return option.compare( currentOption.name ) == 0;
 	}
 
 private:
-	std::string currentOption;
+	Option currentOption;
 };
 
 class ParamEvent : public Param
