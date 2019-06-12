@@ -35,6 +35,7 @@ FFResult Plugin::InitGL( const FFGLViewportStruct* viewPort )
 FFResult Plugin::ProcessOpenGL( ProcessOpenGLStruct* inputTextures )
 {
 	updateAudioAndTime();
+	shader.Use();
 	sendDefaultParams( shader );
 	sendParams( shader );
 	update();
@@ -113,7 +114,6 @@ void Plugin::updateAudioAndTime()
 
 void Plugin::sendParams( FFGLShader& shader )
 {
-	ScopedShaderBinding shaderBinding( shader.GetGLID() );
 	// Clamp to edge is broken in Resolume right now so disable it
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER );

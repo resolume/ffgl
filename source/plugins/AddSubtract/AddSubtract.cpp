@@ -44,7 +44,7 @@ void main()
 	if( color.a > 0.0 )
 		color.rgb /= color.a;
 
-	color.rgb = color.rgb + Brightness;
+	color.rgb += Brightness * 2. - 1.;
 
 	//The plugin has to output premultiplied colors, this is how we're premultiplying our straight color while also
 	//ensuring we aren't going out of the LDR the video engine is working in.
@@ -54,8 +54,7 @@ void main()
 )";
 
 AddSubtract::AddSubtract() :
-	maxUVLocation( -1 ),
-	brightnessLocation( -1 )
+	maxUVLocation( -1 )
 {
 	// Input properties
 	SetMinInputs( 1 );
@@ -87,11 +86,10 @@ FFResult AddSubtract::InitGL( const FFGLViewportStruct* vp )
 
 	//We're never changing the sampler to use, instead during rendering we'll make sure that we're always
 	//binding the texture to sampler 0.
-	glUniform1i( shader.FindUniform( "inputTexture" ), 0 );
+	glUniform1i( shader.FindUniform( "InputTexture" ), 0 );
 
 	//We need to know these uniform locations because we need to set their value each frame.
 	maxUVLocation = shader.FindUniform( "MaxUV" );
-	brightnessLocation = shader.FindUniform( "Brightness" );
 
 	//Use base-class init as success result so that it retains the viewport.
 	return CFreeFrameGLPlugin::InitGL( vp );
@@ -131,7 +129,6 @@ FFResult AddSubtract::DeInitGL()
 	shader.FreeGLResources();
 	quad.Release();
 	maxUVLocation = -1;
-	brightnessLocation = -1;
 
 	return FF_SUCCESS;
 }

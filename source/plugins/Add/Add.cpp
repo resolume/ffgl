@@ -38,7 +38,7 @@ static const char _fragmentShaderCode[] = R"(#version 410 core
 uniform sampler2D textureDest;
 uniform sampler2D textureSrc;
 //the value defined by the slider to switch between the two images
-uniform float mixVal;
+uniform float Opacity;
 
 in vec2 uvDest;
 in vec2 uvSrc;
@@ -52,7 +52,7 @@ void main()
 	vec4 colorSrc  = texture( textureSrc, uvSrc );
 
 	//here we add the colorSrc r,g,b,a pixel value to the colorDest pixel value according to the mixVal value
-	vec4 mix = colorDest + colorSrc * mixVal;
+	vec4 mix = colorDest + colorSrc * Opacity;
 
 	//Here we use the built-in function min(val1,val2) to get the minimum between val1 and val2 and always keep output pixel value between 0.0 and 1.0
 	fragColor = min( mix, 1.0 );
@@ -60,7 +60,6 @@ void main()
 )";
 
 Add::Add() :
-	mixValLocation( -1 ),
 	maxUVDestLocation( -1 ),
 	maxUVSrcLocation( -1 )
 {
@@ -70,7 +69,7 @@ Add::Add() :
 
 	// Parameters
 	// The name here must match the one you declared in your fragment shader.
-	addParam( Param::create( "mixVal" ) );
+	addParam( Param::create( "Opacity" ) );
 }
 Add::~Add()
 {
@@ -98,7 +97,6 @@ FFResult Add::InitGL( const FFGLViewportStruct* vp )
 	glUniform1i( shader.FindUniform( "textureSrc" ), 1 );
 
 	//We need to know these uniform locations because we need to set their value each frame.
-	mixValLocation    = shader.FindUniform( "mixVal" );
 	maxUVDestLocation = shader.FindUniform( "MaxUVDest" );
 	maxUVSrcLocation  = shader.FindUniform( "MaxUVSrc" );
 
@@ -147,7 +145,6 @@ FFResult Add::DeInitGL()
 {
 	shader.FreeGLResources();
 	quad.Release();
-	mixValLocation    = -1;
 	maxUVDestLocation = -1;
 	maxUVSrcLocation  = -1;
 
