@@ -149,7 +149,7 @@ void Particles::UpdateParticles( float deltaTime )
 	updateAudioAndTime();
 	glResources.GetUpdateShader().Set( "Time", timeNow );
 	glResources.GetUpdateShader().Set( "DeltaTime", deltaTime );
-	glResources.GetUpdateShader().Set( "RenderSize", (GLuint)currentViewport.width, (GLuint)currentViewport.height );
+	glResources.GetUpdateShader().Set( "RenderSize", (float)currentViewport.width, (float)currentViewport.height );
 
 	ScopedVAOBinding vaoBinding( glResources.GetFrontVAOID() );
 
@@ -179,7 +179,7 @@ void Particles::RenderParticles()
 	glResources.GetRenderShader().Set( "MAX_UV", 1.0f, 1.0f);
 	glResources.GetRenderShader().Set( "BURST_DURATION", burstDuration->getRealValue() );
 
-	glResources.GetRenderShader().Set( "RenderSize", currentViewport.width, currentViewport.height );
+	glResources.GetRenderShader().Set( "RenderSize", (float)currentViewport.width, (float)currentViewport.height );
 
 	glEnable( GL_BLEND );
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE );
