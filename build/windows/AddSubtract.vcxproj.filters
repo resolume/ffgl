@@ -2,112 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="..\..\source\plugins\AddSubtract\AddSubtract.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGL.h">
-      <Filter>lib\ffgl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLLib.h">
-      <Filter>lib\ffgl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginInfo.h">
-      <Filter>lib\ffgl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager.h">
-      <Filter>lib\ffgl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h">
-      <Filter>lib\ffgl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLFBO.h">
-      <Filter>lib\ffglex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedBufferBinding.h">
-      <Filter>lib\ffglex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedSamplerActivation.h">
-      <Filter>lib\ffglex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedShaderBinding.h">
-      <Filter>lib\ffglex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedTextureBinding.h">
-      <Filter>lib\ffglex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedVAOBinding.h">
-      <Filter>lib\ffglex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLScreenQuad.h">
-      <Filter>lib\ffglex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLShader.h">
-      <Filter>lib\ffglex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglex\FFGLUtilities.h">
-      <Filter>lib\ffglex</Filter>
+    <ClInclude Include="..\..\source\lib\FFGLSDK.h">
+      <Filter>lib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\plugins\AddSubtract\AddSubtract.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGL.cpp">
-      <Filter>lib\ffgl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfo.cpp">
-      <Filter>lib\ffgl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfoData.cpp">
-      <Filter>lib\ffgl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginManager.cpp">
-      <Filter>lib\ffgl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginSDK.cpp">
-      <Filter>lib\ffgl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLFBO.cpp">
-      <Filter>lib\ffglex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedBufferBinding.cpp">
-      <Filter>lib\ffglex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedSamplerActivation.cpp">
-      <Filter>lib\ffglex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedShaderBinding.cpp">
-      <Filter>lib\ffglex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedTextureBinding.cpp">
-      <Filter>lib\ffglex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedVAOBinding.cpp">
-      <Filter>lib\ffglex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLScreenQuad.cpp">
-      <Filter>lib\ffglex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLShader.cpp">
-      <Filter>lib\ffglex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglex\FFGLUtilities.cpp">
-      <Filter>lib\ffglex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\glsdk_0_5_2\glload\source\gl_load.c">
-      <Filter>lib\glsdk_0_5_2\glload</Filter>
+    <ClCompile Include="..\..\source\lib\FFGLSDK.cpp">
+      <Filter>lib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="lib">
       <UniqueIdentifier>{8214ce1e-6570-4818-a12b-1fcea1899b62}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lib\ffgl">
-      <UniqueIdentifier>{ee1a4391-d8ce-48da-82c3-b5e0ae83c282}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lib\ffglex">
-      <UniqueIdentifier>{5d359f2e-d19f-4b7f-b5db-89166ead3d15}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lib\glsdk_0_5_2">
-      <UniqueIdentifier>{2ae8b379-72d6-4c64-b87a-e0e5f928aa6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lib\glsdk_0_5_2\glload">
-      <UniqueIdentifier>{83676bf5-2693-4b6b-94f3-800ba182ee9e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

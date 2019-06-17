@@ -86,11 +86,11 @@ GLuint GLResources::GetBackBufferID() const
 {
 	return vboIDs[ (frontIndex + 1) % 2 ];
 }
-const FFGLShader& GLResources::GetUpdateShader() const
+FFGLShader& GLResources::GetUpdateShader()
 {
 	return updateShader;
 }
-const FFGLShader& GLResources::GetRenderShader() const
+FFGLShader& GLResources::GetRenderShader()
 {
 	return renderShader;
 }

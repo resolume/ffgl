@@ -1,5 +1,4 @@
 #include "FFGLFBO.h"
-#include "FFGLScopedTextureBinding.h"
 
 namespace ffglex
 {
@@ -38,6 +37,13 @@ int FFGLFBO::Create( int _width, int _height )
 	return 1;
 }
 
+int FFGLFBO::Create( int width, int height, GLuint pixelFormat )
+{
+	Create( width, height );
+	m_glPixelFormat = pixelFormat;
+	return 0;
+}
+
 int FFGLFBO::BindAsRenderTarget()
 {
 	//make our fbo active
@@ -61,13 +67,13 @@ int FFGLFBO::BindAsRenderTarget()
 		glGenTextures( 1, &m_glTextureHandle );
 
 		//bind it for some initialization
-		Scoped2DTextureBinding textureBinding( m_glTextureHandle );
+		glBindTexture( GL_TEXTURE_2D, m_glTextureHandle );
 
 		//this only works if the FBO pixel format
 		//is GL_RGBA8. other FBO pixel formats have to
 		//define their texture differently
 		GLuint pformat = GL_RGBA;
-		GLuint ptype = GL_UNSIGNED_BYTE;
+		GLuint ptype   = GL_RGBA8 == m_glPixelFormat ? GL_UNSIGNED_BYTE : GL_FLOAT;
 
 		glTexImage2D(
 			GL_TEXTURE_2D,//texture target
@@ -96,10 +102,10 @@ int FFGLFBO::BindAsRenderTarget()
 		else
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-
-		textureBinding.EndScope();
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER );
+		//glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+		//glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 
 		//attach our texture to the FBO
 		glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_glTextureHandle, 0 );
@@ -133,7 +139,7 @@ int FFGLFBO::UnbindAsRenderTarget( GLuint hostFbo )
 	return 1;
 }
 
-FFGLTextureStruct FFGLFBO::GetTextureInfo()
+FFGLTextureStruct FFGLFBO::GetTextureInfo() const
 {
 	FFGLTextureStruct t;
 
@@ -167,6 +173,11 @@ void FFGLFBO::FreeResources()
 		glDeleteTextures( 1, &m_glTextureHandle );
 		m_glTextureHandle = 0;
 	}
+}
+
+void FFGLFBO::ResizeViewPort()
+{
+	glViewport( 0, 0, m_glWidth, m_glHeight );
 }
 
 }//End namespace ffglex

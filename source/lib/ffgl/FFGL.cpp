@@ -401,6 +401,25 @@ const char* getPluginShortName()
 	return shortName;
 }
 
+FFMixed getParamRange( FFMixed input )
+{
+	FFMixed ret;
+	ret.UIntValue = FF_FAIL;
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return ret;
+	}
+	ret.UIntValue = FF_SUCCESS;
+	
+	GetRangeStruct* getRange = (GetRangeStruct*)input.PointerValue;
+
+	RangeStruct range = s_pPrototype->GetParamRange( getRange->parameterNumber );
+	getRange->range   = range;
+	return ret;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Implementation of plugMain, the one and only exposed function
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -594,20 +613,20 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_GET_PARAMETER_ELEMENT_NAME:
 	{
 		const GetParameterElementNameStruct* arguments = (const GetParameterElementNameStruct*)inputValue.PointerValue;
-		retval.PointerValue = getParameterElementName( arguments->ParameterNumber, arguments->ElementNumber );
+		retval.PointerValue                            = getParameterElementName( arguments->ParameterNumber, arguments->ElementNumber );
 		break;
 	}
 	case FF_GET_PARAMETER_ELEMENT_DEFAULT:
 	{
 		const GetParameterElementValueStruct* arguments = (const GetParameterElementValueStruct*)inputValue.PointerValue;
-		retval = getParameterElementDefault( arguments->ParameterNumber, arguments->ElementNumber );
+		retval                                          = getParameterElementDefault( arguments->ParameterNumber, arguments->ElementNumber );
 		break;
 	}
 	case FF_SET_PARAMETER_ELEMENT_VALUE:
 		if( pPlugObj != NULL )
 		{
 			const SetParameterElementValueStruct* arguments = (const SetParameterElementValueStruct*)inputValue.PointerValue;
-			retval.UIntValue = pPlugObj->SetParamElementValue( arguments->ParameterNumber, arguments->ElementNumber, *(float*)&arguments->NewParameterValue.UIntValue );
+			retval.UIntValue                                = pPlugObj->SetParamElementValue( arguments->ParameterNumber, arguments->ElementNumber, *(float*)&arguments->NewParameterValue.UIntValue );
 		}
 		break;
 	case FF_GETPARAMETERUSAGE:
@@ -620,8 +639,8 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		if( pPlugObj != NULL )
 		{
 			const SetBeatinfoStruct* beatInfo = reinterpret_cast< const SetBeatinfoStruct* >( inputValue.PointerValue );
-			float bpm = *(float*)&beatInfo->bpm.UIntValue;
-			float barPhase = *(float*)&beatInfo->barPhase.UIntValue;
+			float bpm                         = *(float*)&beatInfo->bpm.UIntValue;
+			float barPhase                    = *(float*)&beatInfo->barPhase.UIntValue;
 			pPlugObj->SetBeatInfo( bpm, barPhase );
 			retval.UIntValue = FF_SUCCESS;
 		}
@@ -629,10 +648,41 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		{
 			retval.UIntValue = FF_FAIL;
 		}
+
+		break;
+	case FF_SET_HOSTINFO:
+		if( pPlugObj != NULL )
+		{
+			const SetHostinfoStructTag* hostInfo = reinterpret_cast< const SetHostinfoStructTag* >( inputValue.PointerValue );
+			pPlugObj->SetHostInfo( hostInfo->name, hostInfo->version );
+			retval.UIntValue = FF_SUCCESS;
+		}
+		else
+		{
+			retval.UIntValue = FF_FAIL;
+		}
+
 		break;
 
-	//Previously used function codes that are no longer supported:
-	//case FF_INITIALISE:
+	case FF_SET_SAMPLERATE:
+		if( pPlugObj != NULL )
+		{
+			pPlugObj->SetSampleRate( inputValue.UIntValue );
+			retval.UIntValue = FF_SUCCESS;
+		}
+		else
+		{
+			retval.UIntValue = FF_FAIL;
+		}
+
+		break;
+	case FF_GET_RANGE:
+		retval = getParamRange( inputValue );
+		break;
+		
+
+		//Previously used function codes that are no longer supported:
+		//case FF_INITIALISE:
 		/**
 		 * We're dropping the old FFGL 1.6 and lower initialise here. FFGL 2.0 removed old stuff and made support for newer stuff mandatory
 		 * so hosts need a way to know they cannot use this plugin if they're dependant on the old behaviour. If the host isn't dependant on the old
