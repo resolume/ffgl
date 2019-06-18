@@ -74,7 +74,9 @@ public:
 	struct Range
 	{
 		float min = 0.0f, max = 1.0f;
-		Range(float min, float max) : min(min), max(max) {};
+		Range( float min, float max ) :
+			min( min ),
+			max( max ){};
 	};
 	typedef std::shared_ptr< ParamRange > Ptr;
 
@@ -85,16 +87,16 @@ public:
 
 	static Ptr createInteger( std::string name, int value, Range range )
 	{
-		auto res = std::make_shared< ParamRange >( name, (float)value, range );
+		auto res  = std::make_shared< ParamRange >( name, (float)value, range );
 		res->type = FF_TYPE_INTEGER;
 		return res;
 	}
 
 	ParamRange( std::string name, float value, Range range ) :
-		Param( name, FF_TYPE_STANDARD),
+		Param( name, FF_TYPE_STANDARD ),
 		range( range )
 	{
-		setValue( utils::map( value, range.min, range.max, 0.0, 1.0 ) ); 
+		setValue( utils::map( value, range.min, range.max, 0.0, 1.0 ) );
 	}
 
 	float getRealValue()
@@ -246,4 +248,28 @@ public:
 		text( text )
 	{
 	}
+};
+
+class ParamFFT : public Param
+{
+	static const int DEFAULT_BUFFER_SIZE = 2048;
+
+public:
+	typedef std::shared_ptr< ParamFFT > Ptr;
+
+	static Ptr create( std::string name)
+	{
+		return std::make_shared< ParamFFT >( name, DEFAULT_BUFFER_SIZE );
+	};
+	static Ptr create( std::string name, size_t size )
+	{
+		return std::make_shared< ParamFFT >( name, size );
+	};
+	ParamFFT( std::string name, size_t size )
+		: Param( name )
+		, fftData(size)
+	{
+	}
+	unsigned int index;
+	std::vector< float > fftData;
 };

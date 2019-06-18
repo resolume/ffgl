@@ -33,4 +33,5 @@ protected:
 	ParamRange::Ptr burstDuration;
 	ParamRange::Ptr burstIntensity;			//!< In range between 1.0 .. 16.0
 	ParamBool::Ptr simulate;
+	ParamFFT::Ptr fft;
 };

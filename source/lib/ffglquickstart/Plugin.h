@@ -26,8 +26,6 @@ struct PluginInfo
 class Plugin : public CFreeFrameGLPlugin
 {
 public:
-	static const int FFT_INPUT_INDEX = 0;
-
 	Plugin();
 	~Plugin();
 
@@ -146,6 +144,9 @@ public:
 	/// choice between different option).
 	/// \param	param		The parameter to add
 	void addParam( ParamOption::Ptr param );
+	/// This function handle the special case where the parameter is a ParamFFT
+	/// \param	param		The parameter to add
+	void addParam( ParamFFT::Ptr fft);
 	/// This function allows to create a Hue color param, for exemple in Resolume this will display a
 	/// color picker, which is very handy to choose your color.
 	/// \param	name		The name of the parameter to add
@@ -181,16 +182,15 @@ public:
 protected:
 	std::string fragmentShaderBase;
 	std::vector< Param::Ptr > params;
+	std::map< ParamFFT::Ptr, Audio > audioParams;
 	ffglex::FFGLShader shader;
 	ffglex::FFGLScreenQuad quad;
 
-	std::vector< float > fftData = std::vector< float >( Audio::getBufferSize() );
 	float timeNow    = 0;
 	float deltaTime  = 0;
 	float lastUpdate = 0;
 	int frame        = 0;
 	std::chrono::time_point< std::chrono::high_resolution_clock > t_start = std::chrono::high_resolution_clock::now();
-	Audio audio;
 	utils::Random random;
 	std::set< shader::snippet_id > includedSnippets;
 
@@ -201,10 +201,6 @@ protected:
 		uniform float time;
 		uniform float deltaTime;
 		uniform int frame;
-		uniform float audioVolume;
-		uniform float audioBass;
-		uniform float audioMed;
-		uniform float audioHigh;
 		uniform float bpm;
 		uniform float phase;
 	)";
