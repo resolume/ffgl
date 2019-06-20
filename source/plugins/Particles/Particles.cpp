@@ -92,6 +92,8 @@ FFResult Particles::InitGL( const FFGLViewportStruct* vp )
 		return FF_FAIL;
 	}
 
+	//FFGL requires us to leave the context in a default state on return
+	resetOpenGLState();
 	//Use base-class init as success result so that it retains the viewport.
 	return CFreeFrameGLPlugin::InitGL( vp );
 }
@@ -107,6 +109,8 @@ FFResult Particles::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 		UpdateParticles( deltaTime );
 	RenderParticles();
 
+	//FFGL requires us to leave the context in a default state on return
+	resetOpenGLState();
 	return FF_SUCCESS;
 }
 
@@ -115,8 +119,7 @@ void Particles::UpdateParticles( float deltaTime )
 	updateAudioAndTime();
 	glResources.FlipBuffers();
 
-	ScopedShaderBinding shaderBinding( glResources.GetUpdateShader().GetGLID() );
-
+	glResources.GetUpdateShader().Use();
 	glEnable( GL_RASTERIZER_DISCARD );
 	glBindBufferRange( GL_TRANSFORM_FEEDBACK_BUFFER, 0, glResources.GetBackBufferID(), 0, MAX_BUCKETS * MAX_PARTICLES_PER_BUCKET * sizeof( Vertex ) );
 	glBeginTransformFeedback( GL_POINTS );
@@ -151,11 +154,11 @@ void Particles::UpdateParticles( float deltaTime )
 	glResources.GetUpdateShader().Set( "DeltaTime", deltaTime );
 	glResources.GetUpdateShader().Set( "RenderSize", (float)currentViewport.width, (float)currentViewport.height );
 
-	ScopedVAOBinding vaoBinding( glResources.GetFrontVAOID() );
+	glBindVertexArray( glResources.GetFrontVAOID() );
 
 	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( numBucketsVal * numParticlesPerBucket->getRealValue() ) );
 
-	vaoBinding.EndScope();
+	glBindVertexArray( 0 );
 
 	glEndTransformFeedback();
 	glBindBufferRange( GL_TRANSFORM_FEEDBACK_BUFFER, 0, 0, 0, 0 );
@@ -163,8 +166,8 @@ void Particles::UpdateParticles( float deltaTime )
 }
 void Particles::RenderParticles()
 {
-	ScopedShaderBinding shaderBinding( glResources.GetRenderShader().GetGLID() );
-	ScopedVAOBinding vaoBinding( glResources.GetBackVAOID() );
+	glResources.GetRenderShader().Use();
+	glBindVertexArray( glResources.GetBackVAOID() );
 	ScopedSamplerActivation samplerBinding( 0 );
 	Scoped2DTextureBinding textureBinding( glResources.GetParticleTextureID() );
 

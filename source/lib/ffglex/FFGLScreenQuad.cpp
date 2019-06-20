@@ -56,7 +56,7 @@ void FFGLScreenQuad::Draw()
 	if( vaoID == 0 || vboID == 0 )
 		return;
 
-	glBindVertexArray( vaoID );
+	ScopedVAOBinding vaoBinding( vaoID );
 	glDrawArrays( GL_TRIANGLES, 0, 6 );
 }
 /**
