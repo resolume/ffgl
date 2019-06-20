@@ -113,7 +113,6 @@ void Plugin::updateAudioAndTime()
 		for( size_t index = 0; index < param->fftData.size(); ++index )
 			param->fftData[ index ] = fftInfo->elements[ index ].value;
 		audioParams[ param ].update( param->fftData );
-		delete fftInfo;
 	}
 }
 

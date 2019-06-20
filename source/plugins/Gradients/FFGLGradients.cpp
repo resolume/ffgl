@@ -53,9 +53,8 @@ FFGLGradients::FFGLGradients()
 	addParam( hue2 = Param::create( "Hue 2" , 0.0f) );
 	addParam( saturation = Param::create( "Saturation", 1.0f ) );
 	addParam( brightness = Param::create( "Brightness", 1.0f ) );
-	addParam( fft = ParamFFT::create( "FFT" ) );
-	//addParam( ParamFFT::create( "FFT 322" ) );
 }
+
 FFResult FFGLGradients::InitGL( const FFGLViewportStruct* vp )
 {
 	if( !shader.Compile( _vertexShaderCode, _fragmentShaderCode ) )
@@ -76,7 +75,6 @@ FFResult FFGLGradients::InitGL( const FFGLViewportStruct* vp )
 }
 FFResult FFGLGradients::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
-	updateAudioAndTime();
 	float rgb1[ 3 ];
 	//we need to make sure the hue doesn't reach 1.0f, otherwise the result will be pink and not red how it should be
 	float hue1Val = ( hue1->getValue() == 1.0f ) ? 0.0f : hue1->getValue();
