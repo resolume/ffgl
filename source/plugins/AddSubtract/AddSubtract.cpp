@@ -99,7 +99,7 @@ FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	//The input texture's dimension might change each frame and so might the content area.
 	//We're adopting the texture's maxUV using a uniform because that way we dont have to update our vertex buffer each frame.
 	FFGLTexCoords maxCoords = GetMaxGLTexCoords( *pGL->inputTextures[ 0 ] );
-	shader.Set( "maxUV", maxCoords.s, maxCoords.t );
+	shader.Set( "MaxUV", maxCoords.s, maxCoords.t );
 
 	//This takes care of sending all the parameter that the plugin registered to the shader.
 	sendParams( shader );

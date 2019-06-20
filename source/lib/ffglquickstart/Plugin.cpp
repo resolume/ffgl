@@ -80,7 +80,7 @@ std::string Plugin::createFragmentShader( std::string base )
 		{
 			fragmentShaderCode += "uniform bool " + params[ i ]->getName() + ";\n";
 		}
-		else
+		else if( params[ i ]->getType() != FF_TYPE_BUFFER )
 		{
 			fragmentShaderCode += "uniform float " + params[ i ]->getName() + ";\n";
 		}
@@ -153,7 +153,7 @@ void Plugin::sendParams( FFGLShader& shader )
 			std::string name = params[ i ]->getName();
 			shader.Set( name.c_str(), (bool)params[ i ]->getValue() );
 		}
-		else
+		else if( params[ i ]->getType() != FF_TYPE_BUFFER )
 		{
 			auto range       = std::dynamic_pointer_cast< ParamRange >( params[ i ] );
 			bool isInteger   = params[ i ]->getType() == FF_TYPE_INTEGER;
@@ -177,10 +177,10 @@ void Plugin::sendDefaultParams( ffglex::FFGLShader& shader )
 
 char* Plugin::GetParameterDisplay( unsigned int index )
 {
-	if( 0 <= index && index < params.size() )
+	bool inRange = 0 <= index && index < params.size();
+	bool valid   = params[ index ]->getType() != FF_TYPE_TEXT && params[ index ]->getType() != FF_TYPE_TEXT;
+	if( inRange && valid )
 	{
-		if( params[ index ]->getType() == FF_TYPE_TEXT )
-			return (char*)FF_FAIL;
 		static char displayValueBuffer[ 16 ];
 		auto range              = std::dynamic_pointer_cast< ParamRange >( params[ index ] );
 		float value             = range ? range->getRealValue() : params[ index ]->getValue();
@@ -191,7 +191,7 @@ char* Plugin::GetParameterDisplay( unsigned int index )
 	}
 	else
 	{
-		return CFreeFrameGLPlugin::GetParameterDisplay( index );
+		return (char*)FF_FAIL;
 	}
 }
 

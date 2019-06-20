@@ -269,6 +269,7 @@ public:
 		: Param( name )
 		, fftData(size)
 	{
+		type = FF_TYPE_BUFFER;
 	}
 	unsigned int index;
 	std::vector< float > fftData;
