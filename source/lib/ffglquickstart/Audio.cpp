@@ -15,16 +15,14 @@ void Audio::update( std::vector< float > _fft )
 	float currentVolStore = 0;
 	float bassStore       = 0;
 	float bassCount       = 0;
-	int bassSep           = Audio::getBufferSize() / 3;
+	int bassSep           = fft.size() / 3;
 	float medStore        = 0;
 	float medCount        = 0;
 	int highSep           = bassSep * 2;
 	float highStore       = 0;
 	float highCount       = 0;
 
-	float gain = pow( 10.f, gainParam->getRealValue() / 20.f );
-
-	for( int i = 0; i < Audio::getBufferSize(); i++ )
+	for( int i = 0; i < fft.size(); i++ )
 	{
 		float bin = fft[ i ] * fft[ i ] * gain;
 
@@ -45,7 +43,7 @@ void Audio::update( std::vector< float > _fft )
 		}
 		currentVolStore += bin;
 	}
-	currentVolStore /= (float)Audio::getBufferSize();
+	currentVolStore /= (float)fft.size();
 	currentVolStore = sqrt( currentVolStore );
 	vol.update( currentVolStore );
 
@@ -108,15 +106,10 @@ void Audio::setSampleRate( int _sampleRate )
 {
 	sampleRate  = _sampleRate;
 	freqMax     = (float) sampleRate / 2.f;
-	freqBinStep = freqMax / BUFFER_SIZE;
+	freqBinStep = freqMax / fft.size();
 }
 
-void Audio::setGain( ParamRange::Ptr gain )
+void Audio::setGain( float _gain )
 {
-	gainParam = gain;
-}
-
-int Audio::getBufferSize()
-{
-	return BUFFER_SIZE;
+	gain = pow( 10.f, _gain / 20.f );
 }

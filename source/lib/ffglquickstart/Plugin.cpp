@@ -3,7 +3,6 @@ using namespace ffglex;
 
 Plugin::Plugin()
 {
-	SetBufferParamInfo( FFT_INPUT_INDEX, "FFT", Audio::getBufferSize(), FF_USAGE_FFT );
 }
 
 Plugin::~Plugin()
@@ -81,7 +80,7 @@ std::string Plugin::createFragmentShader( std::string base )
 		{
 			fragmentShaderCode += "uniform bool " + params[ i ]->getName() + ";\n";
 		}
-		else
+		else if( params[ i ]->getType() != FF_TYPE_BUFFER )
 		{
 			fragmentShaderCode += "uniform float " + params[ i ]->getName() + ";\n";
 		}
@@ -105,11 +104,16 @@ void Plugin::updateAudioAndTime()
 	timeNow    = std::chrono::duration< float, std::milli >( t_now - t_start ).count() / 1000.0f;
 	deltaTime  = timeNow - lastUpdate;
 	lastUpdate = timeNow;
+
 	// Update FFT data
-	const ParamInfo* fftInfo = FindParamInfo( FFT_INPUT_INDEX );
-	for( size_t index = 0; index < Audio::getBufferSize(); ++index )
-		fftData[ index ] = fftInfo->elements[ index ].value;
-	audio.update( fftData );
+	for( auto entry : audioParams )
+	{
+		ParamFFT::Ptr param = entry.first;
+		ParamInfo* fftInfo  = FindParamInfo( param->index );
+		for( size_t index = 0; index < param->fftData.size(); ++index )
+			param->fftData[ index ] = fftInfo->elements[ index ].value;
+		audioParams[ param ].update( param->fftData );
+	}
 }
 
 void Plugin::sendParams( FFGLShader& shader )
@@ -148,7 +152,7 @@ void Plugin::sendParams( FFGLShader& shader )
 			std::string name = params[ i ]->getName();
 			shader.Set( name.c_str(), (bool)params[ i ]->getValue() );
 		}
-		else
+		else if( params[ i ]->getType() != FF_TYPE_BUFFER )
 		{
 			auto range       = std::dynamic_pointer_cast< ParamRange >( params[ i ] );
 			bool isInteger   = params[ i ]->getType() == FF_TYPE_INTEGER;
@@ -166,25 +170,19 @@ void Plugin::sendDefaultParams( ffglex::FFGLShader& shader )
 	shader.Set( "deltaTime", deltaTime );
 	shader.Set( "frame", frame );
 	shader.Set( "resolution", (float)currentViewport.width, (float)currentViewport.height );
-
-	shader.Set( "audioVolume", audio.getVolume() );
-	shader.Set( "audioBass", audio.getBass() );
-	shader.Set( "audioMed", audio.getMed() );
-	shader.Set( "audioHigh", audio.getHigh() );
-
 	shader.Set( "bpm", bpm );
 	shader.Set( "phase", barPhase );
 }
 
 char* Plugin::GetParameterDisplay( unsigned int index )
 {
-	if( 0 < index && index <= params.size() )
+	bool inRange = 0 <= index && index < params.size();
+	bool valid   = params[ index ]->getType() != FF_TYPE_TEXT && params[ index ]->getType() != FF_TYPE_TEXT;
+	if( inRange && valid )
 	{
-		if( params[ index - 1 ]->getType() == FF_TYPE_TEXT )
-			return (char*)FF_FAIL;
 		static char displayValueBuffer[ 16 ];
-		auto range              = std::dynamic_pointer_cast< ParamRange >( params[ index - 1 ] );
-		float value             = range ? range->getRealValue() : params[ index - 1 ]->getValue();
+		auto range              = std::dynamic_pointer_cast< ParamRange >( params[ index ] );
+		float value             = range ? range->getRealValue() : params[ index ]->getValue();
 		std::string stringValue = std::to_string( value );
 		memset( displayValueBuffer, 0, sizeof( displayValueBuffer ) );
 		memcpy( displayValueBuffer, stringValue.c_str(), std::min( sizeof( displayValueBuffer ), stringValue.length() ) );
@@ -192,17 +190,15 @@ char* Plugin::GetParameterDisplay( unsigned int index )
 	}
 	else
 	{
-		return CFreeFrameGLPlugin::GetParameterDisplay( index );
+		return (char*)FF_FAIL;
 	}
 }
 
 FFResult Plugin::SetFloatParameter( unsigned int index, float value )
 {
-	if( index == FFT_INPUT_INDEX )
-		return FF_SUCCESS;
-	if( index <= params.size() )
+	if( index < params.size() )
 	{
-		params[ index - 1 ]->setValue( value );
+		params[ index ]->setValue( value );
 		return FF_SUCCESS;
 	}
 	else
@@ -213,9 +209,9 @@ FFResult Plugin::SetFloatParameter( unsigned int index, float value )
 
 float Plugin::GetFloatParameter( unsigned int index )
 {
-	if( 0 < index && index <= params.size() )
+	if( 0 <= index && index < params.size() )
 	{
-		return params[ index - 1 ]->getValue();
+		return params[ index ]->getValue();
 	}
 	else
 	{
@@ -225,11 +221,11 @@ float Plugin::GetFloatParameter( unsigned int index )
 
 FFResult Plugin::SetTextParameter( unsigned int index, const char* value )
 {
-	bool inBounds = 0 < index && index <= params.size();
+	bool inBounds = 0 <= index && index < params.size();
 	if( !inBounds )
 		return FF_FAIL;
 
-	auto paramText = std::dynamic_pointer_cast< ParamText >( params[ index - 1 ] );
+	auto paramText = std::dynamic_pointer_cast< ParamText >( params[ index ] );
 	if( !paramText )
 		return FF_FAIL;
 
@@ -239,11 +235,11 @@ FFResult Plugin::SetTextParameter( unsigned int index, const char* value )
 
 char* Plugin::GetTextParameter( unsigned int index )
 {
-	bool inBounds = 0 < index && index <= params.size();
+	bool inBounds = 0 <= index && index < params.size();
 	if( !inBounds )
 		return "";
 
-	auto paramText = std::dynamic_pointer_cast< ParamText >( params[ index - 1 ] );
+	auto paramText = std::dynamic_pointer_cast< ParamText >( params[ index ] );
 	if( !paramText )
 		return "";
 
@@ -253,7 +249,11 @@ char* Plugin::GetTextParameter( unsigned int index )
 void Plugin::SetSampleRate( unsigned int _sampleRate )
 {
 	sampleRate = _sampleRate;
-	audio.setSampleRate( sampleRate );
+	for( auto entry : audioParams )
+	{
+		ParamFFT::Ptr param = entry.first;
+		audioParams[ param ].setSampleRate( _sampleRate );
+	}
 }
 
 void Plugin::setFragmentShader( std::string base )
@@ -263,27 +263,37 @@ void Plugin::setFragmentShader( std::string base )
 
 void Plugin::addParam( Param::Ptr param )
 {
+	unsigned int new_index = (unsigned int)params.size();
+	SetParamInfo( new_index, param->getName().c_str(), param->getType(), param->getValue() );
 	params.push_back( param );
-	SetParamInfo( (unsigned int)params.size(), param->getName().c_str(), param->getType(), param->getValue() );
 }
 
 void Plugin::addParam( ParamRange::Ptr param )
 {
+	unsigned int new_index = (unsigned int)params.size();
+	SetParamInfo( new_index, param->getName().c_str(), param->getType(), param->getValue() );
+	SetParamRange( new_index, param->getRange().min, param->getRange().max );
 	params.push_back( param );
-	SetParamInfo( (unsigned int)params.size(), param->getName().c_str(), param->getType(), param->getValue() );
-	SetParamRange( (unsigned int)params.size(), param->getRange().min, param->getRange().max );
 }
 
 void Plugin::addParam( ParamOption::Ptr param )
 {
-	params.push_back( param );
-	unsigned int index = (unsigned int)params.size();
-	SetOptionParamInfo( index, param->getName().c_str(), (unsigned int)param->options.size(), param->getValue() );
+	unsigned int new_index = (unsigned int)params.size();
+	SetOptionParamInfo( new_index, param->getName().c_str(), (unsigned int)param->options.size(), param->getValue() );
 
 	for( unsigned int i = 0; i < param->options.size(); i++ )
 	{
-		SetParamElementInfo( index, i, param->options[ i ].name.c_str(), (float)i );
+		SetParamElementInfo( new_index, i, param->options[ i ].name.c_str(), (float)i );
 	}
+	params.push_back( param );
+}
+
+void Plugin::addParam( ParamFFT::Ptr param )
+{
+	audioParams[ param ] = Audio();
+	param->index         = (unsigned int)params.size();
+	SetBufferParamInfo( param->index, param->getName().c_str(), param->fftData.size(), FF_USAGE_FFT );
+	params.push_back( param );
 }
 
 void Plugin::addHueColorParam( std::string name )

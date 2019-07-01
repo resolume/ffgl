@@ -42,9 +42,7 @@ void main()
 }
 )";
 
-FFGLGradients::FFGLGradients() :
-	rgbLeftLocation( -1 ),
-	rgbRightLocation( -1 )
+FFGLGradients::FFGLGradients() 
 {
 	// Input properties
 	SetMinInputs( 0 );
@@ -56,6 +54,7 @@ FFGLGradients::FFGLGradients() :
 	addParam( saturation = Param::create( "Saturation", 1.0f ) );
 	addParam( brightness = Param::create( "Brightness", 1.0f ) );
 }
+
 FFResult FFGLGradients::InitGL( const FFGLViewportStruct* vp )
 {
 	if( !shader.Compile( _vertexShaderCode, _fragmentShaderCode ) )
@@ -69,11 +68,8 @@ FFResult FFGLGradients::InitGL( const FFGLViewportStruct* vp )
 		return FF_FAIL;
 	}
 
-	//FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that.
-	ScopedShaderBinding shaderBinding( shader.GetGLID() );
-	rgbLeftLocation  = shader.FindUniform( "RGBLeft" );
-	rgbRightLocation = shader.FindUniform( "RGBRight" );
-
+	//FFGL requires us to leave the context in a default state on return
+	resetOpenGLState();
 	//Use base-class init as success result so that it retains the viewport.
 	return CFreeFrameGLPlugin::InitGL( vp );
 }
@@ -88,21 +84,20 @@ FFResult FFGLGradients::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	float hue2Val = ( hue2->getValue() == 1.0f ) ? 0.0f : hue2->getValue();
 	HSVtoRGB( hue2Val, saturation->getValue(), brightness->getValue(), rgb2[ 0 ], rgb2[ 1 ], rgb2[ 2 ] );
 
-	//FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that.
-	ScopedShaderBinding shaderBinding( shader.GetGLID() );
+	shader.Use();
 	shader.Set( "RGBLeft" , rgb1[ 0 ], rgb1[ 1 ], rgb1[ 2 ] );
 	shader.Set( "RGBRight" , rgb2[ 0 ], rgb2[ 1 ], rgb2[ 2 ] );
 
 	quad.Draw();
 
+	//FFGL requires us to leave the context in a default state on return
+	resetOpenGLState();
 	return FF_SUCCESS;
 }
 FFResult FFGLGradients::DeInitGL()
 {
 	shader.FreeGLResources();
 	quad.Release();
-	rgbLeftLocation  = -1;
-	rgbRightLocation = -1;
 
 	return FF_SUCCESS;
 }

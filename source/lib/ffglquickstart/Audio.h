@@ -1,9 +1,6 @@
 #pragma once
-#include "Params.h"
 #include "Utils.h"
 
-// The FFT buffer size
-static const int BUFFER_SIZE = 2048;
 
 class Audio
 {
@@ -48,20 +45,13 @@ public:
 	/// This method is called by the Plugin when the sample rate as changed in the host
 	/// \param sampleRate	The new sampleRate value, usually something like 44100 or 48000
 	void setSampleRate( int sampleRate );
-	/// This method allows to set the paramter that represent a gain parameter.
-	/// This gain will be applied before calculating the differents audio volumes.
-	/// As this is a pointer to a ParamRange you only need to set this once.
-	/// \param gain			The gain parameter, usually the -42 to 42 range works well
-	void setGain( ParamRange::Ptr gain );
 
-	/// This method return the BUFFER_SIZE defined just at the start of this file.
-	/// \return				The fft BUFFER_SIZE
-	static int getBufferSize();
+	void setGain( float gain );
 
 private:
 	std::vector< float > fft;
 	utils::SmoothValue vol, bass, med, high;
 	float freqMax, freqBinStep;
 	int sampleRate;
-	ParamRange::Ptr gainParam = ParamRange::create( "default", 0, {0.0f, 1.0f} );
+	float gain = 0;
 };

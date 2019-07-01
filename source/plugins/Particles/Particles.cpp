@@ -78,10 +78,10 @@ Particles::Particles()
 	addParam( burstDuration = ParamRange::create( "Burst Duration", 1.0f, { 0.0f, 1.0f } ) );
 	addParam( burstIntensity = ParamRange::create( "Burst Intensity", 1.0f, { 1.0f, 16.0f } ) );
 	addParam( simulate = ParamBool::create( "simulate", true ) );
+	addParam( fft = ParamFFT::create( "FFT", MAX_BUCKETS ) );
 
-	SetBufferParamInfo( FFT_INPUT_INDEX, "FFT", MAX_BUCKETS, FF_USAGE_FFT );
-	for( unsigned int index = 0; index < MAX_BUCKETS; ++index )
-		SetParamElementInfo( FFT_INPUT_INDEX, index, "", 0.1f );//Default to 0.1 so that we'll keep emitting even if the host doesn't provide fft data.
+	for( unsigned int element_index = 0; element_index < MAX_BUCKETS; ++element_index )
+		SetParamElementInfo( fft->index, element_index, "", 0.1f );//Default to 0.1 so that we'll keep emitting even if the host doesn't provide fft data.
 }
 
 FFResult Particles::InitGL( const FFGLViewportStruct* vp )
@@ -92,6 +92,8 @@ FFResult Particles::InitGL( const FFGLViewportStruct* vp )
 		return FF_FAIL;
 	}
 
+	//FFGL requires us to leave the context in a default state on return
+	resetOpenGLState();
 	//Use base-class init as success result so that it retains the viewport.
 	return CFreeFrameGLPlugin::InitGL( vp );
 }
@@ -107,15 +109,17 @@ FFResult Particles::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 		UpdateParticles( deltaTime );
 	RenderParticles();
 
+	//FFGL requires us to leave the context in a default state on return
+	resetOpenGLState();
 	return FF_SUCCESS;
 }
 
 void Particles::UpdateParticles( float deltaTime )
 {
+	updateAudioAndTime();
 	glResources.FlipBuffers();
 
-	ScopedShaderBinding shaderBinding( glResources.GetUpdateShader().GetGLID() );
-
+	glResources.GetUpdateShader().Use();
 	glEnable( GL_RASTERIZER_DISCARD );
 	glBindBufferRange( GL_TRANSFORM_FEEDBACK_BUFFER, 0, glResources.GetBackBufferID(), 0, MAX_BUCKETS * MAX_PARTICLES_PER_BUCKET * sizeof( Vertex ) );
 	glBeginTransformFeedback( GL_POINTS );
@@ -125,7 +129,7 @@ void Particles::UpdateParticles( float deltaTime )
 	std::vector< float > spawnChances( (size_t)numBucketsVal );
 	memset( spawnChances.data(), 0, spawnChances.size() * sizeof( float ) );
 	//TODO: Map from fft's num bins to our num buckets. Audio guys halp!
-	for( size_t index = 0; index < numBucketsVal && index < fftData.size(); ++index )
+	for( size_t index = 0; index < numBucketsVal && index < fft->fftData.size(); ++index )
 	{
 		float widthPerBucket = 1.6f / numBucketsVal;
 		Rectf spawnArea;
@@ -135,7 +139,7 @@ void Particles::UpdateParticles( float deltaTime )
 		spawnArea.b = -1.1f;
 		//left, width, bottom, height
 		spawnAreas[ index ] = Vec4f( spawnArea.l, spawnArea.getWidth(), spawnArea.t, spawnArea.getHeight() );
-		spawnChances[ index ] = fftData[ index ] * fftData[ index ] * 3.0f;
+		spawnChances[ index ] = fft->fftData[ index ] * fft->fftData[ index ] * 3.0f;
 	}
 	glResources.GetUpdateShader().Set( "MAX_AGE", 60.0f / bpm * maxAge->getRealValue() );
 	glUniform4fv( glResources.GetUpdateShader().FindUniform( "SPAWN_AREAS" ), (GLsizei)spawnAreas.size(), (float*)spawnAreas.data() );
@@ -146,16 +150,15 @@ void Particles::UpdateParticles( float deltaTime )
 	glResources.GetUpdateShader().Set( "BURST_DURATION", burstDuration->getRealValue() );
 	glResources.GetUpdateShader().Set( "BURST_INTENSITY", burstIntensity->getRealValue() );
 
-	updateAudioAndTime();
 	glResources.GetUpdateShader().Set( "Time", timeNow );
 	glResources.GetUpdateShader().Set( "DeltaTime", deltaTime );
 	glResources.GetUpdateShader().Set( "RenderSize", (float)currentViewport.width, (float)currentViewport.height );
 
-	ScopedVAOBinding vaoBinding( glResources.GetFrontVAOID() );
+	glBindVertexArray( glResources.GetFrontVAOID() );
 
 	glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( numBucketsVal * numParticlesPerBucket->getRealValue() ) );
 
-	vaoBinding.EndScope();
+	glBindVertexArray( 0 );
 
 	glEndTransformFeedback();
 	glBindBufferRange( GL_TRANSFORM_FEEDBACK_BUFFER, 0, 0, 0, 0 );
@@ -163,8 +166,8 @@ void Particles::UpdateParticles( float deltaTime )
 }
 void Particles::RenderParticles()
 {
-	ScopedShaderBinding shaderBinding( glResources.GetRenderShader().GetGLID() );
-	ScopedVAOBinding vaoBinding( glResources.GetBackVAOID() );
+	glResources.GetRenderShader().Use();
+	glBindVertexArray( glResources.GetBackVAOID() );
 	ScopedSamplerActivation samplerBinding( 0 );
 	Scoped2DTextureBinding textureBinding( glResources.GetParticleTextureID() );
 
