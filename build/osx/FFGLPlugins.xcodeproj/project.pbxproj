@@ -83,6 +83,26 @@
 		1B27092021639CEC002B8B05 /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B27090B21635FB1002B8B05 /* Constants.cpp */; };
 		1B27092121639CEC002B8B05 /* GLResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B27090A21635FB0002B8B05 /* GLResources.cpp */; };
 		1B27092221639CEC002B8B05 /* Particles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B27090C21635FB1002B8B05 /* Particles.cpp */; };
+		4067B29022D34BC30087434C /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28522D34BC30087434C /* Source.cpp */; };
+		4067B29122D34BC30087434C /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28522D34BC30087434C /* Source.cpp */; };
+		4067B29222D34BC30087434C /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28522D34BC30087434C /* Source.cpp */; };
+		4067B29322D34BC30087434C /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28522D34BC30087434C /* Source.cpp */; };
+		4067B29422D34BC30087434C /* Mixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28922D34BC30087434C /* Mixer.cpp */; };
+		4067B29522D34BC30087434C /* Mixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28922D34BC30087434C /* Mixer.cpp */; };
+		4067B29622D34BC30087434C /* Mixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28922D34BC30087434C /* Mixer.cpp */; };
+		4067B29722D34BC30087434C /* Mixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28922D34BC30087434C /* Mixer.cpp */; };
+		4067B29822D34BC30087434C /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28A22D34BC30087434C /* Audio.cpp */; };
+		4067B29922D34BC30087434C /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28A22D34BC30087434C /* Audio.cpp */; };
+		4067B29A22D34BC30087434C /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28A22D34BC30087434C /* Audio.cpp */; };
+		4067B29B22D34BC30087434C /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28A22D34BC30087434C /* Audio.cpp */; };
+		4067B29C22D34BC30087434C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28D22D34BC30087434C /* Effect.cpp */; };
+		4067B29D22D34BC30087434C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28D22D34BC30087434C /* Effect.cpp */; };
+		4067B29E22D34BC30087434C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28D22D34BC30087434C /* Effect.cpp */; };
+		4067B29F22D34BC30087434C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28D22D34BC30087434C /* Effect.cpp */; };
+		4067B2A022D34BC30087434C /* Plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28E22D34BC30087434C /* Plugin.cpp */; };
+		4067B2A122D34BC30087434C /* Plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28E22D34BC30087434C /* Plugin.cpp */; };
+		4067B2A222D34BC30087434C /* Plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28E22D34BC30087434C /* Plugin.cpp */; };
+		4067B2A322D34BC30087434C /* Plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28E22D34BC30087434C /* Plugin.cpp */; };
 		D69416C91B904EA200D30319 /* AddSubtract.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69416A11B90436100D30319 /* AddSubtract.cpp */; };
 		DB4B641C1FF84E8E0069DA80 /* FFGLGradients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB4B63E31FF8455E0069DA80 /* FFGLGradients.cpp */; };
 		DB4B641D1FF84E910069DA80 /* Add.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB4B63E11FF8453A0069DA80 /* Add.cpp */; };
@@ -163,6 +183,18 @@
 		2FD1224818853D700009EBA8 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		2FD1225318853FFB0009EBA8 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2FD1226B188540470009EBA8 /* AddSubtract.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AddSubtract.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		4067B28422D34BC30087434C /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		4067B28522D34BC30087434C /* Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Source.cpp; sourceTree = "<group>"; };
+		4067B28622D34BC30087434C /* Params.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Params.h; sourceTree = "<group>"; };
+		4067B28722D34BC30087434C /* Plugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plugin.h; sourceTree = "<group>"; };
+		4067B28822D34BC30087434C /* Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Source.h; sourceTree = "<group>"; };
+		4067B28922D34BC30087434C /* Mixer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mixer.cpp; sourceTree = "<group>"; };
+		4067B28A22D34BC30087434C /* Audio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Audio.cpp; sourceTree = "<group>"; };
+		4067B28B22D34BC30087434C /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
+		4067B28C22D34BC30087434C /* Mixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mixer.h; sourceTree = "<group>"; };
+		4067B28D22D34BC30087434C /* Effect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Effect.cpp; sourceTree = "<group>"; };
+		4067B28E22D34BC30087434C /* Plugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Plugin.cpp; sourceTree = "<group>"; };
+		4067B28F22D34BC30087434C /* Effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Effect.h; sourceTree = "<group>"; };
 		A9F28D5818B37D0C007D7C87 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A9F28D5A18B37D12007D7C87 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		A9F92EA9201A1C1500527E48 /* Particles.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Particles.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -298,6 +330,26 @@
 			name = source;
 			sourceTree = "<group>";
 		};
+		4067B28322D34BC30087434C /* ffglquickstart */ = {
+			isa = PBXGroup;
+			children = (
+				4067B28422D34BC30087434C /* Utils.h */,
+				4067B28522D34BC30087434C /* Source.cpp */,
+				4067B28622D34BC30087434C /* Params.h */,
+				4067B28722D34BC30087434C /* Plugin.h */,
+				4067B28822D34BC30087434C /* Source.h */,
+				4067B28922D34BC30087434C /* Mixer.cpp */,
+				4067B28A22D34BC30087434C /* Audio.cpp */,
+				4067B28B22D34BC30087434C /* Audio.h */,
+				4067B28C22D34BC30087434C /* Mixer.h */,
+				4067B28D22D34BC30087434C /* Effect.cpp */,
+				4067B28E22D34BC30087434C /* Plugin.cpp */,
+				4067B28F22D34BC30087434C /* Effect.h */,
+			);
+			name = ffglquickstart;
+			path = ../../source/lib/ffglquickstart;
+			sourceTree = "<group>";
+		};
 		A91E037820173C1F0018E2D0 /* Gradients */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,6 +411,7 @@
 		D6DB1A481B9054CD007E6883 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				4067B28322D34BC30087434C /* ffglquickstart */,
 				1B2708D121635F74002B8B05 /* ffglex */,
 				D6DB1A291B9054A9007E6883 /* ffgl */,
 			);
@@ -489,17 +542,18 @@
 		2DA285930AEE5D640030A4DD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 1020;
 			};
 			buildConfigurationList = 2DA285940AEE5D640030A4DD /* Build configuration list for PBXProject "FFGLPlugins" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
+				Base,
+				fr,
+				de,
+				en,
+				ja,
 			);
 			mainGroup = 2DA285910AEE5D640030A4DD;
 			productRefGroup = 2DA285A10AEE5E480030A4DD /* Products */;
@@ -553,7 +607,9 @@
 			files = (
 				1B2708ED21635F83002B8B05 /* FFGLUtilities.cpp in Sources */,
 				1B2708C221635F6E002B8B05 /* FFGLPluginManager.cpp in Sources */,
+				4067B29922D34BC30087434C /* Audio.cpp in Sources */,
 				1B2708F921635F83002B8B05 /* FFGLScopedBufferBinding.cpp in Sources */,
+				4067B29522D34BC30087434C /* Mixer.cpp in Sources */,
 				1B27090121635F83002B8B05 /* FFGLScopedShaderBinding.cpp in Sources */,
 				1B2708C621635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
 				1B2708CA21635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
@@ -563,9 +619,12 @@
 				1B2708CE21635F6E002B8B05 /* FFGLPluginSDK.cpp in Sources */,
 				1B2708E521635F83002B8B05 /* FFGLScopedSamplerActivation.cpp in Sources */,
 				1B2708F521635F83002B8B05 /* FFGLScopedVAOBinding.cpp in Sources */,
+				4067B29122D34BC30087434C /* Source.cpp in Sources */,
 				1B2708E921635F83002B8B05 /* FFGLScopedTextureBinding.cpp in Sources */,
 				D69416C91B904EA200D30319 /* AddSubtract.cpp in Sources */,
 				1B27090521635F83002B8B05 /* FFGLShader.cpp in Sources */,
+				4067B2A122D34BC30087434C /* Plugin.cpp in Sources */,
+				4067B29D22D34BC30087434C /* Effect.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,17 +634,22 @@
 			files = (
 				1B2708C821635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
 				1B27090321635F83002B8B05 /* FFGLScopedShaderBinding.cpp in Sources */,
+				4067B2A322D34BC30087434C /* Plugin.cpp in Sources */,
 				1B2708C021635F6E002B8B05 /* FFGL.cpp in Sources */,
 				1B2708FF21635F83002B8B05 /* FFGLFBO.cpp in Sources */,
+				4067B29B22D34BC30087434C /* Audio.cpp in Sources */,
 				1B2708C421635F6E002B8B05 /* FFGLPluginManager.cpp in Sources */,
 				1B2708E721635F83002B8B05 /* FFGLScopedSamplerActivation.cpp in Sources */,
 				1B2708D021635F6E002B8B05 /* FFGLPluginSDK.cpp in Sources */,
 				1B27092021639CEC002B8B05 /* Constants.cpp in Sources */,
 				1B2708EF21635F83002B8B05 /* FFGLUtilities.cpp in Sources */,
 				1B2708CC21635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
+				4067B29322D34BC30087434C /* Source.cpp in Sources */,
+				4067B29722D34BC30087434C /* Mixer.cpp in Sources */,
 				1B27090721635F83002B8B05 /* FFGLShader.cpp in Sources */,
 				1B2708F721635F83002B8B05 /* FFGLScopedVAOBinding.cpp in Sources */,
 				1B2708FB21635F83002B8B05 /* FFGLScopedBufferBinding.cpp in Sources */,
+				4067B29F22D34BC30087434C /* Effect.cpp in Sources */,
 				1B2708F321635F83002B8B05 /* FFGLScreenQuad.cpp in Sources */,
 				1B27092121639CEC002B8B05 /* GLResources.cpp in Sources */,
 				1B27092221639CEC002B8B05 /* Particles.cpp in Sources */,
@@ -599,7 +663,9 @@
 			files = (
 				1B2708EE21635F83002B8B05 /* FFGLUtilities.cpp in Sources */,
 				1B2708C321635F6E002B8B05 /* FFGLPluginManager.cpp in Sources */,
+				4067B29A22D34BC30087434C /* Audio.cpp in Sources */,
 				1B2708FA21635F83002B8B05 /* FFGLScopedBufferBinding.cpp in Sources */,
+				4067B29622D34BC30087434C /* Mixer.cpp in Sources */,
 				1B27090221635F83002B8B05 /* FFGLScopedShaderBinding.cpp in Sources */,
 				1B2708C721635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
 				1B2708CB21635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
@@ -609,9 +675,12 @@
 				1B2708CF21635F6E002B8B05 /* FFGLPluginSDK.cpp in Sources */,
 				1B2708E621635F83002B8B05 /* FFGLScopedSamplerActivation.cpp in Sources */,
 				1B2708F621635F83002B8B05 /* FFGLScopedVAOBinding.cpp in Sources */,
+				4067B29222D34BC30087434C /* Source.cpp in Sources */,
 				1B2708EA21635F83002B8B05 /* FFGLScopedTextureBinding.cpp in Sources */,
 				DB4B641D1FF84E910069DA80 /* Add.cpp in Sources */,
 				1B27090621635F83002B8B05 /* FFGLShader.cpp in Sources */,
+				4067B2A222D34BC30087434C /* Plugin.cpp in Sources */,
+				4067B29E22D34BC30087434C /* Effect.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -621,7 +690,9 @@
 			files = (
 				1B2708EC21635F83002B8B05 /* FFGLUtilities.cpp in Sources */,
 				1B2708C121635F6E002B8B05 /* FFGLPluginManager.cpp in Sources */,
+				4067B29822D34BC30087434C /* Audio.cpp in Sources */,
 				1B2708F821635F83002B8B05 /* FFGLScopedBufferBinding.cpp in Sources */,
+				4067B29422D34BC30087434C /* Mixer.cpp in Sources */,
 				1B27090021635F83002B8B05 /* FFGLScopedShaderBinding.cpp in Sources */,
 				1B2708C521635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
 				1B2708C921635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
@@ -631,9 +702,12 @@
 				1B2708CD21635F6E002B8B05 /* FFGLPluginSDK.cpp in Sources */,
 				1B2708E421635F83002B8B05 /* FFGLScopedSamplerActivation.cpp in Sources */,
 				1B2708F421635F83002B8B05 /* FFGLScopedVAOBinding.cpp in Sources */,
+				4067B29022D34BC30087434C /* Source.cpp in Sources */,
 				1B2708E821635F83002B8B05 /* FFGLScopedTextureBinding.cpp in Sources */,
 				DB4B641C1FF84E8E0069DA80 /* FFGLGradients.cpp in Sources */,
 				1B27090421635F83002B8B05 /* FFGLShader.cpp in Sources */,
+				4067B2A022D34BC30087434C /* Plugin.cpp in Sources */,
+				4067B29C22D34BC30087434C /* Effect.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -667,10 +741,37 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D694169A1B90421F00D30319 /* FFGL_Debug.xcconfig */;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CONFIGURATION_BUILD_DIR = ../../binaries/debug;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
@@ -679,12 +780,38 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D694169B1B90421F00D30319 /* FFGL_Release.xcconfig */;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CONFIGURATION_BUILD_DIR = ../../binaries/release;
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				STRIP_STYLE = debugging;
 			};
 			name = Release;
@@ -692,10 +819,10 @@
 		2FD12269188540470009EBA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -703,7 +830,6 @@
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = AddSubtract;
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
@@ -713,16 +839,15 @@
 		2FD1226A188540470009EBA8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = AddSubtract;
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
@@ -732,10 +857,10 @@
 		A9F92EA7201A1C1500527E48 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -743,7 +868,6 @@
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.resolume.Particles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
@@ -754,16 +878,15 @@
 		A9F92EA8201A1C1500527E48 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.resolume.Particles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
@@ -774,6 +897,7 @@
 		D6369DBD1AAF108500B0CC43 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -781,6 +905,7 @@
 		D6369DBE1AAF108500B0CC43 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -788,10 +913,10 @@
 		DB4B63F21FF845820069DA80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -799,7 +924,6 @@
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
@@ -809,16 +933,15 @@
 		DB4B63F31FF845820069DA80 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
@@ -828,10 +951,10 @@
 		DB4B64141FF845920069DA80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -844,7 +967,6 @@
 				);
 				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
@@ -854,9 +976,9 @@
 		DB4B64151FF845920069DA80 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -868,7 +990,6 @@
 				);
 				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
