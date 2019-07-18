@@ -639,8 +639,8 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		if( pPlugObj != NULL )
 		{
 			const SetBeatinfoStruct* beatInfo = reinterpret_cast< const SetBeatinfoStruct* >( inputValue.PointerValue );
-			float bpm                         = *(float*)&beatInfo->bpm.UIntValue;
-			float barPhase                    = *(float*)&beatInfo->barPhase.UIntValue;
+			float bpm                         = *(float*)&beatInfo->bpm;
+			float barPhase                    = *(float*)&beatInfo->barPhase;
 			pPlugObj->SetBeatInfo( bpm, barPhase );
 			retval.UIntValue = FF_SUCCESS;
 		}
