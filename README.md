@@ -5,3 +5,5 @@ The master branch is FFGL 2.0. It is updated to be compatible with OpenGL 4.1 Co
 To compile plugins for hosts that support FFGL 1.5 (Resolume 6, VDMX, COGE, Isadora, Magic Music Visuals), switch to the FFGL1.5 branch: https://github.com/resolume/ffgl/tree/ffgl1.5
 
 You can find some help to get started with FFGL plugin development on the [wiki](https://github.com/resolume/ffgl/wiki).
+
+Also more examples are available on this [repo](https://github.com/flyingrub/ffgl/tree/more/).
