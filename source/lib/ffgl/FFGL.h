@@ -253,8 +253,8 @@ typedef struct SetParameterStructTag
 // SetBeatinfoStruct
 typedef struct SetBeatinfoStructTag
 {
-	FFMixed bpm;
-	FFMixed barPhase;
+	float bpm;
+	float barPhase;
 } SetBeatinfoStruct;
 
 // SetHostinfoStruct
