@@ -273,8 +273,13 @@ protected:
 
 protected:
 	// Structure for keeping information about each plugin parameter
-	typedef struct ParamInfoStruct
+	struct ParamInfo
 	{
+		ParamInfo() :
+			range{ 0, 1 }
+		{
+		}
+
 		unsigned int ID;
 		char Name[ 16 ];
 		unsigned int dwType;
@@ -289,21 +294,16 @@ protected:
 		unsigned int usage;
 
 		RangeStruct range;
-		float DefaultValue;
-		char* StrDefaultValue;
-		ParamInfoStruct* pNext;
 
-		ParamInfoStruct() : range{0,1} {}
-	} ParamInfo;
+		float defaultFloatVal = 0.0f;
+		std::string defaultStringVal;
+	};
 
 	ParamInfo* FindParamInfo( unsigned int ID );
 	const ParamInfo* FindParamInfo( unsigned int ID ) const;
 
 private:
-	// Information on paramters and pointers to ParamInfo list
-	int m_NParams;
-	ParamInfo* m_pFirst;
-	ParamInfo* m_pLast;
+	std::vector< ParamInfo > params;
 
 	// Inputs
 	int m_iMinInputs;

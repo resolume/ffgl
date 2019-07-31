@@ -237,8 +237,8 @@ typedef struct PluginExtendedInfoStructTag
 {
 	FFUInt32 PluginMajorVersion;
 	FFUInt32 PluginMinorVersion;
-	char* Description;
-	char* About;
+	const char* Description;
+	const char* About;
 	FFUInt32 FreeFrameExtendedDataSize;
 	void* FreeFrameExtendedDataBlock;
 } PluginExtendedInfoStruct;

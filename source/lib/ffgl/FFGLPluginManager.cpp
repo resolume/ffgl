@@ -29,41 +29,14 @@
 // CFFGLPluginManager constructor and destructor
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CFFGLPluginManager::CFFGLPluginManager()
+CFFGLPluginManager::CFFGLPluginManager() :
+	m_iMinInputs( 0 ),
+	m_iMaxInputs( 0 ),
+	m_timeSupported( true )
 {
-	m_iMinInputs = 0;
-	m_iMaxInputs = 0;
-	m_timeSupported = true;
-
-	m_NParams = 0;
-	m_pFirst = NULL;
-	m_pLast = NULL;
 }
-
 CFFGLPluginManager::~CFFGLPluginManager()
 {
-	if( m_pFirst != NULL )
-	{
-		ParamInfo* pCurr = m_pFirst;
-		ParamInfo* pNext = m_pFirst;
-
-		while( pCurr != NULL )
-		{
-			pNext = pCurr->pNext;
-
-			if( ( pCurr->dwType == FF_TYPE_TEXT ) &&
-				( pCurr->StrDefaultValue != NULL ) )
-			{
-				free( pCurr->StrDefaultValue );
-			}
-
-			delete pCurr;
-			pCurr = pNext;
-		}
-	}
-
-	m_pFirst = NULL;
-	m_pLast = NULL;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +55,7 @@ unsigned int CFFGLPluginManager::GetMaxInputs() const
 
 unsigned int CFFGLPluginManager::GetNumParams() const
 {
-	return m_NParams;
+	return static_cast< unsigned int >( params.size() );
 }
 
 void CFFGLPluginManager::SetMinInputs( unsigned int iMinInputs )
@@ -97,17 +70,17 @@ void CFFGLPluginManager::SetMaxInputs( unsigned int iMaxInputs )
 
 void CFFGLPluginManager::SetParamInfo( unsigned int pIndex, const char* pchName, unsigned int pType, float fDefaultValue )
 {
-	ParamInfo* pInfo = new ParamInfo;
-	pInfo->ID = pIndex;
+	ParamInfo pInfo;
+	pInfo.ID = pIndex;
 	
-	pInfo->elements.resize( 1 );
-	pInfo->usage = 0;
+	pInfo.elements.resize( 1 );
+	pInfo.usage = 0;
 
 	std::string stringValue = pchName;
-	memset(pInfo->Name, 0, sizeof(pInfo->Name));
-	memcpy(pInfo->Name, stringValue.c_str(), std::min(sizeof(pInfo->Name), stringValue.length()));
+	memset(pInfo.Name, 0, sizeof(pInfo.Name));
+	memcpy(pInfo.Name, stringValue.c_str(), std::min(sizeof(pInfo.Name), stringValue.length()));
 
-	pInfo->dwType = pType;
+	pInfo.dwType = pType;
 	if (pType == FF_TYPE_STANDARD)
 	{
 		if( fDefaultValue > 1.0 )
@@ -116,65 +89,44 @@ void CFFGLPluginManager::SetParamInfo( unsigned int pIndex, const char* pchName,
 			fDefaultValue = 0.0;
 	}
 
-	pInfo->DefaultValue = fDefaultValue;
-	pInfo->StrDefaultValue = NULL;
-	pInfo->pNext = NULL;
-	if( m_pFirst == NULL )
-		m_pFirst = pInfo;
-	if( m_pLast != NULL )
-		m_pLast->pNext = pInfo;
-	m_pLast = pInfo;
-	m_NParams++;
+	pInfo.defaultFloatVal = fDefaultValue;
+	params.push_back( pInfo );
 }
 
 void CFFGLPluginManager::SetBufferParamInfo( unsigned int pIndex, const char* pchName, unsigned int numElements, unsigned int usage )
 {
-	ParamInfo* pInfo = new ParamInfo;
-	pInfo->ID = pIndex;
+	ParamInfo pInfo;
+	pInfo.ID = pIndex;
 
-	pInfo->elements.resize( numElements );
-	pInfo->usage = usage;
+	pInfo.elements.resize( numElements );
+	pInfo.usage = usage;
 
 	std::string stringValue = pchName;
-	memset(pInfo->Name, 0, sizeof(pInfo->Name));
-	memcpy(pInfo->Name, stringValue.c_str(), std::min(sizeof(pInfo->Name), stringValue.length()));
+	memset(pInfo.Name, 0, sizeof(pInfo.Name));
+	memcpy(pInfo.Name, stringValue.c_str(), std::min(sizeof(pInfo.Name), stringValue.length()));
 
-	pInfo->dwType = FF_TYPE_BUFFER;
+	pInfo.dwType = FF_TYPE_BUFFER;
 
-	pInfo->DefaultValue = 0.0f;
-	pInfo->StrDefaultValue = NULL;
-	pInfo->pNext = NULL;
-	if( m_pFirst == NULL )
-		m_pFirst = pInfo;
-	if( m_pLast != NULL )
-		m_pLast->pNext = pInfo;
-	m_pLast = pInfo;
-	m_NParams++;
+	pInfo.defaultFloatVal = 0.0f;
+	params.push_back( pInfo );
 }
 
 void CFFGLPluginManager::SetOptionParamInfo( unsigned int pIndex, const char* pchName, unsigned int numElements, float defaultValue )
 {
-	ParamInfo* pInfo = new ParamInfo;
-	pInfo->ID = pIndex;
+	ParamInfo pInfo;
+	pInfo.ID = pIndex;
 
-	pInfo->elements.resize( numElements );
-	pInfo->usage = FF_USAGE_STANDARD;
+	pInfo.elements.resize( numElements );
+	pInfo.usage = FF_USAGE_STANDARD;
 
 	std::string stringValue = pchName;
-	memset(pInfo->Name, 0, sizeof(pInfo->Name));
-	memcpy(pInfo->Name, stringValue.c_str(), std::min(sizeof(pInfo->Name), stringValue.length()));
+	memset(pInfo.Name, 0, sizeof(pInfo.Name));
+	memcpy(pInfo.Name, stringValue.c_str(), std::min(sizeof(pInfo.Name), stringValue.length()));
 
-	pInfo->dwType = FF_TYPE_OPTION;
+	pInfo.dwType = FF_TYPE_OPTION;
 
-	pInfo->DefaultValue = defaultValue;
-	pInfo->StrDefaultValue = NULL;
-	pInfo->pNext = NULL;
-	if( m_pFirst == NULL )
-		m_pFirst = pInfo;
-	if( m_pLast != NULL )
-		m_pLast->pNext = pInfo;
-	m_pLast = pInfo;
-	m_NParams++;
+	pInfo.defaultFloatVal = defaultValue;
+	params.push_back( pInfo );
 }
 
 void CFFGLPluginManager::SetParamElementInfo( unsigned int paramID, unsigned int elementIndex, const char* elementName, float elementValue )
@@ -192,47 +144,33 @@ void CFFGLPluginManager::SetParamElementInfo( unsigned int paramID, unsigned int
 
 void CFFGLPluginManager::SetParamInfo( unsigned int pIndex, const char* pchName, unsigned int pType, bool bDefaultValue )
 {
-	ParamInfo* pInfo = new ParamInfo;
-	pInfo->ID = pIndex;
+	ParamInfo pInfo;
+	pInfo.ID = pIndex;
 
 	std::string stringValue = pchName;
-	memset(pInfo->Name, 0, sizeof(pInfo->Name));
-	memcpy(pInfo->Name, stringValue.c_str(), std::min(sizeof(pInfo->Name), stringValue.length()));
+	memset(pInfo.Name, 0, sizeof(pInfo.Name));
+	memcpy(pInfo.Name, stringValue.c_str(), std::min(sizeof(pInfo.Name), stringValue.length()));
 
-	pInfo->dwType = pType;
-	pInfo->DefaultValue = bDefaultValue ? 1.0f : 0.0f;
-	pInfo->StrDefaultValue = NULL;
-	pInfo->pNext = NULL;
-	if( m_pFirst == NULL )
-		m_pFirst = pInfo;
-	if( m_pLast != NULL )
-		m_pLast->pNext = pInfo;
-	m_pLast = pInfo;
-	m_NParams++;
+	pInfo.dwType = pType;
+	pInfo.defaultFloatVal = bDefaultValue ? 1.0f : 0.0f;
+	params.push_back( pInfo );
 }
 
 void CFFGLPluginManager::SetParamInfo( unsigned int dwIndex, const char* pchName, unsigned int dwType, const char* pchDefaultValue )
 {
-	ParamInfo* pInfo = new ParamInfo;
-	pInfo->ID = dwIndex;
+	ParamInfo pInfo;
+	pInfo.ID = dwIndex;
 
-	pInfo->elements.resize( 1 );
-	pInfo->usage = 0;
+	pInfo.elements.resize( 1 );
+	pInfo.usage = 0;
 
 	std::string stringValue = pchName;
-	memset(pInfo->Name, 0, sizeof(pInfo->Name));
-	memcpy(pInfo->Name, stringValue.c_str(), std::min(sizeof(pInfo->Name), stringValue.length()));
+	memset(pInfo.Name, 0, sizeof(pInfo.Name));
+	memcpy(pInfo.Name, stringValue.c_str(), std::min(sizeof(pInfo.Name), stringValue.length()));
 
-	pInfo->dwType = dwType;
-	pInfo->DefaultValue = 0;
-	pInfo->StrDefaultValue = strdup( pchDefaultValue );
-	pInfo->pNext = NULL;
-	if( m_pFirst == NULL )
-		m_pFirst = pInfo;
-	if( m_pLast != NULL )
-		m_pLast->pNext = pInfo;
-	m_pLast = pInfo;
-	m_NParams++;
+	pInfo.dwType = dwType;
+	pInfo.defaultStringVal = pchDefaultValue;
+	params.push_back( pInfo );
 }
 
 void CFFGLPluginManager::SetTimeSupported( bool supported )
@@ -343,9 +281,9 @@ FFMixed CFFGLPluginManager::GetParamDefault( unsigned int dwIndex ) const
 		return result;
 
 	if( GetParamType( dwIndex ) == FF_TYPE_TEXT )
-		result.PointerValue = (void*)paramInfo->StrDefaultValue;
+		result.PointerValue = (void*)paramInfo->defaultStringVal.c_str();
 	else
-		result.UIntValue = *(FFUInt32*)&paramInfo->DefaultValue;
+		result.UIntValue = *(FFUInt32*)&paramInfo->defaultFloatVal;
 	
 	return result;
 }
@@ -357,19 +295,21 @@ bool CFFGLPluginManager::GetTimeSupported() const
 
 CFFGLPluginManager::ParamInfo* CFFGLPluginManager::FindParamInfo( unsigned int ID )
 {
-	for( ParamInfo* pCurr = m_pFirst; pCurr != nullptr; pCurr = pCurr->pNext )
+	for( ParamInfo& param : params )
 	{
-		if( pCurr->ID == ID )
-			return pCurr;
+		if( param.ID == ID )
+			return &param;
 	}
+
 	return nullptr;
 }
 const CFFGLPluginManager::ParamInfo* CFFGLPluginManager::FindParamInfo( unsigned int ID ) const
 {
-	for( const ParamInfo* pCurr = m_pFirst; pCurr != nullptr; pCurr = pCurr->pNext )
+	for( const ParamInfo& param : params )
 	{
-		if( pCurr->ID == ID )
-			return pCurr;
+		if( param.ID == ID )
+			return &param;
 	}
+
 	return nullptr;
 }
