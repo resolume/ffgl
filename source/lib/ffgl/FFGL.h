@@ -350,7 +350,7 @@ typedef struct SetParameterElementValueStructTag
 
 BOOL APIENTRY DllMain( HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserved );
 
-__declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
+extern "C" __declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
 typedef __declspec( dllimport ) FFMixed( __stdcall* FF_Main_FuncPtr )( FFUInt32, FFMixed, FFInstanceID );
 
 #else

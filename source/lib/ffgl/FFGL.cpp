@@ -426,7 +426,7 @@ FFMixed getParamRange( FFMixed input )
 
 #ifdef WIN32
 
-FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID )
+extern "C" __declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID )
 
 #elif TARGET_OS_MAC
 
