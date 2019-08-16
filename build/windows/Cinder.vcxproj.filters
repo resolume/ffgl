@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\source\lib\FFGLSDK.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\plugins\Cinder\FFGLCinder.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\lib\FFGLSDK.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\Cinder\FFGLCinder.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="lib">
+      <UniqueIdentifier>{ed10bbd2-06b9-4eb8-8e01-7f978009406a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
