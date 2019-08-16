@@ -16,8 +16,8 @@ public:
 	GLuint GetBackVAOID() const;
 	GLuint GetFrontBufferID() const;
 	GLuint GetBackBufferID() const;
-	ffglex::FFGLShader& GetUpdateShader();
-	ffglex::FFGLShader& GetRenderShader();
+	const ffglex::FFGLShader& GetUpdateShader() const;
+	const ffglex::FFGLShader& GetRenderShader() const;
 
 private:
 	bool LoadParticleTexture();

@@ -45,11 +45,18 @@ FFResult Mixer::render( ProcessOpenGLStruct* inputTextures )
 	if( inputTextures->inputTextures[ 1 ] == nullptr )
 		return FF_FAIL;
 
-	shader.Use();
-	shader.Bind("textureDest", 0, *inputTextures->inputTextures[ 0 ] );
+	//Activate our shader using the scoped binding so that we'll restore the context state when we're done.
+	ScopedShaderBinding shaderBinding( shader.GetGLID() );
+	//Use the scoped bindings to ensure that the context will be returned in it's default state after we're done rendering.
+	ScopedSamplerActivation activateSampler0( 0 );
+	Scoped2DTextureBinding textureBinding0( inputTextures->inputTextures[ 0 ]->Handle );
+	ScopedSamplerActivation activateSampler1( 1 );
+	Scoped2DTextureBinding textureBinding1( inputTextures->inputTextures[ 1 ]->Handle );
+
+	shader.Set("textureDest", 0 );
 	FFGLTexCoords maxCoords = GetMaxGLTexCoords( *inputTextures->inputTextures[ 0 ] );
 	shader.Set( "maxUVDest", maxCoords.s, maxCoords.t );
-	shader.Bind( "textureSrc", 1, *inputTextures->inputTextures[ 1 ] );
+	shader.Set( "textureSrc", 1 );
 	maxCoords = GetMaxGLTexCoords( *inputTextures->inputTextures[ 1 ] );
 	shader.Set( "maxUVSrc", maxCoords.s, maxCoords.t );
 	quad.Draw();

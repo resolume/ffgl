@@ -37,8 +37,13 @@ FFResult Effect::render( ProcessOpenGLStruct* inputTextures )
 	if( inputTextures->inputTextures[ 0 ] == NULL )
 		return FF_FAIL;
 
-	shader.Use();
-	shader.Bind("inputTexture", 0, *inputTextures->inputTextures[ 0 ] );
+	//Activate our shader using the scoped binding so that we'll restore the context state when we're done.
+	ScopedShaderBinding shaderBinding( shader.GetGLID() );
+	//Use the scoped bindings to ensure that the context will be returned in it's default state after we're done rendering.
+	ScopedSamplerActivation activateSampler0( 0 );
+	Scoped2DTextureBinding textureBinding0( inputTextures->inputTextures[ 0 ]->Handle );
+
+	shader.Set( "inputTexture", 0 );
 	FFGLTexCoords maxCoords = GetMaxGLTexCoords( *inputTextures->inputTextures[ 0 ] );
 	shader.Set( "maxUV", maxCoords.s, maxCoords.t );
 	quad.Draw();

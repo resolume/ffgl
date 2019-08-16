@@ -86,9 +86,7 @@ FFResult Add::InitGL( const FFGLViewportStruct* vp )
 		DeInitGL();
 		return FF_FAIL;
 	}
-	
-	//FFGL requires us to leave the context in a default state on return
-	resetOpenGLState();
+
 	//Use base-class init as success result so that it retains the viewport.
 	return CFreeFrameGLPlugin::InitGL( vp );
 }
@@ -102,9 +100,16 @@ FFResult Add::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	if( pGL->inputTextures[ 1 ] == nullptr )
 		return FF_FAIL;
 
-	shader.Use();
-	shader.Bind( "textureDest", 0, *pGL->inputTextures[ 0 ] );
-	shader.Bind( "textureSrc", 1, *pGL->inputTextures[ 1 ] );
+	//Activate our shader using the scoped binding so that we'll restore the context state when we're done.
+	ScopedShaderBinding shaderBinding( shader.GetGLID() );
+	//The shader's samplers are fixed so we need to bind the texture to these exact sampler indices. Use the scoped
+	//bindings to ensure that the context will be returned in it's default state after we're done rendering.
+	ScopedSamplerActivation activateSampler0( 0 );
+	Scoped2DTextureBinding textureBinding0( pGL->inputTextures[ 0 ]->Handle );
+	ScopedSamplerActivation activateSampler1( 1 );
+	Scoped2DTextureBinding textureBinding1( pGL->inputTextures[ 1 ]->Handle );
+	shader.Set( "textureDest", 0 );
+	shader.Set( "textureSrc", 1 );
 
 	//The input texture's dimension might change each frame and so might the content area.
 	//We're adopting the texture's maxUV using a uniform because that way we dont have to update our vertex buffer each frame.
@@ -119,8 +124,6 @@ FFResult Add::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	//Apply our shader to the full screen quad.
 	quad.Draw();
 
-	//FFGL requires us to leave the context in a default state on return
-	resetOpenGLState();
 	return FF_SUCCESS;
 }
 FFResult Add::DeInitGL()

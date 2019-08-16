@@ -27,20 +27,20 @@ FFResult Plugin::InitGL( const FFGLViewportStruct* viewPort )
 		DeInitGL();
 		return FF_FAIL;
 	}
-	resetOpenGLState();
+
 	return CFreeFrameGLPlugin::InitGL( viewPort );
 }
 
 FFResult Plugin::ProcessOpenGL( ProcessOpenGLStruct* inputTextures )
 {
 	updateAudioAndTime();
-	shader.Use();
+	//Activate our shader using the scoped binding so that we'll restore the context state when we're done.
+	ScopedShaderBinding shaderBinding( shader.GetGLID() );
 	sendDefaultParams( shader );
 	sendParams( shader );
 	update();
 	FFResult result = render( inputTextures );
 	consumeAllTrigger();
-	resetOpenGLState();
 
 	return result;
 }
@@ -55,7 +55,8 @@ FFResult Plugin::DeInitGL()
 
 FFResult Plugin::render( ProcessOpenGLStruct* inputTextures )
 {
-	shader.Use();
+	//Activate our shader using the scoped binding so that we'll restore the context state when we're done.
+	ScopedShaderBinding shaderBinding( shader.GetGLID() );
 	quad.Draw();
 	return FF_SUCCESS;
 }
