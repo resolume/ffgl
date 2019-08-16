@@ -2,7 +2,7 @@
 #include <string>
 #include <FFGLSDK.h>
 
-class AddSubtract : public Plugin
+class AddSubtract : public ffglqs::Plugin
 {
 public:
 	AddSubtract();

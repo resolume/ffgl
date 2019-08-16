@@ -139,16 +139,6 @@ void HSVtoRGB( double h, double s, double v, double* r, double* g, double* b )
 	}
 }
 
-void resetOpenGLState()
-{
-	glBindVertexArray( 0 );
-	glBindTexture( GL_TEXTURE_2D , 0 );
-	glActiveTexture( GL_TEXTURE0 );
-	glUseProgram( 0 );
-	glBindBuffer( GL_ARRAY_BUFFER, 0 );
-}
-
-
 float random( float min, float max )
 {
 	return min + ( rand() / ( RAND_MAX / ( max - min ) ) );
@@ -156,6 +146,15 @@ float random( float min, float max )
 float clamp01( float value )
 {
 	return std::min( std::max( value, 0.0f ), 1.0f );
+}
+float clamp( float value, float low, float high )
+{
+	return std::max( std::min( value, high ), low );
+}
+float map( float value, float low, float high, float newLow, float newHigh )
+{
+	float res = newLow + ( value - low ) * ( newHigh - newLow ) / ( high - low );
+	return clamp( res, newLow, newHigh );
 }
 
 void ReplaceAll( std::string& utf8String, const std::string& valueToReplace, const std::string& replaceWith )

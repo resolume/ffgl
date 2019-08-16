@@ -83,26 +83,66 @@
 		1B27092021639CEC002B8B05 /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B27090B21635FB1002B8B05 /* Constants.cpp */; };
 		1B27092121639CEC002B8B05 /* GLResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B27090A21635FB0002B8B05 /* GLResources.cpp */; };
 		1B27092221639CEC002B8B05 /* Particles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B27090C21635FB1002B8B05 /* Particles.cpp */; };
-		4067B29022D34BC30087434C /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28522D34BC30087434C /* Source.cpp */; };
-		4067B29122D34BC30087434C /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28522D34BC30087434C /* Source.cpp */; };
-		4067B29222D34BC30087434C /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28522D34BC30087434C /* Source.cpp */; };
-		4067B29322D34BC30087434C /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28522D34BC30087434C /* Source.cpp */; };
-		4067B29422D34BC30087434C /* Mixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28922D34BC30087434C /* Mixer.cpp */; };
-		4067B29522D34BC30087434C /* Mixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28922D34BC30087434C /* Mixer.cpp */; };
-		4067B29622D34BC30087434C /* Mixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28922D34BC30087434C /* Mixer.cpp */; };
-		4067B29722D34BC30087434C /* Mixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28922D34BC30087434C /* Mixer.cpp */; };
-		4067B29822D34BC30087434C /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28A22D34BC30087434C /* Audio.cpp */; };
-		4067B29922D34BC30087434C /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28A22D34BC30087434C /* Audio.cpp */; };
-		4067B29A22D34BC30087434C /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28A22D34BC30087434C /* Audio.cpp */; };
-		4067B29B22D34BC30087434C /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28A22D34BC30087434C /* Audio.cpp */; };
-		4067B29C22D34BC30087434C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28D22D34BC30087434C /* Effect.cpp */; };
-		4067B29D22D34BC30087434C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28D22D34BC30087434C /* Effect.cpp */; };
-		4067B29E22D34BC30087434C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28D22D34BC30087434C /* Effect.cpp */; };
-		4067B29F22D34BC30087434C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28D22D34BC30087434C /* Effect.cpp */; };
-		4067B2A022D34BC30087434C /* Plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28E22D34BC30087434C /* Plugin.cpp */; };
-		4067B2A122D34BC30087434C /* Plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28E22D34BC30087434C /* Plugin.cpp */; };
-		4067B2A222D34BC30087434C /* Plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28E22D34BC30087434C /* Plugin.cpp */; };
-		4067B2A322D34BC30087434C /* Plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4067B28E22D34BC30087434C /* Plugin.cpp */; };
+		6524807F2306FD14007257C5 /* FFGLSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524805F2306FD13007257C5 /* FFGLSource.cpp */; };
+		652480802306FD14007257C5 /* FFGLSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524805F2306FD13007257C5 /* FFGLSource.cpp */; };
+		652480812306FD14007257C5 /* FFGLSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524805F2306FD13007257C5 /* FFGLSource.cpp */; };
+		652480822306FD14007257C5 /* FFGLSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524805F2306FD13007257C5 /* FFGLSource.cpp */; };
+		652480832306FD14007257C5 /* FFGLParamFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480612306FD13007257C5 /* FFGLParamFFT.cpp */; };
+		652480842306FD14007257C5 /* FFGLParamFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480612306FD13007257C5 /* FFGLParamFFT.cpp */; };
+		652480852306FD14007257C5 /* FFGLParamFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480612306FD13007257C5 /* FFGLParamFFT.cpp */; };
+		652480862306FD14007257C5 /* FFGLParamFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480612306FD13007257C5 /* FFGLParamFFT.cpp */; };
+		652480872306FD14007257C5 /* FFGLEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480652306FD13007257C5 /* FFGLEffect.cpp */; };
+		652480882306FD14007257C5 /* FFGLEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480652306FD13007257C5 /* FFGLEffect.cpp */; };
+		652480892306FD14007257C5 /* FFGLEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480652306FD13007257C5 /* FFGLEffect.cpp */; };
+		6524808A2306FD14007257C5 /* FFGLEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480652306FD13007257C5 /* FFGLEffect.cpp */; };
+		6524808B2306FD14007257C5 /* FFGLRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480662306FD13007257C5 /* FFGLRandom.cpp */; };
+		6524808C2306FD14007257C5 /* FFGLRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480662306FD13007257C5 /* FFGLRandom.cpp */; };
+		6524808D2306FD14007257C5 /* FFGLRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480662306FD13007257C5 /* FFGLRandom.cpp */; };
+		6524808E2306FD14007257C5 /* FFGLRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480662306FD13007257C5 /* FFGLRandom.cpp */; };
+		6524808F2306FD14007257C5 /* FFGLSmoothValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480672306FD13007257C5 /* FFGLSmoothValue.cpp */; };
+		652480902306FD14007257C5 /* FFGLSmoothValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480672306FD13007257C5 /* FFGLSmoothValue.cpp */; };
+		652480912306FD14007257C5 /* FFGLSmoothValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480672306FD13007257C5 /* FFGLSmoothValue.cpp */; };
+		652480922306FD14007257C5 /* FFGLSmoothValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480672306FD13007257C5 /* FFGLSmoothValue.cpp */; };
+		652480932306FD14007257C5 /* FFGLParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480692306FD13007257C5 /* FFGLParam.cpp */; };
+		652480942306FD14007257C5 /* FFGLParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480692306FD13007257C5 /* FFGLParam.cpp */; };
+		652480952306FD14007257C5 /* FFGLParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480692306FD13007257C5 /* FFGLParam.cpp */; };
+		652480962306FD14007257C5 /* FFGLParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480692306FD13007257C5 /* FFGLParam.cpp */; };
+		652480972306FD14007257C5 /* FFGLParamText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524806C2306FD13007257C5 /* FFGLParamText.cpp */; };
+		652480982306FD14007257C5 /* FFGLParamText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524806C2306FD13007257C5 /* FFGLParamText.cpp */; };
+		652480992306FD14007257C5 /* FFGLParamText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524806C2306FD13007257C5 /* FFGLParamText.cpp */; };
+		6524809A2306FD14007257C5 /* FFGLParamText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524806C2306FD13007257C5 /* FFGLParamText.cpp */; };
+		6524809B2306FD14007257C5 /* FFGLParamRange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524806F2306FD13007257C5 /* FFGLParamRange.cpp */; };
+		6524809C2306FD14007257C5 /* FFGLParamRange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524806F2306FD13007257C5 /* FFGLParamRange.cpp */; };
+		6524809D2306FD14007257C5 /* FFGLParamRange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524806F2306FD13007257C5 /* FFGLParamRange.cpp */; };
+		6524809E2306FD14007257C5 /* FFGLParamRange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524806F2306FD13007257C5 /* FFGLParamRange.cpp */; };
+		6524809F2306FD14007257C5 /* FFGLPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480702306FD13007257C5 /* FFGLPlugin.cpp */; };
+		652480A02306FD14007257C5 /* FFGLPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480702306FD13007257C5 /* FFGLPlugin.cpp */; };
+		652480A12306FD14007257C5 /* FFGLPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480702306FD13007257C5 /* FFGLPlugin.cpp */; };
+		652480A22306FD14007257C5 /* FFGLPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480702306FD13007257C5 /* FFGLPlugin.cpp */; };
+		652480A32306FD14007257C5 /* FFGLMixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480712306FD13007257C5 /* FFGLMixer.cpp */; };
+		652480A42306FD14007257C5 /* FFGLMixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480712306FD13007257C5 /* FFGLMixer.cpp */; };
+		652480A52306FD14007257C5 /* FFGLMixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480712306FD13007257C5 /* FFGLMixer.cpp */; };
+		652480A62306FD14007257C5 /* FFGLMixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480712306FD13007257C5 /* FFGLMixer.cpp */; };
+		652480A72306FD14007257C5 /* FFGLParamBool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480762306FD14007257C5 /* FFGLParamBool.cpp */; };
+		652480A82306FD14007257C5 /* FFGLParamBool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480762306FD14007257C5 /* FFGLParamBool.cpp */; };
+		652480A92306FD14007257C5 /* FFGLParamBool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480762306FD14007257C5 /* FFGLParamBool.cpp */; };
+		652480AA2306FD14007257C5 /* FFGLParamBool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480762306FD14007257C5 /* FFGLParamBool.cpp */; };
+		652480AB2306FD14007257C5 /* FFGLParamTrigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480782306FD14007257C5 /* FFGLParamTrigger.cpp */; };
+		652480AC2306FD14007257C5 /* FFGLParamTrigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480782306FD14007257C5 /* FFGLParamTrigger.cpp */; };
+		652480AD2306FD14007257C5 /* FFGLParamTrigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480782306FD14007257C5 /* FFGLParamTrigger.cpp */; };
+		652480AE2306FD14007257C5 /* FFGLParamTrigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480782306FD14007257C5 /* FFGLParamTrigger.cpp */; };
+		652480AF2306FD14007257C5 /* FFGLAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480792306FD14007257C5 /* FFGLAudio.cpp */; };
+		652480B02306FD14007257C5 /* FFGLAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480792306FD14007257C5 /* FFGLAudio.cpp */; };
+		652480B12306FD14007257C5 /* FFGLAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480792306FD14007257C5 /* FFGLAudio.cpp */; };
+		652480B22306FD14007257C5 /* FFGLAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480792306FD14007257C5 /* FFGLAudio.cpp */; };
+		652480B32306FD14007257C5 /* FFGLParamEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807C2306FD14007257C5 /* FFGLParamEvent.cpp */; };
+		652480B42306FD14007257C5 /* FFGLParamEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807C2306FD14007257C5 /* FFGLParamEvent.cpp */; };
+		652480B52306FD14007257C5 /* FFGLParamEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807C2306FD14007257C5 /* FFGLParamEvent.cpp */; };
+		652480B62306FD14007257C5 /* FFGLParamEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807C2306FD14007257C5 /* FFGLParamEvent.cpp */; };
+		652480B72306FD14007257C5 /* FFGLParamOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807E2306FD14007257C5 /* FFGLParamOption.cpp */; };
+		652480B82306FD14007257C5 /* FFGLParamOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807E2306FD14007257C5 /* FFGLParamOption.cpp */; };
+		652480B92306FD14007257C5 /* FFGLParamOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807E2306FD14007257C5 /* FFGLParamOption.cpp */; };
+		652480BA2306FD14007257C5 /* FFGLParamOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807E2306FD14007257C5 /* FFGLParamOption.cpp */; };
 		D69416C91B904EA200D30319 /* AddSubtract.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69416A11B90436100D30319 /* AddSubtract.cpp */; };
 		DB4B641C1FF84E8E0069DA80 /* FFGLGradients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB4B63E31FF8455E0069DA80 /* FFGLGradients.cpp */; };
 		DB4B641D1FF84E910069DA80 /* Add.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB4B63E11FF8453A0069DA80 /* Add.cpp */; };
@@ -183,18 +223,37 @@
 		2FD1224818853D700009EBA8 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		2FD1225318853FFB0009EBA8 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2FD1226B188540470009EBA8 /* AddSubtract.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AddSubtract.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		4067B28422D34BC30087434C /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
-		4067B28522D34BC30087434C /* Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Source.cpp; sourceTree = "<group>"; };
-		4067B28622D34BC30087434C /* Params.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Params.h; sourceTree = "<group>"; };
-		4067B28722D34BC30087434C /* Plugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plugin.h; sourceTree = "<group>"; };
-		4067B28822D34BC30087434C /* Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Source.h; sourceTree = "<group>"; };
-		4067B28922D34BC30087434C /* Mixer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mixer.cpp; sourceTree = "<group>"; };
-		4067B28A22D34BC30087434C /* Audio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Audio.cpp; sourceTree = "<group>"; };
-		4067B28B22D34BC30087434C /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
-		4067B28C22D34BC30087434C /* Mixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mixer.h; sourceTree = "<group>"; };
-		4067B28D22D34BC30087434C /* Effect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Effect.cpp; sourceTree = "<group>"; };
-		4067B28E22D34BC30087434C /* Plugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Plugin.cpp; sourceTree = "<group>"; };
-		4067B28F22D34BC30087434C /* Effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Effect.h; sourceTree = "<group>"; };
+		6524805F2306FD13007257C5 /* FFGLSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLSource.cpp; sourceTree = "<group>"; };
+		652480602306FD13007257C5 /* FFGLParamTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLParamTrigger.h; sourceTree = "<group>"; };
+		652480612306FD13007257C5 /* FFGLParamFFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLParamFFT.cpp; sourceTree = "<group>"; };
+		652480622306FD13007257C5 /* FFGLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLUtils.h; sourceTree = "<group>"; };
+		652480632306FD13007257C5 /* FFGLAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLAudio.h; sourceTree = "<group>"; };
+		652480642306FD13007257C5 /* FFGLParamBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLParamBool.h; sourceTree = "<group>"; };
+		652480652306FD13007257C5 /* FFGLEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLEffect.cpp; sourceTree = "<group>"; };
+		652480662306FD13007257C5 /* FFGLRandom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLRandom.cpp; sourceTree = "<group>"; };
+		652480672306FD13007257C5 /* FFGLSmoothValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLSmoothValue.cpp; sourceTree = "<group>"; };
+		652480682306FD13007257C5 /* FFGLParamFFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLParamFFT.h; sourceTree = "<group>"; };
+		652480692306FD13007257C5 /* FFGLParam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLParam.cpp; sourceTree = "<group>"; };
+		6524806A2306FD13007257C5 /* FFGLRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLRandom.h; sourceTree = "<group>"; };
+		6524806B2306FD13007257C5 /* FFGLSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLSource.h; sourceTree = "<group>"; };
+		6524806C2306FD13007257C5 /* FFGLParamText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLParamText.cpp; sourceTree = "<group>"; };
+		6524806D2306FD13007257C5 /* FFGLEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLEffect.h; sourceTree = "<group>"; };
+		6524806F2306FD13007257C5 /* FFGLParamRange.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLParamRange.cpp; sourceTree = "<group>"; };
+		652480702306FD13007257C5 /* FFGLPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLPlugin.cpp; sourceTree = "<group>"; };
+		652480712306FD13007257C5 /* FFGLMixer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLMixer.cpp; sourceTree = "<group>"; };
+		652480722306FD13007257C5 /* FFGLParamOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLParamOption.h; sourceTree = "<group>"; };
+		652480732306FD13007257C5 /* FFGLParamText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLParamText.h; sourceTree = "<group>"; };
+		652480742306FD14007257C5 /* FFGLParamEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLParamEvent.h; sourceTree = "<group>"; };
+		652480752306FD14007257C5 /* FFGLSmoothValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLSmoothValue.h; sourceTree = "<group>"; };
+		652480762306FD14007257C5 /* FFGLParamBool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLParamBool.cpp; sourceTree = "<group>"; };
+		652480772306FD14007257C5 /* FFGLParamRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLParamRange.h; sourceTree = "<group>"; };
+		652480782306FD14007257C5 /* FFGLParamTrigger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLParamTrigger.cpp; sourceTree = "<group>"; };
+		652480792306FD14007257C5 /* FFGLAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLAudio.cpp; sourceTree = "<group>"; };
+		6524807A2306FD14007257C5 /* FFGLParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLParam.h; sourceTree = "<group>"; };
+		6524807B2306FD14007257C5 /* FFGLMixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLMixer.h; sourceTree = "<group>"; };
+		6524807C2306FD14007257C5 /* FFGLParamEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLParamEvent.cpp; sourceTree = "<group>"; };
+		6524807D2306FD14007257C5 /* FFGLPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLPlugin.h; sourceTree = "<group>"; };
+		6524807E2306FD14007257C5 /* FFGLParamOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLParamOption.cpp; sourceTree = "<group>"; };
 		A9F28D5818B37D0C007D7C87 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A9F28D5A18B37D12007D7C87 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		A9F92EA9201A1C1500527E48 /* Particles.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Particles.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -333,18 +392,37 @@
 		4067B28322D34BC30087434C /* ffglquickstart */ = {
 			isa = PBXGroup;
 			children = (
-				4067B28422D34BC30087434C /* Utils.h */,
-				4067B28522D34BC30087434C /* Source.cpp */,
-				4067B28622D34BC30087434C /* Params.h */,
-				4067B28722D34BC30087434C /* Plugin.h */,
-				4067B28822D34BC30087434C /* Source.h */,
-				4067B28922D34BC30087434C /* Mixer.cpp */,
-				4067B28A22D34BC30087434C /* Audio.cpp */,
-				4067B28B22D34BC30087434C /* Audio.h */,
-				4067B28C22D34BC30087434C /* Mixer.h */,
-				4067B28D22D34BC30087434C /* Effect.cpp */,
-				4067B28E22D34BC30087434C /* Plugin.cpp */,
-				4067B28F22D34BC30087434C /* Effect.h */,
+				652480792306FD14007257C5 /* FFGLAudio.cpp */,
+				652480632306FD13007257C5 /* FFGLAudio.h */,
+				652480652306FD13007257C5 /* FFGLEffect.cpp */,
+				6524806D2306FD13007257C5 /* FFGLEffect.h */,
+				652480712306FD13007257C5 /* FFGLMixer.cpp */,
+				6524807B2306FD14007257C5 /* FFGLMixer.h */,
+				652480692306FD13007257C5 /* FFGLParam.cpp */,
+				6524807A2306FD14007257C5 /* FFGLParam.h */,
+				652480762306FD14007257C5 /* FFGLParamBool.cpp */,
+				652480642306FD13007257C5 /* FFGLParamBool.h */,
+				6524807C2306FD14007257C5 /* FFGLParamEvent.cpp */,
+				652480742306FD14007257C5 /* FFGLParamEvent.h */,
+				652480612306FD13007257C5 /* FFGLParamFFT.cpp */,
+				652480682306FD13007257C5 /* FFGLParamFFT.h */,
+				6524807E2306FD14007257C5 /* FFGLParamOption.cpp */,
+				652480722306FD13007257C5 /* FFGLParamOption.h */,
+				6524806F2306FD13007257C5 /* FFGLParamRange.cpp */,
+				652480772306FD14007257C5 /* FFGLParamRange.h */,
+				6524806C2306FD13007257C5 /* FFGLParamText.cpp */,
+				652480732306FD13007257C5 /* FFGLParamText.h */,
+				652480782306FD14007257C5 /* FFGLParamTrigger.cpp */,
+				652480602306FD13007257C5 /* FFGLParamTrigger.h */,
+				652480702306FD13007257C5 /* FFGLPlugin.cpp */,
+				6524807D2306FD14007257C5 /* FFGLPlugin.h */,
+				652480662306FD13007257C5 /* FFGLRandom.cpp */,
+				6524806A2306FD13007257C5 /* FFGLRandom.h */,
+				652480672306FD13007257C5 /* FFGLSmoothValue.cpp */,
+				652480752306FD14007257C5 /* FFGLSmoothValue.h */,
+				6524805F2306FD13007257C5 /* FFGLSource.cpp */,
+				6524806B2306FD13007257C5 /* FFGLSource.h */,
+				652480622306FD13007257C5 /* FFGLUtils.h */,
 			);
 			name = ffglquickstart;
 			path = ../../source/lib/ffglquickstart;
@@ -605,26 +683,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				652480842306FD14007257C5 /* FFGLParamFFT.cpp in Sources */,
+				652480B82306FD14007257C5 /* FFGLParamOption.cpp in Sources */,
 				1B2708ED21635F83002B8B05 /* FFGLUtilities.cpp in Sources */,
 				1B2708C221635F6E002B8B05 /* FFGLPluginManager.cpp in Sources */,
-				4067B29922D34BC30087434C /* Audio.cpp in Sources */,
 				1B2708F921635F83002B8B05 /* FFGLScopedBufferBinding.cpp in Sources */,
-				4067B29522D34BC30087434C /* Mixer.cpp in Sources */,
 				1B27090121635F83002B8B05 /* FFGLScopedShaderBinding.cpp in Sources */,
+				652480A02306FD14007257C5 /* FFGLPlugin.cpp in Sources */,
 				1B2708C621635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
 				1B2708CA21635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
 				1B2708BE21635F6E002B8B05 /* FFGL.cpp in Sources */,
+				652480B42306FD14007257C5 /* FFGLParamEvent.cpp in Sources */,
+				6524808C2306FD14007257C5 /* FFGLRandom.cpp in Sources */,
 				1B2708F121635F83002B8B05 /* FFGLScreenQuad.cpp in Sources */,
+				652480902306FD14007257C5 /* FFGLSmoothValue.cpp in Sources */,
+				6524809C2306FD14007257C5 /* FFGLParamRange.cpp in Sources */,
 				1B2708FD21635F83002B8B05 /* FFGLFBO.cpp in Sources */,
+				652480942306FD14007257C5 /* FFGLParam.cpp in Sources */,
+				652480A42306FD14007257C5 /* FFGLMixer.cpp in Sources */,
 				1B2708CE21635F6E002B8B05 /* FFGLPluginSDK.cpp in Sources */,
 				1B2708E521635F83002B8B05 /* FFGLScopedSamplerActivation.cpp in Sources */,
+				652480982306FD14007257C5 /* FFGLParamText.cpp in Sources */,
+				652480B02306FD14007257C5 /* FFGLAudio.cpp in Sources */,
 				1B2708F521635F83002B8B05 /* FFGLScopedVAOBinding.cpp in Sources */,
-				4067B29122D34BC30087434C /* Source.cpp in Sources */,
+				652480A82306FD14007257C5 /* FFGLParamBool.cpp in Sources */,
+				652480AC2306FD14007257C5 /* FFGLParamTrigger.cpp in Sources */,
 				1B2708E921635F83002B8B05 /* FFGLScopedTextureBinding.cpp in Sources */,
 				D69416C91B904EA200D30319 /* AddSubtract.cpp in Sources */,
+				652480882306FD14007257C5 /* FFGLEffect.cpp in Sources */,
 				1B27090521635F83002B8B05 /* FFGLShader.cpp in Sources */,
-				4067B2A122D34BC30087434C /* Plugin.cpp in Sources */,
-				4067B29D22D34BC30087434C /* Effect.cpp in Sources */,
+				652480802306FD14007257C5 /* FFGLSource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,26 +721,36 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B2708C821635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
+				652480A22306FD14007257C5 /* FFGLPlugin.cpp in Sources */,
+				652480822306FD14007257C5 /* FFGLSource.cpp in Sources */,
 				1B27090321635F83002B8B05 /* FFGLScopedShaderBinding.cpp in Sources */,
-				4067B2A322D34BC30087434C /* Plugin.cpp in Sources */,
 				1B2708C021635F6E002B8B05 /* FFGL.cpp in Sources */,
+				652480B22306FD14007257C5 /* FFGLAudio.cpp in Sources */,
+				652480AE2306FD14007257C5 /* FFGLParamTrigger.cpp in Sources */,
 				1B2708FF21635F83002B8B05 /* FFGLFBO.cpp in Sources */,
-				4067B29B22D34BC30087434C /* Audio.cpp in Sources */,
+				652480AA2306FD14007257C5 /* FFGLParamBool.cpp in Sources */,
 				1B2708C421635F6E002B8B05 /* FFGLPluginManager.cpp in Sources */,
 				1B2708E721635F83002B8B05 /* FFGLScopedSamplerActivation.cpp in Sources */,
+				6524809A2306FD14007257C5 /* FFGLParamText.cpp in Sources */,
 				1B2708D021635F6E002B8B05 /* FFGLPluginSDK.cpp in Sources */,
+				652480BA2306FD14007257C5 /* FFGLParamOption.cpp in Sources */,
 				1B27092021639CEC002B8B05 /* Constants.cpp in Sources */,
 				1B2708EF21635F83002B8B05 /* FFGLUtilities.cpp in Sources */,
+				652480922306FD14007257C5 /* FFGLSmoothValue.cpp in Sources */,
+				6524808E2306FD14007257C5 /* FFGLRandom.cpp in Sources */,
 				1B2708CC21635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
-				4067B29322D34BC30087434C /* Source.cpp in Sources */,
-				4067B29722D34BC30087434C /* Mixer.cpp in Sources */,
 				1B27090721635F83002B8B05 /* FFGLShader.cpp in Sources */,
+				652480962306FD14007257C5 /* FFGLParam.cpp in Sources */,
+				6524809E2306FD14007257C5 /* FFGLParamRange.cpp in Sources */,
+				652480862306FD14007257C5 /* FFGLParamFFT.cpp in Sources */,
 				1B2708F721635F83002B8B05 /* FFGLScopedVAOBinding.cpp in Sources */,
 				1B2708FB21635F83002B8B05 /* FFGLScopedBufferBinding.cpp in Sources */,
-				4067B29F22D34BC30087434C /* Effect.cpp in Sources */,
+				6524808A2306FD14007257C5 /* FFGLEffect.cpp in Sources */,
 				1B2708F321635F83002B8B05 /* FFGLScreenQuad.cpp in Sources */,
 				1B27092121639CEC002B8B05 /* GLResources.cpp in Sources */,
 				1B27092221639CEC002B8B05 /* Particles.cpp in Sources */,
+				652480B62306FD14007257C5 /* FFGLParamEvent.cpp in Sources */,
+				652480A62306FD14007257C5 /* FFGLMixer.cpp in Sources */,
 				1B2708EB21635F83002B8B05 /* FFGLScopedTextureBinding.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -661,26 +759,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				652480852306FD14007257C5 /* FFGLParamFFT.cpp in Sources */,
+				652480B92306FD14007257C5 /* FFGLParamOption.cpp in Sources */,
 				1B2708EE21635F83002B8B05 /* FFGLUtilities.cpp in Sources */,
 				1B2708C321635F6E002B8B05 /* FFGLPluginManager.cpp in Sources */,
-				4067B29A22D34BC30087434C /* Audio.cpp in Sources */,
 				1B2708FA21635F83002B8B05 /* FFGLScopedBufferBinding.cpp in Sources */,
-				4067B29622D34BC30087434C /* Mixer.cpp in Sources */,
 				1B27090221635F83002B8B05 /* FFGLScopedShaderBinding.cpp in Sources */,
+				652480A12306FD14007257C5 /* FFGLPlugin.cpp in Sources */,
 				1B2708C721635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
 				1B2708CB21635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
 				1B2708BF21635F6E002B8B05 /* FFGL.cpp in Sources */,
+				652480B52306FD14007257C5 /* FFGLParamEvent.cpp in Sources */,
+				6524808D2306FD14007257C5 /* FFGLRandom.cpp in Sources */,
 				1B2708F221635F83002B8B05 /* FFGLScreenQuad.cpp in Sources */,
+				652480912306FD14007257C5 /* FFGLSmoothValue.cpp in Sources */,
+				6524809D2306FD14007257C5 /* FFGLParamRange.cpp in Sources */,
 				1B2708FE21635F83002B8B05 /* FFGLFBO.cpp in Sources */,
+				652480952306FD14007257C5 /* FFGLParam.cpp in Sources */,
+				652480A52306FD14007257C5 /* FFGLMixer.cpp in Sources */,
 				1B2708CF21635F6E002B8B05 /* FFGLPluginSDK.cpp in Sources */,
 				1B2708E621635F83002B8B05 /* FFGLScopedSamplerActivation.cpp in Sources */,
+				652480992306FD14007257C5 /* FFGLParamText.cpp in Sources */,
+				652480B12306FD14007257C5 /* FFGLAudio.cpp in Sources */,
 				1B2708F621635F83002B8B05 /* FFGLScopedVAOBinding.cpp in Sources */,
-				4067B29222D34BC30087434C /* Source.cpp in Sources */,
+				652480A92306FD14007257C5 /* FFGLParamBool.cpp in Sources */,
+				652480AD2306FD14007257C5 /* FFGLParamTrigger.cpp in Sources */,
 				1B2708EA21635F83002B8B05 /* FFGLScopedTextureBinding.cpp in Sources */,
 				DB4B641D1FF84E910069DA80 /* Add.cpp in Sources */,
+				652480892306FD14007257C5 /* FFGLEffect.cpp in Sources */,
 				1B27090621635F83002B8B05 /* FFGLShader.cpp in Sources */,
-				4067B2A222D34BC30087434C /* Plugin.cpp in Sources */,
-				4067B29E22D34BC30087434C /* Effect.cpp in Sources */,
+				652480812306FD14007257C5 /* FFGLSource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -688,26 +796,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				652480832306FD14007257C5 /* FFGLParamFFT.cpp in Sources */,
+				652480B72306FD14007257C5 /* FFGLParamOption.cpp in Sources */,
 				1B2708EC21635F83002B8B05 /* FFGLUtilities.cpp in Sources */,
 				1B2708C121635F6E002B8B05 /* FFGLPluginManager.cpp in Sources */,
-				4067B29822D34BC30087434C /* Audio.cpp in Sources */,
 				1B2708F821635F83002B8B05 /* FFGLScopedBufferBinding.cpp in Sources */,
-				4067B29422D34BC30087434C /* Mixer.cpp in Sources */,
 				1B27090021635F83002B8B05 /* FFGLScopedShaderBinding.cpp in Sources */,
+				6524809F2306FD14007257C5 /* FFGLPlugin.cpp in Sources */,
 				1B2708C521635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
 				1B2708C921635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
 				1B2708BD21635F6E002B8B05 /* FFGL.cpp in Sources */,
+				652480B32306FD14007257C5 /* FFGLParamEvent.cpp in Sources */,
+				6524808B2306FD14007257C5 /* FFGLRandom.cpp in Sources */,
 				1B2708F021635F83002B8B05 /* FFGLScreenQuad.cpp in Sources */,
+				6524808F2306FD14007257C5 /* FFGLSmoothValue.cpp in Sources */,
+				6524809B2306FD14007257C5 /* FFGLParamRange.cpp in Sources */,
 				1B2708FC21635F83002B8B05 /* FFGLFBO.cpp in Sources */,
+				652480932306FD14007257C5 /* FFGLParam.cpp in Sources */,
+				652480A32306FD14007257C5 /* FFGLMixer.cpp in Sources */,
 				1B2708CD21635F6E002B8B05 /* FFGLPluginSDK.cpp in Sources */,
 				1B2708E421635F83002B8B05 /* FFGLScopedSamplerActivation.cpp in Sources */,
+				652480972306FD14007257C5 /* FFGLParamText.cpp in Sources */,
+				652480AF2306FD14007257C5 /* FFGLAudio.cpp in Sources */,
 				1B2708F421635F83002B8B05 /* FFGLScopedVAOBinding.cpp in Sources */,
-				4067B29022D34BC30087434C /* Source.cpp in Sources */,
+				652480A72306FD14007257C5 /* FFGLParamBool.cpp in Sources */,
+				652480AB2306FD14007257C5 /* FFGLParamTrigger.cpp in Sources */,
 				1B2708E821635F83002B8B05 /* FFGLScopedTextureBinding.cpp in Sources */,
 				DB4B641C1FF84E8E0069DA80 /* FFGLGradients.cpp in Sources */,
+				652480872306FD14007257C5 /* FFGLEffect.cpp in Sources */,
 				1B27090421635F83002B8B05 /* FFGLShader.cpp in Sources */,
-				4067B2A022D34BC30087434C /* Plugin.cpp in Sources */,
-				4067B29C22D34BC30087434C /* Effect.cpp in Sources */,
+				6524807F2306FD14007257C5 /* FFGLSource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
