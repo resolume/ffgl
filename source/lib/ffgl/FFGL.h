@@ -98,7 +98,7 @@
 #define NOCOLOR
 #define NOCTLMGR
 #define NODRAWTEXT
-#define NOGDI
+//#define NOGDI        //We need wingdi because it defines wglGetProcAddress
 #define NOKERNEL
 #define NOUSER
 #define NONLS
@@ -129,7 +129,6 @@
 #define NOVIRTUALKEYCODES
 #define NOWH
 #define NODESKTOP
-#define NOGDI
 #define NOWINDOWSTATION
 #define NOSECURITY
 #define NOMSG
@@ -172,9 +171,6 @@
 #define NOMSG
 #define NOHELP
 #define NOSYSPARAMSINFO
-#define NOGDI
-#define NOGDI
-#define NOGDI
 #define NOWINABLE
 #define NO_STATE_FLAGS
 #include <windows.h>
@@ -196,7 +192,7 @@
 #undef NOCOLOR
 #undef NOCTLMGR
 #undef NODRAWTEXT
-#undef NOGDI
+//#undef NOGDI
 #undef NOKERNEL
 #undef NOUSER
 #undef NONLS
@@ -226,7 +222,6 @@
 #undef NOVIRTUALKEYCODES
 #undef NOWH
 #undef NODESKTOP
-#undef NOGDI
 #undef NOWINDOWSTATION
 #undef NOSECURITY
 #undef NOMSG
@@ -269,9 +264,6 @@
 #undef NOMSG
 #undef NOHELP
 #undef NOSYSPARAMSINFO
-#undef NOGDI
-#undef NOGDI
-#undef NOGDI
 #undef NOWINABLE
 #undef NO_STATE_FLAGS
 typedef unsigned __int16 FFUInt16;
