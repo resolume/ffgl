@@ -3,11 +3,11 @@
 namespace ffglqs
 {
 
-std::shared_ptr< ParamOption > ParamOption::create( std::string name, std::vector< Option > options )
+std::shared_ptr< ParamOption > ParamOption::Create( std::string name, std::vector< Option > options )
 {
-	return create( name, std::move( options ), 0 );
+	return Create( name, std::move( options ), 0 );
 }
-std::shared_ptr< ParamOption > ParamOption::create( std::string name, std::vector< Option > options, int defaultOption )
+std::shared_ptr< ParamOption > ParamOption::Create( std::string name, std::vector< Option > options, int defaultOption )
 {
 	return std::make_shared< ParamOption >( name, std::move( options ), defaultOption );
 }
@@ -20,10 +20,10 @@ ParamOption::ParamOption( std::string name, std::vector< Option > options, int d
 	Param( name, FF_TYPE_OPTION, (float)defaultOption ),
 	options( std::move( options ) )
 {
-	setValue( (float)defaultOption );
+	SetValue( (float)defaultOption );
 }
 
-void ParamOption::setValue( float newValue )
+void ParamOption::SetValue( float newValue )
 {
 	size_t valueAsIndex = static_cast< size_t >( newValue );
 
@@ -35,12 +35,12 @@ void ParamOption::setValue( float newValue )
 	currentOption = options[ valueAsIndex ];
 }
 
-float ParamOption::getRealValue() const
+float ParamOption::GetRealValue() const
 {
 	return currentOption.value;
 }
 
-bool ParamOption::isCurrentOption( const std::string& optionName ) const
+bool ParamOption::IsCurrentOption( const std::string& optionName ) const
 {
 	return currentOption.name == optionName;
 }

@@ -3,11 +3,11 @@
 namespace ffglqs
 {
 
-std::shared_ptr< ParamFFT > ParamFFT::create( std::string name)
+std::shared_ptr< ParamFFT > ParamFFT::Create( std::string name)
 {
 	return std::make_shared< ParamFFT >( std::move( name ), DEFAULT_BUFFER_SIZE );
 }
-std::shared_ptr< ParamFFT > ParamFFT::create( std::string name, size_t size )
+std::shared_ptr< ParamFFT > ParamFFT::Create( std::string name, size_t size )
 {
 	return std::make_shared< ParamFFT >( std::move( name ), size );
 }

@@ -61,7 +61,7 @@ AddSubtract::AddSubtract()
 
 	//We declare that this plugin has a Brightness parameter which is a RGB param.
 	//The name here must match the one you declared in your fragment shader.
-	addRGBColorParam( "Brightness" );
+	AddRGBColorParam( "Brightness" );
 }
 AddSubtract::~AddSubtract()
 {
@@ -106,7 +106,7 @@ FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	shader.Set( "MaxUV", maxCoords.s, maxCoords.t );
 
 	//This takes care of sending all the parameter that the plugin registered to the shader.
-	sendParams( shader );
+	SendParams( shader );
 
 	quad.Draw();
 

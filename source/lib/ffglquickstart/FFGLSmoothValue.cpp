@@ -3,16 +3,16 @@
 namespace ffglqs
 {
 
-void SmoothValue::setSmoothness( float smooth )
+void SmoothValue::SetSmoothness( float smooth )
 {
 	smoothness = smooth;
 }
-void SmoothValue::update( float val )
+void SmoothValue::Update( float val )
 {
 	value *= smoothness;
 	value += ( 1 - smoothness ) * val;
 }
-float SmoothValue::getValue()
+float SmoothValue::GetValue()
 {
 	return value;
 }

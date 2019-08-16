@@ -13,13 +13,13 @@ public:
 	template< typename PluginType >
 	static PluginInstance createPlugin( PluginInfo infos );
 
-	virtual FFResult render( ProcessOpenGLStruct* pGL ) override;
+	virtual FFResult Render( ProcessOpenGLStruct* pGL ) override;
 };
 
 template< typename PluginType >
 inline PluginInstance Mixer::createPlugin( PluginInfo infos )
 {
-	return Plugin::createPlugin< PluginType >( infos, FF_MIXER );
+	return Plugin::CreatePlugin< PluginType >( infos, FF_MIXER );
 }
 
 }//End namespace ffglqs

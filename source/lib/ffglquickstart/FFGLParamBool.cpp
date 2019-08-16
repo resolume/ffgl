@@ -3,11 +3,11 @@
 namespace ffglqs
 {
 
-std::shared_ptr< ParamBool > ParamBool::create( std::string name )
+std::shared_ptr< ParamBool > ParamBool::Create( std::string name )
 {
-	return create( std::move( name ), false );
+	return Create( std::move( name ), false );
 }
-std::shared_ptr< ParamBool > ParamBool::create( std::string name, bool defaultValue )
+std::shared_ptr< ParamBool > ParamBool::Create( std::string name, bool defaultValue )
 {
 	return std::make_shared< ParamBool >( std::move( name ), defaultValue );
 }

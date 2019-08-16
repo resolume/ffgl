@@ -3,19 +3,19 @@
 namespace ffglqs
 {
 
-std::shared_ptr< Param > Param::create()
+std::shared_ptr< Param > Param::Create()
 {
-	return create( "" );
+	return Create( "" );
 }
-std::shared_ptr< Param > Param::create( std::string name )
+std::shared_ptr< Param > Param::Create( std::string name )
 {
-	return create( name, 0 );
+	return Create( name, 0 );
 }
-std::shared_ptr< Param > Param::create( std::string name, float value )
+std::shared_ptr< Param > Param::Create( std::string name, float value )
 {
-	return create( name, FF_TYPE_STANDARD, value );
+	return Create( name, FF_TYPE_STANDARD, value );
 }
-std::shared_ptr< Param > Param::create( std::string name, FFUInt32 type, float value )
+std::shared_ptr< Param > Param::Create( std::string name, FFUInt32 type, float value )
 {
 	return std::make_shared< Param >( name, type, value );
 }
@@ -39,20 +39,20 @@ Param::Param( std::string name, FFUInt32 type, float value ) :
 {
 }
 
-void Param::setValue( float v )
+void Param::SetValue( float v )
 {
 	value = v;
 }
 
-float Param::getValue() const
+float Param::GetValue() const
 {
 	return value;
 }
-const std::string& Param::getName() const
+const std::string& Param::GetName() const
 {
 	return name;
 }
-FFUInt32 Param::getType() const
+FFUInt32 Param::GetType() const
 {
 	return type;
 }

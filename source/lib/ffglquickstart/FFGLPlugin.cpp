@@ -19,7 +19,7 @@ Plugin::~Plugin()
 
 FFResult Plugin::InitGL( const FFGLViewportStruct* viewPort )
 {
-	std::string fragmentShaderCode = createFragmentShader( fragmentShaderBase );
+	std::string fragmentShaderCode = CreateFragmentShader( fragmentShaderBase );
 	if( !shader.Compile( vertexShaderCode, fragmentShaderCode ) )
 	{
 		DeInitGL();
@@ -30,7 +30,7 @@ FFResult Plugin::InitGL( const FFGLViewportStruct* viewPort )
 		DeInitGL();
 		return FF_FAIL;
 	}
-	if( init() == FF_FAIL )
+	if( Init() == FF_FAIL )
 	{
 		DeInitGL();
 		return FF_FAIL;
@@ -41,13 +41,13 @@ FFResult Plugin::InitGL( const FFGLViewportStruct* viewPort )
 
 FFResult Plugin::ProcessOpenGL( ProcessOpenGLStruct* inputTextures )
 {
-	updateAudioAndTime();
+	UpdateAudioAndTime();
 	//Activate our shader using the scoped binding so that we'll restore the context state when we're done.
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );
-	sendDefaultParams( shader );
-	sendParams( shader );
-	update();
-	FFResult result = render( inputTextures );
+	SendDefaultParams( shader );
+	SendParams( shader );
+	Update();
+	FFResult result = Render( inputTextures );
 	consumeAllTrigger();
 
 	return result;
@@ -57,11 +57,11 @@ FFResult Plugin::DeInitGL()
 {
 	shader.FreeGLResources();
 	quad.Release();
-	clean();
+	Clean();
 	return FF_SUCCESS;
 }
 
-FFResult Plugin::render( ProcessOpenGLStruct* inputTextures )
+FFResult Plugin::Render( ProcessOpenGLStruct* inputTextures )
 {
 	//Activate our shader using the scoped binding so that we'll restore the context state when we're done.
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );
@@ -69,29 +69,29 @@ FFResult Plugin::render( ProcessOpenGLStruct* inputTextures )
 	return FF_SUCCESS;
 }
 
-std::string Plugin::createFragmentShader( std::string base )
+std::string Plugin::CreateFragmentShader( std::string base )
 {
 	std::string fragmentShaderCode = fragmentShaderCodeStart;
 	int i                          = 0;
 	while( i < params.size() )
 	{
-		if( isRGBColor( i ) )
+		if( IsRGBColor( i ) )
 		{
-			fragmentShaderCode += "uniform vec3 " + params[ i ]->getName() + ";\n";
+			fragmentShaderCode += "uniform vec3 " + params[ i ]->GetName() + ";\n";
 			i += 2;
 		}
-		else if( isHueColor( i ) )
+		else if( IsHueColor( i ) )
 		{
-			fragmentShaderCode += "uniform vec4 " + params[ i ]->getName() + ";\n";
+			fragmentShaderCode += "uniform vec4 " + params[ i ]->GetName() + ";\n";
 			i += 3;
 		}
-		else if( params[ i ]->getType() == FF_TYPE_BOOLEAN || params[ i ]->getType() == FF_TYPE_EVENT )
+		else if( params[ i ]->GetType() == FF_TYPE_BOOLEAN || params[ i ]->GetType() == FF_TYPE_EVENT )
 		{
-			fragmentShaderCode += "uniform bool " + params[ i ]->getName() + ";\n";
+			fragmentShaderCode += "uniform bool " + params[ i ]->GetName() + ";\n";
 		}
-		else if( params[ i ]->getType() != FF_TYPE_BUFFER )
+		else if( params[ i ]->GetType() != FF_TYPE_BUFFER )
 		{
-			fragmentShaderCode += "uniform float " + params[ i ]->getName() + ";\n";
+			fragmentShaderCode += "uniform float " + params[ i ]->GetName() + ";\n";
 		}
 		i += 1;
 	}
@@ -105,7 +105,7 @@ std::string Plugin::createFragmentShader( std::string base )
 	return fragmentShaderCode;
 }
 
-void Plugin::updateAudioAndTime()
+void Plugin::UpdateAudioAndTime()
 {
 	// Update time and frame data
 	frame++;
@@ -121,11 +121,11 @@ void Plugin::updateAudioAndTime()
 		ParamInfo* fftInfo  = FindParamInfo( param->index );
 		for( size_t index = 0; index < param->fftData.size(); ++index )
 			param->fftData[ index ] = fftInfo->elements[ index ].value;
-		audioParams[ param ].update( param->fftData );
+		audioParams[ param ].Update( param->fftData );
 	}
 }
 
-void Plugin::sendParams( FFGLShader& shader )
+void Plugin::SendParams( FFGLShader& shader )
 {
 	// Clamp to edge is broken in Resolume right now so disable it
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER );
@@ -133,47 +133,47 @@ void Plugin::sendParams( FFGLShader& shader )
 	int i = 0;
 	while( i < params.size() )
 	{
-		if( isRGBColor( i ) )
+		if( IsRGBColor( i ) )
 		{
-			std::string name = params[ i ]->getName();
-			float r          = params[ i ]->getValue();
-			float g          = params[ i + 1 ]->getValue();
-			float b          = params[ i + 2 ]->getValue();
+			std::string name = params[ i ]->GetName();
+			float r          = params[ i ]->GetValue();
+			float g          = params[ i + 1 ]->GetValue();
+			float b          = params[ i + 2 ]->GetValue();
 			shader.Set( name.c_str(), r, g, b );
 			i += 2;
 		}
-		else if( isHueColor( i ) )
+		else if( IsHueColor( i ) )
 		{
 			float rgb[ 3 ];
-			std::string name = params[ i ]->getName();
-			float hue        = params[ i ]->getValue();
-			float saturation = params[ i + 1 ]->getValue();
-			float brightness = params[ i + 2 ]->getValue();
-			float alpha      = params[ i + 3 ]->getValue();
+			std::string name = params[ i ]->GetName();
+			float hue        = params[ i ]->GetValue();
+			float saturation = params[ i + 1 ]->GetValue();
+			float brightness = params[ i + 2 ]->GetValue();
+			float alpha      = params[ i + 3 ]->GetValue();
 			//we need to make sure the hue doesn't reach 1.0f, otherwise the result will be pink and not red how it should be
 			hue = ( hue == 1.0f ) ? 0.0f : hue;
 			HSVtoRGB( hue, saturation, brightness, rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] );
 			shader.Set( name.c_str(), rgb[ 0 ], rgb[ 1 ], rgb[ 2 ], alpha );
 			i += 3;
 		}
-		if( params[ i ]->getType() == FF_TYPE_BOOLEAN || params[ i ]->getType() == FF_TYPE_EVENT )
+		if( params[ i ]->GetType() == FF_TYPE_BOOLEAN || params[ i ]->GetType() == FF_TYPE_EVENT )
 		{
-			std::string name = params[ i ]->getName();
-			shader.Set( name.c_str(), (bool)params[ i ]->getValue() );
+			std::string name = params[ i ]->GetName();
+			shader.Set( name.c_str(), (bool)params[ i ]->GetValue() );
 		}
-		else if( params[ i ]->getType() != FF_TYPE_BUFFER )
+		else if( params[ i ]->GetType() != FF_TYPE_BUFFER )
 		{
 			auto range       = std::dynamic_pointer_cast< ParamRange >( params[ i ] );
-			bool isInteger   = params[ i ]->getType() == FF_TYPE_INTEGER;
-			std::string name = params[ i ]->getName();
-			float value      = range && !isInteger ? range->getRealValue() : params[ i ]->getValue();
+			bool isInteger   = params[ i ]->GetType() == FF_TYPE_INTEGER;
+			std::string name = params[ i ]->GetName();
+			float value      = range && !isInteger ? range->GetRealValue() : params[ i ]->GetValue();
 			shader.Set( name.c_str(), value );
 		}
 		i += 1;
 	}
 }
 
-void Plugin::sendDefaultParams( ffglex::FFGLShader& shader )
+void Plugin::SendDefaultParams( ffglex::FFGLShader& shader )
 {
 	shader.Set( "time", timeNow );
 	shader.Set( "deltaTime", deltaTime );
@@ -186,12 +186,12 @@ void Plugin::sendDefaultParams( ffglex::FFGLShader& shader )
 char* Plugin::GetParameterDisplay( unsigned int index )
 {
 	bool inRange = 0 <= index && index < params.size();
-	bool valid   = params[ index ]->getType() != FF_TYPE_TEXT && params[ index ]->getType() != FF_TYPE_TEXT;
+	bool valid   = params[ index ]->GetType() != FF_TYPE_TEXT && params[ index ]->GetType() != FF_TYPE_TEXT;
 	if( inRange && valid )
 	{
 		static char displayValueBuffer[ 16 ];
 		auto range              = std::dynamic_pointer_cast< ParamRange >( params[ index ] );
-		float value             = range ? range->getRealValue() : params[ index ]->getValue();
+		float value             = range ? range->GetRealValue() : params[ index ]->GetValue();
 		std::string stringValue = std::to_string( value );
 		memset( displayValueBuffer, 0, sizeof( displayValueBuffer ) );
 		memcpy( displayValueBuffer, stringValue.c_str(), std::min( sizeof( displayValueBuffer ), stringValue.length() ) );
@@ -207,7 +207,7 @@ FFResult Plugin::SetFloatParameter( unsigned int index, float value )
 {
 	if( index < params.size() )
 	{
-		params[ index ]->setValue( value );
+		params[ index ]->SetValue( value );
 		return FF_SUCCESS;
 	}
 	else
@@ -220,7 +220,7 @@ float Plugin::GetFloatParameter( unsigned int index )
 {
 	if( 0 <= index && index < params.size() )
 	{
-		return params[ index ]->getValue();
+		return params[ index ]->GetValue();
 	}
 	else
 	{
@@ -261,34 +261,34 @@ void Plugin::SetSampleRate( unsigned int _sampleRate )
 	for( auto entry : audioParams )
 	{
 		std::shared_ptr< ParamFFT > param = entry.first;
-		audioParams[ param ].setSampleRate( _sampleRate );
+		audioParams[ param ].SetSampleRate( _sampleRate );
 	}
 }
 
-void Plugin::setFragmentShader( std::string base )
+void Plugin::SetFragmentShader( std::string base )
 {
 	fragmentShaderBase = base;
 }
 
-void Plugin::addParam( std::shared_ptr< Param > param )
+void Plugin::AddParam( std::shared_ptr< Param > param )
 {
 	unsigned int new_index = (unsigned int)params.size();
-	SetParamInfo( new_index, param->getName().c_str(), param->getType(), param->getValue() );
+	SetParamInfo( new_index, param->GetName().c_str(), param->GetType(), param->GetValue() );
 	params.push_back( param );
 }
 
-void Plugin::addParam( std::shared_ptr< ParamRange > param )
+void Plugin::AddParam( std::shared_ptr< ParamRange > param )
 {
 	unsigned int new_index = (unsigned int)params.size();
-	SetParamInfo( new_index, param->getName().c_str(), param->getType(), param->getValue() );
-	SetParamRange( new_index, param->getRange().min, param->getRange().max );
+	SetParamInfo( new_index, param->GetName().c_str(), param->GetType(), param->GetValue() );
+	SetParamRange( new_index, param->GetRange().min, param->GetRange().max );
 	params.push_back( param );
 }
 
-void Plugin::addParam( std::shared_ptr< ParamOption > param )
+void Plugin::AddParam( std::shared_ptr< ParamOption > param )
 {
 	unsigned int new_index = (unsigned int)params.size();
-	SetOptionParamInfo( new_index, param->getName().c_str(), (unsigned int)param->options.size(), param->getValue() );
+	SetOptionParamInfo( new_index, param->GetName().c_str(), (unsigned int)param->options.size(), param->GetValue() );
 
 	for( unsigned int i = 0; i < param->options.size(); i++ )
 	{
@@ -297,69 +297,69 @@ void Plugin::addParam( std::shared_ptr< ParamOption > param )
 	params.push_back( param );
 }
 
-void Plugin::addParam( std::shared_ptr< ParamFFT > param )
+void Plugin::AddParam( std::shared_ptr< ParamFFT > param )
 {
 	audioParams[ param ] = Audio();
 	param->index         = (unsigned int)params.size();
-	SetBufferParamInfo( param->index, param->getName().c_str(), static_cast< unsigned int >( param->fftData.size() ), FF_USAGE_FFT );
+	SetBufferParamInfo( param->index, param->GetName().c_str(), static_cast< unsigned int >( param->fftData.size() ), FF_USAGE_FFT );
 	params.push_back( param );
 }
 
-void Plugin::addHueColorParam( std::string name )
+void Plugin::AddHueColorParam( std::string name )
 {
-	addParam( Param::create( name, FF_TYPE_HUE, 0. ) );
-	addParam( Param::create( name + "_saturation", FF_TYPE_SATURATION, 0. ) );
-	addParam( Param::create( name + "_brighthness", FF_TYPE_BRIGHTNESS, 1.0 ) );
-	addParam( Param::create( name + "_alpha", FF_TYPE_ALPHA, 1.0 ) );
+	AddParam( Param::Create( name, FF_TYPE_HUE, 0. ) );
+	AddParam( Param::Create( name + "_saturation", FF_TYPE_SATURATION, 0. ) );
+	AddParam( Param::Create( name + "_brighthness", FF_TYPE_BRIGHTNESS, 1.0 ) );
+	AddParam( Param::Create( name + "_alpha", FF_TYPE_ALPHA, 1.0 ) );
 }
 
-void Plugin::addRGBColorParam( std::string name )
+void Plugin::AddRGBColorParam( std::string name )
 {
-	addParam( Param::create( name, FF_TYPE_RED, 0.5 ) );
-	addParam( Param::create( name + "_green", FF_TYPE_GREEN, 0.5 ) );
-	addParam( Param::create( name + "_blue", FF_TYPE_BLUE, 0.5 ) );
+	AddParam( Param::Create( name, FF_TYPE_RED, 0.5 ) );
+	AddParam( Param::Create( name + "_green", FF_TYPE_GREEN, 0.5 ) );
+	AddParam( Param::Create( name + "_blue", FF_TYPE_BLUE, 0.5 ) );
 }
 
-bool Plugin::isHueColor( int index )
+bool Plugin::IsHueColor( int index )
 {
 	bool enoughSpace = index + 3 < params.size();
 	if( !enoughSpace )
 		return false;
 	bool isColorType =
-		params[ index ]->getType() == FF_TYPE_HUE &&
-		params[ index + 1 ]->getType() == FF_TYPE_SATURATION &&
-		params[ index + 2 ]->getType() == FF_TYPE_BRIGHTNESS &&
-		params[ index + 3 ]->getType() == FF_TYPE_ALPHA;
+		params[ index ]->GetType() == FF_TYPE_HUE &&
+		params[ index + 1 ]->GetType() == FF_TYPE_SATURATION &&
+		params[ index + 2 ]->GetType() == FF_TYPE_BRIGHTNESS &&
+		params[ index + 3 ]->GetType() == FF_TYPE_ALPHA;
 
 	return isColorType;
 }
 
-bool Plugin::isRGBColor( int index )
+bool Plugin::IsRGBColor( int index )
 {
 	bool enoughSpace = index + 2 < params.size();
 	if( !enoughSpace )
 		return false;
 	bool isColorType =
-		params[ index ]->getType() == FF_TYPE_RED &&
-		params[ index + 1 ]->getType() == FF_TYPE_GREEN &&
-		params[ index + 2 ]->getType() == FF_TYPE_BLUE;
+		params[ index ]->GetType() == FF_TYPE_RED &&
+		params[ index + 1 ]->GetType() == FF_TYPE_GREEN &&
+		params[ index + 2 ]->GetType() == FF_TYPE_BLUE;
 
 	return isColorType;
 }
 
-std::shared_ptr< Param > Plugin::getParam( std::string name )
+std::shared_ptr< Param > Plugin::GetParam( std::string name )
 {
 	for( int i = 0; i < params.size(); i++ )
 	{
-		if( params[ i ]->getName().compare( name ) == 0 )
+		if( params[ i ]->GetName().compare( name ) == 0 )
 			return params[ i ];
 	}
 	return {};
 }
 
-std::shared_ptr< ParamOption > Plugin::getParamOption( std::string name )
+std::shared_ptr< ParamOption > Plugin::GetParamOption( std::string name )
 {
-	auto param = getParam( name );
+	auto param = GetParam( name );
 	if( !param )
 		return {};
 	auto option = std::dynamic_pointer_cast< ParamOption >( param );
@@ -368,9 +368,9 @@ std::shared_ptr< ParamOption > Plugin::getParamOption( std::string name )
 	return option;
 }
 
-std::shared_ptr< ParamText > Plugin::getParamText( std::string name )
+std::shared_ptr< ParamText > Plugin::GetParamText( std::string name )
 {
-	auto param = getParam( name );
+	auto param = GetParam( name );
 	if( !param )
 		return {};
 	auto text = std::dynamic_pointer_cast< ParamText >( param );
@@ -379,7 +379,7 @@ std::shared_ptr< ParamText > Plugin::getParamText( std::string name )
 	return text;
 }
 
-void Plugin::include( shader::snippet_id snippet )
+void Plugin::Include( shader::snippet_id snippet )
 {
 	if( includedSnippets.find( snippet ) != includedSnippets.end() )
 		return;
@@ -394,11 +394,11 @@ void Plugin::include( shader::snippet_id snippet )
 	}
 }
 
-void Plugin::include( std::set< shader::snippet_id > snippets )
+void Plugin::Include( std::set< shader::snippet_id > snippets )
 {
 	for( auto snippet : snippets )
 	{
-		include( snippet );
+		Include( snippet );
 	}
 }
 
@@ -409,7 +409,7 @@ void Plugin::consumeAllTrigger()
 		auto trigger = std::dynamic_pointer_cast< ParamTrigger >( params[ i ] );
 		if( trigger )
 		{
-			trigger->consume();
+			trigger->Consume();
 		}
 	}
 }

@@ -15,17 +15,17 @@ public:
 	};
 	std::vector< Option > options;
 
-	static std::shared_ptr< ParamOption > create( std::string name, std::vector< Option > options );
-	static std::shared_ptr< ParamOption > create( std::string name, std::vector< Option > options, int defaultOption );
+	static std::shared_ptr< ParamOption > Create( std::string name, std::vector< Option > options );
+	static std::shared_ptr< ParamOption > Create( std::string name, std::vector< Option > options, int defaultOption );
 
 	ParamOption( std::string name, std::vector< Option > options );
 	ParamOption( std::string name, std::vector< Option > options, int defaultOption );
 
-	void setValue( float newValue ) override;
+	void SetValue( float newValue ) override;
 
-	float getRealValue() const;
+	float GetRealValue() const;
 
-	bool isCurrentOption( const std::string& optionName ) const;
+	bool IsCurrentOption( const std::string& optionName ) const;
 
 private:
 	Option currentOption;

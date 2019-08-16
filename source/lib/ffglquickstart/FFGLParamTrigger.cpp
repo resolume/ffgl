@@ -13,7 +13,7 @@ ParamTrigger::ParamTrigger( std::string name ) :
 {
 }
 
-void ParamTrigger::consume()
+void ParamTrigger::Consume()
 {
 	value = false;
 }

@@ -11,7 +11,7 @@ public:
 
 	ParamTrigger( std::string name );
 
-	void consume();
+	void Consume();
 };
 
 }//End namespace ffglqs

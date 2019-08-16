@@ -8,13 +8,12 @@ Random::Random() :
 {
 }
 
-int Random::getRandomInt( int min, int max )
+int Random::GetRandomInt( int min, int max )
 {
 	std::uniform_int_distribution<> distribution( min, max );
 	return distribution( rng );
 }
-
-float Random::getRandomFloat( float min, float max )
+float Random::GetRandomFloat( float min, float max )
 {
 	std::uniform_real_distribution<> distribution( min, max );
 	return (float)distribution( rng );

@@ -35,7 +35,7 @@ Effect::~Effect()
 {
 }
 
-FFResult Effect::render( ProcessOpenGLStruct* inputTextures )
+FFResult Effect::Render( ProcessOpenGLStruct* inputTextures )
 {
 	if( inputTextures->numInputTextures < 1 )
 		return FF_FAIL;

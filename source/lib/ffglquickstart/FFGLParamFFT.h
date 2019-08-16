@@ -8,8 +8,8 @@ namespace ffglqs
 class ParamFFT : public Param
 {
 public:
-	static std::shared_ptr< ParamFFT > create( std::string name );
-	static std::shared_ptr< ParamFFT > create( std::string name, size_t size );
+	static std::shared_ptr< ParamFFT > Create( std::string name );
+	static std::shared_ptr< ParamFFT > Create( std::string name, size_t size );
 
 	ParamFFT( std::string name, size_t size );
 

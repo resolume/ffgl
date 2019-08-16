@@ -13,7 +13,7 @@ Audio::~Audio()
 {
 }
 
-void Audio::update( std::vector< float > _fft )
+void Audio::Update( std::vector< float > _fft )
 {
 	fft                   = std::move( _fft );
 	float currentVolStore = 0;
@@ -49,47 +49,47 @@ void Audio::update( std::vector< float > _fft )
 	}
 	currentVolStore /= (float)fft.size();
 	currentVolStore = sqrt( currentVolStore );
-	vol.update( currentVolStore );
+	vol.Update( currentVolStore );
 
 	bassStore /= bassCount;
 	bassStore = sqrt( bassStore );
-	bass.update( bassStore );
+	bass.Update( bassStore );
 
 	medStore /= medCount;
 	medStore = sqrt( medStore );
-	med.update( medStore );
+	med.Update( medStore );
 
 	highStore /= highCount;
 	highStore = sqrt( highStore );
-	high.update( highStore );
+	high.Update( highStore );
 }
 
-float Audio::getVolume()
+float Audio::GetVolume()
 {
-	return vol.getValue();
+	return vol.GetValue();
 }
 
-float Audio::getBass()
+float Audio::GetBass()
 {
-	return bass.getValue();
+	return bass.GetValue();
 }
 
-float Audio::getMed()
+float Audio::GetMed()
 {
-	return med.getValue();
+	return med.GetValue();
 }
 
-float Audio::getHigh()
+float Audio::GetHigh()
 {
-	return high.getValue();
+	return high.GetValue();
 }
 
-float Audio::getVolumeFromTo( int fromFreq, int toFreq )
+float Audio::GetVolumeFromTo( int fromFreq, int toFreq )
 {
 	return 0.0f;
 }
 
-float Audio::toDb( float rms )
+float Audio::ToDB( float rms )
 {
 	float db = 20 * std::log10( rms );
 	db       = ffglex::map( db, -96, 0, 0, 1 );
@@ -98,22 +98,22 @@ float Audio::toDb( float rms )
 	return db;
 }
 
-void Audio::setSmoothness( float smoothness )
+void Audio::SetSmoothness( float smoothness )
 {
-	vol.setSmoothness( smoothness );
-	bass.setSmoothness( smoothness );
-	med.setSmoothness( smoothness );
-	high.setSmoothness( smoothness );
+	vol.SetSmoothness( smoothness );
+	bass.SetSmoothness( smoothness );
+	med.SetSmoothness( smoothness );
+	high.SetSmoothness( smoothness );
 }
 
-void Audio::setSampleRate( int _sampleRate )
+void Audio::SetSampleRate( int _sampleRate )
 {
 	sampleRate  = _sampleRate;
 	freqMax     = (float) sampleRate / 2.f;
 	freqBinStep = freqMax / fft.size();
 }
 
-void Audio::setGain( float _gain )
+void Audio::SetGain( float _gain )
 {
 	gain = pow( 10.f, _gain / 20.f );
 }

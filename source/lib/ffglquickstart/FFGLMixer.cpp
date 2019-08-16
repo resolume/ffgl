@@ -35,14 +35,14 @@ Mixer::Mixer()
 			i_uv_src = vUV * maxUVSrc;
 		}
 	)";
-	addParam( Param::create( "mixVal" ) );
+	AddParam( Param::Create( "mixVal" ) );
 }
 
 Mixer::~Mixer()
 {
 }
 
-FFResult Mixer::render( ProcessOpenGLStruct* inputTextures )
+FFResult Mixer::Render( ProcessOpenGLStruct* inputTextures )
 {
 	if( inputTextures->numInputTextures < 2 )
 		return FF_FAIL;

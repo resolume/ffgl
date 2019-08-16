@@ -8,9 +8,9 @@ class SmoothValue
 public:
 	SmoothValue() = default;
 
-	void setSmoothness( float smooth );
-	void update( float val );
-	float getValue();
+	void SetSmoothness( float smooth );
+	void Update( float val );
+	float GetValue();
 
 private:
 	float smoothness = 0.80f;

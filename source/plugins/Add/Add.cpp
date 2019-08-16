@@ -69,7 +69,7 @@ Add::Add()
 	// Parameters
 	// The name here must match the one you declared in your fragment shader.
 	// Resolume will look for a param named "Opacity" for mix value.
-	addParam( Param::create( "Opacity" ) );
+	AddParam( Param::Create( "Opacity" ) );
 }
 Add::~Add()
 {
@@ -120,7 +120,7 @@ FFResult Add::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	shader.Set( "MaxUVSrc", maxCoords.s, maxCoords.t );
 
 	//This takes care of sending all the parameter that the plugin registered to the shader.
-	sendParams( shader );
+	SendParams( shader );
 
 	//Apply our shader to the full screen quad.
 	quad.Draw();

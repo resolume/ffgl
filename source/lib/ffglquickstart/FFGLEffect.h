@@ -11,15 +11,15 @@ public:
 	~Effect();
 
 	template< typename PluginType >
-	static PluginInstance createPlugin( PluginInfo infos );
+	static PluginInstance CreatePlugin( PluginInfo infos );
 
-	virtual FFResult render( ProcessOpenGLStruct* pGL ) override;
+	virtual FFResult Render( ProcessOpenGLStruct* pGL ) override;
 };
 
 template< typename PluginType >
-inline PluginInstance Effect::createPlugin( PluginInfo infos )
+inline PluginInstance Effect::CreatePlugin( PluginInfo infos )
 {
-	return Plugin::createPlugin< PluginType >( infos, FF_EFFECT );
+	return Plugin::CreatePlugin< PluginType >( infos, FF_EFFECT );
 }
 
 }//End namespace ffglqs
