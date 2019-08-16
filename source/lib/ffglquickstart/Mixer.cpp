@@ -1,4 +1,6 @@
 #include "Mixer.h"
+#include "../ffglex/FFGLScopedSamplerActivation.h"
+#include "../ffglex/FFGLScopedTextureBinding.h"
 using namespace ffglex;
 
 Mixer::Mixer()

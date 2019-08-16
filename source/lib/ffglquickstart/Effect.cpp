@@ -1,4 +1,6 @@
 #include "Effect.h"
+#include "../ffglex/FFGLScopedSamplerActivation.h"
+#include "../ffglex/FFGLScopedTextureBinding.h"
 using namespace ffglex;
 
 Effect::Effect()

@@ -1,4 +1,5 @@
 #include "FFGLFBO.h"
+#include "FFGLScopedTextureBinding.h"
 
 namespace ffglex
 {
