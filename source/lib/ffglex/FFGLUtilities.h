@@ -165,6 +165,8 @@ void HSVtoRGB( double h, double s, double v, double* r, double* g, double* b );
 
 float random( float min, float max );
 float clamp01( float value );
+float clamp( float value, float low, float high );
+float map( float value, float low, float high, float newLow, float newHigh );
 
 void ReplaceAll( std::string& utf8String, const std::string& valueToReplace, const std::string& replaceWith );
 

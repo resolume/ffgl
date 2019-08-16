@@ -147,6 +147,15 @@ float clamp01( float value )
 {
 	return std::min( std::max( value, 0.0f ), 1.0f );
 }
+float clamp( float value, float low, float high )
+{
+	return std::max( std::min( value, high ), low );
+}
+float map( float value, float low, float high, float newLow, float newHigh )
+{
+	float res = newLow + ( value - low ) * ( newHigh - newLow ) / ( high - low );
+	return clamp( res, newLow, newHigh );
+}
 
 void ReplaceAll( std::string& utf8String, const std::string& valueToReplace, const std::string& replaceWith )
 {

@@ -2,7 +2,7 @@
 #include <FFGLSDK.h>
 #include <string>
 
-class Add : public Plugin
+class Add : public ffglqs::Plugin
 {
 public:
 	Add();

@@ -1,5 +1,6 @@
 #include "Add.h"
 using namespace ffglex;
+using namespace ffglqs;
 
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< Add >,                                                                        // Create method
