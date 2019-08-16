@@ -15,9 +15,6 @@ public:
 
 	unsigned int index;
 	std::vector< float > fftData;
-
-private:
-	static const int DEFAULT_BUFFER_SIZE = 2048;
 };
 
 }//End namespace ffglqs

@@ -3,6 +3,8 @@
 namespace ffglqs
 {
 
+static constexpr int DEFAULT_BUFFER_SIZE = 2048;
+
 std::shared_ptr< ParamFFT > ParamFFT::Create( std::string name)
 {
 	return std::make_shared< ParamFFT >( std::move( name ), DEFAULT_BUFFER_SIZE );

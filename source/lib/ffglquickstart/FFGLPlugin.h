@@ -10,7 +10,6 @@
 #include "../ffglex/FFGLUtilities.h"
 #include "../ffglex/FFGLScopedShaderBinding.h"
 #include "FFGLUtils.h"
-#include "FFGLParams.h"
 #include "FFGLAudio.h"
 #include "FFGLRandom.h"
 
