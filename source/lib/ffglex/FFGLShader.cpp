@@ -181,6 +181,27 @@ void FFGLShader::FreeGLResources()
 	}
 }
 
+void FFGLShader::Set( const char* name, float value )
+{
+	glUniform1f( FindUniform( name ), value );
+}
+void FFGLShader::Set( const char* name, float v1, float v2 )
+{
+	glUniform2f( FindUniform( name ), v1, v2 );
+}
+void FFGLShader::Set( const char* name, float v1, float v2, float v3 )
+{
+	glUniform3f( FindUniform( name ), v1, v2, v3 );
+}
+void FFGLShader::Set( const char* name, float v1, float v2, float v3, float v4 )
+{
+	glUniform4f( FindUniform( name ), v1, v2, v3, v4 );
+}
+void FFGLShader::Set( const char* name, int value )
+{
+	glUniform1i( FindUniform( name ), value );
+}
+
 /**
  * Whether or not previous complilation succeeded and this shader is ready to be used for rendering.
  */
@@ -188,10 +209,6 @@ bool FFGLShader::IsReady() const
 {
 	//The shaders themselves are optional, it's the program we're using when rendering with those shaders.
 	return programID != 0;
-}
-void FFGLShader::Use() const
-{
-	glUseProgram( programID );
 }
 /**
  * Gets the OpenGL ID that represents the linked shader program.
@@ -213,38 +230,6 @@ GLuint FFGLShader::GetGLID() const
 GLint FFGLShader::FindUniform( const char* name ) const
 {
 	return glGetUniformLocation( programID, name );
-}
-
-void FFGLShader::Set( const char* name, float value )
-{
-	glUniform1f( FindUniform( name ), value );
-}
-
-void FFGLShader::Set( const char* name, float v1, float v2 )
-{
-	glUniform2f( FindUniform( name ), v1, v2 );
-}
-
-void FFGLShader::Set( const char* name, float v1, float v2, float v3 )
-{
-	glUniform3f( FindUniform( name ), v1, v2, v3 );
-}
-
-void FFGLShader::Set( const char* name, float v1, float v2, float v3, float v4 )
-{
-	glUniform4f( FindUniform( name ), v1, v2, v3, v4 );
-}
-
-void FFGLShader::Set( const char* name, int value )
-{
-	glUniform1i( FindUniform( name ), value );
-}
-
-void FFGLShader::Bind( const char* name, int textureID, const FFGLTextureStruct& texture )
-{
-	Set( name, textureID );
-	glActiveTexture( GL_TEXTURE0 + textureID );
-	glBindTexture( GL_TEXTURE_2D, texture.Handle );
 }
 
 bool FFGLShader::CompileVertexShader( const char* vertexShader )
