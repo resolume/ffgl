@@ -3,6 +3,7 @@
 
 namespace ffglex
 {
+
 class FFGLFBO
 {
 public:

@@ -67,7 +67,7 @@ int FFGLFBO::BindAsRenderTarget()
 		glGenTextures( 1, &m_glTextureHandle );
 
 		//bind it for some initialization
-		glBindTexture( GL_TEXTURE_2D, m_glTextureHandle );
+		Scoped2DTextureBinding textureBinding( m_glTextureHandle );
 
 		//this only works if the FBO pixel format
 		//is GL_RGBA8. other FBO pixel formats have to
@@ -106,6 +106,8 @@ int FFGLFBO::BindAsRenderTarget()
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER );
 		//glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
 		//glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+
+		textureBinding.EndScope();
 
 		//attach our texture to the FBO
 		glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_glTextureHandle, 0 );
