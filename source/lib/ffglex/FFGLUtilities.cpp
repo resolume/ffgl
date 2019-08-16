@@ -139,16 +139,6 @@ void HSVtoRGB( double h, double s, double v, double* r, double* g, double* b )
 	}
 }
 
-void resetOpenGLState()
-{
-	glBindVertexArray( 0 );
-	glBindTexture( GL_TEXTURE_2D , 0 );
-	glActiveTexture( GL_TEXTURE0 );
-	glUseProgram( 0 );
-	glBindBuffer( GL_ARRAY_BUFFER, 0 );
-}
-
-
 float random( float min, float max )
 {
 	return min + ( rand() / ( RAND_MAX / ( max - min ) ) );

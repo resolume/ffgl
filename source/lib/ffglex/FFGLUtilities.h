@@ -164,8 +164,6 @@ float getTicks();
 void HSVtoRGB( float h, float s, float v, float& r, float& g, float& b );
 void HSVtoRGB( double h, double s, double v, double* r, double* g, double* b );
 
-void resetOpenGLState();
-
 float random( float min, float max );
 float clamp01( float value );
 
