@@ -9,7 +9,7 @@ using namespace ffglex;
 
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< FFGLCinder >,// Create method
-	"RS02",                        // Plugin unique ID
+	"RS03",                        // Plugin unique ID
 	"LinCinder Example",            // Plugin name
 	2,                             // API major version number
 	0,                             // API minor version number
