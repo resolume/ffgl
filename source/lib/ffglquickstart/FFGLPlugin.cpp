@@ -127,9 +127,6 @@ void Plugin::UpdateAudioAndTime()
 
 void Plugin::SendParams( FFGLShader& shader )
 {
-	// Clamp to edge is broken in Resolume right now so disable it
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER );
 	int i = 0;
 	while( i < params.size() )
 	{
