@@ -15,3 +15,4 @@ Add						RM01
 Fireworks				OFPX
 Gradients               RS01
 Particles Example       RS02
+CustomThumbnail         RS03

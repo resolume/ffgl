@@ -66,6 +66,10 @@
 //  which the host can then use to fill that buffer with the requested data. This can be used by plugins to
 //  access the host's global fft data for example.
 //
+// FFGL 2.1 by Menno Vink (menno@resolume.com)
+// www.resolume.com
+// -Added support for embedded thumbnails.
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef __FFGL2_H__
@@ -268,6 +272,7 @@
 #undef NO_STATE_FLAGS
 typedef unsigned __int16 FFUInt16;
 typedef unsigned __int32 FFUInt32;
+typedef unsigned __int64 FFUInt64;
 #else
 #if defined( TARGET_OS_MAC )
 #include <OpenGL/gl3.h>
@@ -284,6 +289,7 @@ extern "C" {
 
 typedef uint16_t FFUInt16;
 typedef uint32_t FFUInt32;
+typedef uint64_t FFUInt64;
 #endif
 
 // Function codes
@@ -317,7 +323,7 @@ static const FFUInt32 FF_SET_BEATINFO                  = 38;
 static const FFUInt32 FF_SET_HOSTINFO                  = 39;
 static const FFUInt32 FF_SET_SAMPLERATE                = 40;
 static const FFUInt32 FF_GET_RANGE                     = 41;
-
+static const FFUInt32 FF_GET_THUMBNAIL                 = 42;
 
 //Previously used function codes that are no longer in use. Should prevent using
 //these numbers for new function codes.
@@ -458,6 +464,17 @@ typedef struct GetRangeStructTag
 	FFUInt32 parameterNumber;
 	RangeStruct range;
 } GetRangeStruct;
+
+/**
+ * 
+ */
+typedef struct GetThumbnailStructTag
+{
+	FFUInt32 width;           //!< Used as output parameter (plugin -> host), contains the width of the thumbnail in number of pixels.
+	FFUInt32 height;          //!< Used as output parameter (plugin -> host), contains the height of the thumbnail in number of pixels.
+
+	void* rgbaPixelBuffer;    //!< Host provided location of where the thumbnails rgba pixels should be written. May be nullptr if the host is just querying the thumbnail size, which it needs to calculate minimum buffer size.
+} GetThumbnailStruct;
 
 //FFGLViewportStruct (for InstantiateGL)
 typedef struct FFGLViewportStructTag

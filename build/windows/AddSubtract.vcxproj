@@ -40,6 +40,7 @@
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfoData.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginManager.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginSDK.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.cpp" />
     <ClCompile Include="..\..\source\lib\glsdk_0_5_2\glload\source\gl_load.c" />
     <ClCompile Include="..\..\source\plugins\AddSubtract\AddSubtract.cpp" />
   </ItemGroup>
@@ -75,6 +76,7 @@
     <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginInfo.h" />
     <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginManager.h" />
     <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h" />
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.h" />
     <ClInclude Include="..\..\source\plugins\AddSubtract\AddSubtract.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

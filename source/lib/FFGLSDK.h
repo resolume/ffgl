@@ -2,6 +2,7 @@
 #include "ffgl/FFGL.h"
 #include "ffgl/FFGLLib.h"
 #include "ffgl/FFGLPluginSDK.h"
+#include "ffgl/FFGLThumbnailInfo.h"
 
 #include "ffglex/FFGLFBO.h"
 #include "ffglex/FFGLScopedBufferBinding.h"

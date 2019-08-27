@@ -73,8 +73,9 @@
 // Includes
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "FFGLPluginSDK.h"
 #include <memory.h>
+#include "FFGLPluginSDK.h"
+#include "FFGLThumbnailInfo.h"
 #include "../glsdk_0_5_2/glload/include/gl_load.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -400,7 +401,6 @@ const char* getPluginShortName()
 
 	return shortName;
 }
-
 FFMixed getParamRange( FFMixed input )
 {
 	FFMixed ret;
@@ -418,6 +418,26 @@ FFMixed getParamRange( FFMixed input )
 	RangeStruct range = s_pPrototype->GetParamRange( getRange->parameterNumber );
 	getRange->range   = range;
 	return ret;
+}
+FFUInt32 getThumbnail( GetThumbnailStruct& getStruct )
+{
+	CFFGLThumbnailInfo* thumbnailInfo = CFFGLThumbnailInfo::GetInstance();
+	//It's possible that this plugin doesn't have an embedded thumbnail.
+	if( thumbnailInfo == nullptr )
+	{
+		getStruct.width = 0;
+		getStruct.height = 0;
+		//There's no thumbnail available. Use same error code as previous thumbnails that didn't support this feature
+		//to make implementation on the host easier (fail = no thumbnail, success = thumbnail is available)
+		return FF_FAIL;
+	}
+
+	getStruct.width = thumbnailInfo->GetWidth();
+	getStruct.height = thumbnailInfo->GetHeight();
+	if( getStruct.rgbaPixelBuffer != nullptr )
+		memcpy( getStruct.rgbaPixelBuffer, thumbnailInfo->GetPixels(), getStruct.width * getStruct.height * 4 );
+
+	return FF_SUCCESS;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -679,7 +699,13 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_GET_RANGE:
 		retval = getParamRange( inputValue );
 		break;
-		
+
+	case FF_GET_THUMBNAIL:
+		if( inputValue.PointerValue != nullptr )
+			retval.UIntValue = getThumbnail( *reinterpret_cast< GetThumbnailStruct* >( inputValue.PointerValue ) );
+		else
+			retval.UIntValue = FF_FAIL;
+		break;
 
 		//Previously used function codes that are no longer supported:
 		//case FF_INITIALISE:
