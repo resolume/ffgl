@@ -51,32 +51,77 @@
 #include <vector>
 #include "FFGL.h"
 
-union Color
+struct Color
 {
-	struct Channels
+	Color() :
+		rgba( 0 )
 	{
-		unsigned char r;
-		unsigned char g;
-		unsigned char b;
-		unsigned char a;
-	} channels;
+	}
+	Color( FFUInt32 rgba ) :
+		rgba( rgba )
+	{
+	}
+	Color( unsigned char r, unsigned char g, unsigned char b, unsigned char a ) :
+		rgba( 0 )
+	{
+		rgba |= FFUInt32( r ) << 24;
+		rgba |= FFUInt32( g ) << 16;
+		rgba |= FFUInt32( b ) << 8;
+		rgba |= FFUInt32( a ) << 0;
+	}
+
 	FFUInt32 rgba;
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \class		CFFGLThumbnailInfo
+/// \brief		CFFGLThumbnailInfo manages static information concerning a plugin's thumbnail.
+/// \author		Menno Vink (menno@resolume.com)
+/// \date		2019-08-29
+///
+/// The CFFGLThumbnailInfo class manages static information related to a FreeFrameGL plugin's thumbnail.
+/// If you want to expose an embedded thumbnail inside your plugin you should declare a static instance of this class.
+/// Then when a host that supports embedded thumbnails asks the plugin for it's thumbnail the static instance
+/// is accessed and the embedded plugin is  returned to the host.
+/// As far as thumbnail size goes, it's the plugin that gets to decide what size of thumbnail it wants to provide.
+/// When a host gets a thumbnail at a size different than the thumbnail size that it wants it's up to the host to determine how to go from the
+/// plugin's thumbnail's size to the size of the thumbnail that the host wants to show.
+/// Thumbnails have their origin as top-left. So the first pixel color is the most top left pixel, the second pixel is the next pixel on the row, so a one pixel to the right.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class CFFGLThumbnailInfo
 {
 public:
 	static CFFGLThumbnailInfo* GetInstance();
 
-	CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, std::vector< Color > pixels );
+	/// This constructor can be used when you're generating a vector of colors over which you want to move ownership over
+	/// into this thumbnail info instance. This may be usefull when you have a function to generate the thumbnail because you
+	/// can use the function's return value to provide the thumbnail's colors.
+	///
+	/// \param width		The width of the thumbnail in number of pixels.
+	/// \param height		The height of the thumbnail in number of pixels.
+	/// \param ownedPixels	A vector of colors representing the thumbnail pixels' colors. This vector is expected to be width*height in size.
+	CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, std::vector< Color > ownedPixels );
+	/// This constructor can be used when you've got a static array of color values representing the thumbnail's colors.
+	/// This may be usefull when you've got a plain array of rgba colors that you want to use as thumbnail without having to copy their ownership
+	/// over into this thumbnail info instance.
+	///
+	/// \param width		The width of the thumbnail in number of pixels.
+	/// \param height		The height of the thumbnail in number of pixels.
+	/// \param ownedPixels	A vector of colors representing the thumbnail pixels' colors. This vector is expected to be width*height in size.
+	CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, const Color* pixelData );
 
+	/// Get the width of the thumbnail in number of pixels.
 	FFUInt32 GetWidth() const;
+	/// Get the height of the thumbnail in number of pixels.
 	FFUInt32 GetHeight() const;
+	/// Gets the thumbnail's pixel colors. This is a contiguous array of colors at the size of width * height;
 	const Color* GetPixels() const;
 
 private:
-	FFUInt32 width;
-	FFUInt32 height;
-	std::vector< Color > pixels;
+	FFUInt32 width;                   //!< Width of the thumbnail in number of pixels.
+	FFUInt32 height;                  //!< Height of the thumbnail in number of pixels.
+	std::vector< Color > ownedPixels; //!< Array of thumbnail data owned by this instance.
+	const Color* pixelData;           //!< A pointer to the array of thumbnail pixel data. The thumbnail's colors will be read from this array.
 };
 
 #endif

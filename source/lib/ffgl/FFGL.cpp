@@ -427,7 +427,7 @@ FFUInt32 getThumbnail( GetThumbnailStruct& getStruct )
 	{
 		getStruct.width = 0;
 		getStruct.height = 0;
-		//There's no thumbnail available. Use same error code as previous thumbnails that didn't support this feature
+		//There's no thumbnail available. Use same error code as old plugins that didn't support this feature
 		//to make implementation on the host easier (fail = no thumbnail, success = thumbnail is available)
 		return FF_FAIL;
 	}

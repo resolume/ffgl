@@ -10,11 +10,20 @@ CFFGLThumbnailInfo* CFFGLThumbnailInfo::GetInstance()
 	return instance;
 }
 
-CFFGLThumbnailInfo::CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, std::vector< Color > pixels ) :
+CFFGLThumbnailInfo::CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, std::vector< Color > ownedPixels ) :
 	width( width ), height( height ),
-	pixels( std::move( pixels ) )
+	ownedPixels( std::move( ownedPixels ) )
 {
-	this->pixels.resize( width * height );
+	this->ownedPixels.resize( width * height );
+	//Technically the vector's data doesn't have to be in contiguous memory, but for all stl implementations we know it is so
+	//we can just do this.
+	pixelData = this->ownedPixels.data();
+	instance = this;
+}
+CFFGLThumbnailInfo::CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, const Color* pixelData ) :
+	width( width ), height( height ),
+	pixelData( pixelData )
+{
 	instance = this;
 }
 
@@ -28,7 +37,5 @@ FFUInt32 CFFGLThumbnailInfo::GetHeight() const
 }
 const Color* CFFGLThumbnailInfo::GetPixels() const
 {
-	//Technically the vector's data doesn't have to be in contiguous memory, but for all stl implementations we know it is so
-	//we can just do this.
-	return pixels.data();
+	return pixelData;
 }
