@@ -1,20 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="lib">
-      <UniqueIdentifier>{9b71c016-8808-413f-8975-c1e7c009a1d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lib\ffgl">
-      <UniqueIdentifier>{39895eb7-82f2-41e9-8deb-97cfecc16ad2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lib\ffglex">
-      <UniqueIdentifier>{eb502cd3-c117-40c4-ad67-d442505d2ed8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lib\ffglquickstart">
-      <UniqueIdentifier>{f8b96895-8369-44fd-9f8c-ae7834c38a1c}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="..\..\source\plugins\CustomThumbnail\CustomThumbnail.cpp" />
     <ClCompile Include="..\..\source\lib\glsdk_0_5_2\glload\source\gl_load.c">
       <Filter>lib</Filter>
     </ClCompile>
@@ -31,6 +18,9 @@
       <Filter>lib\ffgl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginSDK.cpp">
+      <Filter>lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.cpp">
       <Filter>lib\ffgl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\lib\ffglex\FFGLFBO.cpp">
@@ -58,6 +48,12 @@
       <Filter>lib\ffglex</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\lib\ffglex\FFGLUtilities.cpp">
+      <Filter>lib\ffglex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedFBOBinding.cpp">
+      <Filter>lib\ffglex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedRenderBufferBinding.cpp">
       <Filter>lib\ffglex</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLAudio.cpp">
@@ -105,12 +101,9 @@
     <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLSource.cpp">
       <Filter>lib\ffglquickstart</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\plugins\CustomThumbnail\CustomThumbnail.cpp" />
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.cpp">
-      <Filter>lib\ffgl</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\CustomThumbnail.h" />
     <ClInclude Include="..\..\source\lib\FFGLSDK.h">
       <Filter>lib</Filter>
     </ClInclude>
@@ -127,6 +120,9 @@
       <Filter>lib\ffgl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h">
+      <Filter>lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.h">
       <Filter>lib\ffgl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\lib\ffglex\FFGLFBO.h">
@@ -154,6 +150,12 @@
       <Filter>lib\ffglex</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\lib\ffglex\FFGLUtilities.h">
+      <Filter>lib\ffglex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedFBOBinding.h">
+      <Filter>lib\ffglex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedRenderBufferBinding.h">
       <Filter>lib\ffglex</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLAudio.h">
@@ -204,9 +206,19 @@
     <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLUtils.h">
       <Filter>lib\ffglquickstart</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\plugins\CustomThumbnail\CustomThumbnail.h" />
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.h">
-      <Filter>lib\ffgl</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="lib">
+      <UniqueIdentifier>{8801f3e8-cb50-4091-8ff9-f31d58ddbd42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\ffgl">
+      <UniqueIdentifier>{9b940116-60ed-4c5a-8c34-2afc4b870472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\ffglex">
+      <UniqueIdentifier>{4c4bb960-cf9c-4237-ab62-e04732ec9d37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\ffglquickstart">
+      <UniqueIdentifier>{4ca40510-9dde-422a-9ecb-895d641ace93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

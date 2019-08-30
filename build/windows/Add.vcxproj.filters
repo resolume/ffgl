@@ -20,6 +20,9 @@
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginSDK.cpp">
       <Filter>lib\ffgl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.cpp">
+      <Filter>lib\ffgl</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\lib\ffglex\FFGLFBO.cpp">
       <Filter>lib\ffglex</Filter>
     </ClCompile>
@@ -47,6 +50,12 @@
     <ClCompile Include="..\..\source\lib\ffglex\FFGLUtilities.cpp">
       <Filter>lib\ffglex</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedFBOBinding.cpp">
+      <Filter>lib\ffglex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedRenderBufferBinding.cpp">
+      <Filter>lib\ffglex</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLAudio.cpp">
       <Filter>lib\ffglquickstart</Filter>
     </ClCompile>
@@ -56,44 +65,41 @@
     <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLMixer.cpp">
       <Filter>lib\ffglquickstart</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLPlugin.cpp">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLSource.cpp">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLSmoothValue.cpp">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLRandom.cpp">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParam.cpp">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParamRange.cpp">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParamOption.cpp">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParamEvent.cpp">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParamTrigger.cpp">
       <Filter>lib\ffglquickstart</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParamBool.cpp">
       <Filter>lib\ffglquickstart</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParamText.cpp">
+    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParamEvent.cpp">
       <Filter>lib\ffglquickstart</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParamFFT.cpp">
       <Filter>lib\ffglquickstart</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.cpp">
-      <Filter>lib\ffgl</Filter>
+    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParamOption.cpp">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParamRange.cpp">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParamText.cpp">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLParamTrigger.cpp">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLPlugin.cpp">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLRandom.cpp">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLSmoothValue.cpp">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLSource.cpp">
+      <Filter>lib\ffglquickstart</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +120,9 @@
       <Filter>lib\ffgl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h">
+      <Filter>lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.h">
       <Filter>lib\ffgl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\lib\ffglex\FFGLFBO.h">
@@ -143,6 +152,12 @@
     <ClInclude Include="..\..\source\lib\ffglex\FFGLUtilities.h">
       <Filter>lib\ffglex</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedFBOBinding.h">
+      <Filter>lib\ffglex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedRenderBufferBinding.h">
+      <Filter>lib\ffglex</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLAudio.h">
       <Filter>lib\ffglquickstart</Filter>
     </ClInclude>
@@ -152,7 +167,37 @@
     <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLMixer.h">
       <Filter>lib\ffglquickstart</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParam.h">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamBool.h">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamEvent.h">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamFFT.h">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamOption.h">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamRange.h">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamText.h">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamTrigger.h">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLPlugin.h">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLRandom.h">
+      <Filter>lib\ffglquickstart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLSmoothValue.h">
       <Filter>lib\ffglquickstart</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLSource.h">
@@ -161,52 +206,19 @@
     <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLUtils.h">
       <Filter>lib\ffglquickstart</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLSmoothValue.h">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLRandom.h">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParam.h">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamRange.h">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamOption.h">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamEvent.h">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamTrigger.h">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamBool.h">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamText.h">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLParamFFT.h">
-      <Filter>lib\ffglquickstart</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.h">
-      <Filter>lib\ffgl</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="lib">
-      <UniqueIdentifier>{67445873-998f-42cf-a8eb-1008a388fa14}</UniqueIdentifier>
+      <UniqueIdentifier>{5ef1361a-7806-419e-8d09-808be24feb91}</UniqueIdentifier>
     </Filter>
     <Filter Include="lib\ffgl">
-      <UniqueIdentifier>{c5c9fe8e-405c-4dbd-a95e-b3cfd5a3d387}</UniqueIdentifier>
+      <UniqueIdentifier>{ead61ebb-22e8-4a44-811d-781cb1c16bc2}</UniqueIdentifier>
     </Filter>
     <Filter Include="lib\ffglex">
-      <UniqueIdentifier>{da3ca1b3-32e0-4aad-a8a1-5e0c088f5f13}</UniqueIdentifier>
+      <UniqueIdentifier>{94cabd89-309c-4bda-816e-abd39c029a2c}</UniqueIdentifier>
     </Filter>
     <Filter Include="lib\ffglquickstart">
-      <UniqueIdentifier>{63e5f90f-e693-4293-aaa7-45c1a0b0bb38}</UniqueIdentifier>
+      <UniqueIdentifier>{a0e718dd-59ee-4672-b295-1972c5921d31}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

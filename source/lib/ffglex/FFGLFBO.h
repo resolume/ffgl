@@ -9,37 +9,28 @@ class FFGLFBO
 public:
 	FFGLFBO();
 
-	int Create( int width, int height );
-	int Create( int width, int height, GLuint pixelFormat );
-	int BindAsRenderTarget();
-	int UnbindAsRenderTarget( GLuint hostFbo );
+	bool Initialise( GLsizei width, GLsizei height, GLint internalColorFormat = GL_RGBA8 );
+	void Release();
 
-	FFGLTextureStruct GetTextureInfo() const;
-	void FreeResources();
 	void ResizeViewPort();
 
-	GLuint GetWidth()
-	{
-		return m_width;
-	}
-	GLuint GetHeight()
-	{
-		return m_height;
-	}
-	GLuint GetFBOHandle() const
-	{
-		return m_fboHandle;
-	}
+	GLuint GetWidth() const;
+	GLuint GetHeight() const;
+	GLuint GetGLID() const;
+	FFGLTextureStruct GetTextureInfo() const;
 
 protected:
-	GLuint m_width;
-	GLuint m_height;
-	GLuint m_glWidth;
-	GLuint m_glHeight;
-	GLuint m_glPixelFormat;
-	GLuint m_glTextureHandle;
-	GLuint m_fboHandle;
-	GLuint m_depthBufferHandle;
+	bool GenerateFBO();
+	bool GenerateDepthBuffer();
+	bool GenerateColorTexture();
+
+	GLsizei width;
+	GLsizei height;
+	GLint internalColorFormat;
+
+	GLuint fboID;
+	GLuint depthBufferID;
+	GLuint colorTextureID;
 };
 
 }//End namespace ffglex
