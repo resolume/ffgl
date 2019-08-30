@@ -13,6 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				65D4D1F223193FC000D12558 /* PBXTargetDependency */,
 				602BD75320668C0A00D035F9 /* PBXTargetDependency */,
 				D6369DC21AAF109800B0CC43 /* PBXTargetDependency */,
 				DB4B64191FF8459E0069DA80 /* PBXTargetDependency */,
@@ -178,7 +179,7 @@
 		65D4D1EC23193DB000D12558 /* FFGLThumbnailInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65D4D1BF23193C9200D12558 /* FFGLThumbnailInfo.cpp */; };
 		65D4D1ED23193DB000D12558 /* FFGLThumbnailInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65D4D1BF23193C9200D12558 /* FFGLThumbnailInfo.cpp */; };
 		65D4D1EE23193DB000D12558 /* FFGLThumbnailInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65D4D1BF23193C9200D12558 /* FFGLThumbnailInfo.cpp */; };
-		65D4D1EF23193DB100D12558 /* FFGLThumbnailInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65D4D1BF23193C9200D12558 /* FFGLThumbnailInfo.cpp */; };
+		65D4D1F023193F7A00D12558 /* FFGLThumbnailInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65D4D1BF23193C9200D12558 /* FFGLThumbnailInfo.cpp */; };
 		D69416C91B904EA200D30319 /* AddSubtract.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69416A11B90436100D30319 /* AddSubtract.cpp */; };
 		DB4B641D1FF84E910069DA80 /* Add.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB4B63E11FF8453A0069DA80 /* Add.cpp */; };
 /* End PBXBuildFile section */
@@ -190,6 +191,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = A9F92E9A201A1C1500527E48;
 			remoteInfo = Fireworks;
+		};
+		65D4D1F123193FC000D12558 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2DA285930AEE5D640030A4DD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65D4D1C323193D0000D12558;
+			remoteInfo = CustomThumbnail;
 		};
 		D6369DC11AAF109800B0CC43 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -823,7 +831,7 @@
 				65D4D1D323193D0000D12558 /* FFGLSmoothValue.cpp in Sources */,
 				65D4D1D423193D0000D12558 /* FFGLParamRange.cpp in Sources */,
 				65D4D1D523193D0000D12558 /* FFGLFBO.cpp in Sources */,
-				65D4D1EF23193DB100D12558 /* FFGLThumbnailInfo.cpp in Sources */,
+				65D4D1F023193F7A00D12558 /* FFGLThumbnailInfo.cpp in Sources */,
 				65D4D1D623193D0000D12558 /* FFGLParam.cpp in Sources */,
 				65D4D1D723193D0000D12558 /* FFGLMixer.cpp in Sources */,
 				65D4D1D823193D0000D12558 /* FFGLPluginSDK.cpp in Sources */,
@@ -963,6 +971,11 @@
 			isa = PBXTargetDependency;
 			target = A9F92E9A201A1C1500527E48 /* Particles */;
 			targetProxy = 602BD75220668C0A00D035F9 /* PBXContainerItemProxy */;
+		};
+		65D4D1F223193FC000D12558 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65D4D1C323193D0000D12558 /* CustomThumbnail */;
+			targetProxy = 65D4D1F123193FC000D12558 /* PBXContainerItemProxy */;
 		};
 		D6369DC21AAF109800B0CC43 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
