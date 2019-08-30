@@ -11,6 +11,7 @@ You can find some help to get started with FFGL plugin development on the [wiki]
 Also more examples are available on this [repo](https://github.com/flyingrub/ffgl/tree/more/).
 
 ## Changes since FFGL 2.0
+- Added support for embedding a thumbnail inside the plugin. See the "CustomThumbnail" example on how to expose your thumbnail. This new feature requires a host supporting FFGL 2.1 (Resolume 7.0.3).
 - Reintroduction of Scoped bindings. (Removed unsafe resetOpenGLState function, use the ScopedBinding classes instead)
 - The Module Definition File is no longer required on Windows.
 - The SDK no longer adjusts any textures to use GL_CLAMP_TO_BORDER.
