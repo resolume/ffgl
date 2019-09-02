@@ -173,6 +173,23 @@ void CFFGLPluginManager::SetParamInfo( unsigned int dwIndex, const char* pchName
 	params.push_back( pInfo );
 }
 
+void CFFGLPluginManager::SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions )
+{
+	ParamInfo pInfo;
+	pInfo.ID = index;
+
+	std::string stringValue = pchName;
+	memset( pInfo.Name, 0, sizeof( pInfo.Name ) );
+	memcpy( pInfo.Name, stringValue.c_str(), std::min( sizeof( pInfo.Name ), stringValue.length() ) );
+
+	pInfo.dwType = FF_TYPE_FILE;
+
+	pInfo.usage = 0;
+
+	pInfo.supportedExtensions = std::move( supportedExtensions );
+	params.push_back( pInfo );
+}
+
 void CFFGLPluginManager::SetTimeSupported( bool supported )
 {
 	m_timeSupported = supported;
@@ -280,12 +297,37 @@ FFMixed CFFGLPluginManager::GetParamDefault( unsigned int dwIndex ) const
 	if( paramInfo == nullptr )
 		return result;
 
-	if( GetParamType( dwIndex ) == FF_TYPE_TEXT )
+	if( GetParamType( dwIndex ) == FF_TYPE_TEXT || GetParamType( dwIndex ) == FF_TYPE_FILE )
 		result.PointerValue = (void*)paramInfo->defaultStringVal.c_str();
 	else
 		result.UIntValue = *(FFUInt32*)&paramInfo->defaultFloatVal;
 	
 	return result;
+}
+
+unsigned int CFFGLPluginManager::GetNumFileParamExtensions( unsigned int index ) const
+{
+	const ParamInfo* paramInfo = FindParamInfo( index );
+	if( paramInfo == nullptr )
+		return 0;
+
+	return (unsigned int)paramInfo->supportedExtensions.size();
+}
+char* CFFGLPluginManager::GetFileParamExtension( unsigned int paramIndex, unsigned int extensionIndex ) const
+{
+	const ParamInfo* paramInfo = FindParamInfo( paramIndex );
+	if( paramInfo == nullptr )
+		return nullptr;
+
+	if( extensionIndex >= paramInfo->supportedExtensions.size() )
+		return nullptr;
+
+	/**
+	 * Have to const-cast here because ffgl is implemented using a single interface function and thus we cannot differentiate
+	 * between constant and non constant pointers. This is also a problem of returning a pointer to our string rather than outputting
+	 * our string into the caller's buffer.
+	 */
+	return const_cast< char* >( paramInfo->supportedExtensions[ extensionIndex ].c_str() );
 }
 
 bool CFFGLPluginManager::GetTimeSupported() const

@@ -159,6 +159,9 @@ public:
 	///						in any other case. In case of error, NULL is returned.
 	FFMixed GetParamDefault( unsigned int dwIndex ) const;
 
+	unsigned int GetNumFileParamExtensions( unsigned int index ) const;
+	char* GetFileParamExtension( unsigned int paramIndex, unsigned int extensionIndex ) const;
+
 	/// This method is called by a the host to determine whether the plugin supports the SetTime function
 	bool GetTimeSupported() const;
 
@@ -263,6 +266,8 @@ protected:
 	/// \param	pchDefaultValue	A string to be used as the default value of the plugin parameter.
 	void SetParamInfo( unsigned int index, const char* pchName, unsigned int type, const char* pchDefaultValue );
 
+	void SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions );
+
 	/// This method is called by a plugin subclass, derived from this class, to indicate whether the
 	/// SetTime function is supported
 	///
@@ -297,6 +302,7 @@ protected:
 
 		float defaultFloatVal = 0.0f;
 		std::string defaultStringVal;
+		std::vector< std::string > supportedExtensions;  //!< The extensions this parameter supports. Only used if dwType is FF_TYPE_FILE.
 	};
 
 	ParamInfo* FindParamInfo( unsigned int ID );

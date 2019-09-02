@@ -50,7 +50,7 @@ char* CFreeFrameGLPlugin::GetParameterDisplay( unsigned int index )
 	unsigned int pType = m_pPlugin->GetParamType( index );
 	if( pType != FF_FAIL )
 	{
-		if( pType == FF_TYPE_TEXT )
+		if( pType == FF_TYPE_TEXT || pType == FF_TYPE_FILE )
 		{
 			return m_pPlugin->GetTextParameter( index );
 		}
