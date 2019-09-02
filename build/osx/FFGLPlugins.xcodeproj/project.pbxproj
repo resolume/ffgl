@@ -144,6 +144,9 @@
 		652480B82306FD14007257C5 /* FFGLParamOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807E2306FD14007257C5 /* FFGLParamOption.cpp */; };
 		652480B92306FD14007257C5 /* FFGLParamOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807E2306FD14007257C5 /* FFGLParamOption.cpp */; };
 		652480BA2306FD14007257C5 /* FFGLParamOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807E2306FD14007257C5 /* FFGLParamOption.cpp */; };
+		65438A5B231D3DC000461EA0 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65438A5A231D3DC000461EA0 /* libz.a */; };
+		65438A68231D3E0700461EA0 /* libpng16d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65438A67231D3E0700461EA0 /* libpng16d.a */; };
+		6589225F231D3812006B3174 /* PNGLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6589225E231D3812006B3174 /* PNGLoader.cpp */; };
 		65D4D1C623193D0000D12558 /* FFGLParamFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480612306FD13007257C5 /* FFGLParamFFT.cpp */; };
 		65D4D1C723193D0000D12558 /* FFGLParamOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807E2306FD14007257C5 /* FFGLParamOption.cpp */; };
 		65D4D1C823193D0000D12558 /* FFGLUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D421635F82002B8B05 /* FFGLUtilities.cpp */; };
@@ -297,6 +300,21 @@
 		6524807C2306FD14007257C5 /* FFGLParamEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLParamEvent.cpp; sourceTree = "<group>"; };
 		6524807D2306FD14007257C5 /* FFGLPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLPlugin.h; sourceTree = "<group>"; };
 		6524807E2306FD14007257C5 /* FFGLParamOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLParamOption.cpp; sourceTree = "<group>"; };
+		65438A5A231D3DC000461EA0 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = "../../source/plugins/CustomThumbnail/zlib-1.2.11/libz.a"; sourceTree = "<group>"; };
+		65438A5D231D3DC900461EA0 /* pnginfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pnginfo.h; sourceTree = "<group>"; };
+		65438A5E231D3DC900461EA0 /* pngstruct.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pngstruct.h; sourceTree = "<group>"; };
+		65438A5F231D3DC900461EA0 /* libpng16_staticd.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpng16_staticd.lib; sourceTree = "<group>"; };
+		65438A60231D3DC900461EA0 /* pngpriv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pngpriv.h; sourceTree = "<group>"; };
+		65438A61231D3DC900461EA0 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpng.a; sourceTree = "<group>"; };
+		65438A62231D3DC900461EA0 /* png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = png.h; sourceTree = "<group>"; };
+		65438A63231D3DC900461EA0 /* pnglibconf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pnglibconf.h; sourceTree = "<group>"; };
+		65438A64231D3DC900461EA0 /* pngconf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pngconf.h; sourceTree = "<group>"; };
+		65438A65231D3DC900461EA0 /* pngdebug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pngdebug.h; sourceTree = "<group>"; };
+		65438A66231D3DC900461EA0 /* libpng16_static.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpng16_static.lib; sourceTree = "<group>"; };
+		65438A67231D3E0700461EA0 /* libpng16d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16d.a; path = ../../source/plugins/CustomThumbnail/lpng1637/libpng16d.a; sourceTree = "<group>"; };
+		6589225C231D3812006B3174 /* PNGLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PNGLoader.h; path = ../../source/plugins/CustomThumbnail/PNGLoader.h; sourceTree = "<group>"; };
+		6589225D231D3812006B3174 /* Thumb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Thumb.h; path = ../../source/plugins/CustomThumbnail/Thumb.h; sourceTree = "<group>"; };
+		6589225E231D3812006B3174 /* PNGLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PNGLoader.cpp; path = ../../source/plugins/CustomThumbnail/PNGLoader.cpp; sourceTree = "<group>"; };
 		65D4D1BE23193C9200D12558 /* FFGLThumbnailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLThumbnailInfo.h; sourceTree = "<group>"; };
 		65D4D1BF23193C9200D12558 /* FFGLThumbnailInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLThumbnailInfo.cpp; sourceTree = "<group>"; };
 		65D4D1C123193CB300D12558 /* CustomThumbnail.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomThumbnail.h; path = ../../source/plugins/CustomThumbnail/CustomThumbnail.h; sourceTree = "<group>"; };
@@ -333,6 +351,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65438A68231D3E0700461EA0 /* libpng16d.a in Frameworks */,
+				65438A5B231D3DC000461EA0 /* libz.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +442,7 @@
 				E8D161130C5DF1DF0035D796 /* frameworks */,
 				2FD12214188538AC0009EBA8 /* source */,
 				2DA285A10AEE5E480030A4DD /* Products */,
+				65438A59231D3DC000461EA0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -484,9 +505,40 @@
 			path = ../../source/lib/ffglquickstart;
 			sourceTree = "<group>";
 		};
+		65438A59231D3DC000461EA0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				65438A67231D3E0700461EA0 /* libpng16d.a */,
+				65438A5C231D3DC900461EA0 /* lpng1637 */,
+				65438A5A231D3DC000461EA0 /* libz.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		65438A5C231D3DC900461EA0 /* lpng1637 */ = {
+			isa = PBXGroup;
+			children = (
+				65438A5D231D3DC900461EA0 /* pnginfo.h */,
+				65438A5E231D3DC900461EA0 /* pngstruct.h */,
+				65438A5F231D3DC900461EA0 /* libpng16_staticd.lib */,
+				65438A60231D3DC900461EA0 /* pngpriv.h */,
+				65438A61231D3DC900461EA0 /* libpng.a */,
+				65438A62231D3DC900461EA0 /* png.h */,
+				65438A63231D3DC900461EA0 /* pnglibconf.h */,
+				65438A64231D3DC900461EA0 /* pngconf.h */,
+				65438A65231D3DC900461EA0 /* pngdebug.h */,
+				65438A66231D3DC900461EA0 /* libpng16_static.lib */,
+			);
+			name = lpng1637;
+			path = ../../source/plugins/CustomThumbnail/lpng1637;
+			sourceTree = "<group>";
+		};
 		65D4D1C023193C9B00D12558 /* CustomThumbnail */ = {
 			isa = PBXGroup;
 			children = (
+				6589225E231D3812006B3174 /* PNGLoader.cpp */,
+				6589225C231D3812006B3174 /* PNGLoader.h */,
+				6589225D231D3812006B3174 /* Thumb.h */,
 				65D4D1C223193CB300D12558 /* CustomThumbnail.cpp */,
 				65D4D1C123193CB300D12558 /* CustomThumbnail.h */,
 			);
@@ -840,6 +892,7 @@
 				65D4D1DB23193D0000D12558 /* FFGLAudio.cpp in Sources */,
 				65D4D1DC23193D0000D12558 /* FFGLScopedVAOBinding.cpp in Sources */,
 				65D4D1DD23193D0000D12558 /* FFGLParamBool.cpp in Sources */,
+				6589225F231D3812006B3174 /* PNGLoader.cpp in Sources */,
 				65D4D1DE23193D0000D12558 /* FFGLParamTrigger.cpp in Sources */,
 				65D4D1DF23193D0000D12558 /* FFGLScopedTextureBinding.cpp in Sources */,
 				65D4D1E023193D0000D12558 /* FFGLEffect.cpp in Sources */,
@@ -1128,9 +1181,15 @@
 					"$(inherited)",
 					"\"$(FFGL_SDK_PATH)\"",
 					../../source/lib,
+					../../source/plugins/CustomThumbnail/lpng1637/,
+					"../../source/plugins/CustomThumbnail/zlib-1.2.11/",
 				);
 				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					../../source/plugins/CustomThumbnail/lpng1637/,
+					"../../source/plugins/CustomThumbnail/zlib-1.2.11/",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
@@ -1151,9 +1210,15 @@
 					"$(inherited)",
 					"\"$(FFGL_SDK_PATH)\"",
 					../../source/lib,
+					../../source/plugins/CustomThumbnail/lpng1637/,
+					"../../source/plugins/CustomThumbnail/zlib-1.2.11/",
 				);
 				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					../../source/plugins/CustomThumbnail/lpng1637/,
+					"../../source/plugins/CustomThumbnail/zlib-1.2.11/",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
