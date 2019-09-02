@@ -69,6 +69,8 @@
 // FFGL 2.1 by Menno Vink (menno@resolume.com)
 // www.resolume.com
 // -Added support for embedded thumbnails.
+// -Reintroduction of RAII bindings to help protect the host's context state.
+// -Added file parameters
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -324,6 +326,8 @@ static const FFUInt32 FF_SET_HOSTINFO                  = 39;
 static const FFUInt32 FF_SET_SAMPLERATE                = 40;
 static const FFUInt32 FF_GET_RANGE                     = 41;
 static const FFUInt32 FF_GET_THUMBNAIL                 = 42;
+static const FFUInt32 FF_GETNUMFILPARAMETEREXTENSIONS  = 43;
+static const FFUInt32 FF_GET_FILE_PARAMETER_EXTENSION  = 44;
 
 //Previously used function codes that are no longer in use. Should prevent using
 //these numbers for new function codes.
@@ -385,6 +389,7 @@ static const FFUInt32 FF_TYPE_STANDARD   = 10;
 static const FFUInt32 FF_TYPE_OPTION     = 11;
 static const FFUInt32 FF_TYPE_BUFFER     = 12;
 static const FFUInt32 FF_TYPE_INTEGER    = 13;
+static const FFUInt32 FF_TYPE_FILE       = 14;
 static const FFUInt32 FF_TYPE_TEXT       = 100;
 static const FFUInt32 FF_TYPE_HUE        = 200;
 static const FFUInt32 FF_TYPE_SATURATION = 201;
@@ -525,6 +530,13 @@ typedef struct SetParameterElementValueStructTag
 	FFUInt32 ElementNumber;
 	FFMixed NewParameterValue;
 } SetParameterElementValueStruct;
+
+// GetFileParameterExtensionStruct
+typedef struct GetFileParameterExtensionStructTag
+{
+	FFUInt32 ParameterNumber;
+	FFUInt32 ExtensionNumber;
+} GetFileParameterExtensionStruct;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Function prototypes

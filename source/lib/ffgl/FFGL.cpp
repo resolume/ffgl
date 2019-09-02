@@ -262,7 +262,7 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 	{
 		unsigned int pType = s_pPrototype->GetParamType( i );
 		FFMixed pDefault   = s_pPrototype->GetParamDefault( i );
-		if( pType == FF_TYPE_TEXT )
+		if( pType == FF_TYPE_TEXT || pType == FF_TYPE_FILE )
 			dwRet = pInstance->SetTextParameter( i, (const char*)pDefault.PointerValue );
 		else
 			dwRet = pInstance->SetFloatParameter( i, *(float*)&pDefault.UIntValue );
@@ -439,6 +439,28 @@ FFUInt32 getThumbnail( GetThumbnailStruct& getStruct )
 
 	return FF_SUCCESS;
 }
+FFUInt32 getNumFileParameterExtensions( unsigned int index )
+{
+	if( s_pPrototype == nullptr )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return FF_FAIL;
+	}
+
+	return s_pPrototype->GetNumFileParamExtensions( index );
+}
+char* getFileParameterExtension( unsigned int paramIndex, unsigned int extensionIndex )
+{
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return NULL;
+	}
+
+	return s_pPrototype->GetFileParamExtension( paramIndex, extensionIndex );
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Implementation of plugMain, the one and only exposed function
@@ -496,7 +518,8 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_SETPARAMETER:
 		if( pPlugObj != NULL )
 		{
-			if( getParameterType( ( (const SetParameterStruct*)inputValue.PointerValue )->ParameterNumber ) == FF_TYPE_TEXT )
+			unsigned int paramType = getParameterType( ( (const SetParameterStruct*)inputValue.PointerValue )->ParameterNumber );
+			if( paramType == FF_TYPE_TEXT || paramType == FF_TYPE_FILE )
 			{
 				retval.UIntValue = pPlugObj->SetTextParameter( ( (const SetParameterStruct*)inputValue.PointerValue )->ParameterNumber,
 															   (const char*)( (const SetParameterStruct*)inputValue.PointerValue )->NewParameterValue.PointerValue );
@@ -515,7 +538,8 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_GETPARAMETER:
 		if( pPlugObj != NULL )
 		{
-			if( getParameterType( inputValue.UIntValue ) == FF_TYPE_TEXT )
+			unsigned int paramType = getParameterType( inputValue.UIntValue );
+			if( paramType == FF_TYPE_TEXT || paramType == FF_TYPE_FILE )
 			{
 				retval.PointerValue = pPlugObj->GetTextParameter( inputValue.UIntValue );
 			}
@@ -707,14 +731,24 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 			retval.UIntValue = FF_FAIL;
 		break;
 
-		//Previously used function codes that are no longer supported:
-		//case FF_INITIALISE:
-		/**
-		 * We're dropping the old FFGL 1.6 and lower initialise here. FFGL 2.0 removed old stuff and made support for newer stuff mandatory
-		 * so hosts need a way to know they cannot use this plugin if they're dependant on the old behaviour. If the host isn't dependant on the old
-		 * behaviour it will have to update to build using the FFGL 2.0 sdk and instead invoke the initialise_v2 opcode. This way
-		 * the plugin and host both agree that it's okay not to support the old behaviour.
-		 */
+	case FF_GETNUMFILPARAMETEREXTENSIONS:
+		retval.UIntValue = getNumFileParameterExtensions( inputValue.UIntValue );
+		break;
+	case FF_GET_FILE_PARAMETER_EXTENSION:
+	{
+		const GetFileParameterExtensionStruct* arguments = reinterpret_cast< const GetFileParameterExtensionStruct* >( inputValue.PointerValue );
+		retval.PointerValue = getFileParameterExtension( arguments->ParameterNumber, arguments->ExtensionNumber );
+		break;
+	}
+
+	//Previously used function codes that are no longer supported:
+	//case FF_INITIALISE:
+	/**
+	 * We're dropping the old FFGL 1.6 and lower initialise here. FFGL 2.0 removed old stuff and made support for newer stuff mandatory
+	 * so hosts need a way to know they cannot use this plugin if they're dependant on the old behaviour. If the host isn't dependant on the old
+	 * behaviour it will have to update to build using the FFGL 2.0 sdk and instead invoke the initialise_v2 opcode. This way
+	 * the plugin and host both agree that it's okay not to support the old behaviour.
+	 */
 	//case FF_INSTANTIATE:
 	//case FF_DEINSTANTIATE:
 	//case FF_PROCESSFRAME:
