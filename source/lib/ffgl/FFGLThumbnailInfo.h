@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// FFGL.h
+// FFGLThumbnailInfo.h
 //
 // FreeFrame is an open-source cross-platform real-time video effects plugin system.
 // It provides a framework for developing video effects plugins and hosts on Windows,

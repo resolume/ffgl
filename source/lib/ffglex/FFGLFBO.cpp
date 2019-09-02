@@ -51,6 +51,9 @@ bool FFGLFBO::Initialise( GLsizei width, GLsizei height, GLint internalColorForm
 }
 void FFGLFBO::Release()
 {
+	width = 0;
+	height = 0;
+
 	if( fboID != 0 )
 	{
 		glDeleteFramebuffers( 1, &fboID );
