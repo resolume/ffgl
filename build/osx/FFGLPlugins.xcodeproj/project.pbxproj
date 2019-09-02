@@ -147,6 +147,16 @@
 		65438A5B231D3DC000461EA0 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65438A5A231D3DC000461EA0 /* libz.a */; };
 		65438A68231D3E0700461EA0 /* libpng16d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65438A67231D3E0700461EA0 /* libpng16d.a */; };
 		6589225F231D3812006B3174 /* PNGLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6589225E231D3812006B3174 /* PNGLoader.cpp */; };
+		65BE5BD9231D65F900CDDFA7 /* FFGLScopedFBOBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD6231D65DA00CDDFA7 /* FFGLScopedFBOBinding.cpp */; };
+		65BE5BDA231D65F900CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD7231D65DA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp */; };
+		65BE5BDB231D65F900CDDFA7 /* FFGLScopedFBOBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD6231D65DA00CDDFA7 /* FFGLScopedFBOBinding.cpp */; };
+		65BE5BDC231D65F900CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD7231D65DA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp */; };
+		65BE5BDD231D65FA00CDDFA7 /* FFGLScopedFBOBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD6231D65DA00CDDFA7 /* FFGLScopedFBOBinding.cpp */; };
+		65BE5BDE231D65FA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD7231D65DA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp */; };
+		65BE5BDF231D65FA00CDDFA7 /* FFGLScopedFBOBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD6231D65DA00CDDFA7 /* FFGLScopedFBOBinding.cpp */; };
+		65BE5BE0231D65FA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD7231D65DA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp */; };
+		65BE5BE1231D65FA00CDDFA7 /* FFGLScopedFBOBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD6231D65DA00CDDFA7 /* FFGLScopedFBOBinding.cpp */; };
+		65BE5BE2231D65FA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD7231D65DA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp */; };
 		65D4D1C623193D0000D12558 /* FFGLParamFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480612306FD13007257C5 /* FFGLParamFFT.cpp */; };
 		65D4D1C723193D0000D12558 /* FFGLParamOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807E2306FD14007257C5 /* FFGLParamOption.cpp */; };
 		65D4D1C823193D0000D12558 /* FFGLUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D421635F82002B8B05 /* FFGLUtilities.cpp */; };
@@ -315,6 +325,10 @@
 		6589225C231D3812006B3174 /* PNGLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PNGLoader.h; path = ../../source/plugins/CustomThumbnail/PNGLoader.h; sourceTree = "<group>"; };
 		6589225D231D3812006B3174 /* Thumb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Thumb.h; path = ../../source/plugins/CustomThumbnail/Thumb.h; sourceTree = "<group>"; };
 		6589225E231D3812006B3174 /* PNGLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PNGLoader.cpp; path = ../../source/plugins/CustomThumbnail/PNGLoader.cpp; sourceTree = "<group>"; };
+		65BE5BD5231D65DA00CDDFA7 /* FFGLScopedRenderBufferBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFGLScopedRenderBufferBinding.h; path = ../../source/lib/ffglex/FFGLScopedRenderBufferBinding.h; sourceTree = "<group>"; };
+		65BE5BD6231D65DA00CDDFA7 /* FFGLScopedFBOBinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FFGLScopedFBOBinding.cpp; path = ../../source/lib/ffglex/FFGLScopedFBOBinding.cpp; sourceTree = "<group>"; };
+		65BE5BD7231D65DA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FFGLScopedRenderBufferBinding.cpp; path = ../../source/lib/ffglex/FFGLScopedRenderBufferBinding.cpp; sourceTree = "<group>"; };
+		65BE5BD8231D65DA00CDDFA7 /* FFGLScopedFBOBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFGLScopedFBOBinding.h; path = ../../source/lib/ffglex/FFGLScopedFBOBinding.h; sourceTree = "<group>"; };
 		65D4D1BE23193C9200D12558 /* FFGLThumbnailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLThumbnailInfo.h; sourceTree = "<group>"; };
 		65D4D1BF23193C9200D12558 /* FFGLThumbnailInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLThumbnailInfo.cpp; sourceTree = "<group>"; };
 		65D4D1C123193CB300D12558 /* CustomThumbnail.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomThumbnail.h; path = ../../source/plugins/CustomThumbnail/CustomThumbnail.h; sourceTree = "<group>"; };
@@ -383,6 +397,10 @@
 		1B2708D121635F74002B8B05 /* ffglex */ = {
 			isa = PBXGroup;
 			children = (
+				65BE5BD6231D65DA00CDDFA7 /* FFGLScopedFBOBinding.cpp */,
+				65BE5BD8231D65DA00CDDFA7 /* FFGLScopedFBOBinding.h */,
+				65BE5BD7231D65DA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp */,
+				65BE5BD5231D65DA00CDDFA7 /* FFGLScopedRenderBufferBinding.h */,
 				1B2708DE21635F82002B8B05 /* FFGLFBO.cpp */,
 				1B2708DF21635F83002B8B05 /* FFGLFBO.h */,
 				1B2708DC21635F82002B8B05 /* FFGLScopedBufferBinding.cpp */,
@@ -839,6 +857,7 @@
 				1B2708CA21635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
 				1B2708BE21635F6E002B8B05 /* FFGL.cpp in Sources */,
 				652480B42306FD14007257C5 /* FFGLParamEvent.cpp in Sources */,
+				65BE5BE0231D65FA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */,
 				6524808C2306FD14007257C5 /* FFGLRandom.cpp in Sources */,
 				1B2708F121635F83002B8B05 /* FFGLScreenQuad.cpp in Sources */,
 				652480902306FD14007257C5 /* FFGLSmoothValue.cpp in Sources */,
@@ -852,6 +871,7 @@
 				652480982306FD14007257C5 /* FFGLParamText.cpp in Sources */,
 				652480B02306FD14007257C5 /* FFGLAudio.cpp in Sources */,
 				1B2708F521635F83002B8B05 /* FFGLScopedVAOBinding.cpp in Sources */,
+				65BE5BDF231D65FA00CDDFA7 /* FFGLScopedFBOBinding.cpp in Sources */,
 				652480A82306FD14007257C5 /* FFGLParamBool.cpp in Sources */,
 				652480AC2306FD14007257C5 /* FFGLParamTrigger.cpp in Sources */,
 				1B2708E921635F83002B8B05 /* FFGLScopedTextureBinding.cpp in Sources */,
@@ -870,9 +890,11 @@
 				65D4D1C723193D0000D12558 /* FFGLParamOption.cpp in Sources */,
 				65D4D1C823193D0000D12558 /* FFGLUtilities.cpp in Sources */,
 				65D4D1C923193D0000D12558 /* FFGLPluginManager.cpp in Sources */,
+				65BE5BD9231D65F900CDDFA7 /* FFGLScopedFBOBinding.cpp in Sources */,
 				65D4D1CA23193D0000D12558 /* FFGLScopedBufferBinding.cpp in Sources */,
 				65D4D1CB23193D0000D12558 /* FFGLScopedShaderBinding.cpp in Sources */,
 				65D4D1CC23193D0000D12558 /* FFGLPlugin.cpp in Sources */,
+				65BE5BDA231D65F900CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */,
 				65D4D1EA23193D7500D12558 /* CustomThumbnail.cpp in Sources */,
 				65D4D1CD23193D0000D12558 /* FFGLPluginInfo.cpp in Sources */,
 				65D4D1CE23193D0000D12558 /* FFGLPluginInfoData.cpp in Sources */,
@@ -923,6 +945,7 @@
 				1B27092021639CEC002B8B05 /* Constants.cpp in Sources */,
 				1B2708EF21635F83002B8B05 /* FFGLUtilities.cpp in Sources */,
 				652480922306FD14007257C5 /* FFGLSmoothValue.cpp in Sources */,
+				65BE5BDB231D65F900CDDFA7 /* FFGLScopedFBOBinding.cpp in Sources */,
 				6524808E2306FD14007257C5 /* FFGLRandom.cpp in Sources */,
 				1B2708CC21635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
 				1B27090721635F83002B8B05 /* FFGLShader.cpp in Sources */,
@@ -938,6 +961,7 @@
 				652480B62306FD14007257C5 /* FFGLParamEvent.cpp in Sources */,
 				652480A62306FD14007257C5 /* FFGLMixer.cpp in Sources */,
 				1B2708EB21635F83002B8B05 /* FFGLScopedTextureBinding.cpp in Sources */,
+				65BE5BDC231D65F900CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -956,6 +980,7 @@
 				1B2708CB21635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
 				1B2708BF21635F6E002B8B05 /* FFGL.cpp in Sources */,
 				652480B52306FD14007257C5 /* FFGLParamEvent.cpp in Sources */,
+				65BE5BDE231D65FA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */,
 				6524808D2306FD14007257C5 /* FFGLRandom.cpp in Sources */,
 				1B2708F221635F83002B8B05 /* FFGLScreenQuad.cpp in Sources */,
 				652480912306FD14007257C5 /* FFGLSmoothValue.cpp in Sources */,
@@ -969,6 +994,7 @@
 				652480992306FD14007257C5 /* FFGLParamText.cpp in Sources */,
 				652480B12306FD14007257C5 /* FFGLAudio.cpp in Sources */,
 				1B2708F621635F83002B8B05 /* FFGLScopedVAOBinding.cpp in Sources */,
+				65BE5BDD231D65FA00CDDFA7 /* FFGLScopedFBOBinding.cpp in Sources */,
 				652480A92306FD14007257C5 /* FFGLParamBool.cpp in Sources */,
 				652480AD2306FD14007257C5 /* FFGLParamTrigger.cpp in Sources */,
 				1B2708EA21635F83002B8B05 /* FFGLScopedTextureBinding.cpp in Sources */,
@@ -994,6 +1020,7 @@
 				1B2708C521635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
 				1B2708C921635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
 				1B2708BD21635F6E002B8B05 /* FFGL.cpp in Sources */,
+				65BE5BE2231D65FA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */,
 				652480B32306FD14007257C5 /* FFGLParamEvent.cpp in Sources */,
 				6524808B2306FD14007257C5 /* FFGLRandom.cpp in Sources */,
 				1B2708F021635F83002B8B05 /* FFGLScreenQuad.cpp in Sources */,
@@ -1007,6 +1034,7 @@
 				1B2708E421635F83002B8B05 /* FFGLScopedSamplerActivation.cpp in Sources */,
 				652480972306FD14007257C5 /* FFGLParamText.cpp in Sources */,
 				652480AF2306FD14007257C5 /* FFGLAudio.cpp in Sources */,
+				65BE5BE1231D65FA00CDDFA7 /* FFGLScopedFBOBinding.cpp in Sources */,
 				1B2708F421635F83002B8B05 /* FFGLScopedVAOBinding.cpp in Sources */,
 				652480A72306FD14007257C5 /* FFGLParamBool.cpp in Sources */,
 				652480AB2306FD14007257C5 /* FFGLParamTrigger.cpp in Sources */,

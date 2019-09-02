@@ -39,6 +39,9 @@
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginSDK.cpp">
       <Filter>lib\ffgl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.cpp">
+      <Filter>lib\ffgl</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\lib\ffglex\FFGLFBO.cpp">
       <Filter>lib\ffglex</Filter>
     </ClCompile>
@@ -64,6 +67,12 @@
       <Filter>lib\ffglex</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\lib\ffglex\FFGLUtilities.cpp">
+      <Filter>lib\ffglex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedFBOBinding.cpp">
+      <Filter>lib\ffglex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedRenderBufferBinding.cpp">
       <Filter>lib\ffglex</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLAudio.cpp">
@@ -118,6 +127,7 @@
     <ClCompile Include="..\..\source\plugins\CustomThumbnail\PNGLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\CustomThumbnail.h" />
     <ClInclude Include="..\..\source\lib\FFGLSDK.h">
       <Filter>lib</Filter>
     </ClInclude>
@@ -134,6 +144,9 @@
       <Filter>lib\ffgl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h">
+      <Filter>lib\ffgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.h">
       <Filter>lib\ffgl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\lib\ffglex\FFGLFBO.h">
@@ -161,6 +174,12 @@
       <Filter>lib\ffglex</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\lib\ffglex\FFGLUtilities.h">
+      <Filter>lib\ffglex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedFBOBinding.h">
+      <Filter>lib\ffglex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedRenderBufferBinding.h">
       <Filter>lib\ffglex</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\lib\ffglquickstart\FFGLAudio.h">

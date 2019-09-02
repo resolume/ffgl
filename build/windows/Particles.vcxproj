@@ -13,6 +13,8 @@
   <ItemGroup>
     <ClCompile Include="..\..\source\lib\ffglex\FFGLFBO.cpp" />
     <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedBufferBinding.cpp" />
+    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedFBOBinding.cpp" />
+    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedRenderBufferBinding.cpp" />
     <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedSamplerActivation.cpp" />
     <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedShaderBinding.cpp" />
     <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedTextureBinding.cpp" />
@@ -49,6 +51,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\source\lib\ffglex\FFGLFBO.h" />
     <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedBufferBinding.h" />
+    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedFBOBinding.h" />
+    <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedRenderBufferBinding.h" />
     <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedSamplerActivation.h" />
     <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedShaderBinding.h" />
     <ClInclude Include="..\..\source\lib\ffglex\FFGLScopedTextureBinding.h" />
