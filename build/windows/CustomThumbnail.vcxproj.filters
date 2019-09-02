@@ -115,6 +115,7 @@
     <ClCompile Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.cpp">
       <Filter>lib\ffgl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\plugins\CustomThumbnail\PNGLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\lib\FFGLSDK.h">
@@ -266,5 +267,6 @@
       <Filter>libPng</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\plugins\CustomThumbnail\Thumb.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\PNGLoader.h" />
   </ItemGroup>
 </Project>
