@@ -7,13 +7,6 @@ enum ParamID
 	PID_INTENSITY
 };
 
-/**
- * There's two ways to provide thumbnails to the host. We could generate one when the plugin is first loaded, or we could have the raw rgba data embedded in the plugin.
- * This define is used to choose between the two modes. If this define is enabled this example shows how to generate a thumbnail when the plugin is being loaded.
- * To see the example where it uses embedded rgba data remove this define.
- */
-#define USE_DYNAMIC_THUMBNAIL
-
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< CustomThumbnail >,           // Creation method
 	"RS03",                                     // Plugin unique ID
@@ -27,7 +20,30 @@ static CFFGLPluginInfo PluginInfo(
 	"Resolume FFGL Example"                     // About
 );
 
-#if defined( USE_DYNAMIC_THUMBNAIL )
+#define THUMBNAIL_METHOD_EMBEDDED_RAW 1
+#define THUMBNAIL_METHOD_EMBEDDED_PNG 2
+#define THUMBNAIL_METHOD_CPU_GENERATED 3
+/**
+ * To provide thumbnail data to the host we need the thumbnail's dimensions and the rgba data. We could come up multiple with ways to provide these but
+ * this example shows the three most common scenarios. To see any of these scenarios you have to changethe value of this define to one of the values above.
+ * The RAW method shows how you would specify the thumbnail if you've got raw RGBA data embedded in your plugin. The PNG method shows how you could specify the
+ * thumbnail data if you've embedded some encoded image (like png). Last is the CPU example that shows you can also generate a thumbnail on the cpu should you want to.
+ */
+#define THUMBNAILMETHOD THUMBNAIL_METHOD_EMBEDDED_PNG
+
+#if THUMBNAILMETHOD == THUMBNAIL_METHOD_EMBEDDED_RAW
+static const Color thumbnail[] =
+{
+	Color( 0x000000FF ), Color( 0xFF0000FF ),
+	Color( 0x00FF00FF ), Color( 0xFFFF00FF ),
+};
+static CFFGLThumbnailInfo ThumbnailInfo( 2, 2, thumbnail );
+#elif THUMBNAILMETHOD == THUMBNAIL_METHOD_EMBEDDED_PNG
+#include "PNGLoader.h"
+#include "Thumb.h"
+//The PNG may be of any dimensions so we use the PNGLoader to get these dimensions from the png data.
+static CFFGLThumbnailInfo ThumbnailInfo( PNGLoader::ParsePNGWidth( THUMBNAIL ), PNGLoader::ParsePNGHeight( THUMBNAIL ), PNGLoader::ParsePNGPixels( THUMBNAIL ) );
+#elif THUMBNAILMETHOD == THUMBNAIL_METHOD_CPU_GENERATED
 /**
  * The plugin gets to decide how large it's thumbnail is, it's then up to the host to determine how to represent this thumbnail
  * on the screen. Some hosts may crop the thumbnails, some may stretch it, some apply autosizing to fit the thumbnail.
@@ -44,11 +60,13 @@ std::vector< Color > generateThumbnail()
 	 * decode from png to raw RGBA.
 	 */
 	std::vector< Color > thumbnail( THUMBNAIL_WIDTH * THUMBNAIL_HEIGHT );
+
 	for( Color& color : thumbnail )
 	{
 		unsigned char intensity = rand() % 256;
 		color = Color( intensity, intensity, intensity, 255 );
 	}
+
 	return thumbnail;
 }
 /**
@@ -57,13 +75,6 @@ std::vector< Color > generateThumbnail()
  * cpu as soon as this plugin is loaded into the application.
  */
 static CFFGLThumbnailInfo ThumbnailInfo( THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT, generateThumbnail() );
-#else
-static const Color thumbnail[] =
-{
-	Color( 0x000000FF ), Color( 0xFF0000FF ),
-	Color( 0x00FF00FF ), Color( 0xFFFF00FF ),
-};
-static CFFGLThumbnailInfo ThumbnailInfo( 2, 2, thumbnail );
 #endif
 
 static const char vertexShaderCode[] = R"(#version 410

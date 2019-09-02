@@ -13,6 +13,12 @@
     <Filter Include="lib\ffglquickstart">
       <UniqueIdentifier>{f8b96895-8369-44fd-9f8c-ae7834c38a1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zlib">
+      <UniqueIdentifier>{a7cdb76e-2e87-4642-974d-0e344b5d5a91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libPng">
+      <UniqueIdentifier>{54c94897-04c9-4d39-baaa-452a95736482}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\lib\glsdk_0_5_2\glload\source\gl_load.c">
@@ -109,6 +115,7 @@
     <ClCompile Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.cpp">
       <Filter>lib\ffgl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\plugins\CustomThumbnail\PNGLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\lib\FFGLSDK.h">
@@ -208,5 +215,58 @@
     <ClInclude Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.h">
       <Filter>lib\ffgl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\gzguts.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\inffast.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\inffixed.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\inflate.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\inftrees.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\trees.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\zlib.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\zutil.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\crc32.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\deflate.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\png.h">
+      <Filter>libPng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\pngconf.h">
+      <Filter>libPng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\pngdebug.h">
+      <Filter>libPng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\pnginfo.h">
+      <Filter>libPng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\pngpriv.h">
+      <Filter>libPng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\pngstruct.h">
+      <Filter>libPng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\pnglibconf.h">
+      <Filter>libPng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\Thumb.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\PNGLoader.h" />
   </ItemGroup>
 </Project>

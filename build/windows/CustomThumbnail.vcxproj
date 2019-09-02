@@ -43,6 +43,7 @@
     <ClCompile Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.cpp" />
     <ClCompile Include="..\..\source\lib\glsdk_0_5_2\glload\source\gl_load.c" />
     <ClCompile Include="..\..\source\plugins\CustomThumbnail\CustomThumbnail.cpp" />
+    <ClCompile Include="..\..\source\plugins\CustomThumbnail\PNGLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\lib\ffglex\FFGLFBO.h" />
@@ -78,6 +79,25 @@
     <ClInclude Include="..\..\source\lib\ffgl\FFGLPluginSDK.h" />
     <ClInclude Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.h" />
     <ClInclude Include="..\..\source\plugins\CustomThumbnail\CustomThumbnail.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\png.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\pngconf.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\pngdebug.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\pnginfo.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\pnglibconf.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\pngpriv.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\lpng1637\pngstruct.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\PNGLoader.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\Thumb.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\crc32.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\deflate.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\gzguts.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\inffast.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\inffixed.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\inflate.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\inftrees.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\trees.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\zlib.h" />
+    <ClInclude Include="..\..\source\plugins\CustomThumbnail\zlib-1.2.11\zutil.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}</ProjectGuid>
@@ -130,7 +150,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\source\lib\;..\..\source\lib\ffgl\utilities\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\source\lib\;$(ProjectDir)..\..\source\plugins\CustomThumbnail\zlib-1.2.11\;$(ProjectDir)..\..\source\plugins\CustomThumbnail\lpng1637\;..\..\source\lib\ffgl\utilities\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>FFGLPlugins.def</ModuleDefinitionFile>
@@ -139,7 +159,8 @@
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
       <AdditionalLibraryDirectories>..\..\..\source\common\opengl\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenGL32.lib;$(ProjectDir)..\..\source\plugins\CustomThumbnail\zlib-1.2.11\zlibstaticd.lib;$(ProjectDir)..\..\source\plugins\CustomThumbnail\lpng1637\libpng16_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,7 +171,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\source\lib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\source\lib\;$(ProjectDir)..\..\source\plugins\CustomThumbnail\zlib-1.2.11\;$(ProjectDir)..\..\source\plugins\CustomThumbnail\lpng1637\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>FFGLPlugins.def</ModuleDefinitionFile>
@@ -160,7 +181,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
       <AdditionalLibraryDirectories>..\..\..\source\common\opengl\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenGL32.lib;$(ProjectDir)..\..\source\plugins\CustomThumbnail\zlib-1.2.11\zlibstatic.lib;$(ProjectDir)..\..\source\plugins\CustomThumbnail\lpng1637\libpng16_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
