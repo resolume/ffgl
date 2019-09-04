@@ -77,6 +77,7 @@
 #include "FFGLPluginSDK.h"
 #include "FFGLThumbnailInfo.h"
 #include "../glsdk_0_5_2/glload/include/gl_load.h"
+using namespace ffgl;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Static and extern variables used in the FreeFrame SDK

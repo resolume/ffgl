@@ -51,6 +51,8 @@
 #include <vector>
 #include "FFGL.h"
 
+namespace ffgl
+{
 struct Color
 {
 	Color() :
@@ -124,4 +126,5 @@ private:
 	const Color* pixelData;           //!< A pointer to the array of thumbnail pixel data. The thumbnail's colors will be read from this array.
 };
 
+}//End namespace ffgl
 #endif

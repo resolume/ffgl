@@ -3,6 +3,8 @@
 //#include <stdlib.h>
 //#include <memory.h>
 
+namespace ffgl
+{
 static CFFGLThumbnailInfo* instance = nullptr;
 
 CFFGLThumbnailInfo* CFFGLThumbnailInfo::GetInstance()
@@ -39,3 +41,5 @@ const Color* CFFGLThumbnailInfo::GetPixels() const
 {
 	return pixelData;
 }
+
+}//End namespace ffgl
