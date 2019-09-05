@@ -34,8 +34,8 @@
 #endif
 
 //FPCREATEINSTANCEGL is a pointer to a function that creates FFGL plugins
-//in this SDK, all FFGL plugins must derive from CFreeFrameGLPlugin
-typedef FFResult __stdcall FPCREATEINSTANCEGL( class CFreeFrameGLPlugin** ppOutInstance );
+//in this SDK, all FFGL plugins must derive from CFFGLPlugin
+typedef FFResult __stdcall FPCREATEINSTANCEGL( class CFFGLPlugin** ppOutInstance );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \class		CFFGLPluginInfo
@@ -155,7 +155,7 @@ private:
  * instantiate this template function with your plugin's type and you're done.
  */
 template< typename PluginType >
-FFResult __stdcall PluginFactory( CFreeFrameGLPlugin** ppOutInstance )
+FFResult __stdcall PluginFactory( CFFGLPlugin** ppOutInstance )
 {
 	*ppOutInstance = new PluginType();
 	if( *ppOutInstance != nullptr )

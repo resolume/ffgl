@@ -84,7 +84,7 @@
 
 extern CFFGLPluginInfo* g_CurrPluginInfo;
 
-static CFreeFrameGLPlugin* s_pPrototype = NULL;
+static CFFGLPlugin* s_pPrototype = NULL;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FreeFrame SDK default implementation of the FreeFrame global functions.
@@ -246,7 +246,7 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 	//get the instantiate function pointer
 	FPCREATEINSTANCEGL* pInstantiate = g_CurrPluginInfo->GetFactoryMethod();
 
-	CFreeFrameGLPlugin* pInstance = NULL;
+	CFFGLPlugin* pInstance = NULL;
 
 	//call the instantiate function
 	FFResult dwRet = pInstantiate( &pInstance );
@@ -322,7 +322,7 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 }
 FFResult deInstantiateGL( void* instanceID )
 {
-	CFreeFrameGLPlugin* p = (CFreeFrameGLPlugin*)instanceID;
+	CFFGLPlugin* p = (CFFGLPlugin*)instanceID;
 
 	if( p != NULL )
 	{
@@ -484,10 +484,10 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	FFMixed retval;
 
 	// declare pPlugObj - pointer to this instance
-	CFreeFrameGLPlugin* pPlugObj;
+	CFFGLPlugin* pPlugObj;
 
-	// typecast DWORD into pointer to a CFreeFrameGLPlugin
-	pPlugObj = (CFreeFrameGLPlugin*)instanceID;
+	// typecast DWORD into pointer to a CFFGLPlugin
+	pPlugObj = (CFFGLPlugin*)instanceID;
 
 	switch( functionCode )
 	{

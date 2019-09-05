@@ -127,7 +127,7 @@ FFResult Particles::InitGL( const FFGLViewportStruct* vp )
 	}
 
 	//Use base-class init as success result so that it retains the viewport.
-	return CFreeFrameGLPlugin::InitGL( vp );
+	return CFFGLPlugin::InitGL( vp );
 }
 FFResult Particles::DeInitGL()
 {
@@ -184,7 +184,7 @@ char* Particles::GetParameterDisplay( unsigned int index )
 		return displayValueBuffer;
 
 	default:
-		return CFreeFrameGLPlugin::GetParameterDisplay( index );
+		return CFFGLPlugin::GetParameterDisplay( index );
 	}
 }
 

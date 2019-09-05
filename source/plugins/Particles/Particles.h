@@ -2,12 +2,12 @@
 #include <FFGLSDK.h>
 #include "GLResources.h"
 
-class Particles : public CFreeFrameGLPlugin
+class Particles : public CFFGLPlugin
 {
 public:
 	Particles();
 
-	//CFreeFrameGLPlugin
+	//CFFGLPlugin
 	FFResult InitGL( const FFGLViewportStruct* vp ) override;
 	FFResult DeInitGL() override;
 	FFResult ProcessOpenGL( ProcessOpenGLStruct* pGL ) override;

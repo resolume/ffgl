@@ -8,7 +8,7 @@ public:
 	Add();
 	~Add();
 
-	//CFreeFrameGLPlugin
+	//CFFGLPlugin
 	FFResult InitGL( const FFGLViewportStruct* vp ) override;
 	FFResult ProcessOpenGL( ProcessOpenGLStruct* pGL ) override;
 	FFResult DeInitGL() override;

@@ -1,12 +1,12 @@
 #pragma once
 #include <FFGLSDK.h>
 
-class FFGLGradients : public CFreeFrameGLPlugin
+class FFGLGradients : public CFFGLPlugin
 {
 public:
 	FFGLGradients();
 
-	//CFreeFrameGLPlugin
+	//CFFGLPlugin
 	FFResult InitGL( const FFGLViewportStruct* vp ) override;
 	FFResult ProcessOpenGL( ProcessOpenGLStruct* pGL ) override;
 	FFResult DeInitGL() override;

@@ -32,10 +32,10 @@ static CFFGLPluginInfo PluginInfo(
 #define THUMBNAILMETHOD THUMBNAIL_METHOD_EMBEDDED_PNG
 
 #if THUMBNAILMETHOD == THUMBNAIL_METHOD_EMBEDDED_RAW
-static const Color thumbnail[] =
+static const CFFGLColor thumbnail[] =
 {
-	Color( 0x000000FF ), Color( 0xFF0000FF ),
-	Color( 0x00FF00FF ), Color( 0xFFFF00FF ),
+	CFFGLColor( 0x000000FF ), CFFGLColor( 0xFF0000FF ),
+	CFFGLColor( 0x00FF00FF ), CFFGLColor( 0xFFFF00FF ),
 };
 static CFFGLThumbnailInfo ThumbnailInfo( 2, 2, thumbnail );
 #elif THUMBNAILMETHOD == THUMBNAIL_METHOD_EMBEDDED_PNG
@@ -52,19 +52,19 @@ static CFFGLThumbnailInfo ThumbnailInfo( PNGLoader::ParsePNGWidth( THUMBNAIL ), 
  */
 static const FFUInt32 THUMBNAIL_WIDTH = 160;
 static const FFUInt32 THUMBNAIL_HEIGHT = 120;
-std::vector< Color > generateThumbnail()
+std::vector< CFFGLColor > generateThumbnail()
 {
 	/**
 	 * NOTE: There's no active context here and the plugin has not been initialized. This function can only be used to generate a thumbnail on the CPU.
 	 * You may want to use a function like this one, if the thumbnail you've embedded has some encoding applied. You can use this function to decode, eg
 	 * decode from png to raw RGBA.
 	 */
-	std::vector< Color > thumbnail( THUMBNAIL_WIDTH * THUMBNAIL_HEIGHT );
+	std::vector< CFFGLColor > thumbnail( THUMBNAIL_WIDTH * THUMBNAIL_HEIGHT );
 
-	for( Color& color : thumbnail )
+	for( CFFGLColor& color : thumbnail )
 	{
 		unsigned char intensity = rand() % 256;
-		color = Color( intensity, intensity, intensity, 255 );
+		color = CFFGLColor( intensity, intensity, intensity, 255 );
 	}
 
 	return thumbnail;
@@ -143,7 +143,7 @@ FFResult CustomThumbnail::InitGL( const FFGLViewportStruct* vp )
 	intensityLocation  = shader.FindUniform( "Intensity" );
 
 	//Use base-class init as success result so that it retains the viewport.
-	return CFreeFrameGLPlugin::InitGL( vp );
+	return CFFGLPlugin::InitGL( vp );
 }
 FFResult CustomThumbnail::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {

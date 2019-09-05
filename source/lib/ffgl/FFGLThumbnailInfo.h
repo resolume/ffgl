@@ -51,26 +51,19 @@
 #include <vector>
 #include "FFGL.h"
 
-struct Color
+struct CFFGLColor
 {
-	Color() :
-		rgba( 0 )
-	{
-	}
-	Color( FFUInt32 rgba ) :
-		rgba( rgba )
-	{
-	}
-	Color( unsigned char r, unsigned char g, unsigned char b, unsigned char a ) :
-		rgba( 0 )
-	{
-		rgba |= FFUInt32( r ) << 24;
-		rgba |= FFUInt32( g ) << 16;
-		rgba |= FFUInt32( b ) << 8;
-		rgba |= FFUInt32( a ) << 0;
-	}
+	/// Creates a new Color that's automatically initialized to transparent black.
+	CFFGLColor();
+	/// Creates a new color from an unsigned integer that contains the data for all the channels.
+	/// The unsigned integer needs to be in the 0xRRGGBBAA format. This means that the Red channel
+	/// needs to be the most significant byte, then green, then blue and alpha is the least significant byte.
+	CFFGLColor( FFUInt32 rgba );
+	/// Creates a color where you can specify the color channel's values seperately without having to manually
+	/// handle the order of the RGBA channels.
+	CFFGLColor( unsigned char r, unsigned char g, unsigned char b, unsigned char a );
 
-	FFUInt32 rgba;
+	FFUInt32 rgba; //!< 1 byte for each channel. Red is MSB while Alpha is LSB. (0xRRGGBBAA)
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +93,7 @@ public:
 	/// \param width		The width of the thumbnail in number of pixels.
 	/// \param height		The height of the thumbnail in number of pixels.
 	/// \param ownedPixels	A vector of colors representing the thumbnail pixels' colors. This vector is expected to be width*height in size.
-	CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, std::vector< Color > ownedPixels );
+	CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, std::vector< CFFGLColor > ownedPixels );
 	/// This constructor can be used when you've got a static array of color values representing the thumbnail's colors.
 	/// This may be usefull when you've got a plain array of rgba colors that you want to use as thumbnail without having to copy their ownership
 	/// over into this thumbnail info instance.
@@ -108,20 +101,20 @@ public:
 	/// \param width		The width of the thumbnail in number of pixels.
 	/// \param height		The height of the thumbnail in number of pixels.
 	/// \param ownedPixels	A vector of colors representing the thumbnail pixels' colors. This vector is expected to be width*height in size.
-	CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, const Color* pixelData );
+	CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, const CFFGLColor* pixelData );
 
 	/// Get the width of the thumbnail in number of pixels.
 	FFUInt32 GetWidth() const;
 	/// Get the height of the thumbnail in number of pixels.
 	FFUInt32 GetHeight() const;
 	/// Gets the thumbnail's pixel colors. This is a contiguous array of colors at the size of width * height;
-	const Color* GetPixels() const;
+	const CFFGLColor* GetPixels() const;
 
 private:
-	FFUInt32 width;                   //!< Width of the thumbnail in number of pixels.
-	FFUInt32 height;                  //!< Height of the thumbnail in number of pixels.
-	std::vector< Color > ownedPixels; //!< Array of thumbnail data owned by this instance.
-	const Color* pixelData;           //!< A pointer to the array of thumbnail pixel data. The thumbnail's colors will be read from this array.
+	FFUInt32 width;                        //!< Width of the thumbnail in number of pixels.
+	FFUInt32 height;                       //!< Height of the thumbnail in number of pixels.
+	std::vector< CFFGLColor > ownedPixels; //!< Array of thumbnail data owned by this instance.
+	const CFFGLColor* pixelData;           //!< A pointer to the array of thumbnail pixel data. The thumbnail's colors will be read from this array.
 };
 
 #endif

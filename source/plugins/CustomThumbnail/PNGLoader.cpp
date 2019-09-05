@@ -113,9 +113,9 @@ FFUInt32 PNGLoader::ParsePNGHeight( const void* pngData )
 
 	return 0;
 }
-std::vector< Color > PNGLoader::ParsePNGPixels( const void* pngData )
+std::vector< CFFGLColor > PNGLoader::ParsePNGPixels( const void* pngData )
 {
-	std::vector< Color > pixels;
+	std::vector< CFFGLColor > pixels;
 
 	png_structp pngReadStruct = png_create_read_struct( PNG_LIBPNG_VER_STRING, 0, 0, 0 );
 	if( pngReadStruct == nullptr )
@@ -215,7 +215,7 @@ std::vector< Color > PNGLoader::ParsePNGPixels( const void* pngData )
 		//The tempBuffer is exactly the required size as we've enforced RGBA8888 as libPNG's output format.
 		memcpy( pixels.data(), tempBuffer.data(), tempBuffer.size() );
 
-		for( Color& color : pixels )
+		for( CFFGLColor& color : pixels )
 		{
 			//libPNG outputs ABGR which is the big-endian format of our RGBA output so we need to flip the bytes.
 			unsigned char* channels = reinterpret_cast< unsigned char* >( &color.rgba );
