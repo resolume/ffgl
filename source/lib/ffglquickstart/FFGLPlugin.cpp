@@ -155,16 +155,11 @@ void Plugin::SendParams( FFGLShader& shader )
 		}
 		if( params[ i ]->GetType() == FF_TYPE_BOOLEAN || params[ i ]->GetType() == FF_TYPE_EVENT )
 		{
-			std::string name = params[ i ]->GetName();
-			shader.Set( name.c_str(), (bool)params[ i ]->GetValue() );
+			shader.Set( params[ i ]->GetName().c_str(), (bool)params[ i ]->GetValue() );
 		}
 		else if( params[ i ]->GetType() != FF_TYPE_BUFFER )
 		{
-			auto range       = std::dynamic_pointer_cast< ParamRange >( params[ i ] );
-			bool isInteger   = params[ i ]->GetType() == FF_TYPE_INTEGER;
-			std::string name = params[ i ]->GetName();
-			float value      = range && !isInteger ? range->GetRealValue() : params[ i ]->GetValue();
-			shader.Set( name.c_str(), value );
+			shader.Set( params[ i ]->GetName().c_str(), params[ i ]->GetValue() );
 		}
 		i += 1;
 	}
@@ -187,8 +182,7 @@ char* Plugin::GetParameterDisplay( unsigned int index )
 	if( inRange && valid )
 	{
 		static char displayValueBuffer[ 16 ];
-		auto range              = std::dynamic_pointer_cast< ParamRange >( params[ index ] );
-		float value             = range ? range->GetRealValue() : params[ index ]->GetValue();
+		float value             = params[ index ]->GetValue();
 		std::string stringValue = std::to_string( value );
 		memset( displayValueBuffer, 0, sizeof( displayValueBuffer ) );
 		memcpy( displayValueBuffer, stringValue.c_str(), std::min( sizeof( displayValueBuffer ), stringValue.length() ) );

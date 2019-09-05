@@ -21,7 +21,7 @@ public:
 	ParamRange( std::string name, float value, Range range );
 
 	Range GetRange() const;
-	float GetRealValue() const;
+	float GetNormalizedValue() const;
 
 protected:
 	Range range;

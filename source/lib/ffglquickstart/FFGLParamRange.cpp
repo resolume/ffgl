@@ -25,16 +25,16 @@ ParamRange::ParamRange( std::string name, float value, Range range ) :
 	Param( std::move( name ), FF_TYPE_STANDARD ),
 	range( range )
 {
-	SetValue( ffglex::map( value, range.min, range.max, 0.0, 1.0 ) );
+	SetValue( value );
 }
 
 ParamRange::Range ParamRange::GetRange() const
 {
 	return range;
 }
-float ParamRange::GetRealValue() const
+float ParamRange::GetNormalizedValue() const
 {
-	return ffglex::map( value, 0.0, 1.0, range.min, range.max );
+	return ffglex::map( value, range.min, range.max, 0.0, 1.0 );
 }
 
 }//End namespace ffglqs

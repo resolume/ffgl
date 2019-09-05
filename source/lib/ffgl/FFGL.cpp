@@ -518,16 +518,17 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_SETPARAMETER:
 		if( pPlugObj != NULL )
 		{
-			unsigned int paramType = getParameterType( ( (const SetParameterStruct*)inputValue.PointerValue )->ParameterNumber );
+			const SetParameterStruct& setParameterStruct = *reinterpret_cast< const SetParameterStruct* >( inputValue.PointerValue );
+			unsigned int paramType = getParameterType( setParameterStruct.ParameterNumber );
 			if( paramType == FF_TYPE_TEXT || paramType == FF_TYPE_FILE )
 			{
-				retval.UIntValue = pPlugObj->SetTextParameter( ( (const SetParameterStruct*)inputValue.PointerValue )->ParameterNumber,
-															   (const char*)( (const SetParameterStruct*)inputValue.PointerValue )->NewParameterValue.PointerValue );
+				retval.UIntValue = pPlugObj->SetTextParameter( setParameterStruct.ParameterNumber,
+				                                               (const char*)setParameterStruct.NewParameterValue.PointerValue );
 			}
 			else
 			{
-				retval.UIntValue = pPlugObj->SetFloatParameter( ( (const SetParameterStruct*)inputValue.PointerValue )->ParameterNumber,
-																( *(float*)&( (const SetParameterStruct*)inputValue.PointerValue )->NewParameterValue.UIntValue ) );
+				retval.UIntValue = pPlugObj->SetFloatParameter( setParameterStruct.ParameterNumber,
+				                                                *(float*)&setParameterStruct.NewParameterValue.UIntValue );
 			}
 		}
 		else
