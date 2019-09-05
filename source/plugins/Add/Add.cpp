@@ -89,7 +89,7 @@ FFResult Add::InitGL( const FFGLViewportStruct* vp )
 	}
 
 	//Use base-class init as success result so that it retains the viewport.
-	return CFreeFrameGLPlugin::InitGL( vp );
+	return CFFGLPlugin::InitGL( vp );
 }
 FFResult Add::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {

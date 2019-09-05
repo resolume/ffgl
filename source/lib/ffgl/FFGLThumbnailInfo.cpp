@@ -3,16 +3,31 @@
 //#include <stdlib.h>
 //#include <memory.h>
 
-namespace ffgl
-{
 static CFFGLThumbnailInfo* instance = nullptr;
+
+CFFGLColor::CFFGLColor() :
+	rgba( 0 )
+{
+}
+CFFGLColor::CFFGLColor( FFUInt32 rgba ) :
+	rgba( rgba )
+{
+}
+CFFGLColor::CFFGLColor( unsigned char r, unsigned char g, unsigned char b, unsigned char a ) :
+	rgba( 0 )
+{
+	rgba |= FFUInt32( r ) << 24;
+	rgba |= FFUInt32( g ) << 16;
+	rgba |= FFUInt32( b ) << 8;
+	rgba |= FFUInt32( a ) << 0;
+}
 
 CFFGLThumbnailInfo* CFFGLThumbnailInfo::GetInstance()
 {
 	return instance;
 }
 
-CFFGLThumbnailInfo::CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, std::vector< Color > ownedPixels ) :
+CFFGLThumbnailInfo::CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, std::vector< CFFGLColor > ownedPixels ) :
 	width( width ), height( height ),
 	ownedPixels( std::move( ownedPixels ) )
 {
@@ -22,7 +37,7 @@ CFFGLThumbnailInfo::CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, std::ve
 	pixelData = this->ownedPixels.data();
 	instance = this;
 }
-CFFGLThumbnailInfo::CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, const Color* pixelData ) :
+CFFGLThumbnailInfo::CFFGLThumbnailInfo( FFUInt32 width, FFUInt32 height, const CFFGLColor* pixelData ) :
 	width( width ), height( height ),
 	pixelData( pixelData )
 {
@@ -37,9 +52,7 @@ FFUInt32 CFFGLThumbnailInfo::GetHeight() const
 {
 	return height;
 }
-const Color* CFFGLThumbnailInfo::GetPixels() const
+const CFFGLColor* CFFGLThumbnailInfo::GetPixels() const
 {
 	return pixelData;
 }
-
-}//End namespace ffgl

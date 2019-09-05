@@ -36,7 +36,7 @@ FFResult Plugin::InitGL( const FFGLViewportStruct* viewPort )
 		return FF_FAIL;
 	}
 
-	return CFreeFrameGLPlugin::InitGL( viewPort );
+	return CFFGLPlugin::InitGL( viewPort );
 }
 
 FFResult Plugin::ProcessOpenGL( ProcessOpenGLStruct* inputTextures )

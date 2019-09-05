@@ -1,12 +1,12 @@
 #pragma once
 #include <FFGLSDK.h>
 
-class CustomThumbnail : public CFreeFrameGLPlugin
+class CustomThumbnail : public CFFGLPlugin
 {
 public:
 	CustomThumbnail();
 
-	//CFreeFrameGLPlugin
+	//CFFGLPlugin
 	FFResult InitGL( const FFGLViewportStruct* vp ) override;
 	FFResult ProcessOpenGL( ProcessOpenGLStruct* pGL ) override;
 	FFResult DeInitGL() override;

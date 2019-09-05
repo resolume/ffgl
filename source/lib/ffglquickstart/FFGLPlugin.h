@@ -31,7 +31,7 @@ struct PluginInfo
 	PluginInfo(std::string id, std::string name) : id(id), name(name) {}
 };
 
-class Plugin : public CFreeFrameGLPlugin
+class Plugin : public CFFGLPlugin
 {
 public:
 	Plugin();
