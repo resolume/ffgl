@@ -16,4 +16,5 @@ Also more examples are available on this [repo](https://github.com/flyingrub/ffg
 - Reintroduction of Scoped bindings. (Removed unsafe resetOpenGLState function, use the ScopedBinding classes instead)
 - The Module Definition File is no longer required on Windows.
 - The SDK no longer adjusts any textures to use GL_CLAMP_TO_BORDER.
+- Renamed CFreeFrameGLPlugin class to CFFGLPlugin. Plugins now need to inherit from the CFFGLPlugin class.
 - Fixed some internal SDK warnings, convoluted implementations and inconsistencies in namings. (Most notably the quickstart module now uses the same conventions as the ffgl and ffglex modules)
