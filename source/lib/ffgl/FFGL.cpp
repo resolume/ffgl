@@ -461,6 +461,17 @@ char* getFileParameterExtension( unsigned int paramIndex, unsigned int extension
 
 	return s_pPrototype->GetFileParamExtension( paramIndex, extensionIndex );
 }
+FFUInt32 getDefaultParameterVisibility( unsigned int index )
+{
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return FF_FAIL;
+	}
+
+	return s_pPrototype->GetParamVisibility( index );
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Implementation of plugMain, the one and only exposed function
@@ -739,6 +750,44 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	{
 		const GetFileParameterExtensionStruct* arguments = reinterpret_cast< const GetFileParameterExtensionStruct* >( inputValue.PointerValue );
 		retval.PointerValue = getFileParameterExtension( arguments->ParameterNumber, arguments->ExtensionNumber );
+		break;
+	}
+
+	case FF_GET_PRAMETER_VISIBILITY:
+	{
+		if( pPlugObj != nullptr )
+			retval.UIntValue = pPlugObj->GetParamVisibility( inputValue.UIntValue );
+		else
+			retval.UIntValue = getDefaultParameterVisibility( inputValue.UIntValue );
+		break;
+	}
+
+	case FF_GET_PARAMETER_EVENTS:
+	{
+		GetParamEventsStruct& eventsBuffer = *reinterpret_cast< GetParamEventsStruct* >( inputValue.PointerValue );
+		//Events orignate from plugin instances so if no instance exists for this request we cannot fullfill it.
+		if( pPlugObj != nullptr )
+		{
+			FFUInt32 numPendingEvents = pPlugObj->GetNumPendingParamEvents();
+			//Hosts are allowed to query the number of events that are pending by passing in a nullptr for the events buffer.
+			//In that case we're outputting the number of pending events in the numEvents field and dont try to write any events into the event buffer.
+			if( eventsBuffer.events == nullptr )
+			{
+				eventsBuffer.numEvents = numPendingEvents;
+				retval.UIntValue = FF_SUCCESS;
+			}
+			else
+			{
+				//The host has provided a buffer to write events in to. We'll be writing our events into the buffer and output the
+				//number of events we've written in there.
+				eventsBuffer.numEvents = pPlugObj->ConsumeParamEvents( eventsBuffer.events, eventsBuffer.numEvents );
+				retval.UIntValue = FF_SUCCESS;
+			}
+		}
+		else
+		{
+			retval.UIntValue = FF_FAIL;
+		}
 		break;
 	}
 

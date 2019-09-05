@@ -104,6 +104,7 @@ public:
 	///						The return value should be cast either to a char* in case of text parameters or to a float*
 	///						in any other case. In case of error, NULL is returned.
 	FFMixed GetParamDefault( unsigned int dwIndex ) const;
+	FFUInt32 GetParamVisibility( unsigned int dwIndex ) const;
 
 	/// This method is called to know the number of elements of the plugin parameter whose index is passed as parameter
 	/// to the method. It is usually called by the default implementations of the FreeFrame global functions.
@@ -158,6 +159,9 @@ public:
 	char* GetFileParamExtension( unsigned int paramIndex, unsigned int extensionIndex ) const;
 
 	RangeStruct GetParamRange( unsigned int index );
+
+	FFUInt32 GetNumPendingParamEvents() const;
+	FFUInt32 ConsumeParamEvents( ParamEventStruct* events, FFUInt32 maxNumEvents );
 
 protected:
 	///	The standard constructor of CFFGLPluginManager.
@@ -261,7 +265,10 @@ protected:
 
 	void SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions );
 
-	void SetParamRange(unsigned int index, float min, float max);
+	void SetParamVisibility( unsigned int paramID, bool shouldBeVisible );
+	void SetParamRange( unsigned int index, float min, float max );
+
+	void RaiseParamEvent( unsigned int paramID, FFUInt64 eventToRaise );
 
 protected:
 	// Structure for keeping information about each plugin parameter
@@ -285,11 +292,14 @@ protected:
 		std::vector< Element > elements;
 		unsigned int usage;
 
+		bool visibleInUI = true;
 		RangeStruct range;
 
 		float defaultFloatVal = 0.0f;
 		std::string defaultStringVal;
 		std::vector< std::string > supportedExtensions;  //!< The extensions this parameter supports. Only used if dwType is FF_TYPE_FILE.
+
+		FFUInt64 pendingEventFlags = 0;                 //!< Event flags for events that are pending for the current parameter.
 	};
 
 	ParamInfo* FindParamInfo( unsigned int ID );

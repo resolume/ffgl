@@ -328,6 +328,8 @@ static const FFUInt32 FF_GET_RANGE                     = 41;
 static const FFUInt32 FF_GET_THUMBNAIL                 = 42;
 static const FFUInt32 FF_GETNUMFILPARAMETEREXTENSIONS  = 43;
 static const FFUInt32 FF_GET_FILE_PARAMETER_EXTENSION  = 44;
+static const FFUInt32 FF_GET_PRAMETER_VISIBILITY       = 45;
+static const FFUInt32 FF_GET_PARAMETER_EVENTS          = 46;
 
 //Previously used function codes that are no longer in use. Should prevent using
 //these numbers for new function codes.
@@ -403,6 +405,14 @@ static const FFUInt32 FF_INPUT_INUSE    = 1;
 // Parameter usages
 static const FFUInt32 FF_USAGE_STANDARD = 0;
 static const FFUInt32 FF_USAGE_FFT      = 1;
+
+// Parameter events flags
+static const FFUInt64 FF_EVENT_FLAG_VISIBILITY    = 0x01; //A parameter's visibility changed.
+//Not supported yet, but possibly in the future we would like these events as well:
+//static const FFUInt64 FF_EVENT_FLAG_VALUE         = 0x02; //A parameter's current value changed.
+//static const FFUInt64 FF_EVENT_FLAG_DEFAULT_VALUE = 0x04; //A parameter's default value changed.
+//static const FFUInt64 FF_EVENT_FLAG_NAME          = 0x08; //A parameter's name changed.
+//static const FFUInt64 FF_EVENT_FLAG_RANGE         = 0x10; //A parameter's range has been changed.
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FreeFrame Types
@@ -537,6 +547,17 @@ typedef struct GetFileParameterExtensionStructTag
 	FFUInt32 ParameterNumber;
 	FFUInt32 ExtensionNumber;
 } GetFileParameterExtensionStruct;
+
+typedef struct ParamEventStructTag
+{
+	FFUInt32 ParameterNumber;
+	FFUInt64 eventFlags;
+} ParamEventStruct;
+typedef struct GetParamEventsStructTag
+{
+	FFUInt32 numEvents;       //!< The number of events in the events buffer.
+	ParamEventStruct* events; //!< Buffer into which the plugin will write it's pending events.
+} GetParamEventsStruct;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Function prototypes

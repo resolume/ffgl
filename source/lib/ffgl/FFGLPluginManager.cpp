@@ -97,8 +97,13 @@ FFMixed CFFGLPluginManager::GetParamDefault( unsigned int dwIndex ) const
 		result.PointerValue = (void*)paramInfo->defaultStringVal.c_str();
 	else
 		result.UIntValue = *(FFUInt32*)&paramInfo->defaultFloatVal;
-	
+
 	return result;
+}
+FFUInt32 CFFGLPluginManager::GetParamVisibility( unsigned int dwIndex ) const
+{
+	const ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	return paramInfo != nullptr ? paramInfo->visibleInUI : FF_FAIL;
 }
 
 unsigned int CFFGLPluginManager::GetNumParamElements( unsigned int dwIndex ) const
@@ -184,6 +189,32 @@ RangeStruct CFFGLPluginManager::GetParamRange( unsigned int index )
 	if( paramInfo )
 		result = paramInfo->range;
 	return result;
+}
+
+FFUInt32 CFFGLPluginManager::GetNumPendingParamEvents() const
+{
+	FFUInt32 numPendingEvents = 0;
+	for( const ParamInfo& param : params )
+	{
+		if( param.pendingEventFlags != 0 )
+			numPendingEvents++;
+	}
+	return numPendingEvents;
+}
+FFUInt32 CFFGLPluginManager::ConsumeParamEvents( ParamEventStruct* events, FFUInt32 maxNumEvents )
+{
+	FFUInt32 numEventsConsumed = 0;
+	for( size_t index = 0; index < params.size() && numEventsConsumed < maxNumEvents; ++index )
+	{
+		if( params[ index ].pendingEventFlags != 0 )
+		{
+			events[ numEventsConsumed ].ParameterNumber = params[ index ].ID;
+			events[ numEventsConsumed ].eventFlags = params[ index ].pendingEventFlags;
+			params[ index ].pendingEventFlags = 0;
+			numEventsConsumed++;
+		}
+	}
+	return numEventsConsumed;
 }
 
 void CFFGLPluginManager::SetMinInputs( unsigned int iMinInputs )
@@ -318,11 +349,24 @@ void CFFGLPluginManager::SetFileParamInfo( unsigned int index, const char* pchNa
 	params.push_back( pInfo );
 }
 
+void CFFGLPluginManager::SetParamVisibility( unsigned int paramID, bool shouldBeVisible )
+{
+	ParamInfo* paramInfo = FindParamInfo( paramID );
+	if( paramInfo != nullptr )
+		paramInfo->visibleInUI = shouldBeVisible;
+}
 void CFFGLPluginManager::SetParamRange( unsigned int index, float min, float max )
 {
 	ParamInfo* paramInfo = FindParamInfo( index );
-	if( paramInfo )
+	if( paramInfo != nullptr )
 		paramInfo->range = { min, max };
+}
+
+void CFFGLPluginManager::RaiseParamEvent( unsigned int paramID, FFUInt64 eventToRaise )
+{
+	ParamInfo* paramInfo = FindParamInfo( paramID );
+	if( paramInfo != nullptr )
+		paramInfo->pendingEventFlags |= eventToRaise;
 }
 
 CFFGLPluginManager::ParamInfo* CFFGLPluginManager::FindParamInfo( unsigned int ID )
