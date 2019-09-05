@@ -53,19 +53,20 @@ public:
 	///
 	/// \return		The minimum number of inputs the host must provide.
 	unsigned int GetMinInputs() const;
-
 	/// This method returns the maximum number of inputs the plugin can receive.
 	/// It is usually called by the default implementations of the FreeFrame global functions.
 	///
 	/// \return		The maximum number of inputs the plugin can receive.
 	unsigned int GetMaxInputs() const;
 
+	/// This method is called by a the host to determine whether the plugin supports the SetTime function
+	bool GetTimeSupported() const;
+
 	/// This method returns how may parameters the plugin has.
 	/// It is usually called by the default implementations of the FreeFrame global functions.
 	///
 	/// \return		The number of parameters of the plugin.
 	unsigned int GetNumParams() const;
-
 	/// This method returns the name of the plugin parameter whose index is passed as parameter
 	/// to the method. It is usually called by the default implementations of the FreeFrame global functions.
 	///
@@ -75,7 +76,6 @@ public:
 	///						The return value is a pointer to an array of 16 1-byte ASCII characters,
 	///						not null terminated (see FreeFrame specification). NULL is returned on error.
 	char* GetParamName( unsigned int index );
-
 	/// This method is called to know the type of the plugin parameter whose index is passed as parameter
 	/// to the method. It is usually called by the default implementations of the FreeFrame global functions.
 	///
@@ -85,6 +85,25 @@ public:
 	///						Codes for allowed parameter types are defined in FreeFrame.h.
 	///						In case of error, FF_FAIL is returned.
 	unsigned int GetParamType( unsigned int index ) const;
+	/// This method is called to know the usage of a plugin parameter
+	/// For example a float buffer that expects a spectrum, will return FF_USAGE_FFT
+	/// By default parameters will return 0 as FF_USAGE_STANDARD.
+	/// In case parameter is an array, it will return the number of elements in the array.
+	/// \param	dwIndex		The index of the plugin parameter whose name is queried.
+	///						It should be in the range [0, Number of plugin parameters).
+	/// \return				The type of the plugin parameter whose index is passed as parameter to the method.
+	///						Codes for allowed parameter types are defined in FreeFrame.h.
+	///						In case of error, FF_FAIL is returned.
+	unsigned int GetParamUsage( unsigned int dwIndex ) const;
+	/// This method is called to get the default value of the plugin parameter whose index is passed as parameter
+	/// to the method. It is usually called by the default implementations of the FreeFrame global functions.
+	///
+	/// \param	dwIndex		The index of the plugin parameter whose name is queried.
+	///						It should be in the range [0, Number of plugin parameters).
+	/// \return				The default value of the plugin parameter whose index is passed as parameter to the method.
+	///						The return value should be cast either to a char* in case of text parameters or to a float*
+	///						in any other case. In case of error, NULL is returned.
+	FFMixed GetParamDefault( unsigned int dwIndex ) const;
 
 	/// This method is called to know the number of elements of the plugin parameter whose index is passed as parameter
 	/// to the method. It is usually called by the default implementations of the FreeFrame global functions.
@@ -96,7 +115,6 @@ public:
 	///						Codes for allowed parameter types are defined in FreeFrame.h.
 	///						In case of error, FF_FAIL is returned.
 	unsigned int GetNumParamElements( unsigned int dwIndex ) const;
-
 	/// Get the name of an element for a parameter that can have elements (eg FF_TYPE_OPTION and FF_TYPE_BUFFER)
 	/// The host may use this name to display that element on the screen. For example an OPTION's element
 	/// will most likely be show as a dropdown option, which when pressed will cause the param's value to change
@@ -111,7 +129,6 @@ public:
 	///						The return value is a pointer to a null terminated c string of ASCII characters.
 	///						In case of error, NULL is returned.
 	char* GetParamElementName( unsigned int dwIndex, unsigned int elIndex );
-
 	/// Get the default value of an element for a parameter whose elements default values have any effect (eg FF_TYPE_OPTION)
 	/// The host will use this value to set the param to this specific value when that option is chosen.
 	///
@@ -124,7 +141,6 @@ public:
 	///						The return value should be cast either to a float*.
 	///						In case of error, NULL is returned.
 	FFMixed GetParamElementDefault( unsigned int dwIndex, unsigned int elIndex ) const;
-
 	/// Set the value of an element for a parameter whose elements values can change (eg FF_TYPE_BUFFER)
 	/// The host will use this to change the contents of a parameter's elements, which the plugin can then use
 	/// depending on what the buffer is used for.
@@ -138,32 +154,8 @@ public:
 	///						if either of the provided indices is out of range. FF_SUCCESS on success, FF_FAIL otherwise.
 	FFUInt32 SetParamElementValue( unsigned int dwIndex, unsigned int elIndex, float newValue );
 
-	/// This method is called to know the usage of a plugin parameter
-	/// For example a float buffer that expects a spectrum, will return FF_USAGE_FFT
-	/// By default parameters will return 0 as FF_USAGE_STANDARD.
-	/// In case parameter is an array, it will return the number of elements in the array.
-	/// \param	dwIndex		The index of the plugin parameter whose name is queried.
-	///						It should be in the range [0, Number of plugin parameters).
-	/// \return				The type of the plugin parameter whose index is passed as parameter to the method.
-	///						Codes for allowed parameter types are defined in FreeFrame.h.
-	///						In case of error, FF_FAIL is returned.
-	unsigned int GetParamUsage( unsigned int dwIndex ) const;
-
-	/// This method is called to get the default value of the plugin parameter whose index is passed as parameter
-	/// to the method. It is usually called by the default implementations of the FreeFrame global functions.
-	///
-	/// \param	dwIndex		The index of the plugin parameter whose name is queried.
-	///						It should be in the range [0, Number of plugin parameters).
-	/// \return				The default value of the plugin parameter whose index is passed as parameter to the method.
-	///						The return value should be cast either to a char* in case of text parameters or to a float*
-	///						in any other case. In case of error, NULL is returned.
-	FFMixed GetParamDefault( unsigned int dwIndex ) const;
-
 	unsigned int GetNumFileParamExtensions( unsigned int index ) const;
 	char* GetFileParamExtension( unsigned int paramIndex, unsigned int extensionIndex ) const;
-
-	/// This method is called by a the host to determine whether the plugin supports the SetTime function
-	bool GetTimeSupported() const;
 
 	RangeStruct GetParamRange( unsigned int index );
 
@@ -181,7 +173,6 @@ protected:
 	/// \param	iMinInputs	The plugin subclass should set it to the minimum number of inputs
 	///						the host must provide.
 	void SetMinInputs( unsigned int iMinInputs );
-
 	/// This method is called by a plugin subclass, derived from this class, to indicate the maximum number
 	/// of inputs the plugin can receive. This method is usually called when a plugin object is instantiated
 	/// (i.e., in the plugin subclass constructor).
@@ -190,36 +181,11 @@ protected:
 	///						can receive.
 	void SetMaxInputs( unsigned int iMaxInputs );
 
-	/// This method is called by a plugin subclass, derived from this class, to specify name, type, and default
-	/// value of the plugin parameter whose index is passed as parameter to the method. This method is usually
-	/// called when a plugin object is instantiated (i.e., in the plugin subclass contructor). This version of
-	/// the SetParamInfo function (DefaultValue of type float) should be called for all types of plugin parameters
-	/// except for text, boolean, and event parameters.
+	/// This method is called by a plugin subclass, derived from this class, to indicate whether the
+	/// SetTime function is supported
 	///
-	/// \param	dwIndex			Index of the plugin parameter whose data are specified.
-	///							It should be in the range [0, Number of plugin parameters).
-	/// \param	pchName			A string containing the name of the plugin parameter.
-	///							According to the FreeFrame specification it should be at most 16 1-byte ASCII
-	///							characters long. Longer strings will be truncated at the 16th character.
-	/// \param	numElements		Number of elements of this parameter ( array )
-	/// \param	usage			Usage of this parameter,
-	void SetBufferParamInfo( unsigned int dwIndex, const char* pchName, unsigned int numElements, unsigned int usage );
-
-	/// This method is called by a plugin subclass, derived from this class, to specify name, type, and default
-	/// value of the plugin parameter whose index is passed as parameter to the method. This method is usually
-	/// called when a plugin object is instantiated (i.e., in the plugin subclass contructor). This version of
-	/// the SetParamInfo function (DefaultValue of type float) should be called for all types of plugin parameters
-	/// except for text, boolean, and event parameters.
-	///
-	/// \param	dwIndex			Index of the plugin parameter whose data are specified.
-	///							It should be in the range [0, Number of plugin parameters).
-	/// \param	pchName			A string containing the name of the plugin parameter.
-	///							According to the FreeFrame specification it should be at most 16 1-byte ASCII
-	///							characters long. Longer strings will be truncated at the 16th character.
-	/// \param	numElements		Number of elements of this parameter ( array )
-	void SetOptionParamInfo( unsigned int dwIndex, const char* pchName, unsigned int numElements, float defaultValue );
-
-	void SetParamElementInfo( unsigned int paramID, unsigned int elementIndex, const char* elementName, float elementValue );
+	/// \param	supported	The plugin indicates whether it supports the SetTime function by passing true or false (1 or 0)
+	void SetTimeSupported( bool supported );
 
 	/// This method is called by a plugin subclass, derived from this class, to specify name, type, and default
 	/// value of the plugin parameter whose index is passed as parameter to the method. This method is usually
@@ -236,7 +202,6 @@ protected:
 	/// \param	fDefaultValue	The default value of the plugin parameter. According to the FreeFrame
 	///							specification it must be a float in the range [0, 1].
 	void SetParamInfo( unsigned int index, const char* pchName, unsigned int type, float fDefaultValue );
-
 	/// This method is called by a plugin subclass, derived from this class, to specify name, type, and default
 	/// value of the plugin parameter whose index is passed as parameter to the method. This method is usually
 	/// called when a plugin object is instantiated (i.e., in the plugin subclass contructor). This version of
@@ -251,7 +216,6 @@ protected:
 	/// \param	dwType			The type of the plugin parameter. Codes for allowed types are defined in FreeFrame.h.
 	/// \param	bDefaultValue	The boolean default value of the plugin parameter.
 	void SetParamInfo( unsigned int index, const char* pchName, unsigned int type, bool bDefaultValue );
-
 	/// This method is called by a plugin subclass, derived from this class, to specify name, type, and default
 	/// value of the plugin parameter whose index is passed as parameter to the method. This method is usually
 	/// called when a plugin object is instantiated (i.e., in the plugin subclass contructor). This version of
@@ -266,13 +230,36 @@ protected:
 	/// \param	pchDefaultValue	A string to be used as the default value of the plugin parameter.
 	void SetParamInfo( unsigned int index, const char* pchName, unsigned int type, const char* pchDefaultValue );
 
-	void SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions );
-
-	/// This method is called by a plugin subclass, derived from this class, to indicate whether the
-	/// SetTime function is supported
+	/// This method is called by a plugin subclass, derived from this class, to specify name, type, and default
+	/// value of the plugin parameter whose index is passed as parameter to the method. This method is usually
+	/// called when a plugin object is instantiated (i.e., in the plugin subclass contructor). This version of
+	/// the SetParamInfo function (DefaultValue of type float) should be called for all types of plugin parameters
+	/// except for text, boolean, and event parameters.
 	///
-	/// \param	supported	The plugin indicates whether it supports the SetTime function by passing true or false (1 or 0)
-	void SetTimeSupported( bool supported );
+	/// \param	dwIndex			Index of the plugin parameter whose data are specified.
+	///							It should be in the range [0, Number of plugin parameters).
+	/// \param	pchName			A string containing the name of the plugin parameter.
+	///							According to the FreeFrame specification it should be at most 16 1-byte ASCII
+	///							characters long. Longer strings will be truncated at the 16th character.
+	/// \param	numElements		Number of elements of this parameter ( array )
+	/// \param	usage			Usage of this parameter,
+	void SetBufferParamInfo( unsigned int dwIndex, const char* pchName, unsigned int numElements, unsigned int usage );
+	/// This method is called by a plugin subclass, derived from this class, to specify name, type, and default
+	/// value of the plugin parameter whose index is passed as parameter to the method. This method is usually
+	/// called when a plugin object is instantiated (i.e., in the plugin subclass contructor). This version of
+	/// the SetParamInfo function (DefaultValue of type float) should be called for all types of plugin parameters
+	/// except for text, boolean, and event parameters.
+	///
+	/// \param	dwIndex			Index of the plugin parameter whose data are specified.
+	///							It should be in the range [0, Number of plugin parameters).
+	/// \param	pchName			A string containing the name of the plugin parameter.
+	///							According to the FreeFrame specification it should be at most 16 1-byte ASCII
+	///							characters long. Longer strings will be truncated at the 16th character.
+	/// \param	numElements		Number of elements of this parameter ( array )
+	void SetOptionParamInfo( unsigned int dwIndex, const char* pchName, unsigned int numElements, float defaultValue );
+	void SetParamElementInfo( unsigned int paramID, unsigned int elementIndex, const char* elementName, float elementValue );
+
+	void SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions );
 
 	void SetParamRange(unsigned int index, float min, float max);
 
