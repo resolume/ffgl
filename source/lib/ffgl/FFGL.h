@@ -550,8 +550,8 @@ typedef struct GetFileParameterExtensionStructTag
 
 typedef struct ParamEventStructTag
 {
-	FFUInt32 ParameterNumber;
-	FFUInt64 eventFlags;
+	FFUInt32 ParameterNumber; //!< The ID of the parameter that fired the event.
+	FFUInt64 eventFlags;      //!< Flags containing all events that the parameter fired since last event consume. A combination of FF_EVENT_FLAG_ flags.
 } ParamEventStruct;
 typedef struct GetParamEventsStructTag
 {

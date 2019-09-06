@@ -104,6 +104,12 @@ public:
 	///						The return value should be cast either to a char* in case of text parameters or to a float*
 	///						in any other case. In case of error, NULL is returned.
 	FFMixed GetParamDefault( unsigned int dwIndex ) const;
+	/// Get the visibility status of a certain parameter.
+	///
+	/// \param dwIndex		The index of the plugin parameter whose visibility state is queried.
+	///						It should be in the range [0, Number of plugin parameters).
+	/// \return				This returns 1 if the parameter is supposed to be visible or 0 when it needs to be invisible.
+	///						If the parameter at dwIndex doesn't exist this returns FF_FAIL
 	FFUInt32 GetParamVisibility( unsigned int dwIndex ) const;
 
 	/// This method is called to know the number of elements of the plugin parameter whose index is passed as parameter
@@ -160,7 +166,15 @@ public:
 
 	RangeStruct GetParamRange( unsigned int index );
 
+	/// Get the number of parameter events that are currently pending.
 	FFUInt32 GetNumPendingParamEvents() const;
+	/// Consumes currently pending parameter events.
+	/// This function loops over the currently pending parameter events and writes out ParamEventStructs into the passed in events buffer.
+	/// It then resets the events that it has consumed so that the next consume call will not return the same events.
+	///
+	/// \param events		The buffer into which param events should be written.
+	/// \param maxNumEvents	The maximum number of events that should be consumed.
+	/// \return				The number of events that were consumed. This may be smaller than maxNumEvents when there aren't any more pending events.
 	FFUInt32 ConsumeParamEvents( ParamEventStruct* events, FFUInt32 maxNumEvents );
 
 protected:
@@ -265,9 +279,21 @@ protected:
 
 	void SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions );
 
+	/// Sets whether or not a parameter should be visible in the host's ui.
+	///
+	/// \param paramID			Index of the parameter whose visibility has to be changed.
+	/// \param shouldBeVisible	True if the parameter should be visible in the ui, false otherwise.
 	void SetParamVisibility( unsigned int paramID, bool shouldBeVisible );
 	void SetParamRange( unsigned int index, float min, float max );
 
+	/// Raises an event flag on a certain parameter. Calling this will store the event as being a pending event
+	/// untill the host decides to consume the event and handles it. Raising an event multiple times before the host
+	/// consumes them will only output a single event to the host. This is okay because the expected host's response
+	/// is to query the parameter's state again, so if it has updated twice then handling the event once after both updates
+	/// will still result in the host querying the correct state.
+	///
+	/// \param paramID			Index of the parameter for which you want the event to be raised.
+	/// \param eventToRaise		The event flag to raise for the parameter. This has to be one of the FF_EVENT_FLAG_ flags.
 	void RaiseParamEvent( unsigned int paramID, FFUInt64 eventToRaise );
 
 protected:
@@ -297,7 +323,7 @@ protected:
 
 		float defaultFloatVal = 0.0f;
 		std::string defaultStringVal;
-		std::vector< std::string > supportedExtensions;  //!< The extensions this parameter supports. Only used if dwType is FF_TYPE_FILE.
+		std::vector< std::string > supportedExtensions; //!< The extensions this parameter supports. Only used if dwType is FF_TYPE_FILE.
 
 		FFUInt64 pendingEventFlags = 0;                 //!< Event flags for events that are pending for the current parameter.
 	};
