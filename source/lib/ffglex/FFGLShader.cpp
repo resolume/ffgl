@@ -11,11 +11,7 @@ namespace ffglex
 /**
  * The default constructor just initializes this object to represent no shader.
  */
-FFGLShader::FFGLShader() :
-	vertexShaderID( 0 ),
-	geometryShaderID( 0 ),
-	fragmentShaderID( 0 ),
-	programID( 0 )
+FFGLShader::FFGLShader() : programID( 0 )
 {
 }
 /**
@@ -24,9 +20,6 @@ FFGLShader::FFGLShader() :
 FFGLShader::~FFGLShader()
 {
 	//If any of these assertions hit you forgot to free this shader's gl resources.
-	assert( vertexShaderID == 0 );
-	assert( geometryShaderID == 0 );
-	assert( fragmentShaderID == 0 );
 	assert( programID == 0 );
 }
 
@@ -80,13 +73,15 @@ bool FFGLShader::Compile( const char* vertexShader, const char* fragmentShader )
 
 	//Everything needs to succeed for this to be a usable shader. If anything fails we'll be cleaning up everything
 	//so that we wont keep anything that wont be used alive.
-	if( !CompileVertexShader( vertexShader ) )
+    
+    
+	if( !addShader(vertexShader, GL_VERTEX_SHADER) )
 	{
 		FreeGLResources();
 		return false;
 	}
 	//Transform feedback shaders dont require a fragment shader.
-	if( fragmentShader != nullptr && strlen( fragmentShader ) != 0 && !CompileFragmentShader( fragmentShader ) )
+	if( fragmentShader != nullptr && strlen( fragmentShader ) != 0 && !addShader(fragmentShader, GL_FRAGMENT_SHADER) )
 	{
 		FreeGLResources();
 		return false;
@@ -123,19 +118,19 @@ bool FFGLShader::Compile( const char* vertexShader, const char* geometryShader, 
 		return false;
 
 	//If anything fails we'll be cleaning up everything so that we wont keep anything that wont be used alive.
-	if( !CompileVertexShader( vertexShader ) )
+	if( !addShader( vertexShader , GL_VERTEX_SHADER) )
 	{
 		FreeGLResources();
 		return false;
 	}
 	//No shaders require the geometry stage.
-	if( geometryShader != nullptr && strlen( geometryShader ) != 0 && !CompileGeometryShader( geometryShader ) )
+	if( geometryShader != nullptr && strlen( geometryShader ) != 0 && !addShader( geometryShader, GL_GEOMETRY_SHADER) )
 	{
 		FreeGLResources();
 		return false;
 	}
 	//Transform feedback shaders dont require a fragment shader.
-	if( fragmentShader != nullptr && strlen( fragmentShader ) != 0 && !CompileFragmentShader( fragmentShader ) )
+	if( fragmentShader != nullptr && strlen( fragmentShader ) != 0 && !addShader( fragmentShader , GL_FRAGMENT_SHADER) )
 	{
 		FreeGLResources();
 		return false;
@@ -156,24 +151,6 @@ bool FFGLShader::Compile( const char* vertexShader, const char* geometryShader, 
  */
 void FFGLShader::FreeGLResources()
 {
-	if( vertexShaderID != 0 )
-	{
-		glDeleteShader( vertexShaderID );
-		vertexShaderID = 0;
-	}
-
-	if( fragmentShaderID != 0 )
-	{
-		glDeleteShader( fragmentShaderID );
-		fragmentShaderID = 0;
-	}
-
-	if( geometryShaderID != 0 )
-	{
-		glDeleteShader( geometryShaderID );
-		geometryShaderID = 0;
-	}
-
 	if( programID != 0 )
 	{
 		glDeleteProgram( programID );
@@ -231,100 +208,54 @@ GLint FFGLShader::FindUniform( const char* name ) const
 {
 	return glGetUniformLocation( programID, name );
 }
-
-bool FFGLShader::CompileVertexShader( const char* vertexShader )
+    
+GLuint FFGLShader::getProgramID()
 {
-	vertexShaderID = glCreateShader( GL_VERTEX_SHADER );
-
-	// Load Shader Sources
-	glShaderSource( vertexShaderID, 1, &vertexShader, NULL );
-
-	// Compile The Shaders
-	glCompileShader( vertexShaderID );
-
-	GLint compileStatus;
-	glGetShaderiv( vertexShaderID, GL_COMPILE_STATUS, &compileStatus );
-
-	if( compileStatus != GL_TRUE )
-	{
-#ifdef LOGSHADERERRORS
-		GLint logLength;
-		glGetShaderiv( vertexShaderID, GL_INFO_LOG_LENGTH, &logLength );
-		std::vector< GLchar > log( logLength + 1 );
-		memset( log.data(), 0, logLength + 1 );
-		glGetShaderInfoLog( vertexShaderID, logLength, NULL, log.data() );
-
-		Log( "Vertex Shader error: ", log.data() );
-#endif
-	}
-
-	return compileStatus == GL_TRUE;
+    if (programID == 0)
+    {
+        programID = glCreateProgram();
+    }
+    
+    return programID;
 }
-bool FFGLShader::CompileGeometryShader( const char* geometryShader )
+
+bool FFGLShader::addShader(const char* shader, GLenum type)
 {
-	geometryShaderID = glCreateShader( GL_GEOMETRY_SHADER );
-
-	// Load Shader Sources
-	glShaderSource( geometryShaderID, 1, &geometryShader, NULL );
-
-	// Compile The Shaders
-	glCompileShader( geometryShaderID );
-
-	GLint compileStatus;
-	glGetShaderiv( geometryShaderID, GL_COMPILE_STATUS, &compileStatus );
-
-	if( compileStatus != GL_TRUE )
-	{
+    GLuint shaderID = glCreateShader( type );
+    
+    // Load Shader Sources
+    glShaderSource( shaderID, 1, &shader, NULL );
+    
+    // Compile The Shaders
+    glCompileShader( shaderID );
+    
+    GLint compileStatus;
+    glGetShaderiv( shaderID, GL_COMPILE_STATUS, &compileStatus );
+    
+    if( compileStatus != GL_TRUE )
+    {
 #ifdef LOGSHADERERRORS
-		GLint logLength;
-		glGetShaderiv( geometryShaderID, GL_INFO_LOG_LENGTH, &logLength );
-		std::vector< GLchar > log( logLength + 1 );
-		memset( log.data(), 0, logLength + 1 );
-		glGetShaderInfoLog( geometryShaderID, logLength, NULL, log.data() );
-
-		Log( "Geometry Shader error: ", log.data() );
+        GLint logLength;
+        glGetShaderiv( shaderID, GL_INFO_LOG_LENGTH, &logLength );
+        std::vector< GLchar > log( logLength + 1 );
+        memset( log.data(), 0, logLength + 1 );
+        glGetShaderInfoLog( shaderID, logLength, NULL, log.data() );
+        
+        Log( "Vertex Shader error: ", log.data() );
 #endif
-	}
-
-	return compileStatus == GL_TRUE;
+        glDeleteShader(shaderID);
+        return false;
+    }
+    
+    glAttachShader(getProgramID(), shaderID);
+    glDeleteShader(shaderID);
+    
+    return true;
 }
-bool FFGLShader::CompileFragmentShader( const char* fragmentShader )
-{
-	fragmentShaderID = glCreateShader( GL_FRAGMENT_SHADER );
 
-	// Load Shader Sources
-	glShaderSource( fragmentShaderID, 1, &fragmentShader, NULL );
-
-	// Compile The Shaders
-	glCompileShader( fragmentShaderID );
-
-	GLint compileStatus;
-	glGetShaderiv( fragmentShaderID, GL_COMPILE_STATUS, &compileStatus );
-
-	if( compileStatus != GL_TRUE )
-	{
-#ifdef LOGSHADERERRORS
-		GLint logLength;
-		glGetShaderiv( fragmentShaderID, GL_INFO_LOG_LENGTH, &logLength );
-		std::vector< GLchar > log( logLength + 1 );
-		memset( log.data(), 0, logLength + 1 );
-		glGetShaderInfoLog( fragmentShaderID, logLength, NULL, log.data() );
-
-		Log( "Fragment Shader error: ", log.data() );
-#endif
-	}
-
-	return compileStatus == GL_TRUE;
-}
 bool FFGLShader::LinkProgram()
 {
-	programID = glCreateProgram();
-
-	glAttachShader( programID, vertexShaderID );
-	if( geometryShaderID != 0 )
-		glAttachShader( programID, geometryShaderID );
-	if( fragmentShaderID != 0 )
-		glAttachShader( programID, fragmentShaderID );
+	programID = getProgramID();
 
 	if( !transformFeedbackVaryings.empty() )
 	{
@@ -344,7 +275,7 @@ bool FFGLShader::LinkProgram()
 		//get the log so we can peek at the error string
 		char log[ 1024 ];
 		GLsizei returnedLength;
-		glGetProgramInfoLog( fragmentShaderID, sizeof( log ) - 1, &returnedLength, log );
+		glGetProgramInfoLog( programID, sizeof( log ) - 1, &returnedLength, log );
 		log[ returnedLength ] = 0;
 
 		Log( "Fragment Shader error: ", log );

@@ -35,16 +35,19 @@ public:
 
 	FFGLShader& operator=( const FFGLShader& ) = delete;
 	FFGLShader& operator=( FFGLShader&& ) = delete;
+    
+    bool addShader(const char* shader, GLenum type);
+    
+    GLuint getProgramID();
+    
+    bool LinkProgram();                                      // Function that tries to link the added shaders into a program. 
 
 private:
-	bool CompileVertexShader( const char* vertexShader );    //Internal utility function that tries to compile a vertex shader and updates the internal vertexShaderID. Doesn't clean up on failure.
-	bool CompileGeometryShader( const char* geometryShader );//Internal utility function that tries to compile a geometry shader and updates the internal geometryShaderID. Doesn't clean up on failure.
-	bool CompileFragmentShader( const char* fragmentShader );//Internal utility function that tries to compile a fragment shader and updates the internal fragmentShaderID. Doesn't clean up on failure.
-	bool LinkProgram();                                      //Internal utility function that tries to link the two previously compiled vertex and fragment shaders into a program. Doesn't clean up on failure.
+//    bool CompileVertexShader( const char* vertexShader );    //Internal utility function that tries to compile a vertex shader and updates the internal vertexShaderID. Doesn't clean up on failure.
+//    bool CompileGeometryShader( const char* geometryShader );//Internal utility function that tries to compile a geometry shader and updates the internal geometryShaderID. Doesn't clean up on failure.
+//    bool CompileFragmentShader( const char* fragmentShader );//Internal utility function that tries to compile a fragment shader and updates the internal fragmentShaderID. Doesn't clean up on failure.
+	
 
-	GLuint vertexShaderID;                                //!< The ID OpenGL gave our vertex shader. 0 for invalid.
-	GLuint geometryShaderID;                              //!< The ID OpenGL gave our geometry shader. 0 if not present or invalid.
-	GLuint fragmentShaderID;                              //!< The ID OpenGL gave our fragment shader. 0 for invalid.
 	GLuint programID;                                     //!< The ID OpenGL gave our shader program. Bind this to use this shader. 0 for invalid.
 	std::vector< std::string > transformFeedbackVaryings; //!< The varyings that will be captured using a transform feedback. Ordered in the order of capturing.
 };
