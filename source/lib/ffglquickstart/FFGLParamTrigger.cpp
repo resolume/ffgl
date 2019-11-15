@@ -3,7 +3,7 @@
 namespace ffglqs
 {
 
-std::shared_ptr< ParamTrigger > ParamTrigger::create( std::string name )
+std::shared_ptr< ParamTrigger > ParamTrigger::Create( std::string name )
 {
 	return std::make_shared< ParamTrigger >( std::move( name ) );
 }
