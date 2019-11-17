@@ -9,60 +9,10 @@
 #include <math.h>
 #include <random>
 #include <iostream>
+#include <algorithm>
 
 namespace ffglex
 {
-#ifdef _WIN32
-typedef __int64 int64;
-inline int64 abs64( const int64 n ) throw()
-{
-	return ( n >= 0 ) ? n : -n;
-}
-
-static int64 hiResTicksPerSecond    = -1;
-static double hiResTicksScaleFactor = 0.0;
-#endif
-
-float getTicks()
-{
-#ifdef _WIN32
-	//return (double) GetTickCount();
-
-	//snippet for timing taken from JUCE library
-	if( hiResTicksPerSecond == -1 )
-	{
-		LARGE_INTEGER f;
-		QueryPerformanceFrequency( &f );
-		hiResTicksPerSecond   = f.QuadPart;
-		hiResTicksScaleFactor = 1000.0f / hiResTicksPerSecond;
-	}
-
-	LARGE_INTEGER ticks;
-	QueryPerformanceCounter( &ticks );
-
-	const int64 mainCounterAsHiResTicks = ( GetTickCount() * hiResTicksPerSecond ) / 1000;
-	const int64 newOffset               = mainCounterAsHiResTicks - ticks.QuadPart;
-
-	// fix for a very obscure PCI hardware bug that can make the counter
-	// sometimes jump forwards by a few seconds..
-	static int64 hiResTicksOffset = 0;
-	const int64 offsetDrift       = abs64( newOffset - hiResTicksOffset );
-
-	if( offsetDrift > ( hiResTicksPerSecond >> 1 ) )
-		hiResTicksOffset = newOffset;
-
-	return ( (double)( ticks.QuadPart + hiResTicksOffset ) ) * hiResTicksScaleFactor;
-
-#else
-
-	Nanoseconds nano = AbsoluteToNanoseconds( UpTime() );
-	// if you want that in (floating point) seconds:
-	double seconds = ( (double)UnsignedWideToUInt64( nano ) ) * 1e-9;
-	return seconds * 1000.0;
-
-#endif
-}
-
 unsigned int is_power_of_2( unsigned int x )
 {
 	return ( x != 0 ) && ( ( x & ( x - 1 ) ) == 0 );
@@ -90,11 +40,11 @@ void HSVtoRGB( float h, float s, float v, float& r, float& g, float& b )
 	}
 	else
 	{
-		double var_h = h * 6;
-		double var_i = floor( var_h );
-		double var_1 = v * ( 1 - s );
-		double var_2 = v * ( 1 - s * ( var_h - var_i ) );
-		double var_3 = v * ( 1 - s * ( 1 - ( var_h - var_i ) ) );
+		float var_h = h * 6;
+		float var_i  = floor( var_h );
+		float var_1  = v * ( 1 - s );
+		float var_2  = v * ( 1 - s * ( var_h - var_i ) );
+		float var_3  = v * ( 1 - s * ( 1 - ( var_h - var_i ) ) );
 
 		if( var_i == 0 )
 		{
@@ -196,6 +146,15 @@ float random( float min, float max )
 float clamp01( float value )
 {
 	return std::min( std::max( value, 0.0f ), 1.0f );
+}
+float clamp( float value, float low, float high )
+{
+	return std::max( std::min( value, high ), low );
+}
+float map( float value, float low, float high, float newLow, float newHigh )
+{
+	float res = newLow + ( value - low ) * ( newHigh - newLow ) / ( high - low );
+	return clamp( res, newLow, newHigh );
 }
 
 void ReplaceAll( std::string& utf8String, const std::string& valueToReplace, const std::string& replaceWith )

@@ -25,19 +25,9 @@ extern CFFGLPluginInfo* g_CurrPluginInfo;
 // CFFGLPluginInfo constructor and destructor
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CFFGLPluginInfo::CFFGLPluginInfo(
-	FPCREATEINSTANCEGL* pCreateInstance,
-	const char* pchUniqueID,
-	const char* pchPluginName,
-	unsigned int dwAPIMajorVersion,
-	unsigned int dwAPIMinorVersion,
-	unsigned int dwPluginMajorVersion,
-	unsigned int dwPluginMinorVersion,
-	unsigned int dwPluginType,
-	const char* pchDescription,
-	const char* pchAbout,
-	unsigned int dwFreeFrameExtendedDataSize,
-	const void* pFreeFrameExtendedDataBlock )
+CFFGLPluginInfo::CFFGLPluginInfo( FPCREATEINSTANCEGL* pCreateInstance, const char* pchUniqueID, const char* pchPluginName, unsigned int dwAPIMajorVersion, unsigned int dwAPIMinorVersion, unsigned int dwPluginMajorVersion, unsigned int dwPluginMinorVersion, unsigned int dwPluginType, const char* pchDescription, const char* pchAbout, unsigned int dwFreeFrameExtendedDataSize, const void* pFreeFrameExtendedDataBlock ) :
+	about( pchAbout ),
+	description( pchDescription )
 {
 	//This FFGL SDK is intended for developing plugins based on the FFGL 2.0 specification. Please
 	//update your plugin code to use FFGL 2.0.
@@ -68,8 +58,8 @@ CFFGLPluginInfo::CFFGLPluginInfo(
 	m_PluginInfo.PluginType = dwPluginType;
 
 	// Filling PluginExtendedInfoStruct
-	m_PluginExtendedInfo.About = strdup( pchAbout );
-	m_PluginExtendedInfo.Description = strdup( pchDescription );
+	m_PluginExtendedInfo.About = about.c_str();
+	m_PluginExtendedInfo.Description = description.c_str();
 	m_PluginExtendedInfo.PluginMajorVersion = dwPluginMajorVersion;
 	m_PluginExtendedInfo.PluginMinorVersion = dwPluginMinorVersion;
 	if( ( dwFreeFrameExtendedDataSize > 0 ) && ( pFreeFrameExtendedDataBlock != NULL ) )
@@ -88,8 +78,9 @@ CFFGLPluginInfo::CFFGLPluginInfo(
 
 CFFGLPluginInfo::~CFFGLPluginInfo()
 {
-	free( m_PluginExtendedInfo.About );
-	free( m_PluginExtendedInfo.Description );
+	//No need to free the strings anymore, we've moved their ownership into the std::string classes.
+	//free( m_PluginExtendedInfo.About );
+	//free( m_PluginExtendedInfo.Description );
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

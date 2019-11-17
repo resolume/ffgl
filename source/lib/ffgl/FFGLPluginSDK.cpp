@@ -21,78 +21,91 @@
 #include "FFGLPluginSDK.h"
 #include <stdio.h>
 #include <memory.h>
+#include <algorithm>
 
 // Buffer used by the default implementation of getParameterDisplay
-static char s_DisplayValue[ 15 ];
+static char s_DisplayValue[ 16 ];
 
 ////////////////////////////////////////////////////////
-// CFreeFrameGLPlugin constructor and destructor
+// CFFGLPlugin constructor and destructor
 ////////////////////////////////////////////////////////
 
-CFreeFrameGLPlugin::CFreeFrameGLPlugin() :
+CFFGLPlugin::CFFGLPlugin() :
 	CFFGLPluginManager(),
 	bpm( 120.0f ),
 	barPhase( 0.0f )
 {
 }
 
-CFreeFrameGLPlugin::~CFreeFrameGLPlugin()
+CFFGLPlugin::~CFFGLPlugin()
 {
 }
 
 ////////////////////////////////////////////////////////
-// Default implementation of CFreeFrameGLPlugin methods
+// Default implementation of CFFGLPlugin methods
 ////////////////////////////////////////////////////////
 
-char* CFreeFrameGLPlugin::GetParameterDisplay( unsigned int index )
+char* CFFGLPlugin::GetParameterDisplay( unsigned int index )
 {
 	unsigned int pType = m_pPlugin->GetParamType( index );
 	if( pType != FF_FAIL )
 	{
-		if( pType == FF_TYPE_TEXT )
+		if( pType == FF_TYPE_TEXT || pType == FF_TYPE_FILE )
 		{
 			return m_pPlugin->GetTextParameter( index );
 		}
 		else
 		{
-			float fValue = m_pPlugin->GetFloatParameter( index );
-			memset( s_DisplayValue, 0, 15 );
-			sprintf( s_DisplayValue, "%f", fValue );
+			std::string stringValue = std::to_string(m_pPlugin->GetFloatParameter( index ));
+			memset(s_DisplayValue, 0, sizeof(s_DisplayValue));
+			memcpy(s_DisplayValue, stringValue.c_str(), std::min(sizeof(s_DisplayValue), stringValue.length()));
 			return s_DisplayValue;
 		}
 	}
 	return NULL;
 }
 
-FFResult CFreeFrameGLPlugin::SetFloatParameter( unsigned int index, float value )
+FFResult CFFGLPlugin::SetFloatParameter( unsigned int index, float value )
 {
 	return FF_FAIL;
 }
 
-FFResult CFreeFrameGLPlugin::SetTextParameter( unsigned int index, const char* value )
+FFResult CFFGLPlugin::SetTextParameter( unsigned int index, const char* value )
 {
 	return FF_FAIL;
 }
 
-float CFreeFrameGLPlugin::GetFloatParameter( unsigned int index )
+float CFFGLPlugin::GetFloatParameter( unsigned int index )
 {
 	return 0.0;
 }
 
-char* CFreeFrameGLPlugin::GetTextParameter( unsigned int index )
+char* CFFGLPlugin::GetTextParameter( unsigned int index )
 {
 	return (char*)FF_FAIL;
 }
 
-FFResult CFreeFrameGLPlugin::GetInputStatus( unsigned int index )
+FFResult CFFGLPlugin::GetInputStatus( unsigned int index )
 {
 	if( index >= GetMaxInputs() )
 		return FF_FAIL;
 	return FF_INPUT_INUSE;
 }
 
-void CFreeFrameGLPlugin::SetBeatInfo( float bpm, float barPhase )
+void CFFGLPlugin::SetBeatInfo( float bpm, float barPhase )
 {
 	this->bpm = bpm;
 	this->barPhase = barPhase;
 }
+
+void CFFGLPlugin::SetHostInfo(const char * hostname, const char * version)
+{
+	hostInfos.name = hostname;
+	hostInfos.version = version;
+}
+
+void CFFGLPlugin::SetSampleRate(unsigned int _sampleRate)
+{
+	sampleRate = _sampleRate;
+}
+

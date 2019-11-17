@@ -66,6 +66,12 @@
 //  which the host can then use to fill that buffer with the requested data. This can be used by plugins to
 //  access the host's global fft data for example.
 //
+// FFGL 2.1 by Menno Vink (menno@resolume.com)
+// www.resolume.com
+// -Added support for embedded thumbnails.
+// -Reintroduction of RAII bindings to help protect the host's context state.
+// -Added file parameters
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef __FFGL2_H__
@@ -79,12 +85,196 @@
 
 #if defined( _WIN32 )
 #define WIN32_LEAN_AND_MEAN//Exclude rarely-used stuff from Windows headers
-#define NOMINMAX           //No min/max macros.
 #define _WINSOCKAPI_       //Prevent inclusion of winsock
+//Defines to prevent windows.h from making all kinds of defines which may conflict with actual user code.
+#define NOGDICAPMASKS
+#define NOVIRTUALKEYCODES
+#define NOWINMESSAGES
+#define NOWINSTYLES
+#define NOSYSMETRICS
+#define NOMENUS
+#define NOICONS
+#define NOKEYSTATES
+#define NOSYSCOMMANDS
+#define NORASTEROPS
+#define NOSHOWWINDOW
+#define OEMRESOURCE
+#define NOATOM
+#define NOCLIPBOARD
+#define NOCOLOR
+#define NOCTLMGR
+#define NODRAWTEXT
+//#define NOGDI        //We need wingdi because it defines wglGetProcAddress
+#define NOKERNEL
+#define NOUSER
+#define NONLS
+#define NOMB
+#define NOMEMMGR
+#define NOMETAFILE
+#define NOMINMAX
+#define NOMSG
+#define NOOPENFILE
+#define NOSCROLL
+#define NOSERVICE
+#define NOSOUND
+#define NOTEXTMETRIC
+#define NOWH
+#define NOWINOFFSETS
+#define NOCOMM
+#define NOKANJI
+#define NOHELP
+#define NOPROFILER
+#define NODEFERWINDOWPOS
+#define NOMCX
+//Defines to prevent WinUser.h from making all kinds of defines which may conflict with actual user code.
+#define NOAPISET
+#define NOUSER
+#define NORESOURCE
+#define NOSCROLL
+#define NOSHOWWINDOW
+#define NOVIRTUALKEYCODES
+#define NOWH
+#define NODESKTOP
+#define NOWINDOWSTATION
+#define NOSECURITY
+#define NOMSG
+#define NOWINOFFSETS
+#define NOWINMESSAGES
+#define NONCMESSAGES
+#define NOKEYSTATES
+#define NOTRACKMOUSEEVENT
+#define NOWINSTYLES
+#define NOCLIPBOARD
+#define NOMSG
+#define NODEFERWINDOWPOS
+#define NOCTLMGR
+#define NOMSG
+#define NOCLIPBOARD
+#define NOMSG
+#define NOSYSMETRICS
+#define NOMENUS
+#define NODRAWTEXT
+#define NOSCROLL
+#define NOMB
+#define NOCOLOR
+#define NOWINOFFSETS
+#define NOWH
+#define NOMENUS
+#define NOSYSCOMMANDS
+#define NOICONS
+#define NOCTLMGR
+#define NOWINSTYLES
+#define NOWINMESSAGES
+#define NOWINMESSAGES
+#define NOMSG
+#define NOWINMESSAGES
+#define NOWINSTYLES
+#define NOWINSTYLES
+#define NOWINMESSAGES
+#define NOWINSTYLES
+#define NOWINMESSAGES
+#define NOMDI
+#define NOMSG
+#define NOHELP
+#define NOSYSPARAMSINFO
+#define NOWINABLE
+#define NO_STATE_FLAGS
 #include <windows.h>
 #include "../glsdk_0_5_2/glload/include/gl_4_1.h"
+#undef NOGDICAPMASKS
+#undef NOVIRTUALKEYCODES
+#undef NOWINMESSAGES
+#undef NOWINSTYLES
+#undef NOSYSMETRICS
+#undef NOMENUS
+#undef NOICONS
+#undef NOKEYSTATES
+#undef NOSYSCOMMANDS
+#undef NORASTEROPS
+#undef NOSHOWWINDOW
+#undef OEMRESOURCE
+#undef NOATOM
+#undef NOCLIPBOARD
+#undef NOCOLOR
+#undef NOCTLMGR
+#undef NODRAWTEXT
+//#undef NOGDI
+#undef NOKERNEL
+#undef NOUSER
+#undef NONLS
+#undef NOMB
+#undef NOMEMMGR
+#undef NOMETAFILE
+#undef NOMINMAX
+#undef NOMSG
+#undef NOOPENFILE
+#undef NOSCROLL
+#undef NOSERVICE
+#undef NOSOUND
+#undef NOTEXTMETRIC
+#undef NOWH
+#undef NOWINOFFSETS
+#undef NOCOMM
+#undef NOKANJI
+#undef NOHELP
+#undef NOPROFILER
+#undef NODEFERWINDOWPOS
+#undef NOMCX
+#undef NOAPISET
+#undef NOUSER
+#undef NORESOURCE
+#undef NOSCROLL
+#undef NOSHOWWINDOW
+#undef NOVIRTUALKEYCODES
+#undef NOWH
+#undef NODESKTOP
+#undef NOWINDOWSTATION
+#undef NOSECURITY
+#undef NOMSG
+#undef NOWINOFFSETS
+#undef NOWINMESSAGES
+#undef NONCMESSAGES
+#undef NOKEYSTATES
+#undef NOTRACKMOUSEEVENT
+#undef NOWINSTYLES
+#undef NOCLIPBOARD
+#undef NOMSG
+#undef NODEFERWINDOWPOS
+#undef NOCTLMGR
+#undef NOMSG
+#undef NOCLIPBOARD
+#undef NOMSG
+#undef NOSYSMETRICS
+#undef NOMENUS
+#undef NODRAWTEXT
+#undef NOSCROLL
+#undef NOMB
+#undef NOCOLOR
+#undef NOWINOFFSETS
+#undef NOWH
+#undef NOMENUS
+#undef NOSYSCOMMANDS
+#undef NOICONS
+#undef NOCTLMGR
+#undef NOWINSTYLES
+#undef NOWINMESSAGES
+#undef NOWINMESSAGES
+#undef NOMSG
+#undef NOWINMESSAGES
+#undef NOWINSTYLES
+#undef NOWINSTYLES
+#undef NOWINMESSAGES
+#undef NOWINSTYLES
+#undef NOWINMESSAGES
+#undef NOMDI
+#undef NOMSG
+#undef NOHELP
+#undef NOSYSPARAMSINFO
+#undef NOWINABLE
+#undef NO_STATE_FLAGS
 typedef unsigned __int16 FFUInt16;
 typedef unsigned __int32 FFUInt32;
+typedef unsigned __int64 FFUInt64;
 #else
 #if defined( TARGET_OS_MAC )
 #include <OpenGL/gl3.h>
@@ -101,6 +291,7 @@ extern "C" {
 
 typedef uint16_t FFUInt16;
 typedef uint32_t FFUInt32;
+typedef uint64_t FFUInt64;
 #endif
 
 // Function codes
@@ -131,6 +322,15 @@ static const FFUInt32 FF_SET_PARAMETER_ELEMENT_VALUE   = 37;
 static const FFUInt32 FF_GETPARAMETERUSAGE             = 32;
 static const FFUInt32 FF_GETPLUGINSHORTNAME            = 33;
 static const FFUInt32 FF_SET_BEATINFO                  = 38;
+static const FFUInt32 FF_SET_HOSTINFO                  = 39;
+static const FFUInt32 FF_SET_SAMPLERATE                = 40;
+static const FFUInt32 FF_GET_RANGE                     = 41;
+static const FFUInt32 FF_GET_THUMBNAIL                 = 42;
+static const FFUInt32 FF_GETNUMFILPARAMETEREXTENSIONS  = 43;
+static const FFUInt32 FF_GET_FILE_PARAMETER_EXTENSION  = 44;
+static const FFUInt32 FF_GET_PRAMETER_VISIBILITY       = 45;
+static const FFUInt32 FF_GET_PARAMETER_EVENTS          = 46;
+
 //Previously used function codes that are no longer in use. Should prevent using
 //these numbers for new function codes.
 //static const FFUInt32 FF_INITIALISE            = 1;
@@ -158,6 +358,7 @@ static const FFUInt32 FF_UNSUPPORTED = 0;
 // Plugin types
 static const FFUInt32 FF_EFFECT = 0;
 static const FFUInt32 FF_SOURCE = 1;
+static const FFUInt32 FF_MIXER  = 2;
 
 // Plugin capabilities
 static const FFUInt32 FF_CAP_SETTIME            = 5;
@@ -189,10 +390,13 @@ static const FFUInt32 FF_TYPE_YPOS       = 6;
 static const FFUInt32 FF_TYPE_STANDARD   = 10;
 static const FFUInt32 FF_TYPE_OPTION     = 11;
 static const FFUInt32 FF_TYPE_BUFFER     = 12;
+static const FFUInt32 FF_TYPE_INTEGER    = 13;
+static const FFUInt32 FF_TYPE_FILE       = 14;
 static const FFUInt32 FF_TYPE_TEXT       = 100;
 static const FFUInt32 FF_TYPE_HUE        = 200;
 static const FFUInt32 FF_TYPE_SATURATION = 201;
 static const FFUInt32 FF_TYPE_BRIGHTNESS = 202;
+static const FFUInt32 FF_TYPE_ALPHA      = 203;
 
 // Input status
 static const FFUInt32 FF_INPUT_NOTINUSE = 0;
@@ -201,6 +405,14 @@ static const FFUInt32 FF_INPUT_INUSE    = 1;
 // Parameter usages
 static const FFUInt32 FF_USAGE_STANDARD = 0;
 static const FFUInt32 FF_USAGE_FFT      = 1;
+
+// Parameter events flags
+static const FFUInt64 FF_EVENT_FLAG_VISIBILITY    = 0x01; //A parameter's visibility changed.
+//Not supported yet, but possibly in the future we would like these events as well:
+//static const FFUInt64 FF_EVENT_FLAG_VALUE         = 0x02; //A parameter's current value changed.
+//static const FFUInt64 FF_EVENT_FLAG_DEFAULT_VALUE = 0x04; //A parameter's default value changed.
+//static const FFUInt64 FF_EVENT_FLAG_NAME          = 0x08; //A parameter's name changed.
+//static const FFUInt64 FF_EVENT_FLAG_RANGE         = 0x10; //A parameter's range has been changed.
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FreeFrame Types
@@ -229,8 +441,8 @@ typedef struct PluginExtendedInfoStructTag
 {
 	FFUInt32 PluginMajorVersion;
 	FFUInt32 PluginMinorVersion;
-	char* Description;
-	char* About;
+	const char* Description;
+	const char* About;
 	FFUInt32 FreeFrameExtendedDataSize;
 	void* FreeFrameExtendedDataBlock;
 } PluginExtendedInfoStruct;
@@ -245,9 +457,39 @@ typedef struct SetParameterStructTag
 // SetBeatinfoStruct
 typedef struct SetBeatinfoStructTag
 {
-	FFMixed bpm;
-	FFMixed barPhase;
+	float bpm;
+	float barPhase;
 } SetBeatinfoStruct;
+
+// SetHostinfoStruct
+typedef struct SetHostinfoStructTag
+{
+	const char* name;
+	const char* version;
+} SetHostinfoStruct;
+
+typedef struct RangeStructTag
+{
+	float min;
+	float max;
+} RangeStruct;
+
+typedef struct GetRangeStructTag
+{
+	FFUInt32 parameterNumber;
+	RangeStruct range;
+} GetRangeStruct;
+
+/**
+ * 
+ */
+typedef struct GetThumbnailStructTag
+{
+	FFUInt32 width;           //!< Used as output parameter (plugin -> host), contains the width of the thumbnail in number of pixels.
+	FFUInt32 height;          //!< Used as output parameter (plugin -> host), contains the height of the thumbnail in number of pixels.
+
+	void* rgbaPixelBuffer;    //!< Host provided location of where the thumbnails rgba pixels should be written. May be nullptr if the host is just querying the thumbnail size, which it needs to calculate minimum buffer size.
+} GetThumbnailStruct;
 
 //FFGLViewportStruct (for InstantiateGL)
 typedef struct FFGLViewportStructTag
@@ -299,6 +541,24 @@ typedef struct SetParameterElementValueStructTag
 	FFMixed NewParameterValue;
 } SetParameterElementValueStruct;
 
+// GetFileParameterExtensionStruct
+typedef struct GetFileParameterExtensionStructTag
+{
+	FFUInt32 ParameterNumber;
+	FFUInt32 ExtensionNumber;
+} GetFileParameterExtensionStruct;
+
+typedef struct ParamEventStructTag
+{
+	FFUInt32 ParameterNumber; //!< The ID of the parameter that fired the event.
+	FFUInt64 eventFlags;      //!< Flags containing all events that the parameter fired since last event consume. A combination of FF_EVENT_FLAG_ flags.
+} ParamEventStruct;
+typedef struct GetParamEventsStructTag
+{
+	FFUInt32 numEvents;       //!< The number of events in the events buffer.
+	ParamEventStruct* events; //!< Buffer into which the plugin will write it's pending events.
+} GetParamEventsStruct;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Function prototypes
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -323,7 +583,7 @@ typedef struct SetParameterElementValueStructTag
 
 BOOL APIENTRY DllMain( HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserved );
 
-__declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
+extern "C" __declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
 typedef __declspec( dllimport ) FFMixed( __stdcall* FF_Main_FuncPtr )( FFUInt32, FFMixed, FFInstanceID );
 
 #else

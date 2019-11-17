@@ -2,6 +2,7 @@
 #include "../ffgl/FFGL.h"//For OpenGL
 #include <vector>
 #include <string>
+#include <string>
 
 namespace ffglex
 {
@@ -14,8 +15,6 @@ class FFGLShader final
 {
 public:
 	FFGLShader();                                                                                     //The default constructor just initializes this object to represent no shader.
-	FFGLShader( const FFGLShader& ) = delete;
-	FFGLShader( FFGLShader&& ) = delete;
 	~FFGLShader();                                                                                    //Destructing this object just checks and lets you know if you've properly released the GL resources.
 
 	void AddTransformFeedbackVarying( const std::string& varyingName );                               //Add a varying that will be captured using a transform feedback.
@@ -23,6 +22,12 @@ public:
 	bool Compile( const char* vertexShader, const char* fragmentShader );                             //Compiles and links two shaders into a shader program.
 	bool Compile( const char* vertexShader, const char* geometryShader, const char* fragmentShader ); //Compiles and links a vertex/geometry/fragment shader into a single shader program.
 	void FreeGLResources();                                                                           //Frees any GL resources that this shader is holding.
+
+	void Set( const char* name, float value );
+	void Set( const char* name, float v1, float v2 );
+	void Set( const char* name, float v1, float v2, float v3 );
+	void Set( const char* name, float v1, float v2, float v3, float v4 );
+	void Set( const char* name, int value );
 
 	bool IsReady() const;                                                                             //Whether or not previous complilation succeeded and this shader is ready to be used for rendering.
 	GLuint GetGLID() const;                                                                           //Gets the OpenGL ID that represents the linked shader program.

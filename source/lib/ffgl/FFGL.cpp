@@ -73,8 +73,9 @@
 // Includes
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "FFGLPluginSDK.h"
 #include <memory.h>
+#include "FFGLPluginSDK.h"
+#include "FFGLThumbnailInfo.h"
 #include "../glsdk_0_5_2/glload/include/gl_load.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +84,7 @@
 
 extern CFFGLPluginInfo* g_CurrPluginInfo;
 
-static CFreeFrameGLPlugin* s_pPrototype = NULL;
+static CFFGLPlugin* s_pPrototype = NULL;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FreeFrame SDK default implementation of the FreeFrame global functions.
@@ -245,7 +246,7 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 	//get the instantiate function pointer
 	FPCREATEINSTANCEGL* pInstantiate = g_CurrPluginInfo->GetFactoryMethod();
 
-	CFreeFrameGLPlugin* pInstance = NULL;
+	CFFGLPlugin* pInstance = NULL;
 
 	//call the instantiate function
 	FFResult dwRet = pInstantiate( &pInstance );
@@ -261,7 +262,7 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 	{
 		unsigned int pType = s_pPrototype->GetParamType( i );
 		FFMixed pDefault   = s_pPrototype->GetParamDefault( i );
-		if( pType == FF_TYPE_TEXT )
+		if( pType == FF_TYPE_TEXT || pType == FF_TYPE_FILE )
 			dwRet = pInstance->SetTextParameter( i, (const char*)pDefault.PointerValue );
 		else
 			dwRet = pInstance->SetFloatParameter( i, *(float*)&pDefault.UIntValue );
@@ -321,7 +322,7 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 }
 FFResult deInstantiateGL( void* instanceID )
 {
-	CFreeFrameGLPlugin* p = (CFreeFrameGLPlugin*)instanceID;
+	CFFGLPlugin* p = (CFFGLPlugin*)instanceID;
 
 	if( p != NULL )
 	{
@@ -400,6 +401,77 @@ const char* getPluginShortName()
 
 	return shortName;
 }
+FFMixed getParamRange( FFMixed input )
+{
+	FFMixed ret;
+	ret.UIntValue = FF_FAIL;
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return ret;
+	}
+	ret.UIntValue = FF_SUCCESS;
+	
+	GetRangeStruct* getRange = (GetRangeStruct*)input.PointerValue;
+
+	RangeStruct range = s_pPrototype->GetParamRange( getRange->parameterNumber );
+	getRange->range   = range;
+	return ret;
+}
+FFUInt32 getThumbnail( GetThumbnailStruct& getStruct )
+{
+	CFFGLThumbnailInfo* thumbnailInfo = CFFGLThumbnailInfo::GetInstance();
+	//It's possible that this plugin doesn't have an embedded thumbnail.
+	if( thumbnailInfo == nullptr )
+	{
+		getStruct.width = 0;
+		getStruct.height = 0;
+		//There's no thumbnail available. Use same error code as old plugins that didn't support this feature
+		//to make implementation on the host easier (fail = no thumbnail, success = thumbnail is available)
+		return FF_FAIL;
+	}
+
+	getStruct.width = thumbnailInfo->GetWidth();
+	getStruct.height = thumbnailInfo->GetHeight();
+	if( getStruct.rgbaPixelBuffer != nullptr )
+		memcpy( getStruct.rgbaPixelBuffer, thumbnailInfo->GetPixels(), getStruct.width * getStruct.height * 4 );
+
+	return FF_SUCCESS;
+}
+FFUInt32 getNumFileParameterExtensions( unsigned int index )
+{
+	if( s_pPrototype == nullptr )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return FF_FAIL;
+	}
+
+	return s_pPrototype->GetNumFileParamExtensions( index );
+}
+char* getFileParameterExtension( unsigned int paramIndex, unsigned int extensionIndex )
+{
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return NULL;
+	}
+
+	return s_pPrototype->GetFileParamExtension( paramIndex, extensionIndex );
+}
+FFUInt32 getDefaultParameterVisibility( unsigned int index )
+{
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return FF_FAIL;
+	}
+
+	return s_pPrototype->GetParamVisibility( index );
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Implementation of plugMain, the one and only exposed function
@@ -407,7 +479,7 @@ const char* getPluginShortName()
 
 #ifdef WIN32
 
-FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID )
+extern "C" __declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID )
 
 #elif TARGET_OS_MAC
 
@@ -423,10 +495,10 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	FFMixed retval;
 
 	// declare pPlugObj - pointer to this instance
-	CFreeFrameGLPlugin* pPlugObj;
+	CFFGLPlugin* pPlugObj;
 
-	// typecast DWORD into pointer to a CFreeFrameGLPlugin
-	pPlugObj = (CFreeFrameGLPlugin*)instanceID;
+	// typecast DWORD into pointer to a CFFGLPlugin
+	pPlugObj = (CFFGLPlugin*)instanceID;
 
 	switch( functionCode )
 	{
@@ -457,15 +529,17 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_SETPARAMETER:
 		if( pPlugObj != NULL )
 		{
-			if( getParameterType( ( (const SetParameterStruct*)inputValue.PointerValue )->ParameterNumber ) == FF_TYPE_TEXT )
+			const SetParameterStruct& setParameterStruct = *reinterpret_cast< const SetParameterStruct* >( inputValue.PointerValue );
+			unsigned int paramType = getParameterType( setParameterStruct.ParameterNumber );
+			if( paramType == FF_TYPE_TEXT || paramType == FF_TYPE_FILE )
 			{
-				retval.UIntValue = pPlugObj->SetTextParameter( ( (const SetParameterStruct*)inputValue.PointerValue )->ParameterNumber,
-															   (const char*)( (const SetParameterStruct*)inputValue.PointerValue )->NewParameterValue.PointerValue );
+				retval.UIntValue = pPlugObj->SetTextParameter( setParameterStruct.ParameterNumber,
+				                                               (const char*)setParameterStruct.NewParameterValue.PointerValue );
 			}
 			else
 			{
-				retval.UIntValue = pPlugObj->SetFloatParameter( ( (const SetParameterStruct*)inputValue.PointerValue )->ParameterNumber,
-																( *(float*)&( (const SetParameterStruct*)inputValue.PointerValue )->NewParameterValue.UIntValue ) );
+				retval.UIntValue = pPlugObj->SetFloatParameter( setParameterStruct.ParameterNumber,
+				                                                *(float*)&setParameterStruct.NewParameterValue.UIntValue );
 			}
 		}
 		else
@@ -476,7 +550,8 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_GETPARAMETER:
 		if( pPlugObj != NULL )
 		{
-			if( getParameterType( inputValue.UIntValue ) == FF_TYPE_TEXT )
+			unsigned int paramType = getParameterType( inputValue.UIntValue );
+			if( paramType == FF_TYPE_TEXT || paramType == FF_TYPE_FILE )
 			{
 				retval.PointerValue = pPlugObj->GetTextParameter( inputValue.UIntValue );
 			}
@@ -594,20 +669,20 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_GET_PARAMETER_ELEMENT_NAME:
 	{
 		const GetParameterElementNameStruct* arguments = (const GetParameterElementNameStruct*)inputValue.PointerValue;
-		retval.PointerValue = getParameterElementName( arguments->ParameterNumber, arguments->ElementNumber );
+		retval.PointerValue                            = getParameterElementName( arguments->ParameterNumber, arguments->ElementNumber );
 		break;
 	}
 	case FF_GET_PARAMETER_ELEMENT_DEFAULT:
 	{
 		const GetParameterElementValueStruct* arguments = (const GetParameterElementValueStruct*)inputValue.PointerValue;
-		retval = getParameterElementDefault( arguments->ParameterNumber, arguments->ElementNumber );
+		retval                                          = getParameterElementDefault( arguments->ParameterNumber, arguments->ElementNumber );
 		break;
 	}
 	case FF_SET_PARAMETER_ELEMENT_VALUE:
 		if( pPlugObj != NULL )
 		{
 			const SetParameterElementValueStruct* arguments = (const SetParameterElementValueStruct*)inputValue.PointerValue;
-			retval.UIntValue = pPlugObj->SetParamElementValue( arguments->ParameterNumber, arguments->ElementNumber, *(float*)&arguments->NewParameterValue.UIntValue );
+			retval.UIntValue                                = pPlugObj->SetParamElementValue( arguments->ParameterNumber, arguments->ElementNumber, *(float*)&arguments->NewParameterValue.UIntValue );
 		}
 		break;
 	case FF_GETPARAMETERUSAGE:
@@ -620,8 +695,8 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		if( pPlugObj != NULL )
 		{
 			const SetBeatinfoStruct* beatInfo = reinterpret_cast< const SetBeatinfoStruct* >( inputValue.PointerValue );
-			float bpm = *(float*)&beatInfo->bpm.UIntValue;
-			float barPhase = *(float*)&beatInfo->barPhase.UIntValue;
+			float bpm                         = *(float*)&beatInfo->bpm;
+			float barPhase                    = *(float*)&beatInfo->barPhase;
 			pPlugObj->SetBeatInfo( bpm, barPhase );
 			retval.UIntValue = FF_SUCCESS;
 		}
@@ -629,16 +704,101 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		{
 			retval.UIntValue = FF_FAIL;
 		}
+
 		break;
+	case FF_SET_HOSTINFO:
+		if( pPlugObj != NULL )
+		{
+			const SetHostinfoStructTag* hostInfo = reinterpret_cast< const SetHostinfoStructTag* >( inputValue.PointerValue );
+			pPlugObj->SetHostInfo( hostInfo->name, hostInfo->version );
+			retval.UIntValue = FF_SUCCESS;
+		}
+		else
+		{
+			retval.UIntValue = FF_FAIL;
+		}
+
+		break;
+
+	case FF_SET_SAMPLERATE:
+		if( pPlugObj != NULL )
+		{
+			pPlugObj->SetSampleRate( inputValue.UIntValue );
+			retval.UIntValue = FF_SUCCESS;
+		}
+		else
+		{
+			retval.UIntValue = FF_FAIL;
+		}
+
+		break;
+	case FF_GET_RANGE:
+		retval = getParamRange( inputValue );
+		break;
+
+	case FF_GET_THUMBNAIL:
+		if( inputValue.PointerValue != nullptr )
+			retval.UIntValue = getThumbnail( *reinterpret_cast< GetThumbnailStruct* >( inputValue.PointerValue ) );
+		else
+			retval.UIntValue = FF_FAIL;
+		break;
+
+	case FF_GETNUMFILPARAMETEREXTENSIONS:
+		retval.UIntValue = getNumFileParameterExtensions( inputValue.UIntValue );
+		break;
+	case FF_GET_FILE_PARAMETER_EXTENSION:
+	{
+		const GetFileParameterExtensionStruct* arguments = reinterpret_cast< const GetFileParameterExtensionStruct* >( inputValue.PointerValue );
+		retval.PointerValue = getFileParameterExtension( arguments->ParameterNumber, arguments->ExtensionNumber );
+		break;
+	}
+
+	case FF_GET_PRAMETER_VISIBILITY:
+	{
+		if( pPlugObj != nullptr )
+			retval.UIntValue = pPlugObj->GetParamVisibility( inputValue.UIntValue );
+		else
+			retval.UIntValue = getDefaultParameterVisibility( inputValue.UIntValue );
+		break;
+	}
+
+	case FF_GET_PARAMETER_EVENTS:
+	{
+		GetParamEventsStruct& eventsBuffer = *reinterpret_cast< GetParamEventsStruct* >( inputValue.PointerValue );
+		//Events orignate from plugin instances so if no instance exists for this request we cannot fullfill it.
+		if( pPlugObj != nullptr )
+		{
+			FFUInt32 numPendingEvents = pPlugObj->GetNumPendingParamEvents();
+			//Hosts are allowed to query the number of events that are pending by passing in a nullptr for the events buffer.
+			//In that case we're outputting the number of pending events in the numEvents field and dont try to write any events into the event buffer.
+			if( eventsBuffer.events == nullptr )
+			{
+				eventsBuffer.numEvents = numPendingEvents;
+				retval.UIntValue = FF_SUCCESS;
+			}
+			else
+			{
+				//The host has provided a buffer to write events in to. We'll be writing our events into the buffer and output the
+				//number of events we've written in there.
+				eventsBuffer.numEvents = pPlugObj->ConsumeParamEvents( eventsBuffer.events, eventsBuffer.numEvents );
+				retval.UIntValue = FF_SUCCESS;
+			}
+		}
+		else
+		{
+			retval.UIntValue = FF_FAIL;
+		}
+		break;
+	}
 
 	//Previously used function codes that are no longer supported:
 	//case FF_INITIALISE:
-		/**
-		 * We're dropping the old FFGL 1.6 and lower initialise here. FFGL 2.0 removed old stuff and made support for newer stuff mandatory
-		 * so hosts need a way to know they cannot use this plugin if they're dependant on the old behaviour. If the host isn't dependant on the old
-		 * behaviour it will have to update to build using the FFGL 2.0 sdk and instead invoke the initialise_v2 opcode. This way
-		 * the plugin and host both agree that it's okay not to support the old behaviour.
-		 */
+	/**
+	 * We're dropping the old FFGL 1.6 and lower initialise here. FFGL 2.0 removed old stuff and made support for newer stuff mandatory
+	 * so hosts need a way to know they cannot use this plugin if they're dependant on the old behaviour. If the host isn't dependant on the old
+	 * behaviour it will have to update to build using the FFGL 2.0 sdk and instead invoke the initialise_v2 opcode. This way
+	 * the plugin and host both agree that it's okay not to support the old behaviour.
+	 */
 	//case FF_INSTANTIATE:
 	//case FF_DEINSTANTIATE:
 	//case FF_PROCESSFRAME:

@@ -127,7 +127,7 @@ FFResult Particles::InitGL( const FFGLViewportStruct* vp )
 	}
 
 	//Use base-class init as success result so that it retains the viewport.
-	return CFreeFrameGLPlugin::InitGL( vp );
+	return CFFGLPlugin::InitGL( vp );
 }
 FFResult Particles::DeInitGL()
 {
@@ -137,7 +137,7 @@ FFResult Particles::DeInitGL()
 }
 FFResult Particles::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
-	float timeNow = getTicks() / 1000.0f;
+	float timeNow = hostTime / 1000.0f;
 	float deltaTime = timeNow - lastUpdate;
 	lastUpdate = timeNow;
 
@@ -184,7 +184,7 @@ char* Particles::GetParameterDisplay( unsigned int index )
 		return displayValueBuffer;
 
 	default:
-		return CFreeFrameGLPlugin::GetParameterDisplay( index );
+		return CFFGLPlugin::GetParameterDisplay( index );
 	}
 }
 
@@ -326,7 +326,7 @@ void Particles::UpdateParticles( float deltaTime )
 	glUniform1f( glResources.GetUpdateShader().FindUniform( "BURST_DURATION" ), burstDuration );
 	glUniform1f( glResources.GetUpdateShader().FindUniform( "BURST_INTENSITY" ), burstIntensity );
 
-	glUniform1f( glResources.GetUpdateShader().FindUniform( "Time" ), getTicks() / 1000.0f );
+	glUniform1f( glResources.GetUpdateShader().FindUniform( "Time" ), hostTime / 1000.0f );
 	glUniform1f( glResources.GetUpdateShader().FindUniform( "DeltaTime" ), deltaTime );
 	glUniform2i( glResources.GetUpdateShader().FindUniform( "RenderSize" ), currentViewport.width, currentViewport.height );
 

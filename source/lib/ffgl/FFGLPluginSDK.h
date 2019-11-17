@@ -24,27 +24,27 @@
 #include "FFGLPluginInfo.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \class		CFreeFrameGLPlugin
-///	\brief		CFreeFrameGLPlugin is the base class for all FreeFrameGL plugins developed with the FreeFrameGL SDK.
+/// \class		CFFGLPlugin
+///	\brief		CFFGLPlugin is the base class for all FreeFrameGL plugins developed with the FreeFrameGL SDK.
 /// \author		Gualtiero Volpe
 /// \version	1.0.0.2
 ///
-/// The CFreeFrameGLPlugin class is the base class for every FreeFrameGL plugins developed with the FreeFrameGL SDK.
+/// The CFFGLPlugin class is the base class for every FreeFrameGL plugins developed with the FreeFrameGL SDK.
 /// It is derived from CFFGLPluginManager, so that most of the plugin management and communication with the host
 /// can be transparently handled through the default implementations of the methods of CFFGLPluginManager.
-/// While CFFGLPluginManager is used by the global FreeFrame methods, CFreeFrameGLPlugin provides a default implementation
-/// of the instance specific FreeFrame functions. Note that CFreeFrameGLPlugin methods are virtual methods: any given
-/// FreeFrameGL plugin developed with the FreeFrameGL SDK will be a derived class of CFreeFrameGLPlugin and will have to
-/// provide a custom implementation of most of such methods. Except for CFreeFrameGLPlugin::GetParameterDisplay and
-/// CFreeFrameGLPlugin::GetInputStatus, all the default methods of CFreeFrameGLPlugin just return FF_FAIL: every derived
+/// While CFFGLPluginManager is used by the global FreeFrame methods, CFFGLPlugin provides a default implementation
+/// of the instance specific FreeFrame functions. Note that CFFGLPlugin methods are virtual methods: any given
+/// FreeFrameGL plugin developed with the FreeFrameGL SDK will be a derived class of CFFGLPlugin and will have to
+/// provide a custom implementation of most of such methods. Except for CFFGLPlugin::GetParameterDisplay and
+/// CFFGLPlugin::GetInputStatus, all the default methods of CFFGLPlugin just return FF_FAIL: every derived
 /// plugin is responsible of providing its specific implementation of such default methods.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class CFreeFrameGLPlugin : public CFFGLPluginManager
+class CFFGLPlugin : public CFFGLPluginManager
 {
 public:
-	/// The standard destructor of CFreeFrameGLPlugin.
-	virtual ~CFreeFrameGLPlugin();
+	/// The standard destructor of CFFGLPlugin.
+	virtual ~CFFGLPlugin();
 
 	/// Default implementation of the FFGL InitGL instance specific function. This function allocates
 	/// the OpenGL resources the plugin needs during its lifetime
@@ -112,16 +112,15 @@ public:
 	///						A custom implementation must be provided by every specific plugin.
 	virtual FFResult SetTime( double time )
 	{
-		return FF_FAIL;
+		hostTime = time;
+		return FF_SUCCESS;
 	}
 
-	/// Inform this plugin of the host's current beat info.
-	/// The default implementations copies the values to local values so that plugins will have them
-	/// available when processing the OpenGL code.
-	///
-	/// \param		bpm The host's global number of beats per minute.
-	/// \param		barPhase The hosts current position inside the bar.
 	virtual void SetBeatInfo( float bpm, float barPhase );
+
+	virtual void SetHostInfo(const char * hostname, const char * version);
+
+	virtual void SetSampleRate(unsigned int sampleRate);
 
 	/// Default implementation of the FreeFrame getInputStatus instance specific function. This function is called
 	/// to know whether a given input is currently in use. For the default implementation every input is always in use.
@@ -171,21 +170,28 @@ public:
 	/// This flag indicates that Connect has been called by the host, or automatically called by FFGL
 	bool m_isConnected;
 
-	/// The only public data field CFreeFrameGLPlugin contains is m_pPlugin, a pointer to the plugin instance.
+	/// The only public data field CFFGLPlugin contains is m_pPlugin, a pointer to the plugin instance.
 	/// Subclasses may use this pointer for self-referencing (e.g., a plugin may pass this pointer to external modules,
 	/// so that they can use it for calling the plugin methods).
-	CFreeFrameGLPlugin* m_pPlugin;
+	CFFGLPlugin* m_pPlugin;
 
 protected:
-	/// The only protected function of CFreeFrameGLPlugin is its constructor. In fact, nor CFFGLPluginManager objects nor
-	/// CFreeFrameGLPlugin objects should be created directly, but only objects of the subclasses implementing specific
+	/// The only protected function of CFFGLPlugin is its constructor. In fact, nor CFFGLPluginManager objects nor
+	/// CFFGLPlugin objects should be created directly, but only objects of the subclasses implementing specific
 	/// plugins should be instantiated. Moreover, subclasses should define and provide a factory method to be used by
 	/// the FreeFrame SDK for instantiating plugin objects.
-	CFreeFrameGLPlugin();
+	CFFGLPlugin();
 
-	FFGLViewportStruct currentViewport;  //!< 
-	float bpm;                           //!< The host's global number of beats per minute.
-	float barPhase;                      //!< The hosts current position inside the bar. It's a float between 0.0f and 1.0f. A bar is 4 beats (usually)
+	FFGLViewportStruct currentViewport;
+	float bpm;
+	float barPhase;
+	
+	struct HostInfo {
+		std::string name;
+		std::string version;
+	} hostInfos;
+	double hostTime;
+	int sampleRate;
 };
 
 #endif

@@ -19,7 +19,8 @@
 
 #ifndef FFGLPLUGININFO_STANDARD
 #define FFGLPLUGININFO_STANDARD
-#include <cstddef>
+#include <string>
+
 #include "FFGL.h"
 
 #ifdef TARGET_OS_MAC
@@ -33,8 +34,8 @@
 #endif
 
 //FPCREATEINSTANCEGL is a pointer to a function that creates FFGL plugins
-//in this SDK, all FFGL plugins must derive from CFreeFrameGLPlugin
-typedef FFResult __stdcall FPCREATEINSTANCEGL( class CFreeFrameGLPlugin** ppOutInstance );
+//in this SDK, all FFGL plugins must derive from CFFGLPlugin
+typedef FFResult __stdcall FPCREATEINSTANCEGL( class CFFGLPlugin** ppOutInstance );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \class		CFFGLPluginInfo
@@ -141,6 +142,9 @@ private:
 	PluginInfoStruct m_PluginInfo;
 	PluginExtendedInfoStruct m_PluginExtendedInfo;
 
+	std::string about;       //!< Owner over the about string for which we've set the pointer in the m_PluginExtendedInfo.
+	std::string description; //!< Owner over the description string for which we've set the pointer in the m_PluginExtendedInfo.
+
 	// Pointer to the factory method of the plugin subclass
 	FPCREATEINSTANCEGL* m_pCreateInstance;
 };
@@ -151,7 +155,7 @@ private:
  * instantiate this template function with your plugin's type and you're done.
  */
 template< typename PluginType >
-FFResult __stdcall PluginFactory( CFreeFrameGLPlugin** ppOutInstance )
+FFResult __stdcall PluginFactory( CFFGLPlugin** ppOutInstance )
 {
 	*ppOutInstance = new PluginType();
 	if( *ppOutInstance != nullptr )

@@ -1,13 +1,5 @@
 #include "AddSubtract.h"
-#include <ffgl/FFGLLib.h>
-#include <ffglex/FFGLScopedShaderBinding.h>
-#include <ffglex/FFGLScopedSamplerActivation.h>
-#include <ffglex/FFGLScopedTextureBinding.h>
 using namespace ffglex;
-
-#define FFPARAM_BrightnessR ( 0 )
-#define FFPARAM_BrightnessG ( 1 )
-#define FFPARAM_BrightnessB ( 2 )
 
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< AddSubtract >,// Create method
@@ -22,7 +14,7 @@ static CFFGLPluginInfo PluginInfo(
 	"Resolume FFGL Example"      // About
 );
 
-static const char vertexShaderCode[] = R"(#version 410 core
+static const char _vertexShaderCode[] = R"(#version 410 core
 uniform vec2 MaxUV;
 
 layout( location = 0 ) in vec4 vPosition;
@@ -37,7 +29,7 @@ void main()
 }
 )";
 
-static const char fragmentShaderCode[] = R"(#version 410 core
+static const char _fragmentShaderCode[] = R"(#version 410 core
 uniform sampler2D InputTexture;
 uniform vec3 Brightness;
 
@@ -52,7 +44,7 @@ void main()
 	if( color.a > 0.0 )
 		color.rgb /= color.a;
 
-	color.rgb = color.rgb + Brightness;
+	color.rgb += Brightness * 2. - 1.;
 
 	//The plugin has to output premultiplied colors, this is how we're premultiplying our straight color while also
 	//ensuring we aren't going out of the LDR the video engine is working in.
@@ -61,21 +53,15 @@ void main()
 }
 )";
 
-AddSubtract::AddSubtract() :
-	maxUVLocation( -1 ),
-	brightnessLocation( -1 ),
-	brightnessR( 0.5f ),
-	brightnessG( 0.5f ),
-	brightnessB( 0.5f )
+AddSubtract::AddSubtract()
 {
 	// Input properties
 	SetMinInputs( 1 );
 	SetMaxInputs( 1 );
 
-	// Parameters
-	SetParamInfof( FFPARAM_BrightnessR, "R", FF_TYPE_RED );
-	SetParamInfof( FFPARAM_BrightnessG, "G", FF_TYPE_GREEN );
-	SetParamInfof( FFPARAM_BrightnessB, "B", FF_TYPE_BLUE );
+	//We declare that this plugin has a Brightness parameter which is a RGB param.
+	//The name here must match the one you declared in your fragment shader.
+	AddRGBColorParam( "Brightness" );
 }
 AddSubtract::~AddSubtract()
 {
@@ -83,7 +69,7 @@ AddSubtract::~AddSubtract()
 
 FFResult AddSubtract::InitGL( const FFGLViewportStruct* vp )
 {
-	if( !shader.Compile( vertexShaderCode, fragmentShaderCode ) )
+	if( !shader.Compile( _vertexShaderCode, _fragmentShaderCode ) )
 	{
 		DeInitGL();
 		return FF_FAIL;
@@ -94,19 +80,8 @@ FFResult AddSubtract::InitGL( const FFGLViewportStruct* vp )
 		return FF_FAIL;
 	}
 
-	//FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that.
-	ScopedShaderBinding shaderBinding( shader.GetGLID() );
-
-	//We're never changing the sampler to use, instead during rendering we'll make sure that we're always
-	//binding the texture to sampler 0.
-	glUniform1i( shader.FindUniform( "inputTexture" ), 0 );
-
-	//We need to know these uniform locations because we need to set their value each frame.
-	maxUVLocation = shader.FindUniform( "MaxUV" );
-	brightnessLocation = shader.FindUniform( "Brightness" );
-
 	//Use base-class init as success result so that it retains the viewport.
-	return CFreeFrameGLPlugin::InitGL( vp );
+	return CFFGLPlugin::InitGL( vp );
 }
 FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
@@ -118,23 +93,20 @@ FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 
 	//FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that.
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );
-
-	FFGLTextureStruct& Texture = *( pGL->inputTextures[ 0 ] );
-
-	//The input texture's dimension might change each frame and so might the content area.
-	//We're adopting the texture's maxUV using a uniform because that way we dont have to update our vertex buffer each frame.
-	FFGLTexCoords maxCoords = GetMaxGLTexCoords( Texture );
-	glUniform2f( maxUVLocation, maxCoords.s, maxCoords.t );
-
-	glUniform3f( brightnessLocation,
-				 -1.0f + ( brightnessR * 2.0f ),
-				 -1.0f + ( brightnessG * 2.0f ),
-				 -1.0f + ( brightnessB * 2.0f ) );
-
 	//The shader's sampler is always bound to sampler index 0 so that's where we need to bind the texture.
 	//Again, we're using the scoped bindings to help us keep the context in a default state.
 	ScopedSamplerActivation activateSampler( 0 );
-	Scoped2DTextureBinding textureBinding( Texture.Handle );
+	Scoped2DTextureBinding textureBinding( pGL->inputTextures[ 0 ]->Handle );
+
+	shader.Set( "inputTexture", 0 );
+
+	//The input texture's dimension might change each frame and so might the content area.
+	//We're adopting the texture's maxUV using a uniform because that way we dont have to update our vertex buffer each frame.
+	FFGLTexCoords maxCoords = GetMaxGLTexCoords( *pGL->inputTextures[ 0 ] );
+	shader.Set( "MaxUV", maxCoords.s, maxCoords.t );
+
+	//This takes care of sending all the parameter that the plugin registered to the shader.
+	SendParams( shader );
 
 	quad.Draw();
 
@@ -144,44 +116,6 @@ FFResult AddSubtract::DeInitGL()
 {
 	shader.FreeGLResources();
 	quad.Release();
-	maxUVLocation = -1;
-	brightnessLocation = -1;
 
 	return FF_SUCCESS;
-}
-
-FFResult AddSubtract::SetFloatParameter( unsigned int dwIndex, float value )
-{
-	switch( dwIndex )
-	{
-	case FFPARAM_BrightnessR:
-		brightnessR = value;
-		break;
-	case FFPARAM_BrightnessG:
-		brightnessG = value;
-		break;
-	case FFPARAM_BrightnessB:
-		brightnessB = value;
-		break;
-	default:
-		return FF_FAIL;
-	}
-
-	return FF_SUCCESS;
-}
-
-float AddSubtract::GetFloatParameter( unsigned int dwIndex )
-{
-	switch( dwIndex )
-	{
-	case FFPARAM_BrightnessR:
-		return brightnessR;
-	case FFPARAM_BrightnessG:
-		return brightnessG;
-	case FFPARAM_BrightnessB:
-		return brightnessB;
-
-	default:
-		return 0.0f;
-	}
 }
