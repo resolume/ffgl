@@ -74,6 +74,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <memory.h>
+#include <assert.h>
 #include "FFGLPluginSDK.h"
 #include "FFGLThumbnailInfo.h"
 #include "../glsdk_0_5_2/glload/include/gl_load.h"
@@ -90,6 +91,8 @@ static CFFGLPlugin* s_pPrototype = NULL;
 // FreeFrame SDK default implementation of the FreeFrame global functions.
 // Such function are called by the plugMain function, the only function a plugin exposes.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void ValidateContextState();
 
 bool InitGLExts()
 {
@@ -310,12 +313,14 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 	//call the InitGL method
 	if( pInstance->InitGL( pGLViewport ) == FF_SUCCESS )
 	{
+		ValidateContextState();
 		//succes? we're done.
 		return pInstance;
 	}
 
 	//InitGL failed, delete the instance
 	pInstance->DeInitGL();
+	ValidateContextState();
 	delete pInstance;
 
 	return (void*)FF_FAIL;
@@ -334,6 +339,7 @@ FFResult deInstantiateGL( void* instanceID )
 		}
 
 		p->DeInitGL();
+		ValidateContextState();
 		delete p;
 
 		return FF_SUCCESS;
@@ -595,6 +601,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 				}
 
 				retval.UIntValue = pPlugObj->ProcessOpenGL( pogls );
+				ValidateContextState();
 			}
 			else
 			{
@@ -809,4 +816,86 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	}
 
 	return retval;
+}
+
+/**
+ * The FFGL host provides us with a context in the default state. We have to return a context in the default
+ * state back to the host. In previous FFGL versions this was also the convention, but it was never actually checked.
+ * Since previous FFGL versions were based on OpenGL 1.0 the host had the ability to isolate these state changes
+ * so that it'll stay unaffected by what a plugin does. Due to the move to OpenGL 4.1 the host no longer has this ability
+ * so it becomes extra important to enforce this convention. The problem when plugins dont restore the state is that
+ * the host's rendering may be affected. For example if the plugin keeps a VBO bound but the hosts renders something assuming
+ * no vbo is bound, it'll start fetching from the plugin's vbo.
+ */
+void ValidateContextState()
+{
+#if defined( _DEBUG )
+	GLint glInt[ 4 ];
+	GLboolean glBool[ 4 ];
+
+	//Please use the ScopedShaderBinding to automatically unbind your shaders.
+	glGetIntegerv( GL_CURRENT_PROGRAM, glInt );
+	assert( glInt[ 0 ] == 0 );
+
+	//Please use the ScopedSamplerActivation to automatically return the active sampler to the default state.
+	glGetIntegerv( GL_ACTIVE_TEXTURE, glInt );
+	assert( glInt[ 0 ] == GL_TEXTURE0 );
+
+	//Please use the ScopedTextureBinding to automatically unbind textures after you're done with them.
+	glGetIntegerv( GL_TEXTURE_BINDING_2D, glInt );
+	assert( glInt[ 0 ] == 0 ); //TODO: What about the other samplers and other texture types?
+
+	//Please use the ScopedVBOBinding to automatically unbind your vertex buffers.
+	glGetIntegerv( GL_ARRAY_BUFFER_BINDING, glInt );
+	assert( glInt[ 0 ] == 0 );
+
+	//Please use the ScopedIBOBinding to automatically unbind your index buffers.
+	glGetIntegerv( GL_ELEMENT_ARRAY_BUFFER_BINDING, glInt );
+	assert( glInt[ 0 ] == 0 );
+
+	//Please use the ScopedUBOBinding to automatically unbind your uniform buffers.
+	glGetIntegerv( GL_UNIFORM_BUFFER_BINDING, glInt );
+	assert( glInt[ 0 ] == 0 );
+
+
+
+
+
+	//We have no scoped bindings for the render state. You need to manually return these to the context default state.
+	glGetIntegerv( GL_POLYGON_MODE, glInt );
+	assert( glInt[ 0 ] == GL_FILL );
+
+	assert( glIsEnabled( GL_CULL_FACE ) == GL_FALSE );
+	glGetIntegerv( GL_FRONT_FACE, glInt );
+	assert( glInt[ 0 ] == GL_CCW );
+
+	assert( glIsEnabled( GL_BLEND ) == GL_FALSE );
+	
+	glGetIntegerv( GL_BLEND_EQUATION_RGB, glInt );
+	assert( glInt[ 0 ] == GL_FUNC_ADD );
+	glGetIntegerv( GL_BLEND_EQUATION_ALPHA, glInt );
+	assert( glInt[ 0 ] == GL_FUNC_ADD );
+	
+	glGetIntegerv( GL_BLEND_SRC_RGB, glInt );
+	assert( glInt[ 0 ] == GL_ONE );
+	glGetIntegerv( GL_BLEND_SRC_ALPHA, glInt );
+	assert( glInt[ 0 ] == GL_ONE );
+	glGetIntegerv( GL_BLEND_DST_RGB, glInt );
+	assert( glInt[ 0 ] == GL_ZERO );
+	glGetIntegerv( GL_BLEND_DST_ALPHA, glInt );
+	assert( glInt[ 0 ] == GL_ZERO );
+
+	glGetBooleanv( GL_DEPTH_WRITEMASK, glBool );
+	assert( glBool[ 0 ] == GL_TRUE );
+
+	assert( glIsEnabled( GL_DEPTH_TEST ) == GL_FALSE );
+	glGetIntegerv( GL_DEPTH_FUNC, glInt );
+	assert( glInt[ 0 ] == GL_LESS );
+
+	glGetBooleanv( GL_COLOR_WRITEMASK, glBool );
+	assert( glBool[ 0 ] == GL_TRUE );
+	assert( glBool[ 1 ] == GL_TRUE );
+	assert( glBool[ 2 ] == GL_TRUE );
+	assert( glBool[ 3 ] == GL_TRUE );
+#endif
 }

@@ -10,4 +10,4 @@ You can find some help to get started with FFGL plugin development on the [wiki]
 Also more examples are available on this [repo](https://github.com/flyingrub/ffgl/tree/more/).
 
 ## Changes since FFGL 2.1
-nothing yet!
+- Added context state validation in debug builds. This provides plugin developers hints on which context state they need to restore.
