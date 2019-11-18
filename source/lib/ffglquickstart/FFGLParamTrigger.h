@@ -7,7 +7,7 @@ namespace ffglqs
 class ParamTrigger : public ParamEvent
 {
 public:
-	static std::shared_ptr< ParamTrigger > create( std::string name );
+	static std::shared_ptr< ParamTrigger > Create( std::string name );
 
 	ParamTrigger( std::string name );
 
