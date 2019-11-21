@@ -195,17 +195,17 @@ FFResult getPluginCaps( unsigned int index )
 
 	switch( index )
 	{
-	case FF_CAP_SETTIME:
+	case FF_CAP_SET_TIME:
 		if( s_pPrototype->GetTimeSupported() )
 			return FF_TRUE;
 		else
 			return FF_FALSE;
-	case FF_CAP_MINIMUMINPUTFRAMES:
+	case FF_CAP_MINIMUM_INPUT_FRAMES:
 		MinInputs = s_pPrototype->GetMinInputs();
 		if( MinInputs < 0 )
 			return FF_FALSE;
 		return MinInputs;
-	case FF_CAP_MAXIMUMINPUTFRAMES:
+	case FF_CAP_MAXIMUM_INPUT_FRAMES:
 		MaxInputs = s_pPrototype->GetMaxInputs();
 		if( MaxInputs < 0 )
 			return FF_FALSE;
@@ -528,7 +528,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 
 	switch( functionCode )
 	{
-	case FF_GETINFO:
+	case FF_GET_INFO:
 		retval.PointerValue = (PluginInfoStruct*)getInfo();
 		break;
 	case FF_INITIALISE_V2:
@@ -537,22 +537,22 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_DEINITIALISE:
 		retval.UIntValue = deInitialise();
 		break;
-	case FF_GETNUMPARAMETERS:
+	case FF_GET_NUM_PARAMETERS:
 		retval.UIntValue = getNumParameters();
 		break;
-	case FF_GETPARAMETERNAME:
+	case FF_GET_PARAMETER_NAME:
 		retval.PointerValue = getParameterName( inputValue.UIntValue );
 		break;
-	case FF_GETPARAMETERDEFAULT:
+	case FF_GET_PARAMETER_DEFAULT:
 		retval = getParameterDefault( inputValue.UIntValue );
 		break;
-	case FF_GETPARAMETERDISPLAY:
+	case FF_GET_PARAMETER_DISPLAY:
 		if( pPlugObj != NULL )
 			retval.PointerValue = pPlugObj->GetParameterDisplay( inputValue.UIntValue );
 		else
 			retval.PointerValue = (char*)FF_FAIL;
 		break;
-	case FF_SETPARAMETER:
+	case FF_SET_PARAMETER:
 		if( pPlugObj != NULL )
 		{
 			const SetParameterStruct& setParameterStruct = *reinterpret_cast< const SetParameterStruct* >( inputValue.PointerValue );
@@ -573,7 +573,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 			retval.UIntValue = FF_FAIL;
 		}
 		break;
-	case FF_GETPARAMETER:
+	case FF_GET_PARAMETER:
 		if( pPlugObj != NULL )
 		{
 			unsigned int paramType = getParameterType( inputValue.UIntValue );
@@ -592,22 +592,22 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 			retval.UIntValue = FF_FAIL;
 		}
 		break;
-	case FF_GETPLUGINCAPS:
+	case FF_GET_PLUGIN_CAPS:
 		retval.UIntValue = getPluginCaps( inputValue.UIntValue );
 		break;
-	case FF_GETEXTENDEDINFO:
+	case FF_GET_EXTENDED_INFO:
 		retval.PointerValue = getExtendedInfo();
 		break;
-	case FF_GETPARAMETERTYPE:
+	case FF_GET_PARAMETER_TYPE:
 		retval.UIntValue = getParameterType( inputValue.UIntValue );
 		break;
-	case FF_GETINPUTSTATUS:
+	case FF_GET_INPUT_STATUS:
 		if( pPlugObj != NULL )
 			retval.UIntValue = pPlugObj->GetInputStatus( inputValue.UIntValue );
 		else
 			retval.UIntValue = FF_FAIL;
 		break;
-	case FF_PROCESSOPENGL:
+	case FF_PROCESS_OPENGL:
 		if( pPlugObj != NULL )
 		{
 			ProcessOpenGLStruct* pogls = (ProcessOpenGLStruct*)inputValue.PointerValue;
@@ -633,16 +633,16 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 			retval.UIntValue = FF_FAIL;
 		}
 		break;
-	case FF_INSTANTIATEGL:
+	case FF_INSTANTIATE_GL:
 		retval.PointerValue = instantiateGL( (const FFGLViewportStruct*)inputValue.PointerValue );
 		break;
-	case FF_DEINSTANTIATEGL:
+	case FF_DEINSTANTIATE_GL:
 		if( pPlugObj != NULL )
 			retval.UIntValue = deInstantiateGL( pPlugObj );
 		else
 			retval.UIntValue = FF_FAIL;
 		break;
-	case FF_SETTIME:
+	case FF_SET_TIME:
 		if( pPlugObj != NULL )
 		{
 			double* inputTime = (double*)inputValue.PointerValue;
@@ -690,7 +690,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 			retval.UIntValue = FF_FAIL;
 		}
 		break;
-	case FF_GETNUMPARAMETERELEMENTS:
+	case FF_GET_NUM_PARAMETER_ELEMENTS:
 		retval.UIntValue = getNumParameterElements( inputValue.UIntValue );
 		break;
 	case FF_GET_PARAMETER_ELEMENT_NAME:
@@ -723,10 +723,10 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 			retval.UIntValue                                = pPlugObj->SetParamElementValue( arguments->ParameterNumber, arguments->ElementNumber, *(float*)&arguments->NewParameterValue.UIntValue );
 		}
 		break;
-	case FF_GETPARAMETERUSAGE:
+	case FF_GET_PARAMETER_USAGE:
 		retval.UIntValue = getParameterUsage( inputValue.UIntValue );
 		break;
-	case FF_GETPLUGINSHORTNAME:
+	case FF_GET_PLUGIN_SHORT_NAME:
 		retval.PointerValue = (void*)getPluginShortName();
 		break;
 	case FF_SET_BEATINFO:
@@ -781,7 +781,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 			retval.UIntValue = FF_FAIL;
 		break;
 
-	case FF_GETNUMFILPARAMETEREXTENSIONS:
+	case FF_GET_NUM_FILE_PARAMETER_EXTENSIONS:
 		retval.UIntValue = getNumFileParameterExtensions( inputValue.UIntValue );
 		break;
 	case FF_GET_FILE_PARAMETER_EXTENSION:

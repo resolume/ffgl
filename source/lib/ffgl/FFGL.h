@@ -295,43 +295,43 @@ typedef uint64_t FFUInt64;
 #endif
 
 // Function codes
-static const FFUInt32 FF_GETINFO                       = 0;
-static const FFUInt32 FF_INITIALISE_V2                 = 34;
-static const FFUInt32 FF_DEINITIALISE                  = 2;
-static const FFUInt32 FF_GETNUMPARAMETERS              = 4;
-static const FFUInt32 FF_GETPARAMETERNAME              = 5;
-static const FFUInt32 FF_GETPARAMETERDEFAULT           = 6;
-static const FFUInt32 FF_GETPARAMETERDISPLAY           = 7;
-static const FFUInt32 FF_SETPARAMETER                  = 8;
-static const FFUInt32 FF_GETPARAMETER                  = 9;
-static const FFUInt32 FF_GETPLUGINCAPS                 = 10;
-static const FFUInt32 FF_GETEXTENDEDINFO               = 13;
-static const FFUInt32 FF_GETPARAMETERTYPE              = 15;
-static const FFUInt32 FF_GETINPUTSTATUS                = 16;
-static const FFUInt32 FF_PROCESSOPENGL                 = 17;
-static const FFUInt32 FF_INSTANTIATEGL                 = 18;
-static const FFUInt32 FF_DEINSTANTIATEGL               = 19;
-static const FFUInt32 FF_SETTIME                       = 20;
-static const FFUInt32 FF_CONNECT                       = 21;
-static const FFUInt32 FF_DISCONNECT                    = 22;
-static const FFUInt32 FF_RESIZE                        = 23;
-static const FFUInt32 FF_GETNUMPARAMETERELEMENTS       = 31;
-static const FFUInt32 FF_GET_PARAMETER_ELEMENT_NAME    = 35;
-static const FFUInt32 FF_GET_PARAMETER_ELEMENT_DEFAULT = 36;
-static const FFUInt32 FF_SET_PARAMETER_ELEMENT_VALUE   = 37;
-static const FFUInt32 FF_GETPARAMETERUSAGE             = 32;
-static const FFUInt32 FF_GETPLUGINSHORTNAME            = 33;
-static const FFUInt32 FF_SET_BEATINFO                  = 38;
-static const FFUInt32 FF_SET_HOSTINFO                  = 39;
-static const FFUInt32 FF_SET_SAMPLERATE                = 40;
-static const FFUInt32 FF_GET_RANGE                     = 41;
-static const FFUInt32 FF_GET_THUMBNAIL                 = 42;
-static const FFUInt32 FF_GETNUMFILPARAMETEREXTENSIONS  = 43;
-static const FFUInt32 FF_GET_FILE_PARAMETER_EXTENSION  = 44;
-static const FFUInt32 FF_GET_PRAMETER_VISIBILITY       = 45;
-static const FFUInt32 FF_GET_PARAMETER_EVENTS          = 46;
-static const FFUInt32 FF_GET_NUM_ELEMENT_SEPARATORS    = 47;
-static const FFUInt32 FF_GET_SEPARATOR_ELEMENT_INDEX   = 48;
+static const FFUInt32 FF_GET_INFO                          = 0;
+static const FFUInt32 FF_INITIALISE_V2                     = 34;
+static const FFUInt32 FF_DEINITIALISE                      = 2;
+static const FFUInt32 FF_GET_NUM_PARAMETERS                = 4;
+static const FFUInt32 FF_GET_PARAMETER_NAME                = 5;
+static const FFUInt32 FF_GET_PARAMETER_DEFAULT             = 6;
+static const FFUInt32 FF_GET_PARAMETER_DISPLAY             = 7;
+static const FFUInt32 FF_SET_PARAMETER                     = 8;
+static const FFUInt32 FF_GET_PARAMETER                     = 9;
+static const FFUInt32 FF_GET_PLUGIN_CAPS                   = 10;
+static const FFUInt32 FF_GET_EXTENDED_INFO                 = 13;
+static const FFUInt32 FF_GET_PARAMETER_TYPE                = 15;
+static const FFUInt32 FF_GET_INPUT_STATUS                  = 16;
+static const FFUInt32 FF_PROCESS_OPENGL                    = 17;
+static const FFUInt32 FF_INSTANTIATE_GL                    = 18;
+static const FFUInt32 FF_DEINSTANTIATE_GL                  = 19;
+static const FFUInt32 FF_SET_TIME                          = 20;
+static const FFUInt32 FF_CONNECT                           = 21;
+static const FFUInt32 FF_DISCONNECT                        = 22;
+static const FFUInt32 FF_RESIZE                            = 23;
+static const FFUInt32 FF_GET_NUM_PARAMETER_ELEMENTS        = 31;
+static const FFUInt32 FF_GET_PARAMETER_ELEMENT_NAME        = 35;
+static const FFUInt32 FF_GET_PARAMETER_ELEMENT_DEFAULT     = 36;
+static const FFUInt32 FF_SET_PARAMETER_ELEMENT_VALUE       = 37;
+static const FFUInt32 FF_GET_PARAMETER_USAGE               = 32;
+static const FFUInt32 FF_GET_PLUGIN_SHORT_NAME             = 33;
+static const FFUInt32 FF_SET_BEATINFO                      = 38;
+static const FFUInt32 FF_SET_HOSTINFO                      = 39;
+static const FFUInt32 FF_SET_SAMPLERATE                    = 40;
+static const FFUInt32 FF_GET_RANGE                         = 41;
+static const FFUInt32 FF_GET_THUMBNAIL                     = 42;
+static const FFUInt32 FF_GET_NUM_FILE_PARAMETER_EXTENSIONS = 43;
+static const FFUInt32 FF_GET_FILE_PARAMETER_EXTENSION      = 44;
+static const FFUInt32 FF_GET_PRAMETER_VISIBILITY           = 45;
+static const FFUInt32 FF_GET_PARAMETER_EVENTS              = 46;
+static const FFUInt32 FF_GET_NUM_ELEMENT_SEPARATORS        = 47;
+static const FFUInt32 FF_GET_SEPARATOR_ELEMENT_INDEX       = 48;
 
 //Previously used function codes that are no longer in use. Should prevent using
 //these numbers for new function codes.
@@ -363,9 +363,9 @@ static const FFUInt32 FF_SOURCE = 1;
 static const FFUInt32 FF_MIXER  = 2;
 
 // Plugin capabilities
-static const FFUInt32 FF_CAP_SETTIME            = 5;
-static const FFUInt32 FF_CAP_MINIMUMINPUTFRAMES = 10;
-static const FFUInt32 FF_CAP_MAXIMUMINPUTFRAMES = 11;
+static const FFUInt32 FF_CAP_SET_TIME                      = 5;
+static const FFUInt32 FF_CAP_MINIMUM_INPUT_FRAMES         = 10;
+static const FFUInt32 FF_CAP_MAXIMUM_INPUT_FRAMES         = 11;
 //Previously used capability codes that are no longer in use. New codes should prevent using
 //these numbers for new capability codes.
 //static const FFUInt32 FF_CAP_16BITVIDEO         = 0;
