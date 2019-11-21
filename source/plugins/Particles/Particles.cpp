@@ -101,9 +101,11 @@ Particles::Particles() :
 	SetParamInfof( PID_TURBULENCE_SPEED, "Turbulence Speed", FF_TYPE_STANDARD );
 	SetOptionParamInfo( PID_MAX_AGE, "Max Age", 5, maxAge );
 	SetParamElementInfo( PID_MAX_AGE, 0, "0.5 beats", 0.5f );
+	AddElementSeparator( PID_MAX_AGE, 1 );
 	SetParamElementInfo( PID_MAX_AGE, 1, "1 beat", 1.0f );
 	SetParamElementInfo( PID_MAX_AGE, 2, "2 beats", 2.0f );
 	SetParamElementInfo( PID_MAX_AGE, 3, "4 beats", maxAge );
+	AddElementSeparator( PID_MAX_AGE, 4 );
 	SetParamElementInfo( PID_MAX_AGE, 4, "16 beats", 16.0f );
 	SetParamInfof( PID_PARTICLE_SIZE, "Particle Size", FF_TYPE_STANDARD );
 	SetParamInfof( PID_VELOCITY_SIZE_FACTOR, "Velocity Size Factor", FF_TYPE_STANDARD );

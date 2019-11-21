@@ -381,6 +381,26 @@ FFMixed getParameterElementDefault( unsigned int paramIndex, unsigned int elemen
 	}
 	return s_pPrototype->GetParamElementDefault( paramIndex, elementIndex );
 }
+FFUInt32 GetNumElementSeparators( unsigned int paramIndex )
+{
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return 0;
+	}
+	return s_pPrototype->GetNumElementSeparators( paramIndex );
+}
+FFUInt32 GetElementSeparatorElementIndex( unsigned int paramIndex, unsigned int separatorIndex )
+{
+	if( s_pPrototype == NULL )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return -1;
+	}
+	return s_pPrototype->GetElementSeparatorElementIndex( paramIndex, separatorIndex );
+}
 FFUInt32 getParameterUsage( unsigned int index )
 {
 	if( s_pPrototype == NULL )
@@ -683,6 +703,17 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	{
 		const GetParameterElementValueStruct* arguments = (const GetParameterElementValueStruct*)inputValue.PointerValue;
 		retval                                          = getParameterElementDefault( arguments->ParameterNumber, arguments->ElementNumber );
+		break;
+	}
+	case FF_GET_NUM_ELEMENT_SEPARATORS:
+	{
+		retval.UIntValue = GetNumElementSeparators( inputValue.UIntValue );
+		break;
+	}
+	case FF_GET_SEPARATOR_ELEMENT_INDEX:
+	{
+		const GetSeparatorElementIndexStructTag* arguments = (const GetSeparatorElementIndexStructTag*)inputValue.PointerValue;
+		retval.UIntValue = GetElementSeparatorElementIndex( arguments->ParameterNumber, arguments->SeparatorIndex );
 		break;
 	}
 	case FF_SET_PARAMETER_ELEMENT_VALUE:

@@ -330,6 +330,8 @@ static const FFUInt32 FF_GETNUMFILPARAMETEREXTENSIONS  = 43;
 static const FFUInt32 FF_GET_FILE_PARAMETER_EXTENSION  = 44;
 static const FFUInt32 FF_GET_PRAMETER_VISIBILITY       = 45;
 static const FFUInt32 FF_GET_PARAMETER_EVENTS          = 46;
+static const FFUInt32 FF_GET_NUM_ELEMENT_SEPARATORS    = 47;
+static const FFUInt32 FF_GET_SEPARATOR_ELEMENT_INDEX   = 48;
 
 //Previously used function codes that are no longer in use. Should prevent using
 //these numbers for new function codes.
@@ -540,6 +542,13 @@ typedef struct SetParameterElementValueStructTag
 	FFUInt32 ElementNumber;
 	FFMixed NewParameterValue;
 } SetParameterElementValueStruct;
+
+// GetSeparatorElementIndexStruct
+typedef struct GetSeparatorElementIndexStructTag
+{
+	FFUInt32 ParameterNumber;
+	FFUInt32 SeparatorIndex;
+} GetSeparatorElementIndexStruct;
 
 // GetFileParameterExtensionStruct
 typedef struct GetFileParameterExtensionStructTag

@@ -160,6 +160,22 @@ public:
 	///	\return				FFGL result indicating if setting the value succeeded. Setting a value might fail
 	///						if either of the provided indices is out of range. FF_SUCCESS on success, FF_FAIL otherwise.
 	FFUInt32 SetParamElementValue( unsigned int dwIndex, unsigned int elIndex, float newValue );
+	/// Get the number of element separators a parameter may have. Calling this only makes sense for FF_TYPE_OPTION parameters
+	/// as those are the only parameters which can contain separatable elements.
+	///
+	/// \param	dwIndex		The index of the plugin parameter fir which you want to get the number of separators.
+	/// \return				The number of separators in this parameter. This returns 0 if the parameter doesn't exist, doesn't support
+	///						separators or just if it doesn't happen to have any.
+	FFUInt32 GetNumElementSeparators( unsigned int dwIndex );
+	/// Get the index of the element before which a paremeter's separator should be shown.
+	///
+	/// \param dwIndex		The index of the plugin parameter from which to get the separator's element index.
+	///						It should be in the range [0, Number of plugin parameters).
+	/// \separatorIndex		The index of the separator for which to get the element index.
+	///						It should be in the range [0, GetNumElementSeparators).
+	/// \return				The element index before which a separator should be shown. This will return -1 in case of
+	///						an error (eg dwIndex or separatorIndex out of range).
+	FFUInt32 GetElementSeparatorElementIndex( unsigned int dwIndex, unsigned int separatorIndex );
 
 	unsigned int GetNumFileParamExtensions( unsigned int index ) const;
 	char* GetFileParamExtension( unsigned int paramIndex, unsigned int extensionIndex ) const;
@@ -276,6 +292,16 @@ protected:
 	/// \param	numElements		Number of elements of this parameter ( array )
 	void SetOptionParamInfo( unsigned int dwIndex, const char* pchName, unsigned int numElements, float defaultValue );
 	void SetParamElementInfo( unsigned int paramID, unsigned int elementIndex, const char* elementName, float elementValue );
+	/// Request the host to add a separator in front of an option parameter's element.
+	/// Most hosts will show option parameters as a drop down, when doing this it's sometimes usefull to
+	/// have categories in the dropdown. These separators can be used to create those categories.
+	///
+	/// \param	paramID				The index of the option parameter which contains the element for which
+	///								the value is to be changed.
+	///								It should be the id of an option parameter.
+	///	\param	beforeElementIndex	The index of the element before which the separator should be shown.
+	///								It should be in the range [0, parameter.Number of elements).
+	void AddElementSeparator( unsigned int paramID, unsigned int beforeElementIndex );
 
 	void SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions );
 
@@ -316,6 +342,11 @@ protected:
 			float value = 0.0f;
 		};
 		std::vector< Element > elements;
+		struct ElementSeparator
+		{
+			unsigned int beforeIndex;
+		};
+		std::vector< ElementSeparator > elementSeparators;
 		unsigned int usage;
 
 		bool visibleInUI = true;

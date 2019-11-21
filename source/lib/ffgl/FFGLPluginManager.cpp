@@ -156,6 +156,19 @@ FFUInt32 CFFGLPluginManager::SetParamElementValue( unsigned int dwIndex, unsigne
 	paramInfo->elements[ elIndex ].value = newValue;
 	return FF_SUCCESS;
 }
+FFUInt32 CFFGLPluginManager::GetNumElementSeparators( unsigned int dwIndex )
+{
+	ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	return paramInfo != nullptr ? static_cast< FFUInt32 >( paramInfo->elementSeparators.size() ) : 0;
+}
+FFUInt32 CFFGLPluginManager::GetElementSeparatorElementIndex( unsigned int dwIndex, unsigned int separatorIndex )
+{
+	ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	if( paramInfo != nullptr && separatorIndex < paramInfo->elementSeparators.size() )
+		return paramInfo->elementSeparators[ separatorIndex ].beforeIndex;
+	else
+		return -1;
+}
 
 unsigned int CFFGLPluginManager::GetNumFileParamExtensions( unsigned int index ) const
 {
@@ -330,6 +343,15 @@ void CFFGLPluginManager::SetParamElementInfo( unsigned int paramID, unsigned int
 	
 	paramInfo->elements[ elementIndex ].name = elementName;
 	paramInfo->elements[ elementIndex ].value = elementValue;
+}
+
+void CFFGLPluginManager::AddElementSeparator( unsigned int paramID, unsigned int beforeElementIndex )
+{
+	ParamInfo* paramInfo = FindParamInfo( paramID );
+	if( paramInfo == nullptr )
+		return;
+
+	paramInfo->elementSeparators.push_back( ParamInfo::ElementSeparator{ beforeElementIndex } );
 }
 
 void CFFGLPluginManager::SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions )
