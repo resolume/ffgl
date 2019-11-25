@@ -29,10 +29,12 @@
 // CFFGLPluginManager constructor and destructor
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CFFGLPluginManager::CFFGLPluginManager() :
+CFFGLPluginManager::CFFGLPluginManager( bool supportTopLeftTextureOrientation ) :
 	m_iMinInputs( 0 ),
 	m_iMaxInputs( 0 ),
-	m_timeSupported( true )
+	m_timeSupported( true ),
+	m_topLeftTextureOrientationSupported( supportTopLeftTextureOrientation ),
+	textureOrientation( TextureOrientation::BOTTOM_LEFT )
 {
 }
 CFFGLPluginManager::~CFFGLPluginManager()
@@ -52,9 +54,17 @@ unsigned int CFFGLPluginManager::GetMaxInputs() const
 	return m_iMaxInputs;
 }
 
-bool CFFGLPluginManager::GetTimeSupported() const
+bool CFFGLPluginManager::IsTimeSupported() const
 {
 	return m_timeSupported;
+}
+bool CFFGLPluginManager::IsTopLeftTextureOrientationSupported() const
+{
+	return m_topLeftTextureOrientationSupported;
+}
+void CFFGLPluginManager::HostEnabledTopLeftTextures()
+{
+	textureOrientation = TextureOrientation::TOP_LEFT;
 }
 
 unsigned int CFFGLPluginManager::GetNumParams() const
@@ -410,4 +420,8 @@ const CFFGLPluginManager::ParamInfo* CFFGLPluginManager::FindParamInfo( unsigned
 	}
 
 	return nullptr;
+}
+CFFGLPluginManager::TextureOrientation CFFGLPluginManager::GetTextureOrientation() const
+{
+	return textureOrientation;
 }
