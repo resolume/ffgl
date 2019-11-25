@@ -75,6 +75,7 @@
 
 #include <memory.h>
 #include <assert.h>
+#include <array>
 #include "FFGLPluginSDK.h"
 #include "FFGLThumbnailInfo.h"
 #include "../glsdk_0_5_2/glload/include/gl_load.h"
@@ -921,9 +922,36 @@ void ValidateContextState()
 	glGetIntegerv( GL_ACTIVE_TEXTURE, glInt );
 	assert( glInt[ 0 ] == GL_TEXTURE0 );
 
-	//Please use the ScopedTextureBinding to automatically unbind textures after you're done with them.
-	glGetIntegerv( GL_TEXTURE_BINDING_2D, glInt );
-	assert( glInt[ 0 ] == 0 ); //TODO: What about the other samplers and other texture types?
+	struct TextureType
+	{
+		GLenum target;
+		GLenum binding;
+	};
+	const std::array< TextureType, 11 > TEXTURE_TYPES =
+	{
+		TextureType{ GL_TEXTURE_1D, GL_TEXTURE_BINDING_1D },
+		TextureType{ GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D },
+		TextureType{ GL_TEXTURE_3D, GL_TEXTURE_BINDING_3D },
+		TextureType{ GL_TEXTURE_1D_ARRAY, GL_TEXTURE_BINDING_1D_ARRAY },
+		TextureType{ GL_TEXTURE_2D_ARRAY, GL_TEXTURE_BINDING_2D_ARRAY },
+		TextureType{ GL_TEXTURE_RECTANGLE, GL_TEXTURE_BINDING_RECTANGLE },
+		TextureType{ GL_TEXTURE_CUBE_MAP, GL_TEXTURE_BINDING_CUBE_MAP },
+		TextureType{ GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_BINDING_CUBE_MAP_ARRAY },
+		TextureType{ GL_TEXTURE_BUFFER, GL_TEXTURE_BINDING_BUFFER },
+		TextureType{ GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_BINDING_2D_MULTISAMPLE },
+		TextureType{ GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY }
+	};
+	GLint numSamplers;
+	glGetIntegerv( GL_MAX_TEXTURE_IMAGE_UNITS, &numSamplers );
+	for( const auto& pair : TEXTURE_TYPES )
+	{
+		for( GLint sampler = 0; sampler < numSamplers; ++sampler )
+		{
+			//Please use the ScopedTextureBinding to automatically unbind textures after you're done with them.
+			glGetIntegerv( pair.binding, glInt );
+			assert( glInt[ 0 ] == 0 );
+		}
+	}
 
 	//Please use the ScopedVBOBinding to automatically unbind your vertex buffers.
 	glGetIntegerv( GL_ARRAY_BUFFER_BINDING, glInt );
@@ -950,12 +978,12 @@ void ValidateContextState()
 	assert( glInt[ 0 ] == GL_CCW );
 
 	assert( glIsEnabled( GL_BLEND ) == GL_FALSE );
-	
+
 	glGetIntegerv( GL_BLEND_EQUATION_RGB, glInt );
 	assert( glInt[ 0 ] == GL_FUNC_ADD );
 	glGetIntegerv( GL_BLEND_EQUATION_ALPHA, glInt );
 	assert( glInt[ 0 ] == GL_FUNC_ADD );
-	
+
 	glGetIntegerv( GL_BLEND_SRC_RGB, glInt );
 	assert( glInt[ 0 ] == GL_ONE );
 	glGetIntegerv( GL_BLEND_SRC_ALPHA, glInt );
