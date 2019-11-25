@@ -310,20 +310,56 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 	if( !InitGLExts() )
 		return (void*)FF_FAIL;
 
+	//The host should pass us a context in it's default state.
+	ValidateContextState();
 	//call the InitGL method
-	if( pInstance->InitGL( pGLViewport ) == FF_SUCCESS )
+	if( pInstance->InitGL( pGLViewport ) != FF_SUCCESS )
 	{
+		//InitGL failed, delete the instance
+		pInstance->DeInitGL();
+		//The plugin should return the context to it's default state.
 		ValidateContextState();
-		//succes? we're done.
+		delete pInstance;
+
+		return (void*)FF_FAIL;
+	}
+	else
+	{
+		//The plugin should return the context to it's default state.
+		ValidateContextState();
 		return pInstance;
 	}
 
-	//InitGL failed, delete the instance
-	pInstance->DeInitGL();
-	ValidateContextState();
-	delete pInstance;
+}
+FFResult processGL( CFFGLPlugin* pPlugObj, ProcessOpenGLStruct* pogls )
+{
+	if( pPlugObj != NULL )
+	{
+		if( pogls != NULL )
+		{
+			// make sure Connect has been called
+			if( !pPlugObj->m_isConnected )
+			{
+				pPlugObj->Connect();
+				pPlugObj->m_isConnected = true;
+			}
 
-	return (void*)FF_FAIL;
+			//The host should pass us a context in it's default state.
+			ValidateContextState();
+			FFResult result = pPlugObj->ProcessOpenGL( pogls );
+			//The plugin should return the context to it's default state.
+			ValidateContextState();
+			return result;
+		}
+		else
+		{
+			return FF_FAIL;
+		}
+	}
+	else
+	{
+		return FF_FAIL;
+	}
 }
 FFResult deInstantiateGL( void* instanceID )
 {
@@ -338,7 +374,10 @@ FFResult deInstantiateGL( void* instanceID )
 			p->m_isConnected = false;
 		}
 
+		//The host should pass us a context in it's default state.
+		ValidateContextState();
 		p->DeInitGL();
+		//The plugin should return the context to it's default state.
 		ValidateContextState();
 		delete p;
 
@@ -608,30 +647,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 			retval.UIntValue = FF_FAIL;
 		break;
 	case FF_PROCESS_OPENGL:
-		if( pPlugObj != NULL )
-		{
-			ProcessOpenGLStruct* pogls = (ProcessOpenGLStruct*)inputValue.PointerValue;
-			if( pogls != NULL )
-			{
-				// make sure Connect has been called
-				if( !pPlugObj->m_isConnected )
-				{
-					pPlugObj->Connect();
-					pPlugObj->m_isConnected = true;
-				}
-
-				retval.UIntValue = pPlugObj->ProcessOpenGL( pogls );
-				ValidateContextState();
-			}
-			else
-			{
-				retval.UIntValue = FF_FAIL;
-			}
-		}
-		else
-		{
-			retval.UIntValue = FF_FAIL;
-		}
+		retval.UIntValue = processGL( pPlugObj, (ProcessOpenGLStruct*)inputValue.PointerValue );
 		break;
 	case FF_INSTANTIATE_GL:
 		retval.PointerValue = instantiateGL( (const FFGLViewportStruct*)inputValue.PointerValue );
