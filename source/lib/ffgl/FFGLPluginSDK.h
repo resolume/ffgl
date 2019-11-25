@@ -81,8 +81,8 @@ public:
 	/// \return					The display value of the plugin parameter or NULL in case of error
 	virtual char* GetParameterDisplay( unsigned int index );
 
-	/* Added the following to obscure the casting to FFMixed from implementations. Could/should also deal with other paramter types
-	    in a similar way */
+	//Added the following to obscure the casting to FFMixed from implementations. Could/should also deal with other paramter types
+	//in a similar way
 	virtual FFResult SetFloatParameter( unsigned int index, float value );
 	virtual FFResult SetTextParameter( unsigned int index, const char* value );
 	virtual float GetFloatParameter( unsigned int index );
@@ -180,7 +180,7 @@ protected:
 	/// CFFGLPlugin objects should be created directly, but only objects of the subclasses implementing specific
 	/// plugins should be instantiated. Moreover, subclasses should define and provide a factory method to be used by
 	/// the FreeFrame SDK for instantiating plugin objects.
-	CFFGLPlugin();
+	CFFGLPlugin( bool supportTopLeftTextureOrientation = false );
 
 	FFGLViewportStruct currentViewport;
 	float bpm;

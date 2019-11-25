@@ -305,6 +305,7 @@ static const FFUInt32 FF_GET_PARAMETER_DISPLAY             = 7;
 static const FFUInt32 FF_SET_PARAMETER                     = 8;
 static const FFUInt32 FF_GET_PARAMETER                     = 9;
 static const FFUInt32 FF_GET_PLUGIN_CAPS                   = 10;
+static const FFUInt32 FF_ENABLE_PLUGIN_CAP                 = 49;
 static const FFUInt32 FF_GET_EXTENDED_INFO                 = 13;
 static const FFUInt32 FF_GET_PARAMETER_TYPE                = 15;
 static const FFUInt32 FF_GET_INPUT_STATUS                  = 16;
@@ -332,6 +333,7 @@ static const FFUInt32 FF_GET_PRAMETER_VISIBILITY           = 45;
 static const FFUInt32 FF_GET_PARAMETER_EVENTS              = 46;
 static const FFUInt32 FF_GET_NUM_ELEMENT_SEPARATORS        = 47;
 static const FFUInt32 FF_GET_SEPARATOR_ELEMENT_INDEX       = 48;
+//Next ID = 50
 
 //Previously used function codes that are no longer in use. Should prevent using
 //these numbers for new function codes.
@@ -363,9 +365,10 @@ static const FFUInt32 FF_SOURCE = 1;
 static const FFUInt32 FF_MIXER  = 2;
 
 // Plugin capabilities
-static const FFUInt32 FF_CAP_SET_TIME                      = 5;
+static const FFUInt32 FF_CAP_SET_TIME                     = 5;
 static const FFUInt32 FF_CAP_MINIMUM_INPUT_FRAMES         = 10;
 static const FFUInt32 FF_CAP_MAXIMUM_INPUT_FRAMES         = 11;
+static const FFUInt32 FF_CAP_TOP_LEFT_TEXTURE_ORIENTATION = 16;
 //Previously used capability codes that are no longer in use. New codes should prevent using
 //these numbers for new capability codes.
 //static const FFUInt32 FF_CAP_16BITVIDEO         = 0;

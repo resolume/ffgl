@@ -196,7 +196,7 @@ FFResult getPluginCaps( unsigned int index )
 	switch( index )
 	{
 	case FF_CAP_SET_TIME:
-		if( s_pPrototype->GetTimeSupported() )
+		if( s_pPrototype->IsTimeSupported() )
 			return FF_TRUE;
 		else
 			return FF_FALSE;
@@ -210,6 +210,11 @@ FFResult getPluginCaps( unsigned int index )
 		if( MaxInputs < 0 )
 			return FF_FALSE;
 		return MaxInputs;
+	case FF_CAP_TOP_LEFT_TEXTURE_ORIENTATION:
+		if( s_pPrototype->IsTopLeftTextureOrientationSupported() )
+			return FF_TRUE;
+		else
+			return FF_FALSE;
 
 	default:
 		return FF_FALSE;
@@ -633,6 +638,34 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		break;
 	case FF_GET_PLUGIN_CAPS:
 		retval.UIntValue = getPluginCaps( inputValue.UIntValue );
+		break;
+	case FF_ENABLE_PLUGIN_CAP:
+		if( pPlugObj != NULL )
+		{
+			switch( inputValue.UIntValue )
+			{
+			case FF_CAP_TOP_LEFT_TEXTURE_ORIENTATION:
+				if( getPluginCaps( FF_CAP_TOP_LEFT_TEXTURE_ORIENTATION ) == FF_TRUE )
+				{
+					pPlugObj->HostEnabledTopLeftTextures();
+				}
+				else
+				{
+					//The host is trying to enable a capability that the plugin doesn't support, so return failure.
+					retval.UIntValue = FF_FAIL;
+				}
+				break;
+			default:
+				//This is not a changable capability, so return failure.
+				retval.UIntValue = FF_FAIL;
+				break;
+			}
+		}
+		else
+		{
+			//Capabilities need to be enabled on specific plugin instances, there's no instance so we return failure.
+			retval.UIntValue = FF_FAIL;
+		}
 		break;
 	case FF_GET_EXTENDED_INFO:
 		retval.PointerValue = getExtendedInfo();

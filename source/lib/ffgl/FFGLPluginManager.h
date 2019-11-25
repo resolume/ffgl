@@ -59,8 +59,20 @@ public:
 	/// \return		The maximum number of inputs the plugin can receive.
 	unsigned int GetMaxInputs() const;
 
-	/// This method is called by a the host to determine whether the plugin supports the SetTime function
-	bool GetTimeSupported() const;
+	/// This method is called by the host to determine whether the plugin supports the SetTime function.
+	bool IsTimeSupported() const;
+	/// This methos is called by the host to determine whether or not the plugin supports top left texture orientations.
+	/// Some hosts may use top-left texture orientations internally. By default plugins use bottom left. If the host wants
+	/// to call those plugins it first needs to flip the inputs on the y-axis, and then when the plugin has run the host needs
+	/// to flip the output as well. This takes some time, so if the plugin reports that it supports top-left orientations the
+	/// host may do this so that it doesn't have to do the texture flipping.
+	bool IsTopLeftTextureOrientationSupported() const;
+	/// This methos is called by the host to tell the plugin that the host will be providing textures oriented at the top-left.
+	/// The host is only allowed to do this if this plugin supports the top-left orientation. This function just toggles the internal
+	/// textureOrientation variable so that the plugin implementation may query it and see that it can use the top-left orientation.
+	/// There's no guarantee that a host will actually ever call this. Hosts that are using bottom-left orientation internally will probably
+	/// never even query the support, let alone enable it.
+	void HostEnabledTopLeftTextures();
 
 	/// This method returns how may parameters the plugin has.
 	/// It is usually called by the default implementations of the FreeFrame global functions.
@@ -194,11 +206,20 @@ public:
 	FFUInt32 ConsumeParamEvents( ParamEventStruct* events, FFUInt32 maxNumEvents );
 
 protected:
-	///	The standard constructor of CFFGLPluginManager.
+	/// The standard constructor of CFFGLPluginManager.
+	///
+	/// \param	supportTopLeftTextureOrientation		Enables support for textures with the top-left orientation. These textures have the left top-most texel at the uv
+	///													coordinate 0, 0. Some hosts use top-left orientation internally, for those hosts it's faster if the plugin also uses the
+	///													top-left orientation as that prevents the host from having to flip inputs and outputs on the y axis.
+	///													Note that this flag only request's the support, usage of the orientation is not guaranteed. If the host intends to use
+	///													top-left orientations it first checks if the plugin supports it, and when it does it tells the plugin that it will be using it.
+	///													So in the implementation of your plugin you should access the textureOrientation variable to see if the host has enabled it.
+	///													If the host hasn't enabled it you must make sure you match the host's texture orientation which is bottom-left for uv coordinate 0, 0.
+	///
 	/// \remark	Notice that the CFFGLPluginManager constructor is a protected member function, i.e., nor CFFGLPluginManager
-	///			objects nor CFreeFramePlugin objects should be created directly, but only objects of the subclasses
+	///		objects nor CFreeFramePlugin objects should be created directly, but only objects of the subclasses
 	///			implementing specific plugins should be instantiated.
-	CFFGLPluginManager();
+	CFFGLPluginManager( bool supportTopLeftTextureOrientation = false );
 
 	/// This method is called by a plugin subclass, derived from this class, to indicate the minimum number
 	/// of inputs the host must provide. This method is usually called when a plugin object is instantiated
@@ -358,9 +379,17 @@ protected:
 
 		FFUInt64 pendingEventFlags = 0;                 //!< Event flags for events that are pending for the current parameter.
 	};
+	enum class TextureOrientation
+	{
+		BOTTOM_LEFT,
+		TOP_LEFT
+	};
 
 	ParamInfo* FindParamInfo( unsigned int ID );
 	const ParamInfo* FindParamInfo( unsigned int ID ) const;
+	/// Get the current texture orientation. Plugin subclasses that support the top-left texture orientation will call this
+	/// to know if the top-left orientation has been enabled by the host.
+	TextureOrientation GetTextureOrientation() const;
 
 private:
 	std::vector< ParamInfo > params;
@@ -369,8 +398,9 @@ private:
 	int m_iMinInputs;
 	int m_iMaxInputs;
 
-	// Time capability
-	bool m_timeSupported;
+	bool m_timeSupported;                            //!< Whether or not this plugin supports having it's time set.
+	const bool m_topLeftTextureOrientationSupported; //!< Whether or not this plugin supports input/output textures with the top-left orientation rather than OpenGL's standard bottom-right.
+	TextureOrientation textureOrientation;  //!< The texture orientation the host/plugin have agreed to use. By default plugins use OpenGL's bottom_left standard.
 };
 
 #endif

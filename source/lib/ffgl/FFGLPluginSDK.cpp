@@ -30,8 +30,8 @@ static char s_DisplayValue[ 16 ];
 // CFFGLPlugin constructor and destructor
 ////////////////////////////////////////////////////////
 
-CFFGLPlugin::CFFGLPlugin() :
-	CFFGLPluginManager(),
+CFFGLPlugin::CFFGLPlugin( bool supportTopLeftTextureOrientation ) :
+	CFFGLPluginManager( supportTopLeftTextureOrientation ),
 	bpm( 120.0f ),
 	barPhase( 0.0f )
 {
