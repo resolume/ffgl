@@ -5,9 +5,12 @@
 #include "ffgl/FFGLPluginInfoData.cpp"
 #include "ffgl/FFGLPluginManager.cpp"
 #include "ffgl/FFGLPluginSDK.cpp"
+#include "ffgl/FFGLThumbnailInfo.cpp"
 
 #include "ffglex/FFGLFBO.cpp"
 #include "ffglex/FFGLScopedBufferBinding.cpp"
+#include "ffglex/FFGLScopedFBOBinding.cpp"
+#include "ffglex/FFGLScopedRenderBufferBinding.cpp"
 #include "ffglex/FFGLScopedSamplerActivation.cpp"
 #include "ffglex/FFGLScopedShaderBinding.cpp"
 #include "ffglex/FFGLScopedTextureBinding.cpp"
