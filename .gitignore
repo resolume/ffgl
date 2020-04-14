@@ -15,3 +15,5 @@ build/osx/FFGLPlugins\.xcodeproj/project\.xcworkspace/xcuserdata/
 .vs
 Debug
 Release
+
+build/windows/FFGLPlugins\.v12\.suo

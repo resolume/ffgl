@@ -1,13 +1,10 @@
-This is the Resolume fork of the FFGL repository. It is up to date and has Visual Studio and Xcode projects to compile 32 bit and 64 bit plugins.
+This is my fork of the Resolume fork of the FFGL repository. Because more forks are forking awesome.
 
-The master branch is used for continued development. It will contain the latest features, fixes and bugs. Plugins compiled with the master branch will work in Resolume 7.0.3 and up.
-If you do not want to be affected by the latest bugs you can use a different branch. eg the FFGL 2.1 branch, which is the most recent released version of the sdk: https://github.com/resolume/ffgl/tree/ffgl2.1. To compile plugins for resolume 7.0.0/7.0.1/7.0.2 you will need to use the ffgl2.0 sdk because these hosts do not support the new features introduced in FFGL 2.1.
+This is where I publish plugins I think are not really useful but also not really useless.
 
-To compile plugins for hosts that support FFGL 1.6 (Resolume 6, VDMX, COGE, Isadora, Magic Music Visuals), switch to the FFGL1.6 branch: https://github.com/resolume/ffgl/tree/ffgl1.6
+If you don't know anything about code and are here for the free stuff, head on over to releases: https://github.com/jorisdejong/ffgl/releases
 
-You can find some help to get started with FFGL plugin development on the [wiki](https://github.com/resolume/ffgl/wiki).
+If you know a little bit about code and are interested in drawing with OpenGL 4, head on over to the HelloTriangle example in the Master branch: https://github.com/jorisdejong/ffgl
 
-Also more examples are available on this [repo](https://github.com/flyingrub/ffgl/tree/more/).
-
-## Changes since FFGL 2.1
-- Added context state validation in debug builds. This provides plugin developers hints on which context state they need to restore.
+If you already know your way around OpenGL and c++, there's nothing for you here and I will probably learn more from you.
+ 

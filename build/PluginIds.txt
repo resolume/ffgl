@@ -1,12 +1,12 @@
 -----Effects-----
 
-AddSubtract				RF01
+AddSubtract				RE01
 
 
 
 
 -----Mixers-----
-Add						RM01
+Add					RM01
 
 
 
@@ -15,4 +15,5 @@ Add						RM01
 Fireworks				OFPX
 Gradients               RS01
 Particles Example       RS02
+CustomThumbnail         RS03
 CustomThumbnail         RS03
