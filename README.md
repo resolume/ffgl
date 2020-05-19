@@ -11,3 +11,4 @@ Also more examples are available on this [repo](https://github.com/flyingrub/ffg
 
 ## Changes since FFGL 2.1
 - Added context state validation in debug builds. This provides plugin developers hints on which context state they need to restore.
+- Removed default DllMain implementation so that plugins may implement it without changing the ffgl library.
