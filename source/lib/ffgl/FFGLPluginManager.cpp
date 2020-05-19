@@ -364,7 +364,7 @@ void CFFGLPluginManager::AddElementSeparator( unsigned int paramID, unsigned int
 	paramInfo->elementSeparators.push_back( ParamInfo::ElementSeparator{ beforeElementIndex } );
 }
 
-void CFFGLPluginManager::SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions )
+void CFFGLPluginManager::SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions, const char* defaultFile )
 {
 	ParamInfo pInfo;
 	pInfo.ID = index;
@@ -378,6 +378,7 @@ void CFFGLPluginManager::SetFileParamInfo( unsigned int index, const char* pchNa
 	pInfo.usage = 0;
 
 	pInfo.supportedExtensions = std::move( supportedExtensions );
+	pInfo.defaultStringVal = defaultFile;
 	params.push_back( pInfo );
 }
 

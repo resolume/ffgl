@@ -324,7 +324,7 @@ protected:
 	///								It should be in the range [0, parameter.Number of elements).
 	void AddElementSeparator( unsigned int paramID, unsigned int beforeElementIndex );
 
-	void SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions );
+	void SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions, const char* defaultFile );
 
 	/// Sets whether or not a parameter should be visible in the host's ui.
 	///
