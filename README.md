@@ -25,9 +25,12 @@ Below are the first steps you need to create and test an FFGL plugin for Resolum
 - Create a compilation target for your plugin:
 	- Select the Xcode project (top of the tree)
 	- Duplicate a target and rename it
-	- Remove the old plugin-specific files under Build Phase > Compile Sources (e.g. if you duplicated Gradients, remove `FFGLGradients.cpp`)
+	- Remove the old plugin-specific files under Build Phases > Compile Sources (e.g. if you duplicated Gradients, remove `FFGLGradients.cpp`)
+	- Duplicating a target in Xcode creates and assigns a new `xx copy-Info.plist` file, but we don't want that. Go to Build Settings > Packaging > Info.plist and change the file name to `FFGLPlugin-Info.plist`.  
+	- Find the reference to the newly created `xx copy-Info.plist` file in the Xcode Project Navigator (probably all the way down the panel) and remove it there. When asked, choose Move to Trash.
 - In Finder, duplicate a plugin folder and rename the files. Choose a corresponding plugin type, e.g. copy `AddSubtract` if you want to build an Effect plugin or `Gradients` if you want to build a Source plugin.
 - Drag the new folder into the Xcode project. You will be asked to which target you want to add them, add them to your new target.
+- Go to the target's Build Phases again and make sure there are no resources under the Copy Bundle Resources phase.
 - Replace the class names to match your new plugin name and rename the elements in the PluginInfo struct
 - Fix up the Build scheme:
 	- When duplicating a target, a Build Scheme was also created. Next to the play and stop buttons, click the schemes dropdown and select Manage Schemes. 
