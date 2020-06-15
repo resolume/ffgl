@@ -197,4 +197,9 @@ void Log( const Args&... args )
 	Log( oss.str() );
 }
 
+/**
+Returns the time in seconds since the first time the method was called.
+ */
+float GetElapsedSeconds();
+
 }//End namespace ffglex
