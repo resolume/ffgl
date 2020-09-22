@@ -346,7 +346,7 @@ static const FFUInt32 FF_GET_SEPARATOR_ELEMENT_INDEX       = 48;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FreeFrame defines
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-enum
+enum : FFUInt32
 {
 	FF_SUCCESS = 0,
 	FF_FAIL    = 0xFFFFFFFF
@@ -412,7 +412,7 @@ static const FFUInt32 FF_USAGE_STANDARD = 0;
 static const FFUInt32 FF_USAGE_FFT      = 1;
 
 // Parameter events flags
-static const FFUInt64 FF_EVENT_FLAG_VISIBILITY    = 0x01; //A parameter's visibility changed.
+static const FFUInt64 FF_EVENT_FLAG_VISIBILITY = 0x01;//A parameter's visibility changed.
 //Not supported yet, but possibly in the future we would like these events as well:
 //static const FFUInt64 FF_EVENT_FLAG_VALUE         = 0x02; //A parameter's current value changed.
 //static const FFUInt64 FF_EVENT_FLAG_DEFAULT_VALUE = 0x04; //A parameter's default value changed.
@@ -490,10 +490,10 @@ typedef struct GetRangeStructTag
  */
 typedef struct GetThumbnailStructTag
 {
-	FFUInt32 width;           //!< Used as output parameter (plugin -> host), contains the width of the thumbnail in number of pixels.
-	FFUInt32 height;          //!< Used as output parameter (plugin -> host), contains the height of the thumbnail in number of pixels.
+	FFUInt32 width; //!< Used as output parameter (plugin -> host), contains the width of the thumbnail in number of pixels.
+	FFUInt32 height;//!< Used as output parameter (plugin -> host), contains the height of the thumbnail in number of pixels.
 
-	void* rgbaPixelBuffer;    //!< Host provided location of where the thumbnails rgba pixels should be written. May be nullptr if the host is just querying the thumbnail size, which it needs to calculate minimum buffer size.
+	void* rgbaPixelBuffer;//!< Host provided location of where the thumbnails rgba pixels should be written. May be nullptr if the host is just querying the thumbnail size, which it needs to calculate minimum buffer size.
 } GetThumbnailStruct;
 
 //FFGLViewportStruct (for InstantiateGL)
@@ -562,13 +562,13 @@ typedef struct GetFileParameterExtensionStructTag
 
 typedef struct ParamEventStructTag
 {
-	FFUInt32 ParameterNumber; //!< The ID of the parameter that fired the event.
-	FFUInt64 eventFlags;      //!< Flags containing all events that the parameter fired since last event consume. A combination of FF_EVENT_FLAG_ flags.
+	FFUInt32 ParameterNumber;//!< The ID of the parameter that fired the event.
+	FFUInt64 eventFlags;     //!< Flags containing all events that the parameter fired since last event consume. A combination of FF_EVENT_FLAG_ flags.
 } ParamEventStruct;
 typedef struct GetParamEventsStructTag
 {
-	FFUInt32 numEvents;       //!< The number of events in the events buffer.
-	ParamEventStruct* events; //!< Buffer into which the plugin will write it's pending events.
+	FFUInt32 numEvents;      //!< The number of events in the events buffer.
+	ParamEventStruct* events;//!< Buffer into which the plugin will write it's pending events.
 } GetParamEventsStruct;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
