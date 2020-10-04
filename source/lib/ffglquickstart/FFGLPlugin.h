@@ -28,7 +28,10 @@ struct PluginInfo
 	std::string id, name, description, about;
 	int majorVersion = 1;
 	int minorVersion = 0;
-	PluginInfo(std::string id, std::string name) : id(id), name(name) {}
+	PluginInfo( std::string id, std::string name ) :
+		id( id ), name( name )
+	{
+	}
 };
 
 class Plugin : public CFFGLPlugin
@@ -72,13 +75,17 @@ public:
 	}
 	/// You can override this function to do something just before the main shader call. It can for example be usefull
 	/// if you have to react to certains parameter change in a specific way and / or send custom uniform to the shader
-	virtual void Update(){}
+	virtual void Update()
+	{
+	}
 	/// The default implementation will just call glDraw with the main shader. You can override this if your plugin needs
 	/// to do more complex things, like calling multiple shaders.
 	/// \return                 FF_FAIL if any error occured else FF_SUCCESS
 	virtual FFResult Render( ProcessOpenGLStruct* inputTextures );
 	/// Use this function to free any ressource allocated in your init() function
-	virtual void Clean(){}
+	virtual void Clean()
+	{
+	}
 
 	/// This function allows to include snippet of code that are provided in Utils.h. This allows plugin
 	/// programmer to not rewrite common code in each plugin. For example, code to get a random number,
@@ -94,7 +101,7 @@ public:
 	/// \param	base		The base of your shader, usually just the void main() function
 	/// \return				The full shader as a string
 	std::string CreateFragmentShader( std::string base );
-	/// This function is called by the plugin before each render it allows to update all the params that 
+	/// This function is called by the plugin before each render it allows to update all the params that
 	/// are sent to the main shader.
 	void UpdateAudioAndTime();
 	/// This function will send all the parameter registered by your plugin to the shader.
@@ -103,7 +110,6 @@ public:
 	/// This function will send all the default parameter (like time, bpm, resolution...) to the shader.
 	/// \param	shader		The shader to send the params
 	void SendDefaultParams( ffglex::FFGLShader& shader );
-
 
 	/// This function is called by the host to get a string representation of any parameter.
 	/// It will just return the value of the current param as a char*.
@@ -154,7 +160,7 @@ public:
 	void AddParam( std::shared_ptr< ParamOption > param );
 	/// This function handle the special case where the parameter is a ParamFFT
 	/// \param	param		The parameter to add
-	void AddParam( std::shared_ptr< ParamFFT > fft);
+	void AddParam( std::shared_ptr< ParamFFT > fft );
 	/// This function allows to create a Hue color param, for exemple in Resolume this will display a
 	/// color picker, which is very handy to choose your color.
 	/// \param	name		The name of the parameter to add
@@ -194,10 +200,10 @@ protected:
 	ffglex::FFGLShader shader;
 	ffglex::FFGLScreenQuad quad;
 
-	float timeNow    = 0;
-	float deltaTime  = 0;
-	float lastUpdate = 0;
-	int frame        = 0;
+	float timeNow                                                         = 0;
+	float deltaTime                                                       = 0;
+	float lastUpdate                                                      = 0;
+	int frame                                                             = 0;
 	std::chrono::time_point< std::chrono::high_resolution_clock > t_start = std::chrono::high_resolution_clock::now();
 	Random random;
 	std::set< shader::snippet_id > includedSnippets;

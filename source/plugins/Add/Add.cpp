@@ -10,7 +10,7 @@ static CFFGLPluginInfo PluginInfo(
 	1,                                                                                           // API minor version number
 	1,                                                                                           // Plugin major version number
 	000,                                                                                         // Plugin minor version number
-	FF_MIXER,                                                                                   // Plugin type
+	FF_MIXER,                                                                                    // Plugin type
 	"Blend two videos by adding the first texture to the second texture. Looks like 50Add mixer",// Plugin description
 	"Resolume FFGL example"                                                                      // About
 );

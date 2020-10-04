@@ -2,7 +2,6 @@
 
 namespace ffglqs
 {
-
 class SmoothValue
 {
 public:

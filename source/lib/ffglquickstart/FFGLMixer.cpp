@@ -6,7 +6,6 @@ using namespace ffglex;
 
 namespace ffglqs
 {
-
 Mixer::Mixer()
 {
 	SetMinInputs( 2 );
@@ -59,7 +58,7 @@ FFResult Mixer::Render( ProcessOpenGLStruct* inputTextures )
 	ScopedSamplerActivation activateSampler1( 1 );
 	Scoped2DTextureBinding textureBinding1( inputTextures->inputTextures[ 1 ]->Handle );
 
-	shader.Set("textureDest", 0 );
+	shader.Set( "textureDest", 0 );
 	FFGLTexCoords maxCoords = GetMaxGLTexCoords( *inputTextures->inputTextures[ 0 ] );
 	shader.Set( "maxUVDest", maxCoords.s, maxCoords.t );
 	shader.Set( "textureSrc", 1 );

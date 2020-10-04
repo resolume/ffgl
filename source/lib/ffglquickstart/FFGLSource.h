@@ -3,7 +3,6 @@
 
 namespace ffglqs
 {
-
 class Source : public Plugin
 {
 public:

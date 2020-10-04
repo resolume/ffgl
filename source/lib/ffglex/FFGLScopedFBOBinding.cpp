@@ -5,7 +5,8 @@ namespace ffglex
 ScopedFBOBinding::ScopedFBOBinding( GLuint fboID, RestoreBehaviour restoreBehaviour ) :
 	isBound( true ),
 	restoreBehaviour( restoreBehaviour ),
-	previousDrawFboID( 0 ), previosReadFboID( 0 )
+	previousDrawFboID( 0 ),
+	previosReadFboID( 0 )
 {
 	//If we have to revert to the currently bound fbo we need to get their id's. If we dont get these id's we'll automatically
 	//get the clearing behaviour as we've initialized the fboIDs to 0.

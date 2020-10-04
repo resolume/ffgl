@@ -2,7 +2,6 @@
 
 namespace ffglqs
 {
-
 std::shared_ptr< ParamOption > ParamOption::Create( std::string name, std::vector< Option > options )
 {
 	return Create( name, std::move( options ), 0 );

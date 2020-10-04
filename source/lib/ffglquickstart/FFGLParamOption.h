@@ -4,7 +4,6 @@
 
 namespace ffglqs
 {
-
 class ParamOption : public Param
 {
 public:

@@ -3,7 +3,6 @@
 
 namespace ffglqs
 {
-
 class Mixer : public Plugin
 {
 public:

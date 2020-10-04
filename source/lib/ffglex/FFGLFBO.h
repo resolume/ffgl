@@ -97,13 +97,13 @@ protected:
 	bool GenerateDepthBuffer();
 	bool GenerateColorTexture();
 
-	GLsizei width;             //!< Width of the fbo in number of pixels. 0 if we're not initialized.
-	GLsizei height;            //!< Height of the fbo in number of pixels. 0 if we're not initialized.
-	GLint internalColorFormat; //!< The internal format of our texture.
+	GLsizei width;            //!< Width of the fbo in number of pixels. 0 if we're not initialized.
+	GLsizei height;           //!< Height of the fbo in number of pixels. 0 if we're not initialized.
+	GLint internalColorFormat;//!< The internal format of our texture.
 
-	GLuint fboID;              //!< OpenGL's id for our FBO. 0 if we're not initialized.
-	GLuint depthBufferID;      //!< OpenGL's id for our renderbuffer we use to store depth information. 0 if we're not initialized.
-	GLuint colorTextureID;     //!< OpenGL's id for our texture we use to store color information. 0 if we're not initialized.
+	GLuint fboID;         //!< OpenGL's id for our FBO. 0 if we're not initialized.
+	GLuint depthBufferID; //!< OpenGL's id for our renderbuffer we use to store depth information. 0 if we're not initialized.
+	GLuint colorTextureID;//!< OpenGL's id for our texture we use to store color information. 0 if we're not initialized.
 };
 
 }//End namespace ffglex

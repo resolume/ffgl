@@ -5,7 +5,6 @@
 
 namespace ffglqs
 {
-
 class Param
 {
 public:

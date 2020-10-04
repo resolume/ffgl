@@ -5,10 +5,8 @@
 
 namespace ffglqs
 {
-
 namespace shader
 {
-
 enum snippet_id
 {
 	random,
@@ -16,13 +14,11 @@ enum snippet_id
 	simplex
 };
 
-static const std::map< snippet_id, std::set< snippet_id > > dependencies =
-{
+static const std::map< snippet_id, std::set< snippet_id > > dependencies = {
 	{ simplex, {} }
 };
 
-static const std::map< snippet_id, std::string > snippets =
-{
+static const std::map< snippet_id, std::string > snippets = {
 
 	// Hardware indepedant random [0;1]
 	{ snippet_id::random, R"(

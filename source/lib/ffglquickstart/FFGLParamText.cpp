@@ -2,7 +2,6 @@
 
 namespace ffglqs
 {
-
 std::shared_ptr< ParamText > ParamText::create( std::string name )
 {
 	return create( std::move( name ), "" );
