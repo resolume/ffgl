@@ -8,7 +8,6 @@ using namespace ffglex;
 
 namespace ffglqs
 {
-
 Plugin::Plugin()
 {
 }
@@ -118,7 +117,7 @@ void Plugin::UpdateAudioAndTime()
 	for( auto entry : audioParams )
 	{
 		std::shared_ptr< ParamFFT > param = entry.first;
-		ParamInfo* fftInfo  = FindParamInfo( param->index );
+		ParamInfo* fftInfo                = FindParamInfo( param->index );
 		for( size_t index = 0; index < param->fftData.size(); ++index )
 			param->fftData[ index ] = fftInfo->elements[ index ].value;
 		audioParams[ param ].Update( param->fftData );

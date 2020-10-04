@@ -3,7 +3,6 @@
 
 namespace ffglqs
 {
-
 class ParamRange : public Param
 {
 public:

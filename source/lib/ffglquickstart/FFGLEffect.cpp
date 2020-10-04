@@ -5,7 +5,6 @@ using namespace ffglex;
 
 namespace ffglqs
 {
-
 Effect::Effect()
 {
 	SetMinInputs( 1 );

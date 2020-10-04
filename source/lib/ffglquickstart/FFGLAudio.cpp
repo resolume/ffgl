@@ -4,7 +4,6 @@
 
 namespace ffglqs
 {
-
 Audio::Audio()
 {
 }
@@ -109,7 +108,7 @@ void Audio::SetSmoothness( float smoothness )
 void Audio::SetSampleRate( int _sampleRate )
 {
 	sampleRate  = _sampleRate;
-	freqMax     = (float) sampleRate / 2.f;
+	freqMax     = (float)sampleRate / 2.f;
 	freqBinStep = freqMax / fft.size();
 }
 

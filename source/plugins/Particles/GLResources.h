@@ -25,7 +25,7 @@ private:
 	bool LoadShaders();
 
 	GLuint particleTextureID;
-	size_t frontIndex;            //!< We're updating to the back buffer and rendering from it.
+	size_t frontIndex;//!< We're updating to the back buffer and rendering from it.
 	GLuint vaoIDs[ 2 ];
 	GLuint vboIDs[ 2 ];
 	ffglex::FFGLShader updateShader;

@@ -3,7 +3,6 @@
 
 namespace ffglqs
 {
-
 class ParamBool : public Param
 {
 public:
