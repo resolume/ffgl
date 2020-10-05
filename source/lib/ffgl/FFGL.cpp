@@ -588,6 +588,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 
 {
 	FFMixed retval;
+	retval.UIntValue = FF_FAIL;
 
 	// declare pPlugObj - pointer to this instance
 	CFFGLPlugin* pPlugObj;
@@ -844,6 +845,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		retval = getParamRange( inputValue );
 		break;
 	case FF_GET_PARAM_GROUP:
+		retval = getParamGroup( inputValue );
 		break;
 
 	case FF_GET_THUMBNAIL:
