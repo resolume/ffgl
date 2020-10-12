@@ -8,7 +8,8 @@ using namespace ffglex;
 
 namespace ffglqs
 {
-Plugin::Plugin()
+Plugin::Plugin( bool supportTopLeftTextureOrientation ) :
+	CFFGLPlugin( supportTopLeftTextureOrientation )
 {
 }
 
@@ -236,11 +237,11 @@ char* Plugin::GetTextParameter( unsigned int index )
 {
 	bool inBounds = 0 <= index && index < params.size();
 	if( !inBounds )
-		return "";
+		return (char*)FF_FAIL;
 
 	auto paramText = std::dynamic_pointer_cast< ParamText >( params[ index ] );
 	if( !paramText )
-		return "";
+		return (char*)FF_FAIL;
 
 	return const_cast< char* >( paramText->text.c_str() );
 }

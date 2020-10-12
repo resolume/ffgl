@@ -6,7 +6,8 @@ using namespace ffglex;
 
 namespace ffglqs
 {
-Mixer::Mixer()
+Mixer::Mixer( bool supportTopLeftTextureOrientation ) :
+	Plugin( supportTopLeftTextureOrientation )
 {
 	SetMinInputs( 2 );
 	SetMaxInputs( 2 );

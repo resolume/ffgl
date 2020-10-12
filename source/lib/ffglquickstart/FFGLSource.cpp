@@ -2,7 +2,8 @@
 
 namespace ffglqs
 {
-Source::Source()
+Source::Source( bool supportTopLeftTextureOrientation ) :
+	Plugin( supportTopLeftTextureOrientation )
 {
 	SetMinInputs( 0 );
 	SetMaxInputs( 0 );
