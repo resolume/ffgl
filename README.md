@@ -13,7 +13,7 @@ Also more examples are available on this [repo](https://github.com/flyingrub/ffg
 - Added context state validation in debug builds. This provides plugin developers hints on which context state they need to restore.
 - Removed default DllMain implementation so that plugins may implement it without changing the ffgl library.
 - File parameters now accept an initial value just like text parameters. (This requires Resolume 7.2 for it to be picked up)
-- Added support for grouping parameters together. Set a parameter's group with SetParamGroup, any cosecutive params with the same group will be listed under the same collapsable region
+- Added support for grouping parameters together. Set a parameter's group with SetParamGroup, any cosecutive params with the same group will be listed under the same collapsable region (This requires Resolume 7.3 for it to be picked up)
 - Added support for top-left texture orientation. Hosts that are rendering with the top-left texture orientation currently need to flip both inputs and the output every frame. A plugin can now inform the host that it supports the top-left orientation by setting supportTopLeftTextureOrientation to true. If the host wants to use it then it'll inform the plugin, which can query if it should use top-left or bottom-left using the GetTextureOrientation function.
 
 
