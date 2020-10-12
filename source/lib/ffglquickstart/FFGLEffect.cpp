@@ -5,7 +5,8 @@ using namespace ffglex;
 
 namespace ffglqs
 {
-Effect::Effect()
+Effect::Effect( bool supportTopLeftTextureOrientation ) :
+	Plugin( supportTopLeftTextureOrientation )
 {
 	SetMinInputs( 1 );
 	SetMaxInputs( 1 );

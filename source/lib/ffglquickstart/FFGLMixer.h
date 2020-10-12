@@ -6,7 +6,7 @@ namespace ffglqs
 class Mixer : public Plugin
 {
 public:
-	Mixer();
+	Mixer( bool supportTopLeftTextureOrientation = false );
 	~Mixer();
 
 	template< typename PluginType >

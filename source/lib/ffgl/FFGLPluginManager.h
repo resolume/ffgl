@@ -61,7 +61,7 @@ public:
 
 	/// This method is called by the host to determine whether the plugin supports the SetTime function.
 	bool IsTimeSupported() const;
-	/// This methos is called by the host to determine whether or not the plugin supports top left texture orientations.
+	/// This method is called by the host to determine whether or not the plugin supports top left texture orientations.
 	/// Some hosts may use top-left texture orientations internally. By default plugins use bottom left. If the host wants
 	/// to call those plugins it first needs to flip the inputs on the y-axis, and then when the plugin has run the host needs
 	/// to flip the output as well. This takes some time, so if the plugin reports that it supports top-left orientations the

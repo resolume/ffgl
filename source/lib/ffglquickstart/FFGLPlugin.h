@@ -37,7 +37,7 @@ struct PluginInfo
 class Plugin : public CFFGLPlugin
 {
 public:
-	Plugin();
+	Plugin( bool supportTopLeftTextureOrientation = false );
 	~Plugin();
 
 	/// This method allows to create the plugin description.
