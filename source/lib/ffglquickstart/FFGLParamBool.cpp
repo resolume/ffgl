@@ -2,7 +2,6 @@
 
 namespace ffglqs
 {
-
 std::shared_ptr< ParamBool > ParamBool::Create( std::string name )
 {
 	return Create( std::move( name ), false );

@@ -33,14 +33,14 @@ struct Vec4f
 };
 struct Rectf
 {
-	float getWidth()  const
+	float getWidth() const
 	{
 		if( r > l )
 			return r - l;
 		else
 			return l - r;
 	}
-	float getHeight()  const
+	float getHeight() const
 	{
 		if( t > b )
 			return t - b;
@@ -117,7 +117,7 @@ Particles::Particles() :
 
 	SetBufferParamInfo( PID_FFT_INPUT, "FFT", MAX_BUCKETS, FF_USAGE_FFT );
 	for( unsigned int index = 0; index < MAX_BUCKETS; ++index )
-		SetParamElementInfo( PID_FFT_INPUT, index, "", 0.1f ); //Default to 0.1 so that we'll keep emitting even if the host doesn't provide fft data.
+		SetParamElementInfo( PID_FFT_INPUT, index, "", 0.1f );//Default to 0.1 so that we'll keep emitting even if the host doesn't provide fft data.
 }
 
 FFResult Particles::InitGL( const FFGLViewportStruct* vp )
@@ -139,9 +139,9 @@ FFResult Particles::DeInitGL()
 }
 FFResult Particles::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
-	float timeNow = hostTime / 1000.0f;
+	float timeNow   = hostTime / 1000.0f;
 	float deltaTime = timeNow - lastUpdate;
-	lastUpdate = timeNow;
+	lastUpdate      = timeNow;
 
 	if( simulate )
 		UpdateParticles( deltaTime );
@@ -222,7 +222,7 @@ FFResult Particles::SetFloatParameter( unsigned int dwIndex, float value )
 		velocityToSizeFactor = value * 19.0f + 1.0f;
 		break;
 	case PID_NUM_BUCKETS:
-		numBuckets = static_cast< int >( value * (MAX_BUCKETS - 16.0f) + 16.0f );
+		numBuckets = static_cast< int >( value * ( MAX_BUCKETS - 16.0f ) + 16.0f );
 		break;
 	case PID_NUM_PARTICLES_PER_BUCKET:
 		numParticlesPerBucket = static_cast< int >( value * MAX_PARTICLES_PER_BUCKET );
@@ -237,7 +237,7 @@ FFResult Particles::SetFloatParameter( unsigned int dwIndex, float value )
 	case PID_SIMULATE:
 		simulate = value != 0.0f;
 		break;
-	case PID_FFT_INPUT:  //This case is here to keep the ffgl framework happy. By responding with FF_SUCCESS we're telling it that this is a valid param id.
+	case PID_FFT_INPUT://This case is here to keep the ffgl framework happy. By responding with FF_SUCCESS we're telling it that this is a valid param id.
 		break;
 
 	default:
@@ -262,21 +262,21 @@ float Particles::GetFloatParameter( unsigned int index )
 	case PID_TURBULENCE_DETAIL:
 		return turbulenceDetail - 0.5f;
 	case PID_TURBULENCE_SPEED:
-		return (turbulenceSpeed - 0.1f) / 1.9f;
+		return ( turbulenceSpeed - 0.1f ) / 1.9f;
 	case PID_MAX_AGE:
 		return maxAge;
 	case PID_PARTICLE_SIZE:
-		return (particleSize - 1.0f) / 9.0f;
+		return ( particleSize - 1.0f ) / 9.0f;
 	case PID_VELOCITY_SIZE_FACTOR:
-		return (velocityToSizeFactor - 1.0f) / 19.0f;
+		return ( velocityToSizeFactor - 1.0f ) / 19.0f;
 	case PID_NUM_BUCKETS:
-		return (numBuckets - 16.0f) / (MAX_BUCKETS - 16.0f);
+		return ( numBuckets - 16.0f ) / ( MAX_BUCKETS - 16.0f );
 	case PID_NUM_PARTICLES_PER_BUCKET:
 		return static_cast< float >( numParticlesPerBucket ) / MAX_PARTICLES_PER_BUCKET;
 	case PID_BURST_DURATION:
 		return burstDuration;
 	case PID_BURST_INTENSITY:
-		return (burstIntensity - 1.0f) / 15.0f;
+		return ( burstIntensity - 1.0f ) / 15.0f;
 
 	case PID_SIMULATE:
 		return simulate ? 1.0f : 0.0f;
@@ -316,7 +316,7 @@ void Particles::UpdateParticles( float deltaTime )
 		spawnArea.t = -1.0f;
 		spawnArea.b = -1.1f;
 		//left, width, bottom, height
-		spawnAreas[ index ] = Vec4f( spawnArea.l, spawnArea.getWidth(), spawnArea.t, spawnArea.getHeight() );
+		spawnAreas[ index ]   = Vec4f( spawnArea.l, spawnArea.getWidth(), spawnArea.t, spawnArea.getHeight() );
 		spawnChances[ index ] = fftData[ index ] * fftData[ index ] * 3.0f;
 	}
 	glUniform1f( glResources.GetUpdateShader().FindUniform( "MAX_AGE" ), 60.0f / bpm * maxAge );

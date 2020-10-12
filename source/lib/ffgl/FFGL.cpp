@@ -76,6 +76,7 @@
 #include <memory.h>
 #include <assert.h>
 #include <array>
+#include <algorithm>
 #include "FFGLPluginSDK.h"
 #include "FFGLThumbnailInfo.h"
 #include "../glsdk_0_5_2/glload/include/gl_load.h"
@@ -335,7 +336,6 @@ void* instantiateGL( const FFGLViewportStruct* pGLViewport )
 		ValidateContextState();
 		return pInstance;
 	}
-
 }
 FFResult processGL( CFFGLPlugin* pPlugObj, ProcessOpenGLStruct* pogls )
 {
@@ -483,11 +483,35 @@ FFMixed getParamRange( FFMixed input )
 			return ret;
 	}
 	ret.UIntValue = FF_SUCCESS;
-	
+
 	GetRangeStruct* getRange = (GetRangeStruct*)input.PointerValue;
 
 	RangeStruct range = s_pPrototype->GetParamRange( getRange->parameterNumber );
 	getRange->range   = range;
+	return ret;
+}
+FFMixed getParamGroup( FFMixed input )
+{
+	FFMixed ret;
+	ret.UIntValue = FF_FAIL;
+
+	GetParamGroupStructTag* getParamGroup = reinterpret_cast< GetParamGroupStructTag* >( input.PointerValue );
+	if( getParamGroup == nullptr || getParamGroup->stringBuffer.maxToWrite == 0 )
+		return ret;
+
+	if( s_pPrototype == nullptr )
+	{
+		FFResult dwRet = initialise();
+		if( dwRet == FF_FAIL )
+			return ret;
+	}
+
+	ret.UIntValue = FF_SUCCESS;
+
+	//Copy the group name into the output buffer.
+	std::string paramGroup = s_pPrototype->GetParamGroup( getParamGroup->parameterNumber );
+	size_t numToCopy       = std::min( (size_t)getParamGroup->stringBuffer.maxToWrite, paramGroup.length() );
+	memcpy( getParamGroup->stringBuffer.address, paramGroup.c_str(), numToCopy );
 	return ret;
 }
 FFUInt32 getThumbnail( GetThumbnailStruct& getStruct )
@@ -496,14 +520,14 @@ FFUInt32 getThumbnail( GetThumbnailStruct& getStruct )
 	//It's possible that this plugin doesn't have an embedded thumbnail.
 	if( thumbnailInfo == nullptr )
 	{
-		getStruct.width = 0;
+		getStruct.width  = 0;
 		getStruct.height = 0;
 		//There's no thumbnail available. Use same error code as old plugins that didn't support this feature
 		//to make implementation on the host easier (fail = no thumbnail, success = thumbnail is available)
 		return FF_FAIL;
 	}
 
-	getStruct.width = thumbnailInfo->GetWidth();
+	getStruct.width  = thumbnailInfo->GetWidth();
 	getStruct.height = thumbnailInfo->GetHeight();
 	if( getStruct.rgbaPixelBuffer != nullptr )
 		memcpy( getStruct.rgbaPixelBuffer, thumbnailInfo->GetPixels(), getStruct.width * getStruct.height * 4 );
@@ -564,6 +588,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 
 {
 	FFMixed retval;
+	retval.UIntValue = FF_FAIL;
 
 	// declare pPlugObj - pointer to this instance
 	CFFGLPlugin* pPlugObj;
@@ -601,16 +626,16 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		if( pPlugObj != NULL )
 		{
 			const SetParameterStruct& setParameterStruct = *reinterpret_cast< const SetParameterStruct* >( inputValue.PointerValue );
-			unsigned int paramType = getParameterType( setParameterStruct.ParameterNumber );
+			unsigned int paramType                       = getParameterType( setParameterStruct.ParameterNumber );
 			if( paramType == FF_TYPE_TEXT || paramType == FF_TYPE_FILE )
 			{
 				retval.UIntValue = pPlugObj->SetTextParameter( setParameterStruct.ParameterNumber,
-				                                               (const char*)setParameterStruct.NewParameterValue.PointerValue );
+															   (const char*)setParameterStruct.NewParameterValue.PointerValue );
 			}
 			else
 			{
 				retval.UIntValue = pPlugObj->SetFloatParameter( setParameterStruct.ParameterNumber,
-				                                                *(float*)&setParameterStruct.NewParameterValue.UIntValue );
+																*(float*)&setParameterStruct.NewParameterValue.UIntValue );
 			}
 		}
 		else
@@ -743,27 +768,23 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_GET_NUM_PARAMETER_ELEMENTS:
 		retval.UIntValue = getNumParameterElements( inputValue.UIntValue );
 		break;
-	case FF_GET_PARAMETER_ELEMENT_NAME:
-	{
+	case FF_GET_PARAMETER_ELEMENT_NAME: {
 		const GetParameterElementNameStruct* arguments = (const GetParameterElementNameStruct*)inputValue.PointerValue;
 		retval.PointerValue                            = getParameterElementName( arguments->ParameterNumber, arguments->ElementNumber );
 		break;
 	}
-	case FF_GET_PARAMETER_ELEMENT_DEFAULT:
-	{
+	case FF_GET_PARAMETER_ELEMENT_DEFAULT: {
 		const GetParameterElementValueStruct* arguments = (const GetParameterElementValueStruct*)inputValue.PointerValue;
 		retval                                          = getParameterElementDefault( arguments->ParameterNumber, arguments->ElementNumber );
 		break;
 	}
-	case FF_GET_NUM_ELEMENT_SEPARATORS:
-	{
+	case FF_GET_NUM_ELEMENT_SEPARATORS: {
 		retval.UIntValue = GetNumElementSeparators( inputValue.UIntValue );
 		break;
 	}
-	case FF_GET_SEPARATOR_ELEMENT_INDEX:
-	{
+	case FF_GET_SEPARATOR_ELEMENT_INDEX: {
 		const GetSeparatorElementIndexStructTag* arguments = (const GetSeparatorElementIndexStructTag*)inputValue.PointerValue;
-		retval.UIntValue = GetElementSeparatorElementIndex( arguments->ParameterNumber, arguments->SeparatorIndex );
+		retval.UIntValue                                   = GetElementSeparatorElementIndex( arguments->ParameterNumber, arguments->SeparatorIndex );
 		break;
 	}
 	case FF_SET_PARAMETER_ELEMENT_VALUE:
@@ -823,6 +844,9 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_GET_RANGE:
 		retval = getParamRange( inputValue );
 		break;
+	case FF_GET_PARAM_GROUP:
+		retval = getParamGroup( inputValue );
+		break;
 
 	case FF_GET_THUMBNAIL:
 		if( inputValue.PointerValue != nullptr )
@@ -834,15 +858,13 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	case FF_GET_NUM_FILE_PARAMETER_EXTENSIONS:
 		retval.UIntValue = getNumFileParameterExtensions( inputValue.UIntValue );
 		break;
-	case FF_GET_FILE_PARAMETER_EXTENSION:
-	{
+	case FF_GET_FILE_PARAMETER_EXTENSION: {
 		const GetFileParameterExtensionStruct* arguments = reinterpret_cast< const GetFileParameterExtensionStruct* >( inputValue.PointerValue );
-		retval.PointerValue = getFileParameterExtension( arguments->ParameterNumber, arguments->ExtensionNumber );
+		retval.PointerValue                              = getFileParameterExtension( arguments->ParameterNumber, arguments->ExtensionNumber );
 		break;
 	}
 
-	case FF_GET_PRAMETER_VISIBILITY:
-	{
+	case FF_GET_PRAMETER_VISIBILITY: {
 		if( pPlugObj != nullptr )
 			retval.UIntValue = pPlugObj->GetParamVisibility( inputValue.UIntValue );
 		else
@@ -850,8 +872,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		break;
 	}
 
-	case FF_GET_PARAMETER_EVENTS:
-	{
+	case FF_GET_PARAMETER_EVENTS: {
 		GetParamEventsStruct& eventsBuffer = *reinterpret_cast< GetParamEventsStruct* >( inputValue.PointerValue );
 		//Events orignate from plugin instances so if no instance exists for this request we cannot fullfill it.
 		if( pPlugObj != nullptr )
@@ -862,14 +883,14 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 			if( eventsBuffer.events == nullptr )
 			{
 				eventsBuffer.numEvents = numPendingEvents;
-				retval.UIntValue = FF_SUCCESS;
+				retval.UIntValue       = FF_SUCCESS;
 			}
 			else
 			{
 				//The host has provided a buffer to write events in to. We'll be writing our events into the buffer and output the
 				//number of events we've written in there.
 				eventsBuffer.numEvents = pPlugObj->ConsumeParamEvents( eventsBuffer.events, eventsBuffer.numEvents );
-				retval.UIntValue = FF_SUCCESS;
+				retval.UIntValue       = FF_SUCCESS;
 			}
 		}
 		else
@@ -927,8 +948,7 @@ void ValidateContextState()
 		GLenum target;
 		GLenum binding;
 	};
-	const std::array< TextureType, 11 > TEXTURE_TYPES =
-	{
+	const std::array< TextureType, 11 > TEXTURE_TYPES = {
 		TextureType{ GL_TEXTURE_1D, GL_TEXTURE_BINDING_1D },
 		TextureType{ GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D },
 		TextureType{ GL_TEXTURE_3D, GL_TEXTURE_BINDING_3D },
@@ -964,10 +984,6 @@ void ValidateContextState()
 	//Please use the ScopedUBOBinding to automatically unbind your uniform buffers.
 	glGetIntegerv( GL_UNIFORM_BUFFER_BINDING, glInt );
 	assert( glInt[ 0 ] == 0 );
-
-
-
-
 
 	//We have no scoped bindings for the render state. You need to manually return these to the context default state.
 	glGetIntegerv( GL_POLYGON_MODE, glInt );

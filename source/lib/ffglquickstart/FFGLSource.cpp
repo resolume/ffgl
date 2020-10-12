@@ -2,7 +2,6 @@
 
 namespace ffglqs
 {
-
 Source::Source()
 {
 	SetMinInputs( 0 );

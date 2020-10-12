@@ -41,10 +41,10 @@ void HSVtoRGB( float h, float s, float v, float& r, float& g, float& b )
 	else
 	{
 		float var_h = h * 6;
-		float var_i  = floor( var_h );
-		float var_1  = v * ( 1 - s );
-		float var_2  = v * ( 1 - s * ( var_h - var_i ) );
-		float var_3  = v * ( 1 - s * ( 1 - ( var_h - var_i ) ) );
+		float var_i = floor( var_h );
+		float var_1 = v * ( 1 - s );
+		float var_2 = v * ( 1 - s * ( var_h - var_i ) );
+		float var_3 = v * ( 1 - s * ( 1 - ( var_h - var_i ) ) );
 
 		if( var_i == 0 )
 		{
@@ -171,7 +171,7 @@ void Log( const std::string& message )
 	OutputDebugString( "\n" );
 	std::cout << message << std::endl;
 #else
-	printf( "%s", (message + "\n").c_str() );
+	printf( "%s", ( message + "\n" ).c_str() );
 #endif
 }
 }//End namespace ffglex

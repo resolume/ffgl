@@ -6,7 +6,6 @@
 
 namespace ffglex
 {
-
 FFGLScreenQuad::FFGLScreenQuad() :
 	vaoID( 0 ),
 	vboID( 0 )

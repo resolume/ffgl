@@ -63,7 +63,7 @@ void GLResources::Release()
 
 void GLResources::FlipBuffers()
 {
-	frontIndex = (frontIndex + 1) % 2;
+	frontIndex = ( frontIndex + 1 ) % 2;
 }
 
 GLuint GLResources::GetParticleTextureID() const
@@ -76,7 +76,7 @@ GLuint GLResources::GetFrontVAOID() const
 }
 GLuint GLResources::GetBackVAOID() const
 {
-	return vaoIDs[ (frontIndex + 1) % 2 ];
+	return vaoIDs[ ( frontIndex + 1 ) % 2 ];
 }
 GLuint GLResources::GetFrontBufferID() const
 {
@@ -84,7 +84,7 @@ GLuint GLResources::GetFrontBufferID() const
 }
 GLuint GLResources::GetBackBufferID() const
 {
-	return vboIDs[ (frontIndex + 1) % 2 ];
+	return vboIDs[ ( frontIndex + 1 ) % 2 ];
 }
 const FFGLShader& GLResources::GetUpdateShader() const
 {
@@ -139,9 +139,9 @@ bool GLResources::LoadVertexBuffers()
 	{
 		for( int bucketIndex = 0; bucketIndex < MAX_BUCKETS; ++bucketIndex )
 		{
-			Vertex& vertex           = vertexData[ vertexIndex ];
-			vertex.age               = std::numeric_limits< float >::max();
-			vertex.bucketIndex       = bucketIndex;
+			Vertex& vertex     = vertexData[ vertexIndex ];
+			vertex.age         = std::numeric_limits< float >::max();
+			vertex.bucketIndex = bucketIndex;
 
 #if defined( USE_DEBUG_INIT_DATA )
 			vertex.age           = particleIndex / float( MAX_PARTICLES_PER_BUCKET - 1 ) * 16.0f;

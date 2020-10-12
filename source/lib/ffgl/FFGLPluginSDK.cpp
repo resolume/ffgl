@@ -56,9 +56,9 @@ char* CFFGLPlugin::GetParameterDisplay( unsigned int index )
 		}
 		else
 		{
-			std::string stringValue = std::to_string(m_pPlugin->GetFloatParameter( index ));
-			memset(s_DisplayValue, 0, sizeof(s_DisplayValue));
-			memcpy(s_DisplayValue, stringValue.c_str(), std::min(sizeof(s_DisplayValue), stringValue.length()));
+			std::string stringValue = std::to_string( m_pPlugin->GetFloatParameter( index ) );
+			memset( s_DisplayValue, 0, sizeof( s_DisplayValue ) );
+			memcpy( s_DisplayValue, stringValue.c_str(), std::min( sizeof( s_DisplayValue ), stringValue.length() ) );
 			return s_DisplayValue;
 		}
 	}
@@ -94,18 +94,17 @@ FFResult CFFGLPlugin::GetInputStatus( unsigned int index )
 
 void CFFGLPlugin::SetBeatInfo( float bpm, float barPhase )
 {
-	this->bpm = bpm;
+	this->bpm      = bpm;
 	this->barPhase = barPhase;
 }
 
-void CFFGLPlugin::SetHostInfo(const char * hostname, const char * version)
+void CFFGLPlugin::SetHostInfo( const char* hostname, const char* version )
 {
-	hostInfos.name = hostname;
+	hostInfos.name    = hostname;
 	hostInfos.version = version;
 }
 
-void CFFGLPlugin::SetSampleRate(unsigned int _sampleRate)
+void CFFGLPlugin::SetSampleRate( unsigned int _sampleRate )
 {
 	sampleRate = _sampleRate;
 }
-

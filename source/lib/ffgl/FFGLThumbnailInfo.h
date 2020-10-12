@@ -63,7 +63,7 @@ struct CFFGLColor
 	/// handle the order of the RGBA channels.
 	CFFGLColor( unsigned char r, unsigned char g, unsigned char b, unsigned char a );
 
-	FFUInt32 rgba; //!< 1 byte for each channel. Red is MSB while Alpha is LSB. (0xRRGGBBAA)
+	FFUInt32 rgba;//!< 1 byte for each channel. Red is MSB while Alpha is LSB. (0xRRGGBBAA)
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,10 +111,10 @@ public:
 	const CFFGLColor* GetPixels() const;
 
 private:
-	FFUInt32 width;                        //!< Width of the thumbnail in number of pixels.
-	FFUInt32 height;                       //!< Height of the thumbnail in number of pixels.
-	std::vector< CFFGLColor > ownedPixels; //!< Array of thumbnail data owned by this instance.
-	const CFFGLColor* pixelData;           //!< A pointer to the array of thumbnail pixel data. The thumbnail's colors will be read from this array.
+	FFUInt32 width;                       //!< Width of the thumbnail in number of pixels.
+	FFUInt32 height;                      //!< Height of the thumbnail in number of pixels.
+	std::vector< CFFGLColor > ownedPixels;//!< Array of thumbnail data owned by this instance.
+	const CFFGLColor* pixelData;          //!< A pointer to the array of thumbnail pixel data. The thumbnail's colors will be read from this array.
 };
 
 #endif

@@ -326,6 +326,7 @@ static const FFUInt32 FF_SET_BEATINFO                      = 38;
 static const FFUInt32 FF_SET_HOSTINFO                      = 39;
 static const FFUInt32 FF_SET_SAMPLERATE                    = 40;
 static const FFUInt32 FF_GET_RANGE                         = 41;
+static const FFUInt32 FF_GET_PARAM_GROUP                   = 50;
 static const FFUInt32 FF_GET_THUMBNAIL                     = 42;
 static const FFUInt32 FF_GET_NUM_FILE_PARAMETER_EXTENSIONS = 43;
 static const FFUInt32 FF_GET_FILE_PARAMETER_EXTENSION      = 44;
@@ -333,7 +334,7 @@ static const FFUInt32 FF_GET_PRAMETER_VISIBILITY           = 45;
 static const FFUInt32 FF_GET_PARAMETER_EVENTS              = 46;
 static const FFUInt32 FF_GET_NUM_ELEMENT_SEPARATORS        = 47;
 static const FFUInt32 FF_GET_SEPARATOR_ELEMENT_INDEX       = 48;
-//Next ID = 50
+//Next ID = 51
 
 //Previously used function codes that are no longer in use. Should prevent using
 //these numbers for new function codes.
@@ -484,6 +485,18 @@ typedef struct GetRangeStructTag
 	FFUInt32 parameterNumber;
 	RangeStruct range;
 } GetRangeStruct;
+
+// String buffer structure used to enable the host to provide a string buffer into which the plugin can copy string data.
+typedef struct StringBufferStructTag
+{
+	char* address;
+	FFUInt32 maxToWrite;//!< The maximum number of characters to write into the buffer. excluding terminating nul, plugins will not automatically write the nul terminator.
+} StringBufferStruct;
+typedef struct GetParamGroupStructTag
+{
+	FFUInt32 parameterNumber;
+	StringBufferStruct stringBuffer;
+} GetParamGroupStruct;
 
 /**
  * 

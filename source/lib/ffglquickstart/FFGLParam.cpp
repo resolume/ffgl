@@ -2,7 +2,6 @@
 
 namespace ffglqs
 {
-
 std::shared_ptr< Param > Param::Create()
 {
 	return Create( "" );

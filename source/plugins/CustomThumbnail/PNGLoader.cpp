@@ -26,7 +26,6 @@ private:
 
 namespace PNGHelpers
 {
-
 static void __cdecl readCallback( png_structp png, png_bytep data, png_size_t length )
 {
 	ByteStream& stream = *reinterpret_cast< ByteStream* >( png_get_io_ptr( png ) );
@@ -146,29 +145,29 @@ std::vector< CFFGLColor > PNGLoader::ParsePNGPixels( const void* pngData )
 
 		switch( colorType )
 		{
-		case PNG_COLOR_TYPE_GRAY:// (bit depths 1, 2, 4, 8, 16)
-			png_set_expand( pngReadStruct );      //Expand the grayscale to at least a bitdepth of 8.
-			png_set_gray_to_rgb( pngReadStruct ); //Converts the grayscale from 1 channel to RGB.
+		case PNG_COLOR_TYPE_GRAY:                // (bit depths 1, 2, 4, 8, 16)
+			png_set_expand( pngReadStruct );     //Expand the grayscale to at least a bitdepth of 8.
+			png_set_gray_to_rgb( pngReadStruct );//Converts the grayscale from 1 channel to RGB.
 			break;
-		case PNG_COLOR_TYPE_GRAY_ALPHA:// (bit depths 8, 16)
-			png_set_gray_to_rgb( pngReadStruct ); // //Converts the grayscale from 1 channel to RGB.
+		case PNG_COLOR_TYPE_GRAY_ALPHA:          // (bit depths 8, 16)
+			png_set_gray_to_rgb( pngReadStruct );// //Converts the grayscale from 1 channel to RGB.
 			//Already contains alpha \o/
 			break;
-		case PNG_COLOR_TYPE_PALETTE:// (bit depths 1, 2, 4, 8)
-			png_set_expand( pngReadStruct );                                  //Turns the palette image into RGB
-			png_set_add_alpha( pngReadStruct, 0xffffffff, PNG_FILLER_AFTER ); //Palettes dont contain alpha, so always add it.
+		case PNG_COLOR_TYPE_PALETTE:                                         // (bit depths 1, 2, 4, 8)
+			png_set_expand( pngReadStruct );                                 //Turns the palette image into RGB
+			png_set_add_alpha( pngReadStruct, 0xffffffff, PNG_FILLER_AFTER );//Palettes dont contain alpha, so always add it.
 			break;
-		case PNG_COLOR_TYPE_RGB:// (bit_depths 8, 16)
-			png_set_add_alpha( pngReadStruct, 0xffffffff, PNG_FILLER_AFTER ); //There's no alpha channel so add it as we need to end up with RGBA.
+		case PNG_COLOR_TYPE_RGB:                                             // (bit_depths 8, 16)
+			png_set_add_alpha( pngReadStruct, 0xffffffff, PNG_FILLER_AFTER );//There's no alpha channel so add it as we need to end up with RGBA.
 			break;
 		case PNG_COLOR_TYPE_RGB_ALPHA:// (bit_depths 8, 16)
 			//PERFECT! This is what we want.
 			break;
 		case PNG_COLOR_MASK_PALETTE:
 			break;
-		//case PNG_COLOR_MASK_COLOR:
+			//case PNG_COLOR_MASK_COLOR:
 			//break;
-		//case PNG_COLOR_MASK_ALPHA:
+			//case PNG_COLOR_MASK_ALPHA:
 			//break;
 		}
 
@@ -185,12 +184,11 @@ std::vector< CFFGLColor > PNGLoader::ParsePNGPixels( const void* pngData )
 		png_read_update_info( pngReadStruct, pngInfoStruct );
 		png_get_IHDR( pngReadStruct, pngInfoStruct, &width, &height, &bitDepth, &colorType, &interlaceType, 0, 0 );
 
-
 		//PNGs are stored in network byte order (big-endian). We're running on a little endian system so swap the byte order.
 		//if( bitDepth == 16 )
-			//png_set_swap( pngReadStruct );
+		//png_set_swap( pngReadStruct );
 
-		size_t lineStride = width * (pngInfoStruct->pixel_depth / 8); // pixelDepth is in bits convert to bytes
+		size_t lineStride = width * ( pngInfoStruct->pixel_depth / 8 );// pixelDepth is in bits convert to bytes
 
 		//Load the image into a temporary buffer so that if anything goes wrong while reading we dont risk
 		//outputting garbage through the output buffer due to a partial read.

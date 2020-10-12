@@ -3,7 +3,6 @@
 
 namespace ffglqs
 {
-
 class Effect : public Plugin
 {
 public:
