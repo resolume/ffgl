@@ -773,7 +773,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		retval.PointerValue                            = getParameterElementName( arguments->ParameterNumber, arguments->ElementNumber );
 		break;
 	}
-	case FF_GET_PARAMETER_ELEMENT_DEFAULT: {
+	case FF_GET_PARAMETER_ELEMENT_VALUE: {
 		const GetParameterElementValueStruct* arguments = (const GetParameterElementValueStruct*)inputValue.PointerValue;
 		retval                                          = getParameterElementDefault( arguments->ParameterNumber, arguments->ElementNumber );
 		break;
