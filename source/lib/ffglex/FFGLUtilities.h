@@ -36,6 +36,15 @@ static const GlVertexTextured TEXTURED_QUAD_VERTICES[] = {
 	{ 1.0f, 1.0f, 1.0f, 1.0f, 0.0f },  //Top right
 	{ 1.0f, 0.0f, 1.0f, -1.0f, 0.0f }, //Bottom right
 };
+static const GlVertexTextured FLIPPED_TEXTURED_QUAD_VERTICES[] = {
+	{ 0.0f, 0.0f, -1.0f, 1.0f, 0.0f }, //Top-left
+	{ 1.0f, 0.0f, 1.0f, 1.0f, 0.0f },  //Top-right
+	{ 0.0f, 1.0f, -1.0f, -1.0f, 0.0f },//Bottom left
+
+	{ 0.0f, 1.0f, -1.0f, -1.0f, 0.0f },//Bottom left
+	{ 1.0f, 0.0f, 1.0f, 1.0f, 0.0f },  //Top right
+	{ 1.0f, 1.0f, 1.0f, -1.0f, 0.0f }, //Bottom right
+};
 static GlVertexTextured g_QuadVerticesTextured[] = {
 	{ 0.0f, 0.0f, -1.0f, -1.0f, 0.0f },
 	{ 1.0f, 0.0f, 1.0f, -1.0f, 0.0f },
