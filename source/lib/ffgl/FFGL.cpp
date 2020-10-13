@@ -980,10 +980,10 @@ void ValidateContextState()
 	assert( glInt[ 0 ] == 0 );
 
 	//Uncommonly used bindings. You can use the ScopedBufferBinding base class for these.
-	glGetIntegerv( GL_COPY_READ_BUFFER_BINDING, glInt );
-	assert( glInt[ 0 ] == 0 );
-	glGetIntegerv( GL_COPY_WRITE_BUFFER_BINDING, glInt );
-	assert( glInt[ 0 ] == 0 );
+	//glGetIntegerv( GL_COPY_READ_BUFFER_BINDING, glInt );
+	//assert( glInt[ 0 ] == 0 );
+	//glGetIntegerv( GL_COPY_WRITE_BUFFER_BINDING, glInt );
+	//assert( glInt[ 0 ] == 0 );
 	glGetIntegerv( GL_DRAW_INDIRECT_BUFFER_BINDING, glInt );
 	assert( glInt[ 0 ] == 0 );
 	glGetIntegerv( GL_PIXEL_PACK_BUFFER_BINDING, glInt );
