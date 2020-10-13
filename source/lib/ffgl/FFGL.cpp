@@ -576,7 +576,7 @@ FFUInt32 getDefaultParameterVisibility( unsigned int index )
 
 extern "C" __declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID )
 
-#elif  defined( FFGL_MACOS )
+#elif defined( FFGL_MACOS )
 
 FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID )
 
@@ -931,7 +931,7 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
  */
 void ValidateContextState()
 {
-#if defined( _DEBUG )
+#if defined( FFGL_DEBUG )
 	GLint glInt[ 4 ];
 	GLboolean glBool[ 4 ];
 
@@ -967,14 +967,30 @@ void ValidateContextState()
 	{
 		for( GLint sampler = 0; sampler < numSamplers; ++sampler )
 		{
+			glActiveTexture( GL_TEXTURE0 + sampler );
 			//Please use the ScopedTextureBinding to automatically unbind textures after you're done with them.
 			glGetIntegerv( pair.binding, glInt );
 			assert( glInt[ 0 ] == 0 );
 		}
 	}
+	glActiveTexture( GL_TEXTURE0 );
 
 	//Please use the ScopedVBOBinding to automatically unbind your vertex buffers.
 	glGetIntegerv( GL_ARRAY_BUFFER_BINDING, glInt );
+	assert( glInt[ 0 ] == 0 );
+
+	//Uncommonly used bindings. You can use the ScopedBufferBinding base class for these.
+	glGetIntegerv( GL_COPY_READ_BUFFER_BINDING, glInt );
+	assert( glInt[ 0 ] == 0 );
+	glGetIntegerv( GL_COPY_WRITE_BUFFER_BINDING, glInt );
+	assert( glInt[ 0 ] == 0 );
+	glGetIntegerv( GL_DRAW_INDIRECT_BUFFER_BINDING, glInt );
+	assert( glInt[ 0 ] == 0 );
+	glGetIntegerv( GL_PIXEL_PACK_BUFFER_BINDING, glInt );
+	assert( glInt[ 0 ] == 0 );
+	glGetIntegerv( GL_PIXEL_UNPACK_BUFFER_BINDING, glInt );
+	assert( glInt[ 0 ] == 0 );
+	glGetIntegerv( GL_TRANSFORM_FEEDBACK_BUFFER_BINDING, glInt );
 	assert( glInt[ 0 ] == 0 );
 
 	//Please use the ScopedIBOBinding to automatically unbind your index buffers.
@@ -983,6 +999,10 @@ void ValidateContextState()
 
 	//Please use the ScopedUBOBinding to automatically unbind your uniform buffers.
 	glGetIntegerv( GL_UNIFORM_BUFFER_BINDING, glInt );
+	assert( glInt[ 0 ] == 0 );
+
+	//Please use the ScopedVAOBinding to automatically unbind your uniform buffers.
+	glGetIntegerv( GL_VERTEX_ARRAY_BINDING, glInt );
 	assert( glInt[ 0 ] == 0 );
 
 	//We have no scoped bindings for the render state. You need to manually return these to the context default state.
