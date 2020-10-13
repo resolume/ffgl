@@ -98,7 +98,7 @@ void ValidateContextState();
 
 bool InitGLExts()
 {
-#if defined( WIN32 )
+#if defined( FFGL_WINDOWS )
 	static bool triedInit  = false;
 	static bool initResult = false;
 	if( triedInit )
@@ -572,15 +572,15 @@ FFUInt32 getDefaultParameterVisibility( unsigned int index )
 // Implementation of plugMain, the one and only exposed function
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef WIN32
+#if defined( FFGL_WINDOWS )
 
 extern "C" __declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID )
 
-#elif TARGET_OS_MAC
+#elif  defined( FFGL_MACOS )
 
 FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID )
 
-#elif __linux__
+#elif defined( FFGL_LINUX )
 
 FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID )
 
