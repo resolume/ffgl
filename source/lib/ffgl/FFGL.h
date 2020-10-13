@@ -80,10 +80,11 @@
 //////////////////////////////////////////////////////////////////////////////////////
 // Includes
 /////////////////////////////////////////////////////////////////////////////////////
+#include "FFGLPlatform.h"
 
 //include the appropriate OpenGL headers for the compiler
 
-#if defined( _WIN32 )
+#if defined( FFGL_WINDOWS )
 #define WIN32_LEAN_AND_MEAN//Exclude rarely-used stuff from Windows headers
 #define _WINSOCKAPI_       //Prevent inclusion of winsock
 //Defines to prevent windows.h from making all kinds of defines which may conflict with actual user code.
@@ -276,13 +277,13 @@ typedef unsigned __int16 FFUInt16;
 typedef unsigned __int32 FFUInt32;
 typedef unsigned __int64 FFUInt64;
 #else
-#if defined( TARGET_OS_MAC )
-#include <OpenGL/gl3.h>
-#elif defined( __linux__ )
-#include <GL/gl.h>
-#else
-#error define this for your OS
-#endif
+#	if defined( FFGL_MACOS )
+#		include <OpenGL/gl3.h>
+#	elif defined( FFGL_LINUX )
+#		include <GL/gl.h>
+#	else
+#		error define this for your OS
+#	endif
 
 extern "C" {
 #include <string.h>
@@ -604,7 +605,7 @@ typedef struct GetParamEventsStructTag
 // the host
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef _WIN32
+#if defined( FFGL_WINDOWS )
 
 extern "C" __declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
 typedef __declspec( dllimport ) FFMixed( __stdcall* FF_Main_FuncPtr )( FFUInt32, FFMixed, FFInstanceID );
@@ -617,7 +618,7 @@ typedef FFMixed ( *FF_Main_FuncPtr )( FFUInt32 funcCode, FFMixed inputVal, FFIns
 
 #endif
 
-#ifndef _WIN32
+#if !defined( FFGL_WINDOWS )
 }//extern "C"
 #endif
 

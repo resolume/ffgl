@@ -351,6 +351,7 @@
 		DB4B63F41FF845820069DA80 /* Add.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Add.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB4B64161FF845920069DA80 /* Gradients.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Gradients.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		E89249CF19AD2CE80019503B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		F40602D32535A54800CCDD40 /* FFGLPlatform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFGLPlatform.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -618,6 +619,7 @@
 				1B2708B921635F6E002B8B05 /* FFGLPluginManager.h */,
 				1B2708BA21635F6E002B8B05 /* FFGLPluginSDK.cpp */,
 				1B2708BB21635F6E002B8B05 /* FFGLPluginSDK.h */,
+				F40602D32535A54800CCDD40 /* FFGLPlatform.h */,
 			);
 			name = ffgl;
 			path = ../../source/lib/ffgl;

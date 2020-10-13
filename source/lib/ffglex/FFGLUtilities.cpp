@@ -1,6 +1,6 @@
 #include "FFGLUtilities.h"
 
-#ifdef _WIN32
+#if defined( FFGL_WINDOWS )
 #include <Windows.h>
 #else
 #include <Carbon/Carbon.h>
@@ -166,7 +166,7 @@ void ReplaceAll( std::string& utf8String, const std::string& valueToReplace, con
 }
 void Log( const std::string& message )
 {
-#if defined( _WIN32 )
+#if defined( FFGL_WINDOWS )
 	OutputDebugString( message.c_str() );
 	OutputDebugString( "\n" );
 	std::cout << message << std::endl;

@@ -23,13 +23,13 @@
 
 #include "FFGL.h"
 
-#ifdef TARGET_OS_MAC
+#if defined( FFGL_MACOS )
 //there is no need for __stdcall on mac, so this will eliminate any
 //usage of it
 #define __stdcall
 #endif
 
-#ifdef __linux__
+#if defined( FFGL_LINUX )
 #define __stdcall
 #endif
 
