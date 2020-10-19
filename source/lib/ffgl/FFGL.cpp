@@ -79,6 +79,7 @@
 #include <algorithm>
 #include "FFGLPluginSDK.h"
 #include "FFGLThumbnailInfo.h"
+#include "FFGLLog.h"
 #include "../glsdk_0_5_2/glload/include/gl_load.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,7 +88,7 @@
 
 extern CFFGLPluginInfo* g_CurrPluginInfo;
 
-static CFFGLPlugin* s_pPrototype = NULL;
+static CFFGLPlugin* s_pPrototype = nullptr;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FreeFrame SDK default implementation of the FreeFrame global functions.
@@ -573,19 +574,10 @@ FFUInt32 getDefaultParameterVisibility( unsigned int index )
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #if defined( FFGL_WINDOWS )
-
 extern "C" __declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID )
-
-#elif defined( FFGL_MACOS )
-
+#elif defined( FFGL_MACOS ) || defined( FFGL_LINUX )
 FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID )
-
-#elif defined( FFGL_LINUX )
-
-FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID )
-
 #endif
-
 {
 	FFMixed retval;
 	retval.UIntValue = FF_FAIL;
@@ -918,6 +910,15 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 	}
 
 	return retval;
+}
+
+#if defined( FFGL_WINDOWS )
+extern "C" __declspec( dllexport ) void __stdcall SetLogCallback( PFNLog logCallback )
+#elif defined( FFGL_MACOS ) || defined( FFGL_LINUX )
+void SetLogCallback( PFNLog logCallback )
+#endif
+{
+	FFGLLog::SetLogCallback( logCallback );
 }
 
 /**

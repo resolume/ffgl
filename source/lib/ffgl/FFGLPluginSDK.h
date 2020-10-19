@@ -133,7 +133,6 @@ public:
 	virtual FFResult GetInputStatus( unsigned int index );
 
 	////////////////////////////////////////////////////////////////////////////
-	/// Additional FFGL functions by Resolume
 	/// Returns the short name of the plugin
 	virtual const char* GetShortName()
 	{

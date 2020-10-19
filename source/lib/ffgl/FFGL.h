@@ -277,13 +277,13 @@ typedef unsigned __int16 FFUInt16;
 typedef unsigned __int32 FFUInt32;
 typedef unsigned __int64 FFUInt64;
 #else
-#	if defined( FFGL_MACOS )
-#		include <OpenGL/gl3.h>
-#	elif defined( FFGL_LINUX )
-#		include <GL/gl.h>
-#	else
-#		error define this for your OS
-#	endif
+#if defined( FFGL_MACOS )
+#include <OpenGL/gl3.h>
+#elif defined( FFGL_LINUX )
+#include <GL/gl.h>
+#else
+#error define this for your OS
+#endif
 
 extern "C" {
 #include <string.h>
@@ -606,16 +606,23 @@ typedef struct GetParamEventsStructTag
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #if defined( FFGL_WINDOWS )
+typedef void( __stdcall* PFNLog )( char* cStr );
+
+typedef __declspec( dllimport ) FFMixed( __stdcall* FF_Main_FuncPtr )( FFUInt32, FFMixed, FFInstanceID );
+typedef __declspec( dllimport ) void( __stdcall* FF_SetLogCallback_FuncPtr )( PFNLog );
 
 extern "C" __declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
-typedef __declspec( dllimport ) FFMixed( __stdcall* FF_Main_FuncPtr )( FFUInt32, FFMixed, FFInstanceID );
-
+extern "C" __declspec( dllexport ) void __stdcall SetLogCallback( PFNLog logCallback );
 #else
 
 //linux and Mac OSX share these
-FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
-typedef FFMixed ( *FF_Main_FuncPtr )( FFUInt32 funcCode, FFMixed inputVal, FFInstanceID instanceID );
+typedef void ( *PFNLog )( char* cStr );
 
+typedef FFMixed ( *FF_Main_FuncPtr )( FFUInt32, FFMixed, FFInstanceID );
+typedef void ( *FF_SetLogCallback_FuncPtr )( PFNLog );
+
+FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
+void SetLogCallback( PFNLog logCallback );
 #endif
 
 #if !defined( FFGL_WINDOWS )
