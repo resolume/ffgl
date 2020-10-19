@@ -1002,7 +1002,7 @@ void ValidateContextState()
 	glGetIntegerv( GL_UNIFORM_BUFFER_BINDING, glInt );
 	assert( glInt[ 0 ] == 0 );
 
-	//Please use the ScopedVAOBinding to automatically unbind your uniform buffers.
+	//Please use the ScopedVAOBinding to automatically unbind your vertex array objects.
 	glGetIntegerv( GL_VERTEX_ARRAY_BINDING, glInt );
 	assert( glInt[ 0 ] == 0 );
 
