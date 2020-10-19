@@ -125,6 +125,8 @@ CustomThumbnail::CustomThumbnail() :
 
 	//Parameters
 	SetParamInfof( PID_INTENSITY, "Intensity", FF_TYPE_STANDARD );
+
+	FFGLLog::LogToHost( "Created CustomThumbnail generator" );
 }
 FFResult CustomThumbnail::InitGL( const FFGLViewportStruct* vp )
 {

@@ -70,6 +70,8 @@ Add::Add()
 	// The name here must match the one you declared in your fragment shader.
 	// Resolume will look for a param named "Opacity" for mix value.
 	AddParam( Param::Create( "Opacity" ) );
+
+	FFGLLog::LogToHost( "Created Add mixer" );
 }
 Add::~Add()
 {
