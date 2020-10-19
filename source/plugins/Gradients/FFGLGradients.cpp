@@ -74,6 +74,8 @@ FFGLGradients::FFGLGradients() :
 	SetParamInfof( PT_SAT2, "Saturation 2", FF_TYPE_SATURATION );
 	SetParamInfof( PT_BRI2, "Brightness 2", FF_TYPE_BRIGHTNESS );
 	SetParamInfof( PT_ALP2, "Alpha 2", FF_TYPE_ALPHA );
+
+	FFGLLog::LogToHost( "Created Gradient generator" );
 }
 FFResult FFGLGradients::InitGL( const FFGLViewportStruct* vp )
 {

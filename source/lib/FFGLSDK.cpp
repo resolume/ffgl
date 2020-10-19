@@ -6,6 +6,7 @@
 #include "ffgl/FFGLPluginManager.cpp"
 #include "ffgl/FFGLPluginSDK.cpp"
 #include "ffgl/FFGLThumbnailInfo.cpp"
+#include "ffgl/FFGLLog.cpp"
 
 #include "ffglex/FFGLFBO.cpp"
 #include "ffglex/FFGLScopedBufferBinding.cpp"

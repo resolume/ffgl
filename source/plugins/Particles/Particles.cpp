@@ -118,6 +118,8 @@ Particles::Particles() :
 	SetBufferParamInfo( PID_FFT_INPUT, "FFT", MAX_BUCKETS, FF_USAGE_FFT );
 	for( unsigned int index = 0; index < MAX_BUCKETS; ++index )
 		SetParamElementInfo( PID_FFT_INPUT, index, "", 0.1f );//Default to 0.1 so that we'll keep emitting even if the host doesn't provide fft data.
+
+	FFGLLog::LogToHost( "Created Particles generator" );
 }
 
 FFResult Particles::InitGL( const FFGLViewportStruct* vp )

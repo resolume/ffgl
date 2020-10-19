@@ -195,6 +195,11 @@
 		65D4D1F023193F7A00D12558 /* FFGLThumbnailInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65D4D1BF23193C9200D12558 /* FFGLThumbnailInfo.cpp */; };
 		D69416C91B904EA200D30319 /* AddSubtract.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69416A11B90436100D30319 /* AddSubtract.cpp */; };
 		DB4B641D1FF84E910069DA80 /* Add.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB4B63E11FF8453A0069DA80 /* Add.cpp */; };
+		F442E33A253DE80B008313C0 /* FFGLLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F442E338253DE801008313C0 /* FFGLLog.cpp */; };
+		F442E33B253DE80B008313C0 /* FFGLLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F442E338253DE801008313C0 /* FFGLLog.cpp */; };
+		F442E33C253DE80C008313C0 /* FFGLLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F442E338253DE801008313C0 /* FFGLLog.cpp */; };
+		F442E33D253DE80D008313C0 /* FFGLLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F442E338253DE801008313C0 /* FFGLLog.cpp */; };
+		F442E33E253DE80E008313C0 /* FFGLLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F442E338253DE801008313C0 /* FFGLLog.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -352,6 +357,8 @@
 		DB4B64161FF845920069DA80 /* Gradients.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Gradients.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		E89249CF19AD2CE80019503B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		F40602D32535A54800CCDD40 /* FFGLPlatform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFGLPlatform.h; sourceTree = "<group>"; };
+		F442E338253DE801008313C0 /* FFGLLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFGLLog.cpp; sourceTree = "<group>"; };
+		F442E339253DE801008313C0 /* FFGLLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLLog.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -607,6 +614,8 @@
 		D6DB1A291B9054A9007E6883 /* ffgl */ = {
 			isa = PBXGroup;
 			children = (
+				F442E338253DE801008313C0 /* FFGLLog.cpp */,
+				F442E339253DE801008313C0 /* FFGLLog.h */,
 				65D4D1BF23193C9200D12558 /* FFGLThumbnailInfo.cpp */,
 				65D4D1BE23193C9200D12558 /* FFGLThumbnailInfo.h */,
 				1B2708B321635F6D002B8B05 /* FFGL.cpp */,
@@ -857,6 +866,7 @@
 				652480A02306FD14007257C5 /* FFGLPlugin.cpp in Sources */,
 				1B2708C621635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
 				1B2708CA21635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
+				F442E33B253DE80B008313C0 /* FFGLLog.cpp in Sources */,
 				1B2708BE21635F6E002B8B05 /* FFGL.cpp in Sources */,
 				652480B42306FD14007257C5 /* FFGLParamEvent.cpp in Sources */,
 				65BE5BE0231D65FA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */,
@@ -899,6 +909,7 @@
 				65BE5BDA231D65F900CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */,
 				65D4D1EA23193D7500D12558 /* CustomThumbnail.cpp in Sources */,
 				65D4D1CD23193D0000D12558 /* FFGLPluginInfo.cpp in Sources */,
+				F442E33E253DE80E008313C0 /* FFGLLog.cpp in Sources */,
 				65D4D1CE23193D0000D12558 /* FFGLPluginInfoData.cpp in Sources */,
 				65D4D1CF23193D0000D12558 /* FFGL.cpp in Sources */,
 				65D4D1D023193D0000D12558 /* FFGLParamEvent.cpp in Sources */,
@@ -930,6 +941,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B2708C821635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
+				F442E33D253DE80D008313C0 /* FFGLLog.cpp in Sources */,
 				652480A22306FD14007257C5 /* FFGLPlugin.cpp in Sources */,
 				652480822306FD14007257C5 /* FFGLSource.cpp in Sources */,
 				1B27090321635F83002B8B05 /* FFGLScopedShaderBinding.cpp in Sources */,
@@ -980,6 +992,7 @@
 				652480A12306FD14007257C5 /* FFGLPlugin.cpp in Sources */,
 				1B2708C721635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
 				1B2708CB21635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
+				F442E33C253DE80C008313C0 /* FFGLLog.cpp in Sources */,
 				1B2708BF21635F6E002B8B05 /* FFGL.cpp in Sources */,
 				652480B52306FD14007257C5 /* FFGLParamEvent.cpp in Sources */,
 				65BE5BDE231D65FA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */,
@@ -1020,6 +1033,7 @@
 				1B27090021635F83002B8B05 /* FFGLScopedShaderBinding.cpp in Sources */,
 				6524809F2306FD14007257C5 /* FFGLPlugin.cpp in Sources */,
 				1B2708C521635F6E002B8B05 /* FFGLPluginInfo.cpp in Sources */,
+				F442E33A253DE80B008313C0 /* FFGLLog.cpp in Sources */,
 				1B2708C921635F6E002B8B05 /* FFGLPluginInfoData.cpp in Sources */,
 				1B2708BD21635F6E002B8B05 /* FFGL.cpp in Sources */,
 				65BE5BE2231D65FA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */,

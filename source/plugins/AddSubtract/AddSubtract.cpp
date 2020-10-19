@@ -62,6 +62,8 @@ AddSubtract::AddSubtract()
 	//We declare that this plugin has a Brightness parameter which is a RGB param.
 	//The name here must match the one you declared in your fragment shader.
 	AddRGBColorParam( "Brightness" );
+
+	FFGLLog::LogToHost( "Created AddSubtract effect" );
 }
 AddSubtract::~AddSubtract()
 {
