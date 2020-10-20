@@ -1,19 +1,14 @@
 This is the Resolume fork of the FFGL repository. It is up to date and has Visual Studio and Xcode projects to compile 64 bit plugins that can be loaded by Resolume 7.0.3 and up.
 
-The master branch is used for continued development. It will contain the latest features, fixes and bugs. Plugins compiled with the master branch will work in Resolume 7.3.0 and up.
-If you do not want to be affected by the latest bugs you can use one of the stable releases. eg FFGL 2.1, which is the most recent released version of the sdk. Plugin development for Resolume 7.0.0/7.0.1/7.0.2 is no longer supported by this repository. These versions are very old and there are many newer versions that users can update to.
+The master branch is used for continued development. It will contain the latest features, fixes and bugs. Plugins compiled with the master branch will work in Resolume 7.3.1 and up.
+If you do not want to be affected by the latest bugs you can use one of the stable releases. eg FFGL 2.2, which is the most recent released version of the sdk. Plugin development for Resolume 7.0.0/7.0.1/7.0.2 is no longer supported by this repository. These versions are very old and there are many newer versions that users can update to.
 
 You can find some help to get started with FFGL plugin development on the [wiki](https://github.com/resolume/ffgl/wiki).
 
 Also more examples are available on this [repo](https://github.com/flyingrub/ffgl/tree/more/).
 
-## Master branch changes since FFGL 2.1
-- Added context state validation in debug builds. This provides plugin developers hints on which context state they need to restore.
-- Removed default DllMain implementation so that plugins may implement it without changing the ffgl library.
-- File parameters now accept an initial value just like text parameters. (This requires Resolume 7.2 for it to be picked up)
-- Added support for grouping parameters together. Set a parameter's group with SetParamGroup, any cosecutive params with the same group will be listed under the same collapsable region (This requires Resolume 7.3.0 for it to be picked up)
-- Added support for top-left texture orientation. Hosts that are rendering with the top-left texture orientation currently need to flip both inputs and the output every frame. A plugin can now inform the host that it supports the top-left orientation by setting supportTopLeftTextureOrientation to true. If the host wants to use it then it'll inform the plugin, which can query if it should use top-left or bottom-left using the GetTextureOrientation function. (This requires Resolume 7.3.1 for it to be picked up)
-- Added support for hooking into the host's logging system from the plugin, enabling plugin's log messages to be interleaved with the host's messages in the host's log file. (This requires Resolume 7.3.1 for it to be picked up)
+## Master branch changes since FFGL 2.2
+_None yet, you can suggest a change by creating an issue. In the issue describe the problem that has to be solved and if you want a suggestion on how it could be solved.
 
 
 ## Quickstart
