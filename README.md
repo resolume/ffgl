@@ -8,7 +8,7 @@ You can find some help to get started with FFGL plugin development on the [wiki]
 Also more examples are available on this [repo](https://github.com/flyingrub/ffgl/tree/more/).
 
 ## Master branch changes since FFGL 2.2
-_None yet, you can suggest a change by creating an issue. In the issue describe the problem that has to be solved and if you want a suggestion on how it could be solved.
+*None yet, you can suggest a change by creating an issue. In the issue describe the problem that has to be solved and if you want a suggestion on how it could be solved.*
 
 
 ## Quickstart
