@@ -5,6 +5,7 @@
 using namespace ffglex;
 
 #define PARAM_Width ( 0 )
+#define PARAM_Compare ( 1 )
 
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< SmoothnessTester >,      // Create method
@@ -28,6 +29,7 @@ SmoothnessTester::SmoothnessTester() :
 
 	// Parameters
 	SetParamInfof( PARAM_Width, "Width", FF_TYPE_STANDARD );
+	SetParamInfof( PARAM_Compare, "Compare", FF_TYPE_BOOLEAN );
 }
 FFResult SmoothnessTester::InitGL( const FFGLViewportStruct* vp )
 {
@@ -48,13 +50,17 @@ FFResult SmoothnessTester::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	ScopedShaderBinding shaderBinding( barShader.GetGLID() );
 
 	barShader.Set( "Width", m_Width );
-	barShader.Set( "Time", GetElapsedSeconds() );
-//	barShader.Set( "Time", (float) hostTime / 1000.f );
+	if ( m_Compare ) {
+		barShader.Set( "Time", GetElapsedSeconds() );
+	} else {
+		barShader.Set( "Time", (float) hostTime / 1000.f );
+	}
 
 	quad.Draw();
 
 	return FF_SUCCESS;
 }
+
 FFResult SmoothnessTester::DeInitGL()
 {
 	barShader.FreeGLResources();
@@ -70,6 +76,9 @@ FFResult SmoothnessTester::SetFloatParameter( unsigned int dwIndex, float value 
 	case PARAM_Width:
 		m_Width = value;
 		break;
+	case PARAM_Compare:
+		m_Compare = value > 0.5;
+		break;
 	default:
 		return FF_FAIL;
 	}
@@ -83,6 +92,9 @@ float SmoothnessTester::GetFloatParameter( unsigned int index )
 	{
 	case PARAM_Width:
 		return m_Width;
+		break;
+	case PARAM_Compare:
+		return m_Compare ? 1.0f : 0.0f;
 		break;
 	default:
 		break;

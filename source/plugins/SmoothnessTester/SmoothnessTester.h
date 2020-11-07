@@ -16,6 +16,7 @@ public:
 
 private:
 	float m_Width;
+	bool m_Compare;
 
 	ffglex::FFGLShader barShader;
 	ffglex::FFGLScreenQuad quad;
