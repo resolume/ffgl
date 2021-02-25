@@ -21,9 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\lib\glsdk_0_5_2\glload\source\gl_load.c">
-      <Filter>lib</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\lib\ffgl\FFGL.cpp">
       <Filter>lib\ffgl</Filter>
     </ClCompile>

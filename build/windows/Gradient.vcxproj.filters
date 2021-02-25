@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\..\source\plugins\Gradients\FFGLGradients.cpp" />
-    <ClCompile Include="..\..\source\lib\glsdk_0_5_2\glload\source\gl_load.c">
-      <Filter>lib</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\lib\ffgl\FFGL.cpp">
       <Filter>lib\ffgl</Filter>
     </ClCompile>

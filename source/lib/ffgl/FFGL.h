@@ -197,7 +197,9 @@
 #define NOWINABLE
 #define NO_STATE_FLAGS
 #include <windows.h>
-#include "../glsdk_0_5_2/glload/include/gl_4_1.h"
+//If this include cannot be found you may have created a new project but did not add the glew property page yet.
+//Go to the Property Manager window (usually docked with the Solution Explorer) and add {root}/deps/glew.props.
+#include <GL/glew.h>
 #undef NOGDICAPMASKS
 #undef NOVIRTUALKEYCODES
 #undef NOWINMESSAGES

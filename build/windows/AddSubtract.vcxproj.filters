@@ -152,9 +152,6 @@
     <ClCompile Include="..\..\source\lib\ffglex\FFGLUtilities.cpp">
       <Filter>lib\ffglex</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\lib\glsdk_0_5_2\glload\source\gl_load.c">
-      <Filter>lib</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLAudio.cpp">
       <Filter>lib\ffglquickstart</Filter>
     </ClCompile>
