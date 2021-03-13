@@ -72,6 +72,22 @@
 // -Reintroduction of RAII bindings to help protect the host's context state.
 // -Added file parameters
 //
+// FFGL 2.2 by Menno Vink (menno@resolume.com)
+// www.resolume.com
+// -Added context state validation in debug builds. This provides plugin developers hints on which context state they need to restore.
+// -Removed default DllMain implementation so that plugins may implement it without changing the ffgl library.
+// -File parameters now accept an initial value just like text parameters.
+//  (This requires Resolume 7.2 for it to be picked up)
+// -Added support for grouping parameters together. Set a parameter's group with SetParamGroup,
+//  any cosecutive params with the same group will be listed under the same collapsable region
+//  (This requires Resolume 7.3.0 for it to be picked up)
+// -Added support for top-left texture orientation. Hosts that are rendering with the top-left texture orientation currently need to flip
+//  both inputs and the output every frame. A plugin can now inform the host that it supports the top-left orientation by setting supportTopLeftTextureOrientation to true.
+//  If the host wants to use it then it'll inform the plugin, which can query if it should use top-left or bottom-left using the GetTextureOrientation function.
+//  (This requires Resolume 7.3.1 for it to be picked up)
+// -Added support for hooking into the host's logging system from the plugin, enabling a plugin's log messages to be interleaved with the host's messages in the host's log file.
+//  (This requires Resolume 7.3.1 for it to be picked up)
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef __FFGL2_H__
@@ -80,10 +96,11 @@
 //////////////////////////////////////////////////////////////////////////////////////
 // Includes
 /////////////////////////////////////////////////////////////////////////////////////
+#include "FFGLPlatform.h"
 
 //include the appropriate OpenGL headers for the compiler
 
-#if defined( _WIN32 )
+#if defined( FFGL_WINDOWS )
 #define WIN32_LEAN_AND_MEAN//Exclude rarely-used stuff from Windows headers
 #define _WINSOCKAPI_       //Prevent inclusion of winsock
 //Defines to prevent windows.h from making all kinds of defines which may conflict with actual user code.
@@ -180,7 +197,9 @@
 #define NOWINABLE
 #define NO_STATE_FLAGS
 #include <windows.h>
-#include "../glsdk_0_5_2/glload/include/gl_4_1.h"
+//If this include cannot be found you may have created a new project but did not add the glew property page yet.
+//Go to the Property Manager window (usually docked with the Solution Explorer) and add {root}/deps/glew.props.
+#include <GL/glew.h>
 #undef NOGDICAPMASKS
 #undef NOVIRTUALKEYCODES
 #undef NOWINMESSAGES
@@ -276,9 +295,9 @@ typedef unsigned __int16 FFUInt16;
 typedef unsigned __int32 FFUInt32;
 typedef unsigned __int64 FFUInt64;
 #else
-#if defined( TARGET_OS_MAC )
+#if defined( FFGL_MACOS )
 #include <OpenGL/gl3.h>
-#elif defined( __linux__ )
+#elif defined( FFGL_LINUX )
 #include <GL/gl.h>
 #else
 #error define this for your OS
@@ -318,7 +337,7 @@ static const FFUInt32 FF_DISCONNECT                        = 22;
 static const FFUInt32 FF_RESIZE                            = 23;
 static const FFUInt32 FF_GET_NUM_PARAMETER_ELEMENTS        = 31;
 static const FFUInt32 FF_GET_PARAMETER_ELEMENT_NAME        = 35;
-static const FFUInt32 FF_GET_PARAMETER_ELEMENT_DEFAULT     = 36;
+static const FFUInt32 FF_GET_PARAMETER_ELEMENT_VALUE       = 36;
 static const FFUInt32 FF_SET_PARAMETER_ELEMENT_VALUE       = 37;
 static const FFUInt32 FF_GET_PARAMETER_USAGE               = 32;
 static const FFUInt32 FF_GET_PLUGIN_SHORT_NAME             = 33;
@@ -326,6 +345,7 @@ static const FFUInt32 FF_SET_BEATINFO                      = 38;
 static const FFUInt32 FF_SET_HOSTINFO                      = 39;
 static const FFUInt32 FF_SET_SAMPLERATE                    = 40;
 static const FFUInt32 FF_GET_RANGE                         = 41;
+static const FFUInt32 FF_GET_PARAM_GROUP                   = 50;
 static const FFUInt32 FF_GET_THUMBNAIL                     = 42;
 static const FFUInt32 FF_GET_NUM_FILE_PARAMETER_EXTENSIONS = 43;
 static const FFUInt32 FF_GET_FILE_PARAMETER_EXTENSION      = 44;
@@ -333,7 +353,7 @@ static const FFUInt32 FF_GET_PRAMETER_VISIBILITY           = 45;
 static const FFUInt32 FF_GET_PARAMETER_EVENTS              = 46;
 static const FFUInt32 FF_GET_NUM_ELEMENT_SEPARATORS        = 47;
 static const FFUInt32 FF_GET_SEPARATOR_ELEMENT_INDEX       = 48;
-//Next ID = 50
+//Next ID = 51
 
 //Previously used function codes that are no longer in use. Should prevent using
 //these numbers for new function codes.
@@ -346,7 +366,7 @@ static const FFUInt32 FF_GET_SEPARATOR_ELEMENT_INDEX       = 48;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FreeFrame defines
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-enum
+enum : FFUInt32
 {
 	FF_SUCCESS = 0,
 	FF_FAIL    = 0xFFFFFFFF
@@ -412,7 +432,7 @@ static const FFUInt32 FF_USAGE_STANDARD = 0;
 static const FFUInt32 FF_USAGE_FFT      = 1;
 
 // Parameter events flags
-static const FFUInt64 FF_EVENT_FLAG_VISIBILITY    = 0x01; //A parameter's visibility changed.
+static const FFUInt64 FF_EVENT_FLAG_VISIBILITY = 0x01;//A parameter's visibility changed.
 //Not supported yet, but possibly in the future we would like these events as well:
 //static const FFUInt64 FF_EVENT_FLAG_VALUE         = 0x02; //A parameter's current value changed.
 //static const FFUInt64 FF_EVENT_FLAG_DEFAULT_VALUE = 0x04; //A parameter's default value changed.
@@ -485,15 +505,27 @@ typedef struct GetRangeStructTag
 	RangeStruct range;
 } GetRangeStruct;
 
+// String buffer structure used to enable the host to provide a string buffer into which the plugin can copy string data.
+typedef struct StringBufferStructTag
+{
+	char* address;
+	FFUInt32 maxToWrite;//!< The maximum number of characters to write into the buffer. excluding terminating nul, plugins will not automatically write the nul terminator.
+} StringBufferStruct;
+typedef struct GetParamGroupStructTag
+{
+	FFUInt32 parameterNumber;
+	StringBufferStruct stringBuffer;
+} GetParamGroupStruct;
+
 /**
  * 
  */
 typedef struct GetThumbnailStructTag
 {
-	FFUInt32 width;           //!< Used as output parameter (plugin -> host), contains the width of the thumbnail in number of pixels.
-	FFUInt32 height;          //!< Used as output parameter (plugin -> host), contains the height of the thumbnail in number of pixels.
+	FFUInt32 width; //!< Used as output parameter (plugin -> host), contains the width of the thumbnail in number of pixels.
+	FFUInt32 height;//!< Used as output parameter (plugin -> host), contains the height of the thumbnail in number of pixels.
 
-	void* rgbaPixelBuffer;    //!< Host provided location of where the thumbnails rgba pixels should be written. May be nullptr if the host is just querying the thumbnail size, which it needs to calculate minimum buffer size.
+	void* rgbaPixelBuffer;//!< Host provided location of where the thumbnails rgba pixels should be written. May be nullptr if the host is just querying the thumbnail size, which it needs to calculate minimum buffer size.
 } GetThumbnailStruct;
 
 //FFGLViewportStruct (for InstantiateGL)
@@ -562,13 +594,13 @@ typedef struct GetFileParameterExtensionStructTag
 
 typedef struct ParamEventStructTag
 {
-	FFUInt32 ParameterNumber; //!< The ID of the parameter that fired the event.
-	FFUInt64 eventFlags;      //!< Flags containing all events that the parameter fired since last event consume. A combination of FF_EVENT_FLAG_ flags.
+	FFUInt32 ParameterNumber;//!< The ID of the parameter that fired the event.
+	FFUInt64 eventFlags;     //!< Flags containing all events that the parameter fired since last event consume. A combination of FF_EVENT_FLAG_ flags.
 } ParamEventStruct;
 typedef struct GetParamEventsStructTag
 {
-	FFUInt32 numEvents;       //!< The number of events in the events buffer.
-	ParamEventStruct* events; //!< Buffer into which the plugin will write it's pending events.
+	FFUInt32 numEvents;      //!< The number of events in the events buffer.
+	ParamEventStruct* events;//!< Buffer into which the plugin will write it's pending events.
 } GetParamEventsStruct;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -591,22 +623,27 @@ typedef struct GetParamEventsStructTag
 // the host
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef _WIN32
+#if defined( FFGL_WINDOWS )
+typedef void( __stdcall* PFNLog )( char* cStr );
 
-BOOL APIENTRY DllMain( HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserved );
+typedef __declspec( dllimport ) FFMixed( __stdcall* FF_Main_FuncPtr )( FFUInt32, FFMixed, FFInstanceID );
+typedef __declspec( dllimport ) void( __stdcall* FF_SetLogCallback_FuncPtr )( PFNLog );
 
 extern "C" __declspec( dllexport ) FFMixed __stdcall plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
-typedef __declspec( dllimport ) FFMixed( __stdcall* FF_Main_FuncPtr )( FFUInt32, FFMixed, FFInstanceID );
-
+extern "C" __declspec( dllexport ) void __stdcall SetLogCallback( PFNLog logCallback );
 #else
 
 //linux and Mac OSX share these
-FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
-typedef FFMixed ( *FF_Main_FuncPtr )( FFUInt32 funcCode, FFMixed inputVal, FFInstanceID instanceID );
+typedef void ( *PFNLog )( char* cStr );
 
+typedef FFMixed ( *FF_Main_FuncPtr )( FFUInt32, FFMixed, FFInstanceID );
+typedef void ( *FF_SetLogCallback_FuncPtr )( PFNLog );
+
+FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instanceID );
+void SetLogCallback( PFNLog logCallback );
 #endif
 
-#ifndef _WIN32
+#if !defined( FFGL_WINDOWS )
 }//extern "C"
 #endif
 

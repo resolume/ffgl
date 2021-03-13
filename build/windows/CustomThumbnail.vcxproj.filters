@@ -21,9 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\lib\glsdk_0_5_2\glload\source\gl_load.c">
-      <Filter>lib</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\lib\ffgl\FFGL.cpp">
       <Filter>lib\ffgl</Filter>
     </ClCompile>
@@ -125,6 +122,9 @@
       <Filter>lib\ffgl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\plugins\CustomThumbnail\PNGLoader.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLLog.cpp">
+      <Filter>lib\ffgl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\plugins\CustomThumbnail\CustomThumbnail.h" />
@@ -287,5 +287,8 @@
     </ClInclude>
     <ClInclude Include="..\..\source\plugins\CustomThumbnail\Thumb.h" />
     <ClInclude Include="..\..\source\plugins\CustomThumbnail\PNGLoader.h" />
+    <ClInclude Include="..\..\source\lib\ffgl\FFGLLog.h">
+      <Filter>lib\ffgl</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

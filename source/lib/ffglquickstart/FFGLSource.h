@@ -3,11 +3,10 @@
 
 namespace ffglqs
 {
-
 class Source : public Plugin
 {
 public:
-	Source();
+	Source( bool supportTopLeftTextureOrientation = false );
 	~Source();
 
 	template< typename PluginType >

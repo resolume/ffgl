@@ -2,7 +2,6 @@
 
 namespace ffglqs
 {
-
 void SmoothValue::SetSmoothness( float smooth )
 {
 	smoothness = smooth;

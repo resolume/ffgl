@@ -21,15 +21,13 @@ struct GlVertexTextured
 	float x, y, z;
 };
 
-static GlVertex g_QuadVertices[] =
-{
+static GlVertex g_QuadVertices[] = {
 	{ -1.0f, -1.0f, 1.0f },
 	{ 1.0f, -1.0f, 1.0f },
 	{ 1.0f, 1.0f, 1.0f },
 	{ -1.0f, 1.0f, 1.0f }
 };
-static const GlVertexTextured TEXTURED_QUAD_VERTICES[] =
-{
+static const GlVertexTextured TEXTURED_QUAD_VERTICES[] = {
 	{ 0.0f, 1.0f, -1.0f, 1.0f, 0.0f }, //Top-left
 	{ 1.0f, 1.0f, 1.0f, 1.0f, 0.0f },  //Top-right
 	{ 0.0f, 0.0f, -1.0f, -1.0f, 0.0f },//Bottom left
@@ -38,16 +36,23 @@ static const GlVertexTextured TEXTURED_QUAD_VERTICES[] =
 	{ 1.0f, 1.0f, 1.0f, 1.0f, 0.0f },  //Top right
 	{ 1.0f, 0.0f, 1.0f, -1.0f, 0.0f }, //Bottom right
 };
-static GlVertexTextured g_QuadVerticesTextured[] =
-{
+static const GlVertexTextured FLIPPED_TEXTURED_QUAD_VERTICES[] = {
+	{ 0.0f, 0.0f, -1.0f, 1.0f, 0.0f }, //Top-left
+	{ 1.0f, 0.0f, 1.0f, 1.0f, 0.0f },  //Top-right
+	{ 0.0f, 1.0f, -1.0f, -1.0f, 0.0f },//Bottom left
+
+	{ 0.0f, 1.0f, -1.0f, -1.0f, 0.0f },//Bottom left
+	{ 1.0f, 0.0f, 1.0f, 1.0f, 0.0f },  //Top right
+	{ 1.0f, 1.0f, 1.0f, -1.0f, 0.0f }, //Bottom right
+};
+static GlVertexTextured g_QuadVerticesTextured[] = {
 	{ 0.0f, 0.0f, -1.0f, -1.0f, 0.0f },
 	{ 1.0f, 0.0f, 1.0f, -1.0f, 0.0f },
 	{ 1.0f, 1.0f, 1.0f, 1.0f, 0.0f },
 	{ 0.0f, 1.0f, -1.0f, 1.0f, 0.0f }
 };
 
-static GlVertex g_cubeVertices[] =
-{
+static GlVertex g_cubeVertices[] = {
 	{ -1.0f, -1.0f, 1.0f },
 	{ 1.0f, -1.0f, 1.0f },
 	{ 1.0f, 1.0f, 1.0f },
@@ -79,8 +84,7 @@ static GlVertex g_cubeVertices[] =
 	{ -1.0f, 1.0f, -1.0f }
 };
 
-static GlVertexTextured g_cubeVerticesTextured[] =
-{
+static GlVertexTextured g_cubeVerticesTextured[] = {
 	{ 0.0f, 0.0f, -1.0f, -1.0f, 1.0f },
 	{ 1.0f, 0.0f, 1.0f, -1.0f, 1.0f },
 	{ 1.0f, 1.0f, 1.0f, 1.0f, 1.0f },
@@ -112,8 +116,7 @@ static GlVertexTextured g_cubeVerticesTextured[] =
 	{ 0.0f, 1.0f, -1.0f, 1.0f, -1.0f }
 };
 
-static GlVertex g_cubeVerticesWired[] =
-{
+static GlVertex g_cubeVerticesWired[] = {
 	//Front face
 	{ -1.0f, -1.0f, 1.0f },
 	{ 1.0f, -1.0f, 1.0f },
@@ -176,7 +179,7 @@ void VariadicMessageBuilder( std::ostream& o, T t )
 	o << t;
 }
 template< typename T, typename... Args >
-void VariadicMessageBuilder( std::ostream& o, T t, const Args& ... args )
+void VariadicMessageBuilder( std::ostream& o, T t, const Args&... args )
 {
 	VariadicMessageBuilder( o, t );
 	VariadicMessageBuilder( o, args... );
@@ -186,7 +189,7 @@ void Log( const std::string& message );
  * This function logs anything that's streamable to a stringstream, just provide it as many arguments as you want
  * and it'll concatenate all of them into a string and show it in your debugger.
  */
-template<typename... Args>
+template< typename... Args >
 void Log( const Args&... args )
 {
 	std::ostringstream oss;

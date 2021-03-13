@@ -10,7 +10,7 @@ static CFFGLPluginInfo PluginInfo(
 	1,                                                                                           // API minor version number
 	1,                                                                                           // Plugin major version number
 	000,                                                                                         // Plugin minor version number
-	FF_MIXER,                                                                                   // Plugin type
+	FF_MIXER,                                                                                    // Plugin type
 	"Blend two videos by adding the first texture to the second texture. Looks like 50Add mixer",// Plugin description
 	"Resolume FFGL example"                                                                      // About
 );
@@ -70,6 +70,8 @@ Add::Add()
 	// The name here must match the one you declared in your fragment shader.
 	// Resolume will look for a param named "Opacity" for mix value.
 	AddParam( Param::Create( "Opacity" ) );
+
+	FFGLLog::LogToHost( "Created Add mixer" );
 }
 Add::~Add()
 {

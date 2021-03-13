@@ -118,9 +118,9 @@ public:
 
 	virtual void SetBeatInfo( float bpm, float barPhase );
 
-	virtual void SetHostInfo(const char * hostname, const char * version);
+	virtual void SetHostInfo( const char* hostname, const char* version );
 
-	virtual void SetSampleRate(unsigned int sampleRate);
+	virtual void SetSampleRate( unsigned int sampleRate );
 
 	/// Default implementation of the FreeFrame getInputStatus instance specific function. This function is called
 	/// to know whether a given input is currently in use. For the default implementation every input is always in use.
@@ -133,7 +133,6 @@ public:
 	virtual FFResult GetInputStatus( unsigned int index );
 
 	////////////////////////////////////////////////////////////////////////////
-	/// Additional FFGL functions by Resolume
 	/// Returns the short name of the plugin
 	virtual const char* GetShortName()
 	{
@@ -185,8 +184,9 @@ protected:
 	FFGLViewportStruct currentViewport;
 	float bpm;
 	float barPhase;
-	
-	struct HostInfo {
+
+	struct HostInfo
+	{
 		std::string name;
 		std::string version;
 	} hostInfos;

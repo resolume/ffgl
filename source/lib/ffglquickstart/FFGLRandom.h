@@ -3,7 +3,6 @@
 
 namespace ffglqs
 {
-
 class Random
 {
 public:

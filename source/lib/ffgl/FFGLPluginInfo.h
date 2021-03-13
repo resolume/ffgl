@@ -23,13 +23,13 @@
 
 #include "FFGL.h"
 
-#ifdef TARGET_OS_MAC
+#if defined( FFGL_MACOS )
 //there is no need for __stdcall on mac, so this will eliminate any
 //usage of it
 #define __stdcall
 #endif
 
-#ifdef __linux__
+#if defined( FFGL_LINUX )
 #define __stdcall
 #endif
 
@@ -107,7 +107,7 @@ public:
 		const char* pchDescription,
 		const char* pchAbout,
 		unsigned int dwFreeFrameExtendedDataSize = 0,
-		const void* pFreeFrameExtendedDataBlock = NULL );
+		const void* pFreeFrameExtendedDataBlock  = NULL );
 
 	/// The standard destructor of CFFGLPluginInfo.
 	~CFFGLPluginInfo();
@@ -142,8 +142,8 @@ private:
 	PluginInfoStruct m_PluginInfo;
 	PluginExtendedInfoStruct m_PluginExtendedInfo;
 
-	std::string about;       //!< Owner over the about string for which we've set the pointer in the m_PluginExtendedInfo.
-	std::string description; //!< Owner over the description string for which we've set the pointer in the m_PluginExtendedInfo.
+	std::string about;      //!< Owner over the about string for which we've set the pointer in the m_PluginExtendedInfo.
+	std::string description;//!< Owner over the description string for which we've set the pointer in the m_PluginExtendedInfo.
 
 	// Pointer to the factory method of the plugin subclass
 	FPCREATEINSTANCEGL* m_pCreateInstance;

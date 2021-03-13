@@ -58,8 +58,8 @@ CFFGLPluginInfo::CFFGLPluginInfo( FPCREATEINSTANCEGL* pCreateInstance, const cha
 	m_PluginInfo.PluginType = dwPluginType;
 
 	// Filling PluginExtendedInfoStruct
-	m_PluginExtendedInfo.About = about.c_str();
-	m_PluginExtendedInfo.Description = description.c_str();
+	m_PluginExtendedInfo.About              = about.c_str();
+	m_PluginExtendedInfo.Description        = description.c_str();
 	m_PluginExtendedInfo.PluginMajorVersion = dwPluginMajorVersion;
 	m_PluginExtendedInfo.PluginMinorVersion = dwPluginMinorVersion;
 	if( ( dwFreeFrameExtendedDataSize > 0 ) && ( pFreeFrameExtendedDataBlock != NULL ) )
@@ -70,7 +70,7 @@ CFFGLPluginInfo::CFFGLPluginInfo( FPCREATEINSTANCEGL* pCreateInstance, const cha
 	else
 	{
 		m_PluginExtendedInfo.FreeFrameExtendedDataBlock = NULL;
-		m_PluginExtendedInfo.FreeFrameExtendedDataSize = 0;
+		m_PluginExtendedInfo.FreeFrameExtendedDataSize  = 0;
 	}
 
 	g_CurrPluginInfo = this;

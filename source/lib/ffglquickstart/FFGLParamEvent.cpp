@@ -2,7 +2,6 @@
 
 namespace ffglqs
 {
-
 std::shared_ptr< ParamEvent > ParamEvent::Create( std::string name )
 {
 	return std::make_shared< ParamEvent >( std::move( name ) );

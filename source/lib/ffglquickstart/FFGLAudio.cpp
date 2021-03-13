@@ -4,7 +4,6 @@
 
 namespace ffglqs
 {
-
 Audio::Audio()
 {
 }
@@ -19,7 +18,7 @@ void Audio::Update( std::vector< float > _fft )
 	float currentVolStore = 0;
 	float bassStore       = 0;
 	float bassCount       = 0;
-	int bassSep           = fft.size() / 3;
+	int bassSep           = static_cast< int >( fft.size() / 3 );
 	float medStore        = 0;
 	float medCount        = 0;
 	int highSep           = bassSep * 2;
@@ -109,7 +108,7 @@ void Audio::SetSmoothness( float smoothness )
 void Audio::SetSampleRate( int _sampleRate )
 {
 	sampleRate  = _sampleRate;
-	freqMax     = (float) sampleRate / 2.f;
+	freqMax     = (float)sampleRate / 2.f;
 	freqBinStep = freqMax / fft.size();
 }
 

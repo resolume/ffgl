@@ -6,6 +6,7 @@
 #include "ffgl/FFGLPluginManager.cpp"
 #include "ffgl/FFGLPluginSDK.cpp"
 #include "ffgl/FFGLThumbnailInfo.cpp"
+#include "ffgl/FFGLLog.cpp"
 
 #include "ffglex/FFGLFBO.cpp"
 #include "ffglex/FFGLScopedBufferBinding.cpp"
@@ -35,4 +36,6 @@
 #include "ffglquickstart/FFGLSmoothValue.cpp"
 #include "ffglquickstart/FFGLSource.cpp"
 
+#if defined( TARGET_OS_WIN )
 #include "glsdk_0_5_2/glload/source/gl_load.c"
+#endif

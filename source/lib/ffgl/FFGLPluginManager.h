@@ -61,7 +61,7 @@ public:
 
 	/// This method is called by the host to determine whether the plugin supports the SetTime function.
 	bool IsTimeSupported() const;
-	/// This methos is called by the host to determine whether or not the plugin supports top left texture orientations.
+	/// This method is called by the host to determine whether or not the plugin supports top left texture orientations.
 	/// Some hosts may use top-left texture orientations internally. By default plugins use bottom left. If the host wants
 	/// to call those plugins it first needs to flip the inputs on the y-axis, and then when the plugin has run the host needs
 	/// to flip the output as well. This takes some time, so if the plugin reports that it supports top-left orientations the
@@ -193,6 +193,7 @@ public:
 	char* GetFileParamExtension( unsigned int paramIndex, unsigned int extensionIndex ) const;
 
 	RangeStruct GetParamRange( unsigned int index );
+	std::string GetParamGroup( unsigned int dwIndex );
 
 	/// Get the number of parameter events that are currently pending.
 	FFUInt32 GetNumPendingParamEvents() const;
@@ -324,7 +325,7 @@ protected:
 	///								It should be in the range [0, parameter.Number of elements).
 	void AddElementSeparator( unsigned int paramID, unsigned int beforeElementIndex );
 
-	void SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions );
+	void SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions, const char* defaultFile );
 
 	/// Sets whether or not a parameter should be visible in the host's ui.
 	///
@@ -332,6 +333,7 @@ protected:
 	/// \param shouldBeVisible	True if the parameter should be visible in the ui, false otherwise.
 	void SetParamVisibility( unsigned int paramID, bool shouldBeVisible );
 	void SetParamRange( unsigned int index, float min, float max );
+	void SetParamGroup( unsigned int dwIndex, std::string newGroupName );
 
 	/// Raises an event flag on a certain parameter. Calling this will store the event as being a pending event
 	/// untill the host decides to consume the event and handles it. Raising an event multiple times before the host
@@ -375,9 +377,10 @@ protected:
 
 		float defaultFloatVal = 0.0f;
 		std::string defaultStringVal;
-		std::vector< std::string > supportedExtensions; //!< The extensions this parameter supports. Only used if dwType is FF_TYPE_FILE.
+		std::vector< std::string > supportedExtensions;//!< The extensions this parameter supports. Only used if dwType is FF_TYPE_FILE.
 
-		FFUInt64 pendingEventFlags = 0;                 //!< Event flags for events that are pending for the current parameter.
+		FFUInt64 pendingEventFlags = 0;//!< Event flags for events that are pending for the current parameter.
+		std::string groupName;         //!< Name for the param group this param is a member of. Empty for ungrouped.
 	};
 	enum class TextureOrientation
 	{
@@ -398,9 +401,9 @@ private:
 	int m_iMinInputs;
 	int m_iMaxInputs;
 
-	bool m_timeSupported;                            //!< Whether or not this plugin supports having it's time set.
-	const bool m_topLeftTextureOrientationSupported; //!< Whether or not this plugin supports input/output textures with the top-left orientation rather than OpenGL's standard bottom-right.
-	TextureOrientation textureOrientation;  //!< The texture orientation the host/plugin have agreed to use. By default plugins use OpenGL's bottom_left standard.
+	bool m_timeSupported;                           //!< Whether or not this plugin supports having it's time set.
+	const bool m_topLeftTextureOrientationSupported;//!< Whether or not this plugin supports input/output textures with the top-left orientation rather than OpenGL's standard bottom-right.
+	TextureOrientation textureOrientation;          //!< The texture orientation the host/plugin have agreed to use. By default plugins use OpenGL's bottom_left standard.
 };
 
 #endif

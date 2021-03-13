@@ -16,13 +16,25 @@ public:
 	float GetFloatParameter( unsigned int index ) override;
 
 private:
-	float m_Hue1;
-	float m_Hue2;
-	float m_Saturation;
-	float m_Brightness;
+	struct RGBA
+	{
+		float red   = 1.0f;
+		float green = 1.0f;
+		float blue  = 0.0f;
+		float alpha = 1.0f;
+	};
+	struct HSBA
+	{
+		float hue   = 0.0f;
+		float sat   = 1.0f;
+		float bri   = 1.0f;
+		float alpha = 1.0f;
+	};
+	RGBA rgba1;
+	HSBA hsba2;
 
-	ffglex::FFGLShader shader;   //!< Utility to help us compile and link some shaders into a program.
-	ffglex::FFGLScreenQuad quad; //!< Utility to help us render a full screen quad.
+	ffglex::FFGLShader shader;  //!< Utility to help us compile and link some shaders into a program.
+	ffglex::FFGLScreenQuad quad;//!< Utility to help us render a full screen quad.
 	GLint rgbLeftLocation;
 	GLint rgbRightLocation;
 };

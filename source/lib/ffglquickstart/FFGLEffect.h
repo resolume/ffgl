@@ -3,11 +3,10 @@
 
 namespace ffglqs
 {
-
 class Effect : public Plugin
 {
 public:
-	Effect();
+	Effect( bool supportTopLeftTextureOrientation = false );
 	~Effect();
 
 	template< typename PluginType >

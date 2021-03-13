@@ -2,7 +2,6 @@
 
 namespace ffglex
 {
-
 /**
  * Constructs this RAII binding which automatically binds your buffer to the requested target.
  *
@@ -36,18 +35,15 @@ void ScopedBufferBinding::EndScope()
 	}
 }
 
-
 ScopedVBOBinding::ScopedVBOBinding( GLuint vboID ) :
 	ScopedBufferBinding( GL_ARRAY_BUFFER, vboID )
 {
 }
 
-
 ScopedIBOBinding::ScopedIBOBinding( GLuint iboID ) :
 	ScopedBufferBinding( GL_ELEMENT_ARRAY_BUFFER, iboID )
 {
 }
-
 
 ScopedUBOBinding::ScopedUBOBinding( GLuint uboID ) :
 	ScopedBufferBinding( GL_UNIFORM_BUFFER, uboID )

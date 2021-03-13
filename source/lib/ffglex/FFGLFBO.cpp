@@ -21,8 +21,8 @@ bool FFGLFBO::Initialise( GLsizei width, GLsizei height, GLint internalColorForm
 	if( fboID != 0 )
 		return false;
 
-	this->width = width;
-	this->height = height;
+	this->width               = width;
+	this->height              = height;
 	this->internalColorFormat = internalColorFormat;
 
 	//If any of the generation functions fail we'll release the resources that did successfully initialize so that
@@ -51,7 +51,7 @@ bool FFGLFBO::Initialise( GLsizei width, GLsizei height, GLint internalColorForm
 }
 void FFGLFBO::Release()
 {
-	width = 0;
+	width  = 0;
 	height = 0;
 
 	if( fboID != 0 )
@@ -127,8 +127,7 @@ bool FFGLFBO::GenerateColorTexture()
 	Scoped2DTextureBinding textureBinding( colorTextureID );
 
 	//Create the texture with no mipmap levels and no borders. The data format and data type dont really matter as we're not uploading any data.
-	glTexImage2D( GL_TEXTURE_2D, 0, internalColorFormat, width, height, 0,
-	              GL_RGBA, internalColorFormat == GL_RGBA8 ? GL_UNSIGNED_BYTE : GL_FLOAT, NULL );
+	glTexImage2D( GL_TEXTURE_2D, 0, internalColorFormat, width, height, 0, GL_RGBA, internalColorFormat == GL_RGBA8 ? GL_UNSIGNED_BYTE : GL_FLOAT, NULL );
 
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );

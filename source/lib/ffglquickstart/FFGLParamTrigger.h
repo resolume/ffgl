@@ -3,7 +3,6 @@
 
 namespace ffglqs
 {
-
 class ParamTrigger : public ParamEvent
 {
 public:

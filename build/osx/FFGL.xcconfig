@@ -1,7 +1,5 @@
 SDKROOT = macosx
 MACOSX_DEPLOYMENT_TARGET = 10.9
-ARCHS = $(ARCHS_STANDARD_32_64_BIT)
-
 ONLY_ACTIVE_ARCH = YES
 
 FFGL_SDK_PATH				= ../../source/lib/
@@ -12,4 +10,22 @@ LINKER_FLAGS				= -framework OpenGL -framework Carbon -framework AppKit
 
 PREPROCESSOR_BASE			= TARGET_OS_MAC=1
 
-
+USE_HEADERMAP = NO
+CLANG_CXX_LANGUAGE_STANDARD = c++17
+CLANG_CXX_LIBRARY = libc++
+ALWAYS_SEARCH_USER_PATHS = NO
+CLANG_WARN_DOCUMENTATION_COMMENTS = NO
+//Unused variables may happen in subclasses overriding virtual functions. It's not an option to remove the variable names or
+//have them commented out because this breaks the ability to scan through code without reading it as
+//it's much more common that variable names are present in their normal form so that's what readers expect the most.
+GCC_WARN_UNUSED_VARIABLE = NO
+//Having to handle every tiny little warning is annoying, but having this disabled will result
+//in warnings building up to a point where new warnings cannot be recognised anymore and thus issues
+//will seep into the code.
+GCC_TREAT_WARNINGS_AS_ERRORS = YES
+//Apple deprecates functions without providing alternatives. We want to use deprecated functions
+//for as long as possible. This will cause the bulk of the update work to be moved to the point where
+//the functions are actually removed. But updating is only done when it's safe to do so and when a function
+//has finally been removed it has been deprecated for the longest possible time so the likelyhood of a
+//correctly functioning alternative is better than updating sooner.
+GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO

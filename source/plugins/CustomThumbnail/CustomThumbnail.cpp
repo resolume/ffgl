@@ -8,16 +8,16 @@ enum ParamID
 };
 
 static CFFGLPluginInfo PluginInfo(
-	PluginFactory< CustomThumbnail >,           // Creation method
-	"RS03",                                     // Plugin unique ID
-	"Custom Thumbnail Example",                 // Plugin name
-	2,                                          // API major version number
-	1,                                          // API minor version number
-	1,                                          // Plugin major version number
-	000,                                        // Plugin minor version number
-	FF_SOURCE,                                  // Plugin type
-	"Sample FFGL plugin with custom thumbnail", // Plugin description
-	"Resolume FFGL Example"                     // About
+	PluginFactory< CustomThumbnail >,          // Creation method
+	"RS03",                                    // Plugin unique ID
+	"Custom Thumbnail Example",                // Plugin name
+	2,                                         // API major version number
+	1,                                         // API minor version number
+	1,                                         // Plugin major version number
+	000,                                       // Plugin minor version number
+	FF_SOURCE,                                 // Plugin type
+	"Sample FFGL plugin with custom thumbnail",// Plugin description
+	"Resolume FFGL Example"                    // About
 );
 
 #define THUMBNAIL_METHOD_EMBEDDED_RAW 1
@@ -32,10 +32,11 @@ static CFFGLPluginInfo PluginInfo(
 #define THUMBNAILMETHOD THUMBNAIL_METHOD_EMBEDDED_PNG
 
 #if THUMBNAILMETHOD == THUMBNAIL_METHOD_EMBEDDED_RAW
-static const CFFGLColor thumbnail[] =
-{
-	CFFGLColor( 0x000000FF ), CFFGLColor( 0xFF0000FF ),
-	CFFGLColor( 0x00FF00FF ), CFFGLColor( 0xFFFF00FF ),
+static const CFFGLColor thumbnail[] = {
+	CFFGLColor( 0x000000FF ),
+	CFFGLColor( 0xFF0000FF ),
+	CFFGLColor( 0x00FF00FF ),
+	CFFGLColor( 0xFFFF00FF ),
 };
 static CFFGLThumbnailInfo ThumbnailInfo( 2, 2, thumbnail );
 #elif THUMBNAILMETHOD == THUMBNAIL_METHOD_EMBEDDED_PNG
@@ -50,7 +51,7 @@ static CFFGLThumbnailInfo ThumbnailInfo( PNGLoader::ParsePNGWidth( THUMBNAIL ), 
  * Resolume uses 160x120 thumbnails, and since we're testing with Resolume being the host we're matching this resolution so that
  * we're getting a pixel perfect thumbnail.
  */
-static const FFUInt32 THUMBNAIL_WIDTH = 160;
+static const FFUInt32 THUMBNAIL_WIDTH  = 160;
 static const FFUInt32 THUMBNAIL_HEIGHT = 120;
 std::vector< CFFGLColor > generateThumbnail()
 {
@@ -64,7 +65,7 @@ std::vector< CFFGLColor > generateThumbnail()
 	for( CFFGLColor& color : thumbnail )
 	{
 		unsigned char intensity = rand() % 256;
-		color = CFFGLColor( intensity, intensity, intensity, 255 );
+		color                   = CFFGLColor( intensity, intensity, intensity, 255 );
 	}
 
 	return thumbnail;
@@ -124,6 +125,8 @@ CustomThumbnail::CustomThumbnail() :
 
 	//Parameters
 	SetParamInfof( PID_INTENSITY, "Intensity", FF_TYPE_STANDARD );
+
+	FFGLLog::LogToHost( "Created CustomThumbnail generator" );
 }
 FFResult CustomThumbnail::InitGL( const FFGLViewportStruct* vp )
 {
@@ -140,7 +143,7 @@ FFResult CustomThumbnail::InitGL( const FFGLViewportStruct* vp )
 
 	//FFGL requires us to leave the context in a default state on return, so use this scoped binding to help us do that.
 	ScopedShaderBinding shaderBinding( shader.GetGLID() );
-	intensityLocation  = shader.FindUniform( "Intensity" );
+	intensityLocation = shader.FindUniform( "Intensity" );
 
 	//Use base-class init as success result so that it retains the viewport.
 	return CFFGLPlugin::InitGL( vp );

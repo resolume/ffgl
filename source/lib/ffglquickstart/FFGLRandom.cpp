@@ -2,7 +2,6 @@
 
 namespace ffglqs
 {
-
 Random::Random() :
 	rng( std::mt19937( device() ) )
 {
