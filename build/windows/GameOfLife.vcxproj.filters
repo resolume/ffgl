@@ -206,6 +206,9 @@
       <Filter>lib\ffglex</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\plugins\GameOfLife\GameOfLife.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLLog.cpp">
+      <Filter>lib\ffgl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="lib">

@@ -13,6 +13,8 @@
   <ItemGroup>
     <ClCompile Include="..\..\source\lib\ffglex\FFGLFBO.cpp" />
     <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedBufferBinding.cpp" />
+    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedFBOBinding.cpp" />
+    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedRenderBufferBinding.cpp" />
     <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedSamplerActivation.cpp" />
     <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedShaderBinding.cpp" />
     <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedTextureBinding.cpp" />
@@ -21,10 +23,12 @@
     <ClCompile Include="..\..\source\lib\ffglex\FFGLShader.cpp" />
     <ClCompile Include="..\..\source\lib\ffglex\FFGLUtilities.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\FFGL.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLLog.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfo.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfoData.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginManager.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginSDK.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.cpp" />
     <ClCompile Include="..\..\source\lib\glsdk_0_5_2\glload\source\gl_load.c" />
     <ClCompile Include="..\..\source\plugins\Cloner\Cloner.cpp" />
   </ItemGroup>

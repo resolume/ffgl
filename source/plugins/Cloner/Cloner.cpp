@@ -189,7 +189,7 @@ FFResult Cloner::InitGL( const FFGLViewportStruct* vp )
 	fanLocation       = shader.FindUniform( "Fan" );
 
 	//Use base-class init as success result so that it retains the viewport.
-	return CFreeFrameGLPlugin::InitGL( vp );
+	return CFFGLPlugin::InitGL( vp );
 }
 FFResult Cloner::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {

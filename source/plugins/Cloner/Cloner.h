@@ -4,7 +4,7 @@
 #include <ffglex/FFGLShader.h>
 #include <ffglex/FFGLScreenQuad.h>
 
-class Cloner : public CFreeFrameGLPlugin
+class Cloner : public CFFGLPlugin
 {
 public:
 	Cloner();

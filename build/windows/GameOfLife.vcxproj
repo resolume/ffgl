@@ -38,6 +38,7 @@
     <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLSmoothValue.cpp" />
     <ClCompile Include="..\..\source\lib\ffglquickstart\FFGLSource.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\FFGL.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLLog.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfo.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginInfoData.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\FFGLPluginManager.cpp" />

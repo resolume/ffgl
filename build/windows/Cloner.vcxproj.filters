@@ -92,6 +92,18 @@
       <Filter>lib\glsdk_0_5_2\glload</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\plugins\Cloner\Cloner.cpp" />
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLLog.cpp">
+      <Filter>lib\ffgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedFBOBinding.cpp">
+      <Filter>lib\ffglex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffglex\FFGLScopedRenderBufferBinding.cpp">
+      <Filter>lib\ffglex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\lib\ffgl\FFGLThumbnailInfo.cpp">
+      <Filter>lib\ffgl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="lib">
