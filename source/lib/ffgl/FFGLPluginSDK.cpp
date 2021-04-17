@@ -1,4 +1,6 @@
+#if !defined( _CRT_SECURE_NO_WARNINGS )
 #define _CRT_SECURE_NO_WARNINGS
+#endif
 //
 // Copyright (c) 2004 - InfoMus Lab - DIST - University of Genova
 //
