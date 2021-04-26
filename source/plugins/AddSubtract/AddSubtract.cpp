@@ -100,7 +100,7 @@ FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	ScopedSamplerActivation activateSampler( 0 );
 	Scoped2DTextureBinding textureBinding( pGL->inputTextures[ 0 ]->Handle );
 
-	shader.Set( "inputTexture", 0 );
+	shader.Set( "InputTexture", 0 );
 
 	//The input texture's dimension might change each frame and so might the content area.
 	//We're adopting the texture's maxUV using a uniform because that way we dont have to update our vertex buffer each frame.
