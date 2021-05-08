@@ -386,11 +386,16 @@ void CFFGLPluginManager::SetFileParamInfo( unsigned int index, const char* pchNa
 	params.push_back( pInfo );
 }
 
-void CFFGLPluginManager::SetParamVisibility( unsigned int paramID, bool shouldBeVisible )
+void CFFGLPluginManager::SetParamVisibility( unsigned int paramID, bool shouldBeVisible, bool raiseEvent )
 {
 	ParamInfo* paramInfo = FindParamInfo( paramID );
 	if( paramInfo != nullptr )
+	{
+		bool wasVisible = paramInfo->visibleInUI;
 		paramInfo->visibleInUI = shouldBeVisible;
+		if( raiseEvent && wasVisible != shouldBeVisible )
+			paramInfo->pendingEventFlags |= FF_EVENT_FLAG_VISIBILITY;
+	}
 }
 void CFFGLPluginManager::SetParamRange( unsigned int paramID, float min, float max )
 {

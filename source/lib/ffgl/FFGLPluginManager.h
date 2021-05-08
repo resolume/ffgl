@@ -331,7 +331,10 @@ protected:
 	///
 	/// \param paramID			Index of the parameter whose visibility has to be changed.
 	/// \param shouldBeVisible	True if the parameter should be visible in the ui, false otherwise.
-	void SetParamVisibility( unsigned int paramID, bool shouldBeVisible );
+	/// \param raiseEvent                Whether or not this function should automatically raise a visibility change event. Stateful hosts (ie Resolume)
+	///                         require you to raise the event in order for them to pick up the visiblity change. You'd probably pass false here during
+	///                         initialization of your parameters and true when you're changing visibility on the fly.
+	void SetParamVisibility( unsigned int paramID, bool shouldBeVisible, bool raiseEvent );
 	void SetParamRange( unsigned int index, float min, float max );
 	void SetParamGroup( unsigned int dwIndex, std::string newGroupName );
 
