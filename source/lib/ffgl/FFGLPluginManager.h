@@ -194,6 +194,7 @@ public:
 
 	RangeStruct GetParamRange( unsigned int index );
 	std::string GetParamGroup( unsigned int dwIndex );
+	std::string GetParamDisplayName( unsigned int dwIndex );
 
 	/// Get the number of parameter events that are currently pending.
 	FFUInt32 GetNumPendingParamEvents() const;
@@ -337,6 +338,13 @@ protected:
 	void SetParamVisibility( unsigned int paramID, bool shouldBeVisible, bool raiseEvent );
 	void SetParamRange( unsigned int index, float min, float max );
 	void SetParamGroup( unsigned int dwIndex, std::string newGroupName );
+	/// Change the name that a host should show as a param's name.
+	///
+	/// \param paramID                     Index of the parameter whose display name has to be changed.
+	/// \param newDisplayName     The new name that should be displayed. If this is empty the host will revert to the original name.
+	/// \param raiseEvent              Whether or not a display name change event should be fired to make stateful hosts pick up the change.
+	///                        Probably you want to pass false during initialization and true when changing a display name while the plugin is running.
+	void SetParamDisplayName( unsigned int paramID, std::string newDisplayName, bool raiseEvent );
 
 	/// Raises an event flag on a certain parameter. Calling this will store the event as being a pending event
 	/// untill the host decides to consume the event and handles it. Raising an event multiple times before the host
@@ -357,8 +365,9 @@ protected:
 		{
 		}
 
-		unsigned int ID;
-		char Name[ 16 ];
+		unsigned int ID; //!< The id is used to represent this parameter in communication between host and plugin.
+		std::string name; //!< The name is shown by the host to the user to identify this plugin. It may also be used by the host for parameter serialization.
+		std::string displayName; //!< Override for the name shown by the host. Params should retain the same names for serialization, but display names can change as those aren't used for identification.
 		unsigned int dwType;
 
 		// extra parameters
