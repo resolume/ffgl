@@ -88,6 +88,9 @@
 // -Added support for hooking into the host's logging system from the plugin, enabling a plugin's log messages to be interleaved with the host's messages in the host's log file.
 //  (This requires Resolume 7.3.1 for it to be picked up)
 //
+// FFGL 2.3 by Menno Vink (menno@resolume.com)
+// www.resolume.com
+// -Added support for dynamic parameter display names.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef __FFGL2_H__
@@ -346,6 +349,7 @@ static const FFUInt32 FF_SET_HOSTINFO                      = 39;
 static const FFUInt32 FF_SET_SAMPLERATE                    = 40;
 static const FFUInt32 FF_GET_RANGE                         = 41;
 static const FFUInt32 FF_GET_PARAM_GROUP                   = 50;
+static const FFUInt32 FF_GET_PARAM_DISPLAY_NAME            = 51;
 static const FFUInt32 FF_GET_THUMBNAIL                     = 42;
 static const FFUInt32 FF_GET_NUM_FILE_PARAMETER_EXTENSIONS = 43;
 static const FFUInt32 FF_GET_FILE_PARAMETER_EXTENSION      = 44;
@@ -353,7 +357,7 @@ static const FFUInt32 FF_GET_PRAMETER_VISIBILITY           = 45;
 static const FFUInt32 FF_GET_PARAMETER_EVENTS              = 46;
 static const FFUInt32 FF_GET_NUM_ELEMENT_SEPARATORS        = 47;
 static const FFUInt32 FF_GET_SEPARATOR_ELEMENT_INDEX       = 48;
-//Next ID = 51
+//Next ID = 52
 
 //Previously used function codes that are no longer in use. Should prevent using
 //these numbers for new function codes.
@@ -432,12 +436,12 @@ static const FFUInt32 FF_USAGE_STANDARD = 0;
 static const FFUInt32 FF_USAGE_FFT      = 1;
 
 // Parameter events flags
-static const FFUInt64 FF_EVENT_FLAG_VISIBILITY = 0x01;//A parameter's visibility changed.
+static const FFUInt64 FF_EVENT_FLAG_VISIBILITY   = 0x01;//A parameter's visibility changed.
+static const FFUInt64 FF_EVENT_FLAG_DISPLAY_NAME = 0x02; //A parameter's displayname changed.
 //Not supported yet, but possibly in the future we would like these events as well:
-//static const FFUInt64 FF_EVENT_FLAG_VALUE         = 0x02; //A parameter's current value changed.
-//static const FFUInt64 FF_EVENT_FLAG_DEFAULT_VALUE = 0x04; //A parameter's default value changed.
-//static const FFUInt64 FF_EVENT_FLAG_NAME          = 0x08; //A parameter's name changed.
-//static const FFUInt64 FF_EVENT_FLAG_RANGE         = 0x10; //A parameter's range has been changed.
+//static const FFUInt64 FF_EVENT_FLAG_VALUE         = 0x??; //A parameter's current value changed.
+//static const FFUInt64 FF_EVENT_FLAG_DEFAULT_VALUE = 0x??; //A parameter's default value changed.
+//static const FFUInt64 FF_EVENT_FLAG_RANGE         = 0x??; //A parameter's range has been changed.
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FreeFrame Types
@@ -511,14 +515,14 @@ typedef struct StringBufferStructTag
 	char* address;
 	FFUInt32 maxToWrite;//!< The maximum number of characters to write into the buffer. excluding terminating nul, plugins will not automatically write the nul terminator.
 } StringBufferStruct;
-typedef struct GetParamGroupStructTag
+typedef struct GetStringStructTag
 {
 	FFUInt32 parameterNumber;
 	StringBufferStruct stringBuffer;
-} GetParamGroupStruct;
+} GetStringStruct;
 
 /**
- * 
+ *
  */
 typedef struct GetThumbnailStructTag
 {

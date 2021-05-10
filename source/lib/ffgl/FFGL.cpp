@@ -490,13 +490,18 @@ FFMixed getParamRange( FFMixed input )
 	getRange->range   = range;
 	return ret;
 }
+void writeStringToHostBuffer( const std::string& stringToWrite, StringBufferStruct& hostBuffer )
+{
+	size_t numToCopy = std::min( (size_t)hostBuffer.maxToWrite, stringToWrite.length() );
+	memcpy( hostBuffer.address, stringToWrite.c_str(), numToCopy );
+}
 FFMixed getParamGroup( FFMixed input )
 {
 	FFMixed ret;
 	ret.UIntValue = FF_FAIL;
 
-	GetParamGroupStructTag* getParamGroup = reinterpret_cast< GetParamGroupStructTag* >( input.PointerValue );
-	if( getParamGroup == nullptr || getParamGroup->stringBuffer.maxToWrite == 0 )
+	GetStringStructTag* getStringStruct = reinterpret_cast< GetStringStructTag* >( input.PointerValue );
+	if( getStringStruct == nullptr || getStringStruct->stringBuffer.maxToWrite == 0 )
 		return ret;
 
 	if( s_pPrototype == nullptr )
@@ -506,12 +511,28 @@ FFMixed getParamGroup( FFMixed input )
 			return ret;
 	}
 
-	ret.UIntValue = FF_SUCCESS;
+	std::string paramGroup = s_pPrototype->GetParamGroup( getStringStruct->parameterNumber );
+	writeStringToHostBuffer( paramGroup, getStringStruct->stringBuffer );
 
-	//Copy the group name into the output buffer.
-	std::string paramGroup = s_pPrototype->GetParamGroup( getParamGroup->parameterNumber );
-	size_t numToCopy       = std::min( (size_t)getParamGroup->stringBuffer.maxToWrite, paramGroup.length() );
-	memcpy( getParamGroup->stringBuffer.address, paramGroup.c_str(), numToCopy );
+	ret.UIntValue = FF_SUCCESS;
+	return ret;
+}
+FFMixed getParamDisplayName( void* instanceID, FFMixed input )
+{
+	FFMixed ret;
+	ret.UIntValue = FF_FAIL;
+	CFFGLPlugin* pluginInstance = (CFFGLPlugin*)instanceID;
+	if( pluginInstance == nullptr )
+		return ret;
+
+	GetStringStructTag* getStringStruct = reinterpret_cast< GetStringStructTag* >( input.PointerValue );
+	if( getStringStruct == nullptr || getStringStruct->stringBuffer.maxToWrite == 0 )
+		return ret;
+
+	std::string displayName = pluginInstance->GetParamDisplayName( getStringStruct->parameterNumber );
+	writeStringToHostBuffer( displayName, getStringStruct->stringBuffer );
+
+	ret.UIntValue = FF_SUCCESS;
 	return ret;
 }
 FFUInt32 getThumbnail( GetThumbnailStruct& getStruct )
@@ -837,6 +858,9 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		break;
 	case FF_GET_PARAM_GROUP:
 		retval = getParamGroup( inputValue );
+		break;
+	case FF_GET_PARAM_DISPLAY_NAME:
+		retval = getParamDisplayName( pPlugObj, inputValue );
 		break;
 
 	case FF_GET_THUMBNAIL:
