@@ -9,8 +9,9 @@ Also more examples are available on this [repo](https://github.com/flyingrub/ffg
 
 ## Master branch changes since FFGL 2.2
 - Replaced glload by glew, enabling OpenGL 4.6 extensions to be used inside plugins. Plugins may need to add deps/glew.props to their project's property pages for them to link to the binary.
-*You can suggest a change by creating an issue. In the issue describe the problem that has to be solved and if you want, a suggestion on how it could be solved.*
+- Implementd parameter display names. Parameter names are used as identification during serialization, display names can be used to override the name that is shown in the ui. The display name can also be changed dynamically by raising a display name changed event. (Requires Resolume 7.4 and up)
 
+*You can suggest a change by creating an issue. In the issue describe the problem that has to be solved and if you want, a suggestion on how it could be solved.*
 
 ## Quickstart
 
