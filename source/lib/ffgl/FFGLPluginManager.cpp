@@ -76,7 +76,10 @@ char* CFFGLPluginManager::GetParamName( unsigned int dwIndex )
 	if( paramInfo == nullptr )
 		return nullptr;
 
-	return paramInfo->Name;
+	//Legacy ffgl interface, we shouldn't return a pointer to a string managed by us
+	//because the host has no guarantee that the pointer will remain valid for as long as it wants.
+	//We should instead copy to a string buffer owned by the host.
+	return const_cast< char* >( paramInfo->name.c_str() );
 }
 unsigned int CFFGLPluginManager::GetParamType( unsigned int dwIndex ) const
 {
@@ -215,7 +218,12 @@ RangeStruct CFFGLPluginManager::GetParamRange( unsigned int dwIndex )
 std::string CFFGLPluginManager::GetParamGroup( unsigned int dwIndex )
 {
 	ParamInfo* paramInfo = FindParamInfo( dwIndex );
-	return paramInfo != nullptr ? paramInfo->groupName.c_str() : std::string();
+	return paramInfo != nullptr ? paramInfo->groupName : std::string();
+}
+std::string CFFGLPluginManager::GetParamDisplayName( unsigned int dwIndex )
+{
+	ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	return paramInfo != nullptr ? paramInfo->displayName : std::string();
 }
 
 FFUInt32 CFFGLPluginManager::GetNumPendingParamEvents() const
@@ -265,10 +273,7 @@ void CFFGLPluginManager::SetParamInfo( unsigned int paramID, const char* pchName
 
 	pInfo.elements.resize( 1 );
 	pInfo.usage = 0;
-
-	std::string stringValue = pchName;
-	memset( pInfo.Name, 0, sizeof( pInfo.Name ) );
-	memcpy( pInfo.Name, stringValue.c_str(), std::min( sizeof( pInfo.Name ), stringValue.length() ) );
+	pInfo.name = pchName;
 
 	pInfo.dwType = pType;
 	if( pType == FF_TYPE_STANDARD )
@@ -286,10 +291,7 @@ void CFFGLPluginManager::SetParamInfo( unsigned int paramID, const char* pchName
 {
 	ParamInfo pInfo;
 	pInfo.ID = paramID;
-
-	std::string stringValue = pchName;
-	memset( pInfo.Name, 0, sizeof( pInfo.Name ) );
-	memcpy( pInfo.Name, stringValue.c_str(), std::min( sizeof( pInfo.Name ), stringValue.length() ) );
+	pInfo.name = pchName;
 
 	pInfo.dwType          = pType;
 	pInfo.defaultFloatVal = bDefaultValue ? 1.0f : 0.0f;
@@ -302,10 +304,7 @@ void CFFGLPluginManager::SetParamInfo( unsigned int dwIndex, const char* pchName
 
 	pInfo.elements.resize( 1 );
 	pInfo.usage = 0;
-
-	std::string stringValue = pchName;
-	memset( pInfo.Name, 0, sizeof( pInfo.Name ) );
-	memcpy( pInfo.Name, stringValue.c_str(), std::min( sizeof( pInfo.Name ), stringValue.length() ) );
+	pInfo.name = pchName;
 
 	pInfo.dwType           = dwType;
 	pInfo.defaultStringVal = pchDefaultValue;
@@ -319,10 +318,7 @@ void CFFGLPluginManager::SetBufferParamInfo( unsigned int paramID, const char* p
 
 	pInfo.elements.resize( numElements );
 	pInfo.usage = usage;
-
-	std::string stringValue = pchName;
-	memset( pInfo.Name, 0, sizeof( pInfo.Name ) );
-	memcpy( pInfo.Name, stringValue.c_str(), std::min( sizeof( pInfo.Name ), stringValue.length() ) );
+	pInfo.name = pchName;
 
 	pInfo.dwType = FF_TYPE_BUFFER;
 
@@ -336,10 +332,7 @@ void CFFGLPluginManager::SetOptionParamInfo( unsigned int pIndex, const char* pc
 
 	pInfo.elements.resize( numElements );
 	pInfo.usage = FF_USAGE_STANDARD;
-
-	std::string stringValue = pchName;
-	memset( pInfo.Name, 0, sizeof( pInfo.Name ) );
-	memcpy( pInfo.Name, stringValue.c_str(), std::min( sizeof( pInfo.Name ), stringValue.length() ) );
+	pInfo.name = pchName;
 
 	pInfo.dwType = FF_TYPE_OPTION;
 
@@ -372,10 +365,7 @@ void CFFGLPluginManager::SetFileParamInfo( unsigned int index, const char* pchNa
 {
 	ParamInfo pInfo;
 	pInfo.ID = index;
-
-	std::string stringValue = pchName;
-	memset( pInfo.Name, 0, sizeof( pInfo.Name ) );
-	memcpy( pInfo.Name, stringValue.c_str(), std::min( sizeof( pInfo.Name ), stringValue.length() ) );
+	pInfo.name = pchName;
 
 	pInfo.dwType = FF_TYPE_FILE;
 
@@ -386,11 +376,16 @@ void CFFGLPluginManager::SetFileParamInfo( unsigned int index, const char* pchNa
 	params.push_back( pInfo );
 }
 
-void CFFGLPluginManager::SetParamVisibility( unsigned int paramID, bool shouldBeVisible )
+void CFFGLPluginManager::SetParamVisibility( unsigned int paramID, bool shouldBeVisible, bool raiseEvent )
 {
 	ParamInfo* paramInfo = FindParamInfo( paramID );
-	if( paramInfo != nullptr )
-		paramInfo->visibleInUI = shouldBeVisible;
+	if( paramInfo == nullptr )
+		return;
+
+	bool wasVisible = paramInfo->visibleInUI;
+	paramInfo->visibleInUI = shouldBeVisible;
+	if( raiseEvent && wasVisible != shouldBeVisible )
+		paramInfo->pendingEventFlags |= FF_EVENT_FLAG_VISIBILITY;
 }
 void CFFGLPluginManager::SetParamRange( unsigned int paramID, float min, float max )
 {
@@ -403,6 +398,17 @@ void CFFGLPluginManager::SetParamGroup( unsigned int dwIndex, std::string newGro
 	ParamInfo* paramInfo = FindParamInfo( dwIndex );
 	if( paramInfo != nullptr )
 		paramInfo->groupName = newGroupName;
+}
+void CFFGLPluginManager::SetParamDisplayName( unsigned int paramID, std::string newDisplayName, bool raiseEvent )
+{
+	ParamInfo* paramInfo = FindParamInfo( paramID );
+	if( paramInfo == nullptr )
+		return;
+
+	std::string previousDisplayName = std::move( paramInfo->displayName );
+	paramInfo->displayName = std::move( newDisplayName );
+	if( raiseEvent && previousDisplayName != paramInfo->displayName )
+		paramInfo->pendingEventFlags |= FF_EVENT_FLAG_DISPLAY_NAME;
 }
 
 void CFFGLPluginManager::RaiseParamEvent( unsigned int paramID, FFUInt64 eventToRaise )
