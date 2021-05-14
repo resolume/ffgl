@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mixers", "mixers", "{98BAD375-4E77-4EDA-86CA-E77F213DCDA6}"
 EndProject
@@ -17,6 +17,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Particles", "Particles.vcxproj", "{96F220F8-DF7E-49AB-9E51-394676061B00}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CustomThumbnail", "CustomThumbnail.vcxproj", "{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Events", "Events.vcxproj", "{B02CC7B5-D2B4-4DB0-8390-4D25BBA96181}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}.Debug|x64.Build.0 = Debug|x64
 		{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}.Release|x64.ActiveCfg = Release|x64
 		{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}.Release|x64.Build.0 = Release|x64
+		{B02CC7B5-D2B4-4DB0-8390-4D25BBA96181}.Debug|x64.ActiveCfg = Debug|x64
+		{B02CC7B5-D2B4-4DB0-8390-4D25BBA96181}.Debug|x64.Build.0 = Debug|x64
+		{B02CC7B5-D2B4-4DB0-8390-4D25BBA96181}.Release|x64.ActiveCfg = Release|x64
+		{B02CC7B5-D2B4-4DB0-8390-4D25BBA96181}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +60,7 @@ Global
 		{6858F0CB-DE74-406F-B56A-CC5514CAA952} = {26AC2413-23B7-4D1F-BB58-17D67106F3F1}
 		{96F220F8-DF7E-49AB-9E51-394676061B00} = {26AC2413-23B7-4D1F-BB58-17D67106F3F1}
 		{01FC8291-A59A-4D36-9F2A-31E1D5998BD0} = {26AC2413-23B7-4D1F-BB58-17D67106F3F1}
+		{B02CC7B5-D2B4-4DB0-8390-4D25BBA96181} = {26AC2413-23B7-4D1F-BB58-17D67106F3F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28436461-C06F-497A-8594-636977E4CDAF}

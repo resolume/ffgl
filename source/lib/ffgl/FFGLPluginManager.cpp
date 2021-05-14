@@ -273,7 +273,7 @@ void CFFGLPluginManager::SetParamInfo( unsigned int paramID, const char* pchName
 
 	pInfo.elements.resize( 1 );
 	pInfo.usage = 0;
-	pInfo.name = pchName;
+	pInfo.name  = pchName;
 
 	pInfo.dwType = pType;
 	if( pType == FF_TYPE_STANDARD )
@@ -290,7 +290,7 @@ void CFFGLPluginManager::SetParamInfo( unsigned int paramID, const char* pchName
 void CFFGLPluginManager::SetParamInfo( unsigned int paramID, const char* pchName, unsigned int pType, bool bDefaultValue )
 {
 	ParamInfo pInfo;
-	pInfo.ID = paramID;
+	pInfo.ID   = paramID;
 	pInfo.name = pchName;
 
 	pInfo.dwType          = pType;
@@ -304,7 +304,7 @@ void CFFGLPluginManager::SetParamInfo( unsigned int dwIndex, const char* pchName
 
 	pInfo.elements.resize( 1 );
 	pInfo.usage = 0;
-	pInfo.name = pchName;
+	pInfo.name  = pchName;
 
 	pInfo.dwType           = dwType;
 	pInfo.defaultStringVal = pchDefaultValue;
@@ -318,7 +318,7 @@ void CFFGLPluginManager::SetBufferParamInfo( unsigned int paramID, const char* p
 
 	pInfo.elements.resize( numElements );
 	pInfo.usage = usage;
-	pInfo.name = pchName;
+	pInfo.name  = pchName;
 
 	pInfo.dwType = FF_TYPE_BUFFER;
 
@@ -332,7 +332,7 @@ void CFFGLPluginManager::SetOptionParamInfo( unsigned int pIndex, const char* pc
 
 	pInfo.elements.resize( numElements );
 	pInfo.usage = FF_USAGE_STANDARD;
-	pInfo.name = pchName;
+	pInfo.name  = pchName;
 
 	pInfo.dwType = FF_TYPE_OPTION;
 
@@ -364,7 +364,7 @@ void CFFGLPluginManager::AddElementSeparator( unsigned int paramID, unsigned int
 void CFFGLPluginManager::SetFileParamInfo( unsigned int index, const char* pchName, std::vector< std::string > supportedExtensions, const char* defaultFile )
 {
 	ParamInfo pInfo;
-	pInfo.ID = index;
+	pInfo.ID   = index;
 	pInfo.name = pchName;
 
 	pInfo.dwType = FF_TYPE_FILE;
@@ -382,7 +382,7 @@ void CFFGLPluginManager::SetParamVisibility( unsigned int paramID, bool shouldBe
 	if( paramInfo == nullptr )
 		return;
 
-	bool wasVisible = paramInfo->visibleInUI;
+	bool wasVisible        = paramInfo->visibleInUI;
 	paramInfo->visibleInUI = shouldBeVisible;
 	if( raiseEvent && wasVisible != shouldBeVisible )
 		paramInfo->pendingEventFlags |= FF_EVENT_FLAG_VISIBILITY;
@@ -406,7 +406,7 @@ void CFFGLPluginManager::SetParamDisplayName( unsigned int paramID, std::string 
 		return;
 
 	std::string previousDisplayName = std::move( paramInfo->displayName );
-	paramInfo->displayName = std::move( newDisplayName );
+	paramInfo->displayName          = std::move( newDisplayName );
 	if( raiseEvent && previousDisplayName != paramInfo->displayName )
 		paramInfo->pendingEventFlags |= FF_EVENT_FLAG_DISPLAY_NAME;
 }

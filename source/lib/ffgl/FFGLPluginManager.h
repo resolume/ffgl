@@ -365,9 +365,9 @@ protected:
 		{
 		}
 
-		unsigned int ID; //!< The id is used to represent this parameter in communication between host and plugin.
-		std::string name; //!< The name is shown by the host to the user to identify this plugin. It may also be used by the host for parameter serialization.
-		std::string displayName; //!< Override for the name shown by the host. Params should retain the same names for serialization, but display names can change as those aren't used for identification.
+		unsigned int ID;        //!< The id is used to represent this parameter in communication between host and plugin.
+		std::string name;       //!< The name is shown by the host to the user to identify this plugin. It may also be used by the host for parameter serialization.
+		std::string displayName;//!< Override for the name shown by the host. Params should retain the same names for serialization, but display names can change as those aren't used for identification.
 		unsigned int dwType;
 
 		// extra parameters

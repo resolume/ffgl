@@ -437,9 +437,9 @@ static const FFUInt32 FF_USAGE_FFT      = 1;
 
 // Parameter events flags
 static const FFUInt64 FF_EVENT_FLAG_VISIBILITY   = 0x01;//A parameter's visibility changed.
-static const FFUInt64 FF_EVENT_FLAG_DISPLAY_NAME = 0x02; //A parameter's displayname changed.
+static const FFUInt64 FF_EVENT_FLAG_DISPLAY_NAME = 0x02;//A parameter's displayname changed.
+static const FFUInt64 FF_EVENT_FLAG_VALUE        = 0x04;//A parameter's current value changed.
 //Not supported yet, but possibly in the future we would like these events as well:
-//static const FFUInt64 FF_EVENT_FLAG_VALUE         = 0x??; //A parameter's current value changed.
 //static const FFUInt64 FF_EVENT_FLAG_DEFAULT_VALUE = 0x??; //A parameter's default value changed.
 //static const FFUInt64 FF_EVENT_FLAG_RANGE         = 0x??; //A parameter's range has been changed.
 
