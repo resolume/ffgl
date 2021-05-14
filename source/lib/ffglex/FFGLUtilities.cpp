@@ -10,6 +10,7 @@
 #include <random>
 #include <iostream>
 #include <algorithm>
+#include <chrono>// for secondsSinceLaunch
 
 namespace ffglex
 {
@@ -174,4 +175,20 @@ void Log( const std::string& message )
 	printf( "%s", ( message + "\n" ).c_str() );
 #endif
 }
+
+static std::chrono::steady_clock::time_point m_startTime = std::chrono::steady_clock::time_point::min();// the time in seconds since the first time the method was called
+float GetElapsedSeconds()
+{
+	if( m_startTime == std::chrono::steady_clock::time_point::min() )
+	{
+		m_startTime = std::chrono::high_resolution_clock::now();
+		return 0;
+	}
+	else
+	{
+		auto elapsed = std::chrono::high_resolution_clock::now() - m_startTime;
+		return (float)( std::chrono::duration_cast< std::chrono::milliseconds >( elapsed ).count() / 1000.0 );
+	}
+};
+
 }//End namespace ffglex

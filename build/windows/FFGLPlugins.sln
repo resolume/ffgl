@@ -18,6 +18,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Particles", "Particles.vcxp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CustomThumbnail", "CustomThumbnail.vcxproj", "{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SmoothnessTester", "SmoothnessTester.vcxproj", "{5081478F-EE1F-45AE-96C1-9E36A486539D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -44,6 +46,10 @@ Global
 		{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}.Debug|x64.Build.0 = Debug|x64
 		{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}.Release|x64.ActiveCfg = Release|x64
 		{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}.Release|x64.Build.0 = Release|x64
+		{5081478F-EE1F-45AE-96C1-9E36A486539D}.Debug|x64.ActiveCfg = Debug|x64
+		{5081478F-EE1F-45AE-96C1-9E36A486539D}.Debug|x64.Build.0 = Debug|x64
+		{5081478F-EE1F-45AE-96C1-9E36A486539D}.Release|x64.ActiveCfg = Release|x64
+		{5081478F-EE1F-45AE-96C1-9E36A486539D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +60,7 @@ Global
 		{6858F0CB-DE74-406F-B56A-CC5514CAA952} = {26AC2413-23B7-4D1F-BB58-17D67106F3F1}
 		{96F220F8-DF7E-49AB-9E51-394676061B00} = {26AC2413-23B7-4D1F-BB58-17D67106F3F1}
 		{01FC8291-A59A-4D36-9F2A-31E1D5998BD0} = {26AC2413-23B7-4D1F-BB58-17D67106F3F1}
+		{5081478F-EE1F-45AE-96C1-9E36A486539D} = {26AC2413-23B7-4D1F-BB58-17D67106F3F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28436461-C06F-497A-8594-636977E4CDAF}
