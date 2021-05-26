@@ -167,8 +167,8 @@ void ReplaceAll( std::string& utf8String, const std::string& valueToReplace, con
 void Log( const std::string& message )
 {
 #if defined( FFGL_WINDOWS )
-	OutputDebugString( message.c_str() );
-	OutputDebugString( "\n" );
+	OutputDebugStringA( message.c_str() );
+	OutputDebugStringA( "\n" );
 	std::cout << message << std::endl;
 #else
 	printf( "%s", ( message + "\n" ).c_str() );
