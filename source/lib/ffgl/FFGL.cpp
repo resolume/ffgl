@@ -392,39 +392,52 @@ FFResult deInstantiateGL( void* instanceID )
 
 	return FF_FAIL;
 }
-FFUInt32 getNumParameterElements( unsigned int index )
+FFUInt32 getNumParameterElements( unsigned int index, CFFGLPlugin* pPlugObj = nullptr )
 {
-	if( s_pPrototype == NULL )
+	if( pPlugObj == nullptr )
 	{
-		FFResult dwRet = initialise();
-		if( dwRet == FF_FAIL )
-			return FF_FAIL;
+		if( s_pPrototype == nullptr )
+		{
+			FFResult dwRet = initialise();
+			if( dwRet == FF_FAIL )
+				return FF_FAIL;
+		}
+		pPlugObj = s_pPrototype;
 	}
 
-	return s_pPrototype->GetNumParamElements( index );
+	return pPlugObj->GetNumParamElements( index );
 }
-char* getParameterElementName( unsigned int paramIndex, unsigned int elementIndex )
+char* getParameterElementName( unsigned int paramIndex, unsigned int elementIndex, CFFGLPlugin* pPlugObj = nullptr )
 {
-	if( s_pPrototype == NULL )
+	if( pPlugObj == nullptr )
 	{
-		FFResult dwRet = initialise();
-		if( dwRet == FF_FAIL )
-			return NULL;
+		if( s_pPrototype == nullptr )
+		{
+			FFResult dwRet = initialise();
+			if( dwRet == FF_FAIL )
+				return nullptr;
+		}
+		pPlugObj = s_pPrototype;
 	}
 
-	return s_pPrototype->GetParamElementName( paramIndex, elementIndex );
+	return pPlugObj->GetParamElementName( paramIndex, elementIndex );
 }
-FFMixed getParameterElementDefault( unsigned int paramIndex, unsigned int elementIndex )
+FFMixed getParameterElementValue( unsigned int paramIndex, unsigned int elementIndex, CFFGLPlugin* pPlugObj = nullptr )
 {
 	FFMixed ret;
 	ret.UIntValue = FF_FAIL;
-	if( s_pPrototype == NULL )
+	if( pPlugObj == nullptr )
 	{
-		FFResult dwRet = initialise();
-		if( dwRet == FF_FAIL )
-			return ret;
+		if( s_pPrototype == nullptr )
+		{
+			FFResult dwRet = initialise();
+			if( dwRet == FF_FAIL )
+				return ret;
+		}
+		pPlugObj = s_pPrototype;
 	}
-	return s_pPrototype->GetParamElementDefault( paramIndex, elementIndex );
+	
+	return pPlugObj->GetParamElementDefault( paramIndex, elementIndex );
 }
 FFUInt32 GetNumElementSeparators( unsigned int paramIndex )
 {
@@ -778,16 +791,16 @@ FFMixed plugMain( FFUInt32 functionCode, FFMixed inputValue, FFInstanceID instan
 		}
 		break;
 	case FF_GET_NUM_PARAMETER_ELEMENTS:
-		retval.UIntValue = getNumParameterElements( inputValue.UIntValue );
+		retval.UIntValue = getNumParameterElements( inputValue.UIntValue, pPlugObj );
 		break;
 	case FF_GET_PARAMETER_ELEMENT_NAME: {
 		const GetParameterElementNameStruct* arguments = (const GetParameterElementNameStruct*)inputValue.PointerValue;
-		retval.PointerValue                            = getParameterElementName( arguments->ParameterNumber, arguments->ElementNumber );
+		retval.PointerValue                            = getParameterElementName( arguments->ParameterNumber, arguments->ElementNumber, pPlugObj );
 		break;
 	}
 	case FF_GET_PARAMETER_ELEMENT_VALUE: {
 		const GetParameterElementValueStruct* arguments = (const GetParameterElementValueStruct*)inputValue.PointerValue;
-		retval                                          = getParameterElementDefault( arguments->ParameterNumber, arguments->ElementNumber );
+		retval                                          = getParameterElementValue( arguments->ParameterNumber, arguments->ElementNumber, pPlugObj );
 		break;
 	}
 	case FF_GET_NUM_ELEMENT_SEPARATORS: {

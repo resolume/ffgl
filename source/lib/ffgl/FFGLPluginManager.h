@@ -346,6 +346,8 @@ protected:
 	///                        Probably you want to pass false during initialization and true when changing a display name while the plugin is running.
 	void SetParamDisplayName( unsigned int paramID, std::string newDisplayName, bool raiseEvent );
 
+	void SetParamElements( unsigned int dwIndex, std::vector< std::string > newElements, const std::vector< float >& elementValues, bool raiseEvent );
+
 	/// Raises an event flag on a certain parameter. Calling this will store the event as being a pending event
 	/// untill the host decides to consume the event and handles it. Raising an event multiple times before the host
 	/// consumes them will only output a single event to the host. This is okay because the expected host's response
