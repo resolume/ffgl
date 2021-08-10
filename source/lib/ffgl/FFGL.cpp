@@ -123,6 +123,15 @@ FFResult initialise()
 	if( g_CurrPluginInfo == NULL )
 		return FF_FAIL;
 
+	//Allow the plugin to initialise itself before we do anything with it. This allows it
+	//to execute some setup code that it'll only ever need to do once.
+	if( FPINITIALISELIBRARY* pInitialise = g_CurrPluginInfo->GetInitialiseMethod() )
+	{
+		FFResult result = pInitialise();
+		if( result != FF_SUCCESS )
+			return result;
+	}
+
 	if( s_pPrototype == NULL )
 	{
 		//get the instantiate function pointer
@@ -147,6 +156,12 @@ FFResult deInitialise()
 		delete s_pPrototype;
 		s_pPrototype = NULL;
 	}
+
+	//Allow the plugin to initialise itself before we do anything with it. This allows it
+	//to execute some setup code that it'll only ever need to do once.
+	if( FPDEINITIALISELIBRARY* pDeinitialise = g_CurrPluginInfo->GetDeinitialiseMethod() )
+		pDeinitialise();
+
 	return FF_SUCCESS;
 }
 unsigned int getNumParameters()
@@ -436,7 +451,7 @@ FFMixed getParameterElementValue( unsigned int paramIndex, unsigned int elementI
 		}
 		pPlugObj = s_pPrototype;
 	}
-	
+
 	return pPlugObj->GetParamElementDefault( paramIndex, elementIndex );
 }
 FFUInt32 GetNumElementSeparators( unsigned int paramIndex )
@@ -533,7 +548,7 @@ FFMixed getParamGroup( FFMixed input )
 FFMixed getParamDisplayName( void* instanceID, FFMixed input )
 {
 	FFMixed ret;
-	ret.UIntValue = FF_FAIL;
+	ret.UIntValue               = FF_FAIL;
 	CFFGLPlugin* pluginInstance = (CFFGLPlugin*)instanceID;
 	if( pluginInstance == nullptr )
 		return ret;
