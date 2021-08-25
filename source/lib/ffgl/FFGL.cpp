@@ -151,6 +151,9 @@ FFResult initialise()
 }
 FFResult deInitialise()
 {
+	if( g_CurrPluginInfo == NULL )
+		return FF_FAIL;
+		
 	if( s_pPrototype != NULL )
 	{
 		delete s_pPrototype;
