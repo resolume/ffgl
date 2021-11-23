@@ -37,6 +37,13 @@
 //in this SDK, all FFGL plugins must derive from CFFGLPlugin
 typedef FFResult __stdcall FPCREATEINSTANCEGL( class CFFGLPlugin** ppOutInstance );
 
+//Function pointer signature that matches the function that can be set to receive a plugin library
+//initialisation callback.
+typedef FFResult __stdcall FPINITIALISELIBRARY();
+//Function pointer signature that matches the function that can be set to receive a plugin library
+//deinitialisation callback.
+typedef void __stdcall FPDEINITIALISELIBRARY();
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \class		CFFGLPluginInfo
 ///	\brief		CFFGLPluginInfo manages static information concerning a plugin name, version, and description.
@@ -106,8 +113,10 @@ public:
 		unsigned int dwPluginType,
 		const char* pchDescription,
 		const char* pchAbout,
-		unsigned int dwFreeFrameExtendedDataSize = 0,
-		const void* pFreeFrameExtendedDataBlock  = NULL );
+		unsigned int dwFreeFrameExtendedDataSize   = 0,
+		const void* pFreeFrameExtendedDataBlock    = nullptr,
+		FPINITIALISELIBRARY* initialiseLibrary     = nullptr,
+		FPDEINITIALISELIBRARY* deinitialiseLibrary = nullptr );
 
 	/// The standard destructor of CFFGLPluginInfo.
 	~CFFGLPluginInfo();
@@ -137,6 +146,13 @@ public:
 	/// \return		A pointer to the factory method of the plugin subclass.
 	FPCREATEINSTANCEGL* GetFactoryMethod() const;
 
+	/// Returns a pointer to the plugin specific library initialisation function. It is called by the
+	/// FreeFrame SDK when the host tells the library to initialise itself.
+	FPINITIALISELIBRARY* GetInitialiseMethod() const;
+	/// Returns a pointer to the plugin specific library deinitialisation function. It is called by the
+	/// FreeFrame SDK when the host tells the library to deinitialise itself.
+	FPDEINITIALISELIBRARY* GetDeinitialiseMethod() const;
+
 private:
 	// Structures containing information about the plugin
 	PluginInfoStruct m_PluginInfo;
@@ -147,6 +163,9 @@ private:
 
 	// Pointer to the factory method of the plugin subclass
 	FPCREATEINSTANCEGL* m_pCreateInstance;
+
+	FPINITIALISELIBRARY* m_initialiseLibrary;
+	FPDEINITIALISELIBRARY* m_deinitialiseLibrary;
 };
 
 /**

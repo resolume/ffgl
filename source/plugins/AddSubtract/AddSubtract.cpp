@@ -1,6 +1,13 @@
 #include "AddSubtract.h"
 using namespace ffglex;
 
+enum ParamType : FFUInt32
+{
+	PT_RED,
+	PT_GREEN,
+	PT_BLUE
+};
+
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< AddSubtract >,// Create method
 	"RE01",                      // Plugin unique ID of maximum length 4.
@@ -53,15 +60,15 @@ void main()
 }
 )";
 
-AddSubtract::AddSubtract()
+AddSubtract::AddSubtract() :
+	r( 0.5f ), g( 0.5f ), b( 0.5f )
 {
-	// Input properties
 	SetMinInputs( 1 );
 	SetMaxInputs( 1 );
 
-	//We declare that this plugin has a Brightness parameter which is a RGB param.
-	//The name here must match the one you declared in your fragment shader.
-	AddRGBColorParam( "Brightness" );
+	SetParamInfof( PT_RED, "Brightness", FF_TYPE_RED );
+	SetParamInfof( PT_GREEN, "Brightness_Green", FF_TYPE_GREEN );
+	SetParamInfof( PT_BLUE, "Brightness_Blue", FF_TYPE_BLUE );
 
 	FFGLLog::LogToHost( "Created AddSubtract effect" );
 }
@@ -107,8 +114,7 @@ FFResult AddSubtract::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	FFGLTexCoords maxCoords = GetMaxGLTexCoords( *pGL->inputTextures[ 0 ] );
 	shader.Set( "MaxUV", maxCoords.s, maxCoords.t );
 
-	//This takes care of sending all the parameter that the plugin registered to the shader.
-	SendParams( shader );
+	glUniform3f( shader.FindUniform( "Brightness" ), r, g, b );
 
 	quad.Draw();
 
@@ -120,4 +126,40 @@ FFResult AddSubtract::DeInitGL()
 	quad.Release();
 
 	return FF_SUCCESS;
+}
+
+FFResult AddSubtract::SetFloatParameter( unsigned int dwIndex, float value )
+{
+	switch( dwIndex )
+	{
+	case PT_RED:
+		r = value;
+		break;
+	case PT_GREEN:
+		g = value;
+		break;
+	case PT_BLUE:
+		b = value;
+		break;
+
+	default:
+		return FF_FAIL;
+	}
+
+	return FF_SUCCESS;
+}
+
+float AddSubtract::GetFloatParameter( unsigned int index )
+{
+	switch( index )
+	{
+	case PT_RED:
+		return r;
+	case PT_GREEN:
+		return g;
+	case PT_BLUE:
+		return b;
+	}
+
+	return 0.0f;
 }

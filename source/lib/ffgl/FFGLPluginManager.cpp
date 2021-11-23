@@ -411,6 +411,26 @@ void CFFGLPluginManager::SetParamDisplayName( unsigned int paramID, std::string 
 		paramInfo->pendingEventFlags |= FF_EVENT_FLAG_DISPLAY_NAME;
 }
 
+void CFFGLPluginManager::SetParamElements( unsigned int dwIndex, std::vector< std::string > newElements, const std::vector< float >& elementValues, bool raiseEvent )
+{
+	ParamInfo* paramInfo = FindParamInfo( dwIndex );
+	if( paramInfo == nullptr )
+		return;
+	if( paramInfo->dwType != FF_TYPE_OPTION )
+		return;
+	if( newElements.size() != elementValues.size() )
+		return;
+
+	paramInfo->elements.resize( newElements.size() );
+	for( size_t index = 0, num = newElements.size(); index < num; ++index )
+	{
+		paramInfo->elements[ index ].name = std::move( newElements[ index ] );
+		paramInfo->elements[ index ].value = elementValues[ index ];
+	}
+	if( raiseEvent )
+		paramInfo->pendingEventFlags |= FF_EVENT_FLAG_ELEMENTS;
+}
+
 void CFFGLPluginManager::RaiseParamEvent( unsigned int paramID, FFUInt64 eventToRaise )
 {
 	ParamInfo* paramInfo = FindParamInfo( paramID );
