@@ -15,7 +15,7 @@ FFGLScreenQuad::~FFGLScreenQuad()
 {
 	//If any of these assertions hit you forgot to release this quad's gl resources.
 	assert( vaoID == 0 );
-	assert( vaoID == 0 );
+	assert( vboID == 0 );
 }
 
 /**
