@@ -145,7 +145,6 @@
 		652480B92306FD14007257C5 /* FFGLParamOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807E2306FD14007257C5 /* FFGLParamOption.cpp */; };
 		652480BA2306FD14007257C5 /* FFGLParamOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807E2306FD14007257C5 /* FFGLParamOption.cpp */; };
 		65438A5B231D3DC000461EA0 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65438A5A231D3DC000461EA0 /* libz.a */; };
-		65438A68231D3E0700461EA0 /* libpng16d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65438A67231D3E0700461EA0 /* libpng16d.a */; };
 		6589225F231D3812006B3174 /* PNGLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6589225E231D3812006B3174 /* PNGLoader.cpp */; };
 		65BE5BD9231D65F900CDDFA7 /* FFGLScopedFBOBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD6231D65DA00CDDFA7 /* FFGLScopedFBOBinding.cpp */; };
 		65BE5BDA231D65F900CDDFA7 /* FFGLScopedRenderBufferBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD7231D65DA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp */; };
@@ -235,6 +234,7 @@
 		F49A35E8264ECC2A008127CC /* FFGLShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708E321635F83002B8B05 /* FFGLShader.cpp */; };
 		F49A35E9264ECC2A008127CC /* FFGLSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524805F2306FD13007257C5 /* FFGLSource.cpp */; };
 		F49A35FA264ECCB1008127CC /* FFGLEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F49A35F9264ECCB1008127CC /* FFGLEvents.cpp */; };
+		F4B2ADA527E0C4BA00FE3A20 /* libpng16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B2ADA427E0C4BA00FE3A20 /* libpng16.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -400,6 +400,7 @@
 		F49A35EE264ECC2A008127CC /* Events.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Events.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		F49A35F8264ECCB1008127CC /* FFGLEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFGLEvents.h; path = ../../source/plugins/Events/FFGLEvents.h; sourceTree = "<group>"; };
 		F49A35F9264ECCB1008127CC /* FFGLEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FFGLEvents.cpp; path = ../../source/plugins/Events/FFGLEvents.cpp; sourceTree = "<group>"; };
+		F4B2ADA427E0C4BA00FE3A20 /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16.a; path = ../../source/plugins/CustomThumbnail/lpng1637/libpng16.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,12 +415,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65438A68231D3E0700461EA0 /* libpng16d.a in Frameworks */,
 				65438A5B231D3DC000461EA0 /* libz.a in Frameworks */,
-		A9D22AA42181FA0400708C0E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				F4B2ADA527E0C4BA00FE3A20 /* libpng16.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +585,7 @@
 		65438A59231D3DC000461EA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F4B2ADA427E0C4BA00FE3A20 /* libpng16.a */,
 				65438A67231D3E0700461EA0 /* libpng16d.a */,
 				65438A5C231D3DC900461EA0 /* lpng1637 */,
 				65438A5A231D3DC000461EA0 /* libz.a */,

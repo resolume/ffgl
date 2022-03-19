@@ -5,6 +5,7 @@
 
 /.DS_Store
 /source/lib/.DS_Store
+DerivedData/
 
 /source/lib/glsdk_0_5_2/.DS_Store
 /source/lib/glsdk_0_5_2/glload/.DS_Store
