@@ -1,6 +1,5 @@
 #include "FFGLShader.h"
 #include <stdio.h>
-#include <vector>
 #include <assert.h>
 #include "FFGLUtilities.h"
 
@@ -227,9 +226,12 @@ GLuint FFGLShader::GetGLID() const
  * @return: The uniform's location to be passed into a glUniform{1|2|3|4}{f|i} function call. -1 if no uniform with the
  * provided name is available.
  */
-GLint FFGLShader::FindUniform( const char* name ) const
+GLint FFGLShader::FindUniform( const char* name ) 
 {
-	return glGetUniformLocation( programID, name );
+	std::string stringName( name );
+	if( !uniformLocations.count( stringName ) == 0 )
+		uniformLocations[ stringName ] = glGetUniformLocation( programID, name );
+	return uniformLocations[ stringName ];
 }
 
 bool FFGLShader::CompileVertexShader( const char* vertexShader )

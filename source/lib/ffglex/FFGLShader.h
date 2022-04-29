@@ -2,7 +2,7 @@
 #include "../ffgl/FFGL.h"//For OpenGL
 #include <vector>
 #include <string>
-#include <string>
+#include <map>
 
 namespace ffglex
 {
@@ -31,7 +31,7 @@ public:
 
 	bool IsReady() const;                       //Whether or not previous complilation succeeded and this shader is ready to be used for rendering.
 	GLuint GetGLID() const;                     //Gets the OpenGL ID that represents the linked shader program.
-	GLint FindUniform( const char* name ) const;//Finds the uniform location that needs to be used to addess a uniform with a certain name.
+	GLint FindUniform( const char* name );		//Finds the uniform location that needs to be used to addess a uniform with a certain name.
 
 	FFGLShader& operator=( const FFGLShader& ) = delete;
 	FFGLShader& operator=( FFGLShader&& ) = delete;
@@ -47,6 +47,7 @@ private:
 	GLuint fragmentShaderID;                             //!< The ID OpenGL gave our fragment shader. 0 for invalid.
 	GLuint programID;                                    //!< The ID OpenGL gave our shader program. Bind this to use this shader. 0 for invalid.
 	std::vector< std::string > transformFeedbackVaryings;//!< The varyings that will be captured using a transform feedback. Ordered in the order of capturing.
+	std::map< std::string, GLint > uniformLocations;	 //a map to cache uniform locations to avoid a call to glGetUniformLocation on every call to set
 };
 
 }//End namespace ffglex
