@@ -1,4 +1,6 @@
-This is the Resolume fork of the FFGL repository. It is up to date and has Visual Studio and Xcode projects to compile 64 bit plugins that can be loaded by Resolume 7.0.3 and up.
+This is the Resolume fork of the FFGL repository. It is up to date and has Visual Studio and Xcode projects to compile 64 bit plugins that can be loaded by Resolume 7.0.3 and up.  
+
+**Note for macOS developers:** *Resolume 7.11.0 has added native ARM support. This means that on Apple Sillicon it will run as a native ARM process. Native ARM processes cannot load x86_64 based plugins. To enable your plugin to be loaded you should build it as universal build. If your Xcode is up-to-date enough you can choose to build for "Any Mac (Apple Silicon, Intel)" instead of "My Mac" in the top left corner. Please read the [apple developer documentation](https://developer.apple.com/documentation/apple-silicon/building-a-universal-macos-binary) for more information about universal builds.*
 
 The master branch is used for continued development. It will contain the latest features, fixes and bugs. Plugins compiled with the master branch will work in Resolume 7.3.1 and up.
 If you do not want to be affected by the latest bugs you can use one of the stable releases. eg FFGL 2.2, which is the most recent released version of the sdk. Plugin development for Resolume 7.0.0/7.0.1/7.0.2 is no longer supported by this repository. These versions are very old and there are many newer versions that users can update to.
