@@ -229,7 +229,7 @@ GLuint FFGLShader::GetGLID() const
 GLint FFGLShader::FindUniform( const char* name ) 
 {
 	std::string stringName( name );
-	if( !uniformLocations.count( stringName ) == 0 )
+	if( uniformLocations.count( stringName ) == 0 )
 		uniformLocations[ stringName ] = glGetUniformLocation( programID, name );
 	return uniformLocations[ stringName ];
 }
