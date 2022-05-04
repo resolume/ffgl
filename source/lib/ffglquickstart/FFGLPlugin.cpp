@@ -303,6 +303,13 @@ void Plugin::AddParam( std::shared_ptr< ParamFFT > param )
 	params.push_back( param );
 }
 
+void Plugin::AddParam( std::shared_ptr< ParamText > param )
+{
+	unsigned int new_index = (unsigned int)params.size();
+	SetParamInfo( new_index, param->GetName().c_str(), param->GetType(), param->text.c_str() );
+	params.push_back( param );
+}
+
 void Plugin::AddHueColorParam( std::string name )
 {
 	AddParam( Param::Create( name, FF_TYPE_HUE, 0. ) );
