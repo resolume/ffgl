@@ -89,7 +89,7 @@ std::string Plugin::CreateFragmentShader( std::string base )
 		{
 			fragmentShaderCode += "uniform bool " + params[ i ]->GetName() + ";\n";
 		}
-		else if( params[ i ]->GetType() != FF_TYPE_BUFFER )
+		else if( params[ i ]->GetType() != FF_TYPE_BUFFER && params[ i ]->GetType() != FF_TYPE_TEXT )
 		{
 			fragmentShaderCode += "uniform float " + params[ i ]->GetName() + ";\n";
 		}
@@ -157,7 +157,7 @@ void Plugin::SendParams( FFGLShader& shader )
 		{
 			shader.Set( params[ i ]->GetName().c_str(), (bool)params[ i ]->GetValue() );
 		}
-		else if( params[ i ]->GetType() != FF_TYPE_BUFFER )
+		else if( params[ i ]->GetType() != FF_TYPE_BUFFER && params[ i ]->GetType() != FF_TYPE_TEXT )
 		{
 			shader.Set( params[ i ]->GetName().c_str(), params[ i ]->GetValue() );
 		}
