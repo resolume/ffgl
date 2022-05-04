@@ -307,7 +307,7 @@ void Plugin::AddHueColorParam( std::string name )
 {
 	AddParam( Param::Create( name, FF_TYPE_HUE, 0. ) );
 	AddParam( Param::Create( name + "_saturation", FF_TYPE_SATURATION, 0. ) );
-	AddParam( Param::Create( name + "_brighthness", FF_TYPE_BRIGHTNESS, 1.0 ) );
+	AddParam( Param::Create( name + "_brightness", FF_TYPE_BRIGHTNESS, 1.0 ) );
 	AddParam( Param::Create( name + "_alpha", FF_TYPE_ALPHA, 1.0 ) );
 }
 
