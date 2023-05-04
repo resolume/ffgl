@@ -27,11 +27,11 @@ void ParamOption::SetValue( float newValue )
 	size_t valueAsIndex = static_cast< size_t >( newValue );
 
 	if( options.size() <= valueAsIndex )
-		value = 0;
+		value = 0.0f;
 	else
 		value = newValue;
 
-	currentOption = options[ valueAsIndex ];
+	currentOption = options[ static_cast< size_t >( value ) ];
 }
 
 float ParamOption::GetRealValue() const
