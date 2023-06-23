@@ -1,8 +1,6 @@
 #include "PNGLoader.h"
 #include <png.h>
 //#include <pngconf.h>
-#include <pngstruct.h>
-#include <pnginfo.h>
 
 class ByteStream
 {
@@ -188,7 +186,7 @@ std::vector< CFFGLColor > PNGLoader::ParsePNGPixels( const void* pngData )
 		//if( bitDepth == 16 )
 		//png_set_swap( pngReadStruct );
 
-		size_t lineStride = width * ( pngInfoStruct->pixel_depth / 8 );// pixelDepth is in bits convert to bytes
+		size_t lineStride = width * ( png_get_bit_depth( pngReadStruct, pngInfoStruct ) * png_get_channels( pngReadStruct, pngInfoStruct ) / 8 );// pixelDepth is in bits convert to bytes
 
 		//Load the image into a temporary buffer so that if anything goes wrong while reading we dont risk
 		//outputting garbage through the output buffer due to a partial read.

@@ -2,7 +2,7 @@
 
 #if defined( FFGL_WINDOWS )
 #include <Windows.h>
-#else
+#elif defined( FFGL_MACOS )
 #include <Carbon/Carbon.h>
 #endif
 

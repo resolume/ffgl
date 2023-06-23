@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <memory>
 #include "../ffgl/FFGLPluginInfo.h"
 #include "../ffgl/FFGLPluginSDK.h"
 #include "../ffgl/FFGLLib.h"
