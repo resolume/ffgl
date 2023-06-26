@@ -104,8 +104,9 @@
 //include the appropriate OpenGL headers for the compiler
 
 #if defined( FFGL_WINDOWS )
+#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN//Exclude rarely-used stuff from Windows headers
-#define _WINSOCKAPI_       //Prevent inclusion of winsock
+#endif
 //Defines to prevent windows.h from making all kinds of defines which may conflict with actual user code.
 #define NOGDICAPMASKS
 #define NOVIRTUALKEYCODES
@@ -131,7 +132,11 @@
 #define NOMB
 #define NOMEMMGR
 #define NOMETAFILE
+#ifdef NOMINMAX
+#define KEEP_NOMINMAX
+#else
 #define NOMINMAX
+#endif
 #define NOMSG
 #define NOOPENFILE
 #define NOSCROLL
@@ -227,7 +232,9 @@
 #undef NOMB
 #undef NOMEMMGR
 #undef NOMETAFILE
+#ifndef KEEP_NOMINMAX
 #undef NOMINMAX
+#endif
 #undef NOMSG
 #undef NOOPENFILE
 #undef NOSCROLL
@@ -301,7 +308,7 @@ typedef unsigned __int64 FFUInt64;
 #if defined( FFGL_MACOS )
 #include <OpenGL/gl3.h>
 #elif defined( FFGL_LINUX )
-#include <GL/gl.h>
+#include <GL/glew.h>
 #else
 #error define this for your OS
 #endif

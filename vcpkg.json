@@ -1,0 +1,12 @@
+{
+  "name": "resolume-ffgl",
+  "version-string": "0.0.1",
+  "dependencies": [
+    {
+      "name": "glew",
+      "platform": "!osx"
+    },
+    "libpng",
+    "zlib"
+  ]
+}
