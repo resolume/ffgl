@@ -1,6 +1,6 @@
-add_library(ffgl_plugin_particles STATIC)
-add_library(ffgl::plugin::particles ALIAS ffgl_plugin_particles)
-target_sources(ffgl_plugin_particles PRIVATE
+add_library(ffgl-plugin-particles STATIC)
+add_library(ffgl::plugin::particles ALIAS ffgl-plugin-particles)
+target_sources(ffgl-plugin-particles PRIVATE
     Constants.h     Constants.cpp
     GLResources.h   GLResources.cpp
     Particles.h     Particles.cpp
@@ -9,4 +9,10 @@ target_sources(ffgl_plugin_particles PRIVATE
     shaders/vsRender.h
     shaders/vsUpdate.h
 )
-target_link_libraries(ffgl_plugin_particles PRIVATE ffgl::sdk)
+target_link_libraries(ffgl-plugin-particles PRIVATE ffgl::sdk)
+
+install(
+    TARGETS     ffgl-plugin-particles
+    EXPORT      ffgl--plugin-particles-targets
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
