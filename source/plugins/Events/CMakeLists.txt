@@ -1,4 +1,10 @@
-add_library(ffgl_plugin_events STATIC)
-add_library(ffgl::plugin::events ALIAS ffgl_plugin_events)
-target_sources(ffgl_plugin_events PRIVATE FFGLEvents.h FFGLEvents.cpp)
-target_link_libraries(ffgl_plugin_events PRIVATE ffgl::sdk)
+add_library(ffgl-plugin-events STATIC)
+add_library(ffgl::plugin::events ALIAS ffgl-plugin-events)
+target_sources(ffgl-plugin-events PRIVATE FFGLEvents.h FFGLEvents.cpp)
+target_link_libraries(ffgl-plugin-events PRIVATE ffgl::sdk)
+
+install(
+    TARGETS     ffgl-plugin-events
+    EXPORT      ffgl--plugin-events-targets
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)

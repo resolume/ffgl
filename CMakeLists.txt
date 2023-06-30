@@ -9,18 +9,72 @@ if (EXISTS CACHE{VCPKG_MANIFEST_FILE})
     vcpkg_acquire_dependencies()
 endif()
 
-add_library(ffgl_sdk STATIC)
-add_library(ffgl::sdk ALIAS ffgl_sdk)
-target_sources(ffgl_sdk PUBLIC source/lib/FFGLSDK.h)
-target_sources(ffgl_sdk PRIVATE source/lib/FFGLSDK.cpp)
+add_library(ffgl-sdk STATIC
+    source/lib/FFGLSDK.h
+    source/lib/FFGLSDK.cpp
+)
 
-target_include_directories(ffgl_sdk PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/source/lib/")
+add_library(ffgl::sdk ALIAS ffgl-sdk)
+set_target_properties(ffgl-sdk PROPERTIES EXPORT_NAME sdk)
+
+target_include_directories(ffgl-sdk PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/source/lib/>
+    $<INSTALL_INTERFACE:include>
+)
+
+target_compile_features(ffgl-sdk PUBLIC cxx_std_11)
 
 # we need glew (except on macOS)
 if (NOT APPLE)
     find_package(GLEW REQUIRED)
-    target_link_libraries(ffgl_sdk PRIVATE GLEW::GLEW)
+    target_link_libraries(ffgl-sdk PRIVATE GLEW::GLEW)
 endif()
+
+include(GNUInstallDirs)
+
+install(
+    DIRECTORY source/lib/ffgl
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    FILES_MATCHING PATTERN "*.h"
+)
+
+install(
+    TARGETS     ffgl-sdk
+    EXPORT      ffgl-sdk-targets
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+install(
+    EXPORT      ffgl-sdk-targets
+    NAMESPACE   ffgl::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ffgl-sdk
+)
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/ffgl-sdk/ffgl-sdk-config-version.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY AnyNewerVersion
+)
+
+export(
+    EXPORT      ffgl-sdk-targets
+    FILE        "${CMAKE_CURRENT_BINARY_DIR}/ffgl-sdk/ffgl-sdk-targets.cmake"
+    NAMESPACE   ffgl::
+)
+
+configure_file(cmake/ffgl-sdk-config.cmake
+    "${CMAKE_CURRENT_BINARY_DIR}/ffgl-sdk/ffgl-sdk-config-version.cmake"
+    COPYONLY
+)
+
+install(
+    FILES
+        cmake/ffgl-sdk-config.cmake
+        "${CMAKE_CURRENT_BINARY_DIR}/ffgl-sdk/ffgl-sdk-config-version.cmake"
+    DESTINATION
+        ${CMAKE_INSTALL_LIBDIR}/cmake/ffgl-sdk
+)
 
 # are we building ffgl as the main repo, or is it included
 # into another project?
