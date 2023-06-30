@@ -89,7 +89,7 @@ std::string Plugin::CreateFragmentShader( std::string base )
 		{
 			fragmentShaderCode += "uniform bool " + params[ i ]->GetName() + ";\n";
 		}
-		else if( params[ i ]->GetType() != FF_TYPE_BUFFER )
+		else if( params[ i ]->GetType() != FF_TYPE_BUFFER && params[ i ]->GetType() != FF_TYPE_TEXT )
 		{
 			fragmentShaderCode += "uniform float " + params[ i ]->GetName() + ";\n";
 		}
@@ -157,7 +157,7 @@ void Plugin::SendParams( FFGLShader& shader )
 		{
 			shader.Set( params[ i ]->GetName().c_str(), (bool)params[ i ]->GetValue() );
 		}
-		else if( params[ i ]->GetType() != FF_TYPE_BUFFER )
+		else if( params[ i ]->GetType() != FF_TYPE_BUFFER && params[ i ]->GetType() != FF_TYPE_TEXT )
 		{
 			shader.Set( params[ i ]->GetName().c_str(), params[ i ]->GetValue() );
 		}
@@ -300,6 +300,13 @@ void Plugin::AddParam( std::shared_ptr< ParamFFT > param )
 	audioParams[ param ] = Audio();
 	param->index         = (unsigned int)params.size();
 	SetBufferParamInfo( param->index, param->GetName().c_str(), static_cast< unsigned int >( param->fftData.size() ), FF_USAGE_FFT );
+	params.push_back( param );
+}
+
+void Plugin::AddParam( std::shared_ptr< ParamText > param )
+{
+	unsigned int new_index = (unsigned int)params.size();
+	SetParamInfo( new_index, param->GetName().c_str(), param->GetType(), param->text.c_str() );
 	params.push_back( param );
 }
 

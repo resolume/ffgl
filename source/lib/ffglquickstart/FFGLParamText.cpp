@@ -2,11 +2,11 @@
 
 namespace ffglqs
 {
-std::shared_ptr< ParamText > ParamText::create( std::string name )
+std::shared_ptr< ParamText > ParamText::Create( std::string name )
 {
-	return create( std::move( name ), "" );
+	return Create( std::move( name ), "" );
 }
-std::shared_ptr< ParamText > ParamText::create( std::string name, std::string text )
+std::shared_ptr< ParamText > ParamText::Create( std::string name, std::string text )
 {
 	return std::make_shared< ParamText >( std::move( name ), text );
 }

@@ -165,6 +165,9 @@ public:
 	/// This function allows to create a Hue color param, for exemple in Resolume this will display a
 	/// color picker, which is very handy to choose your color.
 	/// \param	name		The name of the parameter to add
+	void AddParam( std::shared_ptr< ParamText > param );
+	/// This function handles the special case where the parameter is a ParamText
+	/// \param	param		The name of the parameter to add
 	void AddHueColorParam( std::string name );
 	/// This function allows to create a RGB color param, in Resolume it is displayed as three sliders for
 	/// each Red, Green and Blue.
