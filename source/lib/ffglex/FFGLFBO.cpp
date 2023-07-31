@@ -66,10 +66,10 @@ void FFGLFBO::Release()
 		depthBufferID = 0;
 	}
 
-	if( depthBufferID != 0 )
+	if( colorTextureID != 0 )
 	{
-		glDeleteTextures( 1, &depthBufferID );
-		depthBufferID = 0;
+		glDeleteTextures( 1, &colorTextureID );
+		colorTextureID = 0;
 	}
 }
 
