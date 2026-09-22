@@ -53,9 +53,9 @@ public:
 private:
 	std::vector< float > fft;
 	SmoothValue vol, bass, med, high;
-	float freqMax, freqBinStep;
-	int sampleRate;
-	float gain = 0;
+	float freqMax    = 0;
+	int sampleRate   = 0;
+	float gain       = 0;
 };
 
 }//End namespace ffglqs

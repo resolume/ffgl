@@ -1,4 +1,5 @@
 #include "FFGLAudio.h"
+#include <algorithm>
 #include <cmath>
 #include "../ffglex/FFGLUtilities.h"
 
@@ -85,7 +86,29 @@ float Audio::GetHigh()
 
 float Audio::GetVolumeFromTo( int fromFreq, int toFreq )
 {
-	return 0.0f;
+	if( fft.empty() || sampleRate <= 0 )
+		return 0.0f;
+
+	if( fromFreq > toFreq )
+		std::swap( fromFreq, toFreq );
+
+	const int fftSize   = static_cast< int >( fft.size() );
+	const float binStep = freqMax / static_cast< float >( fftSize );
+
+	int fromBin = static_cast< int >( fromFreq / binStep );
+	int toBin   = static_cast< int >( std::ceil( toFreq / binStep ) );
+
+	//Clamp to the valid bin range, and make sure the range covers at least one bin even if it's
+	//narrower than a single bin's frequency width.
+	fromBin = std::min( std::max( fromBin, 0 ), fftSize - 1 );
+	toBin   = std::min( std::max( toBin, fromBin + 1 ), fftSize );
+
+	float sum = 0.0f;
+	for( int i = fromBin; i < toBin; i++ )
+		sum += fft[ i ] * fft[ i ] * gain;
+
+	sum /= static_cast< float >( toBin - fromBin );
+	return std::sqrt( sum );
 }
 
 float Audio::ToDB( float rms )
@@ -107,9 +130,8 @@ void Audio::SetSmoothness( float smoothness )
 
 void Audio::SetSampleRate( int _sampleRate )
 {
-	sampleRate  = _sampleRate;
-	freqMax     = (float)sampleRate / 2.f;
-	freqBinStep = freqMax / fft.size();
+	sampleRate = _sampleRate;
+	freqMax    = (float)sampleRate / 2.f;
 }
 
 void Audio::SetGain( float _gain )
