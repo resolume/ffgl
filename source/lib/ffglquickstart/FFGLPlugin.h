@@ -151,17 +151,21 @@ public:
 	/// It also allows the plugin to automatically pass the current value of each parameters to the
 	/// shader before drawing.
 	/// \param	param		The parameter to add
-	void AddParam( std::shared_ptr< Param > param );
+	/// \return	The index the param was added at.
+	unsigned int AddParam( std::shared_ptr< Param > param );
 	/// This function handle the special case where the parameter is a ParamRange
 	/// \param	param		The parameter to add
-	void AddParam( std::shared_ptr< ParamRange > param );
+	/// \return	The index the param was added at.
+	unsigned int AddParam( std::shared_ptr< ParamRange > param );
 	/// This function handle the special case where the parameter is a ParamOption (When you have the
 	/// choice between different option).
 	/// \param	param		The parameter to add
-	void AddParam( std::shared_ptr< ParamOption > param );
+	/// \return	The index the param was added at.
+	unsigned int AddParam( std::shared_ptr< ParamOption > param );
 	/// This function handle the special case where the parameter is a ParamFFT
 	/// \param	param		The parameter to add
-	void AddParam( std::shared_ptr< ParamFFT > fft );
+	/// \return	The index the param was added at.
+	unsigned int AddParam( std::shared_ptr< ParamFFT > fft );
 	/// This function allows to create a Hue color param, for exemple in Resolume this will display a
 	/// color picker, which is very handy to choose your color.
 	/// \param	name		The name of the parameter to add
